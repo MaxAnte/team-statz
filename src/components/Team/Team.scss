@@ -1,0 +1,15 @@
+.team__players {
+  display: flex;
+  align-items: center;
+  margin: 0px -15px;
+}
+.player {
+  &__item {
+    width: 25%;
+    padding: 0px 15px;
+  }
+  &__link {
+    text-decoration: none;
+    color: #000;
+  }
+}

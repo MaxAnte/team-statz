@@ -1,10 +1,12 @@
 import React from "react";
 
-import "./PlayerCard.css";
+import "./PlayerCard.scss";
 
 import basket from "../../assets/images/basket.svg";
 import glassCleaner from "../../assets/images/glass_cleaner.png";
 import assist from "../../assets/images/assist.png";
+import thief from "../../assets/images/thief.svg";
+import block from "../../assets/images/block.svg";
 
 function PlayerCard({player}) {
   return (
@@ -34,6 +36,22 @@ function PlayerCard({player}) {
         ) : (
           ""
         )}
+        {player.bestInBlk ? (
+          <div className="player__badge">
+            <img src={block} alt="Block mashine" />
+            <span>You shall NOT pass</span>
+          </div>
+        ) : (
+          ""
+        )}
+        {player.bestInStl ? (
+          <div className="player__badge">
+            <img src={thief} alt="Thief" />
+            <span>Thief</span>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="player__img">
@@ -46,6 +64,8 @@ function PlayerCard({player}) {
         <div className="player__stats--item">PTS: {player.pts}</div>
         <div className="player__stats--item">REB: {player.reb}</div>
         <div className="player__stats--item">AST: {player.ast}</div>
+        <div className="player__stats--item">BLK: {player.blk}</div>
+        <div className="player__stats--item">STL: {player.stl}</div>
       </div>
     </div>
   );

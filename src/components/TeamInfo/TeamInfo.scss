@@ -1,0 +1,39 @@
+.team {
+  &__info {
+    display: flex;
+    padding: 25px;
+    margin-block: 25px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    background: #fff;
+    &--left {
+      width: 15%;
+      padding-right: 25px;
+      // padding: 0px 45px 0px 0px;
+      text-align: center;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 75%;
+        background: #000;
+        opacity: 0.15;
+      }
+    }
+    &--right {
+      width: 85%;
+      padding: 0px 0px 0px 55px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-size: 22px;
+        font-weight: 500;
+      }
+    }
+  }
+}
