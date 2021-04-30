@@ -1,0 +1,54 @@
+import React from "react";
+
+import "./PlayerCard.css";
+
+import basket from "../../assets/images/basket.svg";
+import glassCleaner from "../../assets/images/glass_cleaner.png";
+import assist from "../../assets/images/assist.png";
+
+function PlayerCard({player}) {
+  return (
+    <div className="player__card">
+      <div className="player__badges">
+        {player.bestInPts ? (
+          <div className="player__badge">
+            <img src={basket} alt="Bucket mashine" />
+            <span>Bucket mashine</span>
+          </div>
+        ) : (
+          ""
+        )}
+        {player.bestInReb ? (
+          <div className="player__badge">
+            <img src={glassCleaner} alt="Glass cleaner" />
+            <span>Glass cleaner</span>
+          </div>
+        ) : (
+          ""
+        )}
+        {player.bestInAst ? (
+          <div className="player__badge">
+            <img src={assist} alt="Point GOD" />
+            <span>Point GOD</span>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+
+      <div className="player__img">
+        <img src={player.image_thumb} alt="Player" />
+      </div>
+      <p className="player__name">
+        {player.name}, {player.position}
+      </p>
+      <div className="player__stats">
+        <div className="player__stats--item">PTS: {player.pts}</div>
+        <div className="player__stats--item">REB: {player.reb}</div>
+        <div className="player__stats--item">AST: {player.ast}</div>
+      </div>
+    </div>
+  );
+}
+
+export default PlayerCard;

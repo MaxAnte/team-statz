@@ -1,25 +1,28 @@
-import logo from "./logo.svg";
+import React from "react";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Games from "./components/Games/Games";
+import Team from "./components/Team/Team";
 import "./App.css";
 
-function App() {
+function App({store}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. Here you can see
-          first commited change. Another branch
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <main>
+          <Switch>
+            <Route path="/" exact component={Games} />
+            <Route path="/team" component={() => <Team store={store} />} />
+            {/* <Route path="/schedule" component={() => <Schedule store={store} />} />
+            <Route path="/games" component={() => <Games store={store} />} />
+            <Route path="/stats" component={() => <Stats store={store} />} /> */}
+          </Switch>
+        </main>
+        <Footer>© Max Zahorsky 2021</Footer>
+      </div>
+    </Router>
   );
 }
 

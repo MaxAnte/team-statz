@@ -1,0 +1,163 @@
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 25px;
+  margin-bottom: 35px;
+}
+.logo {
+  line-height: 1;
+  text-decoration: none;
+  color: #000;
+  position: relative;
+  display: block;
+  margin-right: auto;
+  padding-right: 22px;
+}
+.logo::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 0px;
+  height: 0px;
+  border-left: 0px solid transparent;
+  border-top: 0px solid transparent;
+  transition: all 0.3s ease;
+}
+.logo::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  width: 0px;
+  height: 0px;
+  border-right: 0px solid transparent;
+  border-bottom: 0px solid transparent;
+  transition: all 0.3s ease;
+}
+.logo:hover::before {
+  border-left: 2px solid #000;
+  border-top: 2px solid #000;
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+.logo:hover::after {
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+.logo h1 {
+  position: relative;
+}
+.logo span {
+  position: absolute;
+  right: -25px;
+  top: 60%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: #fff;
+  background: #31ad31;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+nav ul li {
+  font-size: 20px;
+  padding: 0px 15px;
+  position: relative;
+}
+nav ul li a {
+  color: #000;
+  text-decoration: none;
+}
+nav ul li a::after {
+  content: "";
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+nav ul li a.is-active::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -5px;
+  height: 2px;
+  background-color: #000;
+  width: 65%;
+  opacity: 1;
+  transition: all 0.3s ease;
+  transition-delay: 0.5s;
+}
+nav ul li a span {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transform: translateY(15px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+nav ul li a:hover span {
+  transform: translateY(25px);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+nav ul li a::before {
+  content: "";
+  font-size: 36px;
+  font-family: "icomoon";
+}
+nav ul li a[href="/team"]::before {
+  content: "\e906";
+  /* content: "\e907"; */
+}
+nav ul li a[href="/schedule"]::before {
+  content: "\e901";
+  /* content: "\e902"; */
+}
+nav ul li a[href="/stats"]::before {
+  content: "\e903";
+  /* content: "\e904"; */
+  /* content: "\e905"; */
+}
+.auth {
+  position: relative;
+  padding: 0px 15px;
+  cursor: pointer;
+}
+.auth::before {
+  content: "\e900";
+  font-size: 36px;
+  font-family: "icomoon";
+  color: #000;
+}
+.auth span {
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transform: translateY(5px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.auth:hover span {
+  transform: translateY(18px);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
