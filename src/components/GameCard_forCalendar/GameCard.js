@@ -1,9 +1,8 @@
 import React from "react";
-import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 
 import "./GameCard.scss";
 
-function GameCard({ game, players }) {
+function GameCard({game}) {
   return (
     <div className="game__card">
       <h4 className="game__name">vs. {game.enemy}</h4>
@@ -16,9 +15,6 @@ function GameCard({ game, players }) {
         :<span>{game.enemyScore}</span>
       </div>
       <div className="game__date">{game.date}</div>
-      {game.playersStats.map(el => {
-        return <GamePlayerStat player={el} allPlayers={players} />;
-      })}
     </div>
   );
 }

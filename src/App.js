@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Games from "./components/Games/Games";
@@ -10,7 +10,7 @@ import Stats from "./components/Stats/Stats";
 
 import "./App.css";
 
-function App({store}) {
+function App({ store }) {
   // console.log(store);
 
   return (
@@ -19,11 +19,7 @@ function App({store}) {
         <Header />
         <main>
           <Switch>
-            <Route
-              path="/"
-              exact
-              component={() => <Games games={store.games} />}
-            />
+            <Route path="/" exact component={() => <Games store={store} />} />
             <Route path="/team" component={() => <Team store={store} />} />
             <Route path="/player/:id" component={PlayerCard} />
             <Route path="/schedule" component={Schedule} />

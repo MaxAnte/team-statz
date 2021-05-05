@@ -1,0 +1,25 @@
+.table {
+  &__wrap {
+    background: #fff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 0 auto 25px;
+  }
+  &__row,
+  &__head {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 0.4fr 0.4fr 0.4fr;
+    text-align: center;
+  }
+  &__head {
+    padding: 10px 15px;
+    border-bottom: 1px rgba(0, 0, 0, 0.05) solid;
+    font-size: 12px;
+  }
+  &__row {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px rgba(0, 0, 0, 0.05) solid;
+  }
+}
