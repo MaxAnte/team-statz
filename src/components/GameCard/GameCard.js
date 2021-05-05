@@ -17,7 +17,14 @@ function GameCard({ game, players }) {
       </div>
       <div className="game__date">{game.date}</div>
       {game.playersStats.map(el => {
-        return <GamePlayerStat player={el} allPlayers={players} />;
+        return (
+          <GamePlayerStat
+            player={el}
+            allPlayers={players}
+            gameID={game.id}
+            key={el.id}
+          />
+        );
       })}
     </div>
   );

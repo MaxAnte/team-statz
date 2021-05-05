@@ -21,7 +21,7 @@ function Table({ teams }) {
       </div>
       {teamsWinRate.map((el, i) => {
         return (
-          <div className="table__row">
+          <div className="table__row" key={`tableRow${i}`}>
             <span className="table__row--pos">{++i}</span>
             <p className="table__row--name">{el.name}</p>
             <span className="table__row--wins">{el.wins}</span>

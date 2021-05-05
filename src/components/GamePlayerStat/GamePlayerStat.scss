@@ -27,8 +27,8 @@
   }
   &__right {
     padding-left: 35px;
-    max-width: calc(100% - 400px);
     display: flex;
+    align-items: center;
   }
   &__stats {
     display: flex;
@@ -45,7 +45,7 @@
         position: absolute;
         bottom: 0;
         left: 15px;
-        width: 100%;
+        width: calc(100% - 45px);
         height: 1px;
         background: rgba(0, 0, 0, 0.15);
       }
@@ -109,5 +109,6 @@
   }
   &__canvas {
     width: 300px;
+    padding-left: 15px;
   }
 }

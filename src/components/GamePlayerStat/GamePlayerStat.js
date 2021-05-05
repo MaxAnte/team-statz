@@ -3,8 +3,8 @@ import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import "./GamePlayerStat.scss";
 
-function GamePlayerStat({ player, allPlayers }) {
-  const curPlayerArr = allPlayers.filter(item => item.id == player.id);
+function GamePlayerStat({ player, allPlayers, gameID }) {
+  const curPlayerArr = allPlayers.filter(item => item.id === player.id);
   const curPlayer = curPlayerArr[0];
 
   const getPercentage = (atempts, made) => {
@@ -155,7 +155,11 @@ function GamePlayerStat({ player, allPlayers }) {
           </div>
         </div>
         <div className="gps__canvas">
-          <GamePlayerCanvas coordinates={player.coordinates} />
+          <GamePlayerCanvas
+            coordinates={player.coordinates}
+            mode="view"
+            canvID={`canv_game-${gameID}_player-${player.id}`}
+          />
         </div>
       </div>
     </div>

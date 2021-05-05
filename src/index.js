@@ -31,9 +31,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200 },
-            { x: 250, y: 150 },
-            { x: 350, y: 220 }
+            { x: 100, y: 200, miss: true },
+            { x: 250, y: 150, miss: true },
+            { x: 350, y: 220, miss: false }
           ]
         },
         {
@@ -54,9 +54,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220 },
-            { x: 550, y: 130 },
-            { x: 535, y: 320 }
+            { x: 500, y: 220, miss: true },
+            { x: 550, y: 130, miss: false },
+            { x: 535, y: 320, miss: false }
           ]
         }
       ]
@@ -86,9 +86,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200 },
-            { x: 250, y: 150 },
-            { x: 350, y: 220 }
+            { x: 100, y: 200, miss: true },
+            { x: 250, y: 150, miss: false },
+            { x: 350, y: 220, miss: false }
           ]
         },
         {
@@ -109,9 +109,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220 },
-            { x: 550, y: 130 },
-            { x: 535, y: 320 }
+            { x: 500, y: 220, miss: false },
+            { x: 550, y: 130, miss: true },
+            { x: 535, y: 320, miss: true }
           ]
         }
       ]
@@ -141,9 +141,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200 },
-            { x: 250, y: 150 },
-            { x: 350, y: 220 }
+            { x: 100, y: 200, miss: true },
+            { x: 250, y: 150, miss: false },
+            { x: 350, y: 220, miss: true }
           ]
         },
         {
@@ -164,9 +164,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220 },
-            { x: 550, y: 130 },
-            { x: 535, y: 320 }
+            { x: 500, y: 220, miss: false },
+            { x: 550, y: 130, miss: true },
+            { x: 535, y: 320, miss: false }
           ]
         }
       ]
@@ -196,9 +196,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200 },
-            { x: 250, y: 150 },
-            { x: 350, y: 220 }
+            { x: 100, y: 200, miss: true },
+            { x: 250, y: 150, miss: false },
+            { x: 350, y: 220, miss: false }
           ]
         },
         {
@@ -219,9 +219,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220 },
-            { x: 550, y: 130 },
-            { x: 535, y: 320 }
+            { x: 500, y: 220, miss: false },
+            { x: 550, y: 130, miss: true },
+            { x: 535, y: 320, miss: true }
           ]
         }
       ]
