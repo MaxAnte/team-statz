@@ -7,8 +7,8 @@ import "./Games.css";
 function Games({ store }) {
   const { players, games, teams } = store;
   return (
-    <main>
-      <h2 className="title">Standings</h2>
+    <div className="games page-wrapper">
+      <h2 className="title">Season standings</h2>
       <Table teams={teams} />
       <h2 className="title">Games</h2>
       <div className="games__wrapper">
@@ -20,7 +20,7 @@ function Games({ store }) {
           );
         })}
       </div>
-    </main>
+    </div>
   );
 }
 

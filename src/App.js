@@ -20,9 +20,17 @@ function App({ store }) {
         <main>
           <Switch>
             <Route path="/" exact component={() => <Games store={store} />} />
-            <Route path="/team" component={() => <Team store={store} />} />
+            <Route
+              path="/team"
+              component={() => (
+                <Team players={store.players} games={store.games} />
+              )}
+            />
             <Route path="/player/:id" component={PlayerCard} />
-            <Route path="/schedule" component={Schedule} />
+            <Route
+              path="/schedule"
+              component={() => <Schedule games={store.games} />}
+            />
             <Route path="/stats" component={Stats} />
           </Switch>
         </main>

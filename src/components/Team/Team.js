@@ -1,20 +1,17 @@
-import React, {useState} from "react";
-import {NavLink} from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
 
 import "./Team.scss";
 
-function Team({store}) {
-  const [state, setState] = useState(store);
-  // console.log(state);
-
-  let bestPts = {pts: 0, id: 0};
-  let bestReb = {reb: 0, id: 0};
-  let bestAst = {ast: 0, id: 0};
-  let bestBlk = {blk: 0, id: 0};
-  let bestStl = {stl: 0, id: 0};
-  state.players.forEach(el => {
+function Team({ players, games }) {
+  let bestPts = { pts: 0, id: 0 };
+  let bestReb = { reb: 0, id: 0 };
+  let bestAst = { ast: 0, id: 0 };
+  let bestBlk = { blk: 0, id: 0 };
+  let bestStl = { stl: 0, id: 0 };
+  players.forEach(el => {
     if (el.pts > bestPts.pts) {
       bestPts.pts = el.pts;
       bestPts.id = el.id;
@@ -36,7 +33,7 @@ function Team({store}) {
       bestStl.id = el.id;
     }
   });
-  state.players.map(el => {
+  players.map(el => {
     if (el.id === bestPts.id) {
       el.bestInPts = true;
     }
@@ -56,13 +53,13 @@ function Team({store}) {
   });
 
   return (
-    <div className="team">
+    <div className="team page-wrapper">
       <h2 className="title">Basketball City Team</h2>
       <div className="team__info">
-        <TeamInfo data={state} />
+        <TeamInfo players={players} games={games} />
       </div>
       <div className="team__players">
-        {state.players.map((player, id) => {
+        {players.map((player, id) => {
           return (
             <div className="player__item" key={id}>
               <NavLink to={`/player/${id}`} className="player__link">

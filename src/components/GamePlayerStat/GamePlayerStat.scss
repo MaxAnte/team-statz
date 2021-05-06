@@ -59,11 +59,12 @@
         grid-template-columns: repeat(4, 1fr);
       }
       &__item {
-        position: relative;
         margin-bottom: 30px;
         > p {
+          display: inline;
+          position: relative;
           font-size: 18px;
-          span {
+          > span {
             margin-left: 8px;
             font-size: 22px;
           }
@@ -72,7 +73,7 @@
           position: absolute;
           bottom: 0;
           left: 0;
-          right: 0;
+          min-width: 100%;
           opacity: 0;
           transform: translateY(25px);
           display: flex;
@@ -86,16 +87,17 @@
           span {
             margin-bottom: 3px;
             text-align: center;
+            white-space: nowrap;
             &:last-child {
               margin-bottom: 0px;
             }
           }
-          &:hover {
-            opacity: 1;
-            transform: translateY(10px);
-            transition: all 0.5s ease;
-            cursor: pointer;
-          }
+        }
+        &:hover &--info {
+          opacity: 1;
+          transform: translateY(10px);
+          transition: all 0.5s ease;
+          cursor: pointer;
         }
       }
     }

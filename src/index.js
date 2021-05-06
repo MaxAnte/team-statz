@@ -11,7 +11,8 @@ const store = {
       enemy: "Veterans",
       ourScore: 100,
       enemyScore: 97,
-      date: "01.01.2021",
+      date: "2021-05-10",
+      time: "17:00",
       playersStats: [
         {
           id: 0,
@@ -66,7 +67,8 @@ const store = {
       enemy: "VTK",
       ourScore: 120,
       enemyScore: 70,
-      date: "02.02.2021",
+      date: "2021-05-15",
+      time: "20:00",
       playersStats: [
         {
           id: 0,
@@ -121,7 +123,8 @@ const store = {
       enemy: "Warriors",
       ourScore: 92,
       enemyScore: 115,
-      date: "03.03.2021",
+      date: "2021-05-26",
+      time: "21:00",
       playersStats: [
         {
           id: 0,
@@ -176,7 +179,8 @@ const store = {
       enemy: "Termits",
       ourScore: 99,
       enemyScore: 108,
-      date: "04.04.2021",
+      date: "2021-06-05",
+      time: "18:30",
       playersStats: [
         {
           id: 0,
@@ -283,12 +287,7 @@ const store = {
       three_pa: 20,
       three_pm: 10,
       tov: 2,
-      fouls: 3,
-      bestInPts: false,
-      bestInReb: false,
-      bestInAst: false,
-      bestInBlk: false,
-      bestInStl: false
+      fouls: 3
     },
     {
       id: 2,
@@ -306,7 +305,7 @@ const store = {
       reb: 6.5,
       ast: 8.2,
       blk: 0.2,
-      stl: 1.6,
+      stl: 2.2,
       fta: 10,
       ftm: 8,
       two_pa: 50,
@@ -314,12 +313,7 @@ const store = {
       three_pa: 20,
       three_pm: 10,
       tov: 2,
-      fouls: 3,
-      bestInPts: false,
-      bestInReb: false,
-      bestInAst: false,
-      bestInBlk: false,
-      bestInStl: false
+      fouls: 3
     },
     {
       id: 3,
@@ -345,12 +339,7 @@ const store = {
       three_pa: 20,
       three_pm: 10,
       tov: 2,
-      fouls: 3,
-      bestInPts: false,
-      bestInReb: false,
-      bestInAst: false,
-      bestInBlk: false,
-      bestInStl: false
+      fouls: 3
     },
     {
       id: 4,
@@ -376,12 +365,7 @@ const store = {
       three_pa: 20,
       three_pm: 10,
       tov: 2,
-      fouls: 3,
-      bestInPts: false,
-      bestInReb: false,
-      bestInAst: false,
-      bestInBlk: false,
-      bestInStl: false
+      fouls: 3
     }
     // {
     //   id: 100,
@@ -391,9 +375,6 @@ const store = {
     //   pts: 55.6,
     //   reb: 25.5,
     //   ast: 20.2,
-    //   bestInPts: false,
-    //   bestInReb: false,
-    //   bestInAst: false
     // }
   ],
   teams: [

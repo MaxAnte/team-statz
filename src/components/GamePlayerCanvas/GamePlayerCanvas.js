@@ -35,7 +35,7 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
 
       let posx = pos.x;
       let posy = pos.y;
-      drawType == true
+      drawType === true
         ? (ctx.fillStyle = "#008000")
         : (ctx.fillStyle = "#ff0000");
       ctx.fillRect(posx, posy, 15, 15);

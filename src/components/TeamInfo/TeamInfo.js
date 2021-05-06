@@ -4,8 +4,7 @@ import logo from "../../assets/images/logo-bc.png";
 
 import "./TeamInfo.scss";
 
-function TeamInfo({data}) {
-  const {games, players} = data;
+function TeamInfo({ players, games }) {
   const arrTotals = Array(4).fill(0);
   const properties = ["REB", "AST", "BLK", "STL"];
   let offensiveRating = 0;
@@ -37,7 +36,7 @@ function TeamInfo({data}) {
         <p>DRtg: {defensiveRating}</p>
         {arrTotals.map((el, i) => {
           return (
-            <p>
+            <p key={i}>
               <span>{properties[i]}: </span>
               {(el / games.length).toFixed(1)}
             </p>
