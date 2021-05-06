@@ -1,5 +1,5 @@
 import React from "react";
-// import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
+import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import "./GamePlayerStat.scss";
 
@@ -49,27 +49,27 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
             <div className="gps__stats--row__title">Points: {player.pts}</div>
             <div className="gps__stats--row__stats">
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   2P%:
                   <span>{getPercentage(player.two_pa, player.two_pm)}</span>
                   <div className="gps__stats--row__item--info">
                     <span>Atempted: {player.two_pa}</span>
                     <span>Made: {player.two_pm}</span>
                   </div>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   3P%:
                   <span>{getPercentage(player.three_pa, player.three_pm)}</span>
                   <div className="gps__stats--row__item--info">
                     <span>Atempted: {player.three_pa}</span>
                     <span>Made: {player.three_pm}</span>
                   </div>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   FG%:
                   <span>
                     {getPercentage(
@@ -81,17 +81,17 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
                     <span>Atempted: {player.two_pa + player.three_pa}</span>
                     <span>Made: {player.two_pm + player.three_pm}</span>
                   </div>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   FT%:
                   <span>{getPercentage(player.fta, player.ftm)}</span>
                   <div className="gps__stats--row__item--info">
                     <span>Atempted: {player.fta}</span>
                     <span>Made: {player.ftm}</span>
                   </div>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -100,32 +100,32 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
             <div className="gps__stats--row__title">Statistic:</div>
             <div className="gps__stats--row__stats">
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   AST:
                   <span>{player.ast}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   REB:
                   <span>{player.oreb + player.dreb}</span>
                   <div className="gps__stats--row__item--info">
                     <span>Offensive: {player.oreb}</span>
                     <span>Defensive: {player.dreb}</span>
                   </div>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   STL:
                   <span>{player.stl}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   BLK:
                   <span>{player.blk}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
                 <p>
@@ -134,32 +134,32 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
                 </p>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   Fouls:
                   <span>{player.fouls}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   Minutes:
                   <span>{player.minutes}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   EFF:
                   <span>{getEfficiencyRate(player)}</span>
-                </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="gps__canvas">
-          {/* <GamePlayerCanvas
+          <GamePlayerCanvas
             coordinates={player.coordinates}
             mode="view"
             canvID={`canv_game-${gameID}_player-${player.id}`}
-          /> */}
+          />
         </div>
       </div>
     </div>
