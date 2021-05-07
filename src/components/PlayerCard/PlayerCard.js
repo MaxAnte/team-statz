@@ -2,13 +2,14 @@ import React from "react";
 
 import "./PlayerCard.scss";
 
+import blankPhoto from "../../assets/images/blank-silhouette.png";
 import basket from "../../assets/images/basket.svg";
 import glassCleaner from "../../assets/images/glass_cleaner.png";
 import assist from "../../assets/images/assist.png";
 import thief from "../../assets/images/thief.svg";
 import block from "../../assets/images/block.svg";
 
-function PlayerCard({player}) {
+function PlayerCard({ player }) {
   return (
     <div className="player__card">
       <div className="player__badges">
@@ -55,17 +56,20 @@ function PlayerCard({player}) {
       </div>
 
       <div className="player__img">
-        <img src={player.image_thumb} alt="Player" />
+        <img
+          src={player.image_thumb === "" ? blankPhoto : player.image_thumb}
+          alt="Player"
+        />
       </div>
       <p className="player__name">
         {player.name}, {player.position}
       </p>
       <div className="player__stats">
-        <div className="player__stats--item">PTS: {player.pts}</div>
-        <div className="player__stats--item">REB: {player.reb}</div>
-        <div className="player__stats--item">AST: {player.ast}</div>
-        <div className="player__stats--item">BLK: {player.blk}</div>
-        <div className="player__stats--item">STL: {player.stl}</div>
+        <div className="player__stats--item">PPG: {player.pts}</div>
+        <div className="player__stats--item">RPG: {player.reb}</div>
+        <div className="player__stats--item">APG: {player.ast}</div>
+        <div className="player__stats--item">BPG: {player.blk}</div>
+        <div className="player__stats--item">SPG: {player.stl}</div>
       </div>
     </div>
   );

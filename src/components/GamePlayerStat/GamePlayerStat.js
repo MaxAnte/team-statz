@@ -2,6 +2,7 @@ import React from "react";
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import "./GamePlayerStat.scss";
+import blankPhoto from "../../assets/images/blank-silhouette.png";
 
 function GamePlayerStat({ player, allPlayers, gameID }) {
   const curPlayerArr = allPlayers.filter(item => item.id === player.id);
@@ -38,7 +39,12 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
   return (
     <div className="game__player_stat">
       <div className="gps__left">
-        <img src={curPlayer.image_thumb} alt={curPlayer.name} />
+        <img
+          src={
+            curPlayer.image_thumb === "" ? blankPhoto : curPlayer.image_thumb
+          }
+          alt={curPlayer.name}
+        />
         <h5>
           {curPlayer.name}, {curPlayer.position}
         </h5>

@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-import blankPhoto from "./assets/images/blank-silhouette.png";
+import lebron from "./assets/images/players/lebron.png";
+import stephen from "./assets/images/players/stephen.png";
+import hakeem from "./assets/images/players/hakeem.png";
+import nikola from "./assets/images/players/nikola.png";
+import john from "./assets/images/players/john.png";
 
 const store = {
   games: [
@@ -32,9 +36,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200, miss: true },
-            { x: 250, y: 150, miss: true },
-            { x: 350, y: 220, miss: false }
+            { x: 200, y: 200, miss: true },
+            { x: 270, y: 70, miss: true },
+            { x: 470, y: 100, miss: false }
           ]
         },
         {
@@ -55,9 +59,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220, miss: true },
-            { x: 550, y: 130, miss: false },
-            { x: 535, y: 320, miss: false }
+            { x: 200, y: 220, miss: true },
+            { x: 250, y: 130, miss: false },
+            { x: 235, y: 320, miss: false }
           ]
         }
       ]
@@ -71,7 +75,7 @@ const store = {
       time: "20:00",
       playersStats: [
         {
-          id: 0,
+          id: 2,
           pts: 28,
           oreb: 2,
           dreb: 6,
@@ -88,9 +92,9 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200, miss: true },
-            { x: 250, y: 150, miss: false },
-            { x: 350, y: 220, miss: false }
+            { x: 200, y: 200, miss: true },
+            { x: 270, y: 70, miss: true },
+            { x: 470, y: 100, miss: false }
           ]
         },
         {
@@ -111,9 +115,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220, miss: false },
-            { x: 550, y: 130, miss: true },
-            { x: 535, y: 320, miss: true }
+            { x: 200, y: 220, miss: true },
+            { x: 250, y: 130, miss: false },
+            { x: 235, y: 320, miss: false }
           ]
         }
       ]
@@ -127,7 +131,7 @@ const store = {
       time: "21:00",
       playersStats: [
         {
-          id: 0,
+          id: 4,
           pts: 28,
           oreb: 2,
           dreb: 6,
@@ -144,13 +148,13 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200, miss: true },
-            { x: 250, y: 150, miss: false },
-            { x: 350, y: 220, miss: true }
+            { x: 200, y: 200, miss: true },
+            { x: 270, y: 70, miss: true },
+            { x: 470, y: 100, miss: false }
           ]
         },
         {
-          id: 1,
+          id: 3,
           pts: 15,
           oreb: 4,
           dreb: 2,
@@ -167,9 +171,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220, miss: false },
-            { x: 550, y: 130, miss: true },
-            { x: 535, y: 320, miss: false }
+            { x: 200, y: 220, miss: true },
+            { x: 250, y: 130, miss: false },
+            { x: 235, y: 320, miss: false }
           ]
         }
       ]
@@ -183,7 +187,7 @@ const store = {
       time: "18:30",
       playersStats: [
         {
-          id: 0,
+          id: 4,
           pts: 28,
           oreb: 2,
           dreb: 6,
@@ -200,13 +204,13 @@ const store = {
           fouls: 2,
           minutes: 20,
           coordinates: [
-            { x: 100, y: 200, miss: true },
-            { x: 250, y: 150, miss: false },
-            { x: 350, y: 220, miss: false }
+            { x: 200, y: 200, miss: true },
+            { x: 270, y: 70, miss: true },
+            { x: 470, y: 100, miss: false }
           ]
         },
         {
-          id: 1,
+          id: 0,
           pts: 15,
           oreb: 4,
           dreb: 2,
@@ -223,9 +227,9 @@ const store = {
           fouls: 4,
           minutes: 30,
           coordinates: [
-            { x: 500, y: 220, miss: false },
-            { x: 550, y: 130, miss: true },
-            { x: 535, y: 320, miss: true }
+            { x: 200, y: 220, miss: true },
+            { x: 250, y: 130, miss: false },
+            { x: 235, y: 320, miss: false }
           ]
         }
       ]
@@ -236,7 +240,7 @@ const store = {
       id: 0,
       name: "Lebron James",
       position: "SF",
-      image_thumb: blankPhoto,
+      image_thumb: lebron,
       age: 35,
       number: 23,
       gp: 20,
@@ -267,7 +271,7 @@ const store = {
       id: 1,
       name: "Nikola Jokic",
       position: "C",
-      image_thumb: blankPhoto,
+      image_thumb: nikola,
       age: 24,
       number: 15,
       gp: 20,
@@ -293,7 +297,7 @@ const store = {
       id: 2,
       name: "Stephen Curry",
       position: "PG",
-      image_thumb: blankPhoto,
+      image_thumb: stephen,
       age: 33,
       number: 33,
       gp: 20,
@@ -319,7 +323,7 @@ const store = {
       id: 3,
       name: "Hakeem Olajuwon",
       position: "C",
-      image_thumb: blankPhoto,
+      image_thumb: hakeem,
       age: 27,
       number: 15,
       gp: 20,
@@ -345,7 +349,7 @@ const store = {
       id: 4,
       name: "John Stockton",
       position: "PG",
-      image_thumb: blankPhoto,
+      image_thumb: john,
       age: 28,
       number: 12,
       gp: 20,
@@ -371,7 +375,7 @@ const store = {
     //   id: 100,
     //   name: "Wilt Chamberlain",
     //   position: "C",
-    //   image_thumb: blankPhoto,
+    //   image_thumb: '',
     //   pts: 55.6,
     //   reb: 25.5,
     //   ast: 20.2,

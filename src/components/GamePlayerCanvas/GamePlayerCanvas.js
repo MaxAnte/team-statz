@@ -22,7 +22,7 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
 
     if (mode === "view") {
       coordinates.forEach(el => {
-        el.miss ? (ctx.fillStyle = "#ff0000") : (ctx.fillStyle = "#008000");
+        el.miss ? (ctx.fillStyle = "#ff0000") : (ctx.fillStyle = "#07ef39");
         ctx.fillRect(el.x, el.y, 15, 15);
       });
     }
