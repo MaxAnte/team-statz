@@ -109,8 +109,41 @@
       margin-bottom: 25px;
     }
   }
+  &__badges {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    &--item {
+      color: #d367d3;
+      border: 2px #d367d3 solid;
+      border-radius: 5px;
+      padding: 2px 10px;
+      background: rgba(211, 103, 211, 0.25);
+      font-size: 12px;
+      font-weight: 500;
+      animation: 1s infinite statBadge;
+      transition: all 1s ease;
+      &.hidden {
+        display: none;
+      }
+    }
+  }
   &__canvas {
     width: 300px;
     padding-left: 15px;
+  }
+}
+
+@keyframes statBadge {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
   }
 }

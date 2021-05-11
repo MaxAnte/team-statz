@@ -36,6 +36,30 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
     return `${perc.toFixed(1)}%`;
   };
 
+  const getBadges = player => {
+    let count = 0;
+    let dreb = 0;
+    const countableStats = ["pts", "dreb", "oreb", "ast", "blk", "stl"];
+    const statsBadges = [
+      "Double-Double",
+      "Triple-Double",
+      "Quadriple-Double",
+      "Quntiple-Double"
+    ];
+    countableStats.map(key => {
+      if (player[key] >= 10) count++;
+      if (key === "dreb") dreb = player[key];
+      if (key === "oreb") dreb += player[key];
+    });
+    if (dreb >= 10) count++;
+    return (
+      <div className={`gps__badges--item ${count <= 1 ? "hidden" : ""}`}>
+        {statsBadges[count - 2]}
+      </div>
+    );
+  };
+  // console.log(player);
+
   return (
     <div className="game__player_stat">
       <div className="gps__left">
@@ -158,6 +182,7 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
                 </div>
               </div>
             </div>
+            <div className="gps__badges">{getBadges(player)}</div>
           </div>
         </div>
         <div className="gps__canvas">
