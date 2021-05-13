@@ -4,6 +4,7 @@ h2 {
 .games__wrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .games__item {
   text-align: center;

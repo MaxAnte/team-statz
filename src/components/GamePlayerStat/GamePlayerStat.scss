@@ -29,6 +29,7 @@
     padding-left: 35px;
     display: flex;
     align-items: center;
+    width: calc(100% - 300px);
   }
   &__stats {
     display: flex;
@@ -133,6 +134,7 @@
   &__canvas {
     width: 300px;
     padding-left: 15px;
+    margin-left: auto;
   }
 }
 

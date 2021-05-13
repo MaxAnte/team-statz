@@ -4,8 +4,8 @@ import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 import "./GamePlayerStat.scss";
 import blankPhoto from "../../assets/images/blank-silhouette.png";
 
-function GamePlayerStat({ player, allPlayers, gameID }) {
-  const curPlayerArr = allPlayers.filter(item => item.id === player.id);
+function GamePlayerStat({player, allPlayers, gameID}) {
+  const curPlayerArr = allPlayers.filter((item) => item.id === player.id);
   const curPlayer = curPlayerArr[0];
 
   const getPercentage = (atempts, made) => {
@@ -13,7 +13,7 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
     return `${perc.toFixed(1)}%`;
   };
 
-  const getEfficiencyRate = player => {
+  const getEfficiencyRate = (player) => {
     const {
       pts,
       oreb,
@@ -27,7 +27,7 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
       three_pm,
       fta,
       ftm,
-      tov
+      tov,
     } = player;
     const fga = two_pa + three_pa;
     const fgm = two_pm + three_pm;
@@ -36,7 +36,7 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
     return `${perc.toFixed(1)}%`;
   };
 
-  const getBadges = player => {
+  const getBadges = (player) => {
     let count = 0;
     let dreb = 0;
     const countableStats = ["pts", "dreb", "oreb", "ast", "blk", "stl"];
@@ -44,9 +44,9 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
       "Double-Double",
       "Triple-Double",
       "Quadriple-Double",
-      "Quntiple-Double"
+      "Quntiple-Double",
     ];
-    countableStats.map(key => {
+    countableStats.map((key) => {
       if (player[key] >= 10) count++;
       if (key === "dreb") dreb = player[key];
       if (key === "oreb") dreb += player[key];
@@ -158,10 +158,10 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
                 </div>
               </div>
               <div className="gps__stats--row__item">
-                <p>
+                <div>
                   TOV:
                   <span>{player.tov}</span>
-                </p>
+                </div>
               </div>
               <div className="gps__stats--row__item">
                 <div>
