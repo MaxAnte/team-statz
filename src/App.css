@@ -1,14 +1,16 @@
 @import "./assets/fonts/fonts.css";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: "Montserrat";
 }
 
-.App {
+.app {
   background: #f9f9f9;
 
   /* temp */
@@ -16,14 +18,17 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
 .title {
   font-size: 32px;
   margin-bottom: 35px;
 }
+
 main {
   max-width: 1920px;
   padding: 0px 25px;
 }
+
 .page-wrapper {
   display: flex;
   flex-direction: column;

@@ -8,14 +8,24 @@ import PlayerCard from "./components/PlayerCard/PlayerCard";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
 
-import "./App.css";
+import './App.css'
+import styles from "./background.module.css";
 
 function App({ store }) {
   // console.log(store);
+  
+  const checkDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const christmas = new Date(`${year} December 10`);
+    const endChristmas = new Date(`${year + 1} January 10`)
+    if(now >= christmas && now <= endChristmas) return styles.christmas;
+    return styles.baseBg
+  }
 
   return (
     <Router>
-      <div className="App">
+      <div className={`app ${checkDate()}`}>
         <Header />
         <main>
           <Switch>

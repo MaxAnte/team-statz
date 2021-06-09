@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, {useRef, useState, useEffect} from "react";
 
 import "./GamePlayerCanvas.scss";
 
-function GamePlayerCanvas({ coordinates, mode, canvID }) {
+function GamePlayerCanvas({coordinates, mode, canvID}) {
+  const [canvasState, setCanvasState] = useState([]);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -21,9 +22,20 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
     // let drawType = true;
 
     if (mode === "view") {
-      coordinates.forEach(el => {
-        el.miss ? (ctx.fillStyle = "#ff0000") : (ctx.fillStyle = "#07ef39");
-        ctx.fillRect(el.x, el.y, 15, 15);
+      coordinates.forEach((el) => {        
+        ctx.beginPath();
+        if (el.miss) {
+          ctx.moveTo(el.x - 10, el.y - 10);
+          ctx.lineTo(el.x + 10, el.y + 10);
+          ctx.moveTo(el.x + 10, el.y - 10);
+          ctx.lineTo(el.x - 10, el.y + 10);
+        } else {
+          ctx.arc(el.x, el.y, 10, 0, 2 * Math.PI);
+        }
+        ctx.lineWidth = 5;
+        ctx.closePath();
+        el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");
+        ctx.stroke();
       });
     }
   }, []);
