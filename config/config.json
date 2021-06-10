@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecret": "The team is secret",
+  "mongoUri": "https://status.cloud.mongodb.com/incidents/1ys8hj6kfsww"
+}
