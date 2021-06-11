@@ -65,13 +65,13 @@ function AuthModal() {
           >
             Login
           </button>
-          <button
+          {/* <button
             className="btn-submit"
             onClick={registerHandler}
             disabled={loading}
           >
             Register
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
