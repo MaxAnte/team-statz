@@ -1,9 +1,13 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+import AuthModal from "../AuthModal/AuthModal";
 
 import "./Header.scss";
 
 function Header() {
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal);
   return (
     <header>
       <NavLink className="logo" exact={true} to="/">
@@ -30,9 +34,13 @@ function Header() {
           </li>
         </ul>
       </nav>
-      <span className="auth">
+      <span className="auth" onClick={() => toggleModal()}>
         <span>Moder</span>
       </span>
+      {modal ? <AuthModal /> : null}
+      {modal ? (
+        <div className="modal-bg" onClick={() => toggleModal()}></div>
+      ) : null}
     </header>
   );
 }
