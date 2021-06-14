@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 
 import "./authModal.scss";
 
 function AuthModal() {
+  const auth = useContext(AuthContext);
+  console.log(auth.token);
   const { loading, error, request } = useHttp();
   const [form, setForm] = useState({ login: "", password: "" });
 
@@ -22,7 +25,8 @@ function AuthModal() {
   const loginHandler = async () => {
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
-      console.log("Data:", data);
+      auth.login(data.token, data.userId);
+      console.log("Data:", data, auth.login);
     } catch (e) {}
   };
 
