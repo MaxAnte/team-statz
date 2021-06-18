@@ -1,36 +1,42 @@
-import React, {useRef, useState, useEffect} from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import "./GamePlayerCanvas.scss";
 
-function GamePlayerCanvas({coordinates, mode, canvID}) {
-  const [canvasState, setCanvasState] = useState([]);
+function GamePlayerCanvas({ coordinates, mode, canvID }) {
+  const [newCoords, setNewCoords] = useState([]);
+  const [drawType, setDrawType] = useState(false);
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const WIDTH = 290;
-    const HEIGHT = 310;
-    const DPI_WIDTH = WIDTH * 2;
-    const DPI_HEIGHT = HEIGHT * 2;
-    // const newCoords = [];
+  const WIDTH = 290;
+  const HEIGHT = 310;
+  const DPI_WIDTH = WIDTH * 2;
+  const DPI_HEIGHT = HEIGHT * 2;
 
+  const drawMiss = (ctx, element) => {
+    ctx.moveTo(element.x - 10, element.y - 10);
+    ctx.lineTo(element.x + 10, element.y + 10);
+    ctx.moveTo(element.x + 10, element.y - 10);
+    ctx.lineTo(element.x - 10, element.y + 10);
+  };
+  const drawMade = (ctx, element) =>
+    ctx.arc(element.x, element.y, 10, 0, 2 * Math.PI);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     var ctx = canvas.getContext("2d");
+
     canvas.style.width = WIDTH + "px";
     canvas.style.height = HEIGHT + "px";
     canvas.width = DPI_WIDTH;
     canvas.height = DPI_HEIGHT;
-    // let drawType = true;
 
     if (mode === "view") {
-      coordinates.forEach((el) => {        
+      coordinates.forEach((el) => {
         ctx.beginPath();
         if (el.miss) {
-          ctx.moveTo(el.x - 10, el.y - 10);
-          ctx.lineTo(el.x + 10, el.y + 10);
-          ctx.moveTo(el.x + 10, el.y - 10);
-          ctx.lineTo(el.x - 10, el.y + 10);
+          drawMiss(ctx, el);
         } else {
-          ctx.arc(el.x, el.y, 10, 0, 2 * Math.PI);
+          drawMade(ctx, el);
         }
         ctx.lineWidth = 5;
         ctx.closePath();
@@ -41,7 +47,7 @@ function GamePlayerCanvas({coordinates, mode, canvID}) {
   }, []);
 
   // const draw = e => {
-  //   if (!mode === "view") {
+  //   if (mode !== "view") {
   //     console.log(e);
   //     if (!e.target.matches(canvID)) return;
   //     var pos = getMousePos(canvas, e);
@@ -65,19 +71,6 @@ function GamePlayerCanvas({coordinates, mode, canvID}) {
   //   };
   // };
 
-  // const changeDrawMode = e => {
-  //   if (e.target.matches(".hit")) {
-  //     drawType = true;
-  //     e.target.classList.add("is-active");
-  //     document.getElementsByClassName("miss")[0].classList.remove("is-active");
-  //   }
-  //   if (e.target.matches(".miss")) {
-  //     drawType = false;
-  //     e.target.classList.add("is-active");
-  //     document.getElementsByClassName("hit")[0].classList.remove("is-active");
-  //   }
-  // };
-
   return (
     <div className="gamePlayerCanvas__wrap">
       <canvas
@@ -86,28 +79,22 @@ function GamePlayerCanvas({coordinates, mode, canvID}) {
         id={canvID}
         // onClick={e => draw(e)}
       ></canvas>
-      {mode === "view" ? (
-        ""
-      ) : (
+      {mode !== "view" ? (
         <div class="buttons">
           <div
-            class="hit"
-            // onClick={e => {
-            //   changeDrawMode(e);
-            // }}
+            className={`hit ${drawType ? "is-active" : ""}`}
+            onClick={() => setDrawType(!drawType)}
           >
             Hit
           </div>
           <div
-            class="miss"
-            // onClick={e => {
-            //   changeDrawMode(e);
-            // }}
+            className={`miss ${!drawType ? "is-active" : ""}`}
+            onClick={() => setDrawType(!drawType)}
           >
             Miss
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

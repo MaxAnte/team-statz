@@ -22,7 +22,7 @@
     transition: all 0.3s ease;
     margin-top: 15px;
     &:hover,
-    .is-active {
+    &.is-active {
       background: red;
       transition: all 0.3s ease;
       color: #fff;
@@ -32,7 +32,7 @@
     border: 1px solid #00d000;
     color: #00d000;
     &:hover,
-    .is-active {
+    &.is-active {
       background: #00d000;
       transition: all 0.3s ease;
     }
