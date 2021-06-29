@@ -1,4 +1,4 @@
-.auth-modal {
+.authModal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -12,13 +12,13 @@
   text-align: center;
 }
 
-.auth-input {
+.authInput {
   position: relative;
   padding: 15px 0 0;
   margin-bottom: 10px;
 }
 
-input {
+.authInput input {
   font-family: inherit;
   width: 100%;
   height: 40px;
@@ -30,19 +30,19 @@ input {
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
-
-  &::placeholder {
-    color: transparent;
-  }
-
-  &:placeholder-shown ~ label {
-    font-size: 1.1rem;
-    cursor: text;
-    top: 20px;
-  }
 }
 
-label {
+.authInput input::placeholder {
+  color: transparent;
+}
+
+.authInput input:placeholder-shown ~ label {
+  font-size: 1.1rem;
+  cursor: text;
+  top: 20px;
+}
+
+.authInput label {
   position: absolute;
   display: block;
   transition: 0.2s;
@@ -52,34 +52,35 @@ label {
   top: 0px;
 }
 
-input:focus {
-  + label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 0.9rem;
-    color: #31ad31;
-    font-weight: 700;
-  }
+.authInput input:focus {
   padding-bottom: 6px;
   border-bottom: 2px solid #31ad31;
 }
 
-.auth-action {
+.authInput input:focus + label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 0.9rem;
+  color: #31ad31;
+  font-weight: 700;
+}
+
+.authAction {
   margin-top: 25px;
-  button {
-    background-color: #31ad31;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    padding: 10px 25px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    &:hover {
-      background-color: #1a911a;
-      transition: all 0.3s ease;
-    }
-  }
+}
+.authAction button {
+  background-color: #31ad31;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.authAction button:hover {
+  background-color: #1a911a;
+  transition: all 0.3s ease;
 }

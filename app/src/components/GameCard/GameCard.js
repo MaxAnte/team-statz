@@ -1,22 +1,24 @@
 import React from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 
-import "./GameCard.scss";
+import styles from "./gameCard.module.css";
 
 function GameCard({ game, players }) {
   return (
-    <div className="game__card">
-      <h4 className="game__name">vs. {game.enemy}</h4>
-      <div className="game__score">
+    <div className={styles.gameCard}>
+      <h4 className={styles.gameName}>vs. {game.enemy}</h4>
+      <div className={styles.gameScore}>
         <span
-          className={`our ${game.ourScore > game.enemyScore ? "win" : "lose"}`}
+          className={`our ${
+            game.ourScore > game.enemyScore ? styles.win : styles.lose
+          }`}
         >
           {game.ourScore}
         </span>
         :<span>{game.enemyScore}</span>
       </div>
-      <div className="game__date">{game.date}</div>
-      {game.playersStats.map(el => {
+      <div className={styles.gameDate}>{game.date}</div>
+      {game.playersStats.map((el) => {
         return (
           <GamePlayerStat
             player={el}

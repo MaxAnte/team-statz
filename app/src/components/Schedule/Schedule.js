@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 
-import "./Schedule.scss";
+import styles from "./schedule.module.css";
 
 function Schedule({ games }) {
   const weekday = require("dayjs/plugin/weekday");
@@ -23,7 +23,7 @@ function Schedule({ games }) {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
   const TODAY = dayjs().format("YYYY-MM-DD");
 
@@ -32,13 +32,13 @@ function Schedule({ games }) {
 
   const [calendar, setCalendar] = useState({
     year: INITIAL_YEAR,
-    month: INITIAL_MONTH
+    month: INITIAL_MONTH,
   });
 
   const CURRENT_YEAR = calendar.year;
   const CURRENT_MONTH = MONTHS[calendar.month - 1];
 
-  const updateCalendar = e => {
+  const updateCalendar = (e) => {
     let curMonth;
     let curYear;
     console.log(calendar.year);
@@ -77,7 +77,7 @@ function Schedule({ games }) {
       return {
         date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
         dayOfMonth: index + 1,
-        isCurrentMonth: true
+        isCurrentMonth: true,
       };
     });
   };
@@ -98,11 +98,12 @@ function Schedule({ games }) {
       (day, index) => {
         return {
           date: dayjs(
-            `${previousMonth.year()}-${previousMonth.month() +
-              1}-${previousMonthLastMondayDayOfMonth + index}`
+            `${previousMonth.year()}-${previousMonth.month() + 1}-${
+              previousMonthLastMondayDayOfMonth + index
+            }`
           ).format("YYYY-MM-DD"),
           dayOfMonth: previousMonthLastMondayDayOfMonth + index,
-          isCurrentMonth: false
+          isCurrentMonth: false,
         };
       }
     );
@@ -125,12 +126,12 @@ function Schedule({ games }) {
           `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
         ).format("YYYY-MM-DD"),
         dayOfMonth: index + 1,
-        isCurrentMonth: false
+        isCurrentMonth: false,
       };
     });
   };
 
-  const getWeekday = date => {
+  const getWeekday = (date) => {
     return dayjs(date).weekday();
   };
 
@@ -149,39 +150,39 @@ function Schedule({ games }) {
   // console.log(games);
 
   return (
-    <div className="schedule page-wrapper">
+    <div className={`${styles.schedule} page-wrapper`}>
       <h1 className="title">Schedule</h1>
-      <div className="calendar-month">
-        <section className="calendar-month-header">
+      <div className={styles.calendarMonth}>
+        <section className={styles.calendarMonthHeader}>
           <div
             id="selected-month"
-            className="calendar-month-header-selected-month"
+            className={styles.calendarMonthHeaderSelectedMonth}
           >
-            <span id="prev" onClick={e => updateCalendar(e)}>
+            <span id="prev" onClick={(e) => updateCalendar(e)}>
               {"<"}
             </span>
             {CURRENT_MONTH}, {CURRENT_YEAR}
-            <span id="next" onClick={e => updateCalendar(e)}>
+            <span id="next" onClick={(e) => updateCalendar(e)}>
               {">"}
             </span>
           </div>
         </section>
-        <ol className="day-of-week">
+        <ol className={styles.dayOfWeek}>
           {WEEKDAYS.map((weekday, i) => (
             <li key={i}>{weekday}</li>
           ))}
         </ol>
-        <ol className="days-grid">
-          {days.map(day => (
+        <ol className={styles.daysGrid}>
+          {days.map((day) => (
             <li
               key={day.date}
-              className={`calendar-day ${
-                !day.isCurrentMonth ? "calendar-day--not-current" : ""
+              className={`${styles.calendarDay} ${
+                !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
               }
-              ${day.date === TODAY ? "calendar-day--today" : ""}`}
+              ${day.date === TODAY ? styles.calendarDayToday : ""}`}
             >
               <span>{day.dayOfMonth}</span>
-              {games.map(game => {
+              {games.map((game) => {
                 if (game.date === day.date) {
                   return <GameCardCalendar game={game} key={game.id} />;
                 }

@@ -1,0 +1,74 @@
+.playerCard {
+  padding: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  text-align: center;
+  background: #fff;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.playerCard:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+.playerImg {
+  margin-bottom: 15px;
+}
+.playerImg img {
+  width: 100%;
+}
+.playerName {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.playerPosition {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+.playerStats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0px -10px;
+}
+.playerStats > div {
+  width: 33.333%;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+}
+.playerBadges {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.playerBadges img {
+  width: 60px;
+  margin-bottom: 10px;
+}
+.playerBadges img:last-child {
+  margin-bottom: 0px;
+}
+.playerBadge {
+  position: relative;
+}
+.playerBadge span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid #fafafa;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.3s ease;
+}
+.playerBadge img:hover + span {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.3s ease;
+}

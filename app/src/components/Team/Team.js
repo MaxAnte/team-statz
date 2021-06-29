@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
 
-import "./Team.scss";
+import styles from "./team.module.css";
 
 function Team({ players, games }) {
   let bestPts = { pts: 0, id: 0 };
@@ -11,7 +11,7 @@ function Team({ players, games }) {
   let bestAst = { ast: 0, id: 0 };
   let bestBlk = { blk: 0, id: 0 };
   let bestStl = { stl: 0, id: 0 };
-  players.forEach(el => {
+  players.forEach((el) => {
     if (el.pts > bestPts.pts) {
       bestPts.pts = el.pts;
       bestPts.id = el.id;
@@ -33,7 +33,7 @@ function Team({ players, games }) {
       bestStl.id = el.id;
     }
   });
-  players.map(el => {
+  players.map((el) => {
     if (el.id === bestPts.id) {
       el.bestInPts = true;
     }
@@ -55,14 +55,12 @@ function Team({ players, games }) {
   return (
     <div className="team page-wrapper">
       <h2 className="title">Basketball City Team</h2>
-      <div className="team__info">
-        <TeamInfo players={players} games={games} />
-      </div>
-      <div className="team__players">
+      <TeamInfo players={players} games={games} />
+      <div className={styles.teamPlayers}>
         {players.map((player, id) => {
           return (
-            <div className="player__item" key={id}>
-              <NavLink to={`/player/${id}`} className="player__link">
+            <div className={styles.playerItem} key={id}>
+              <NavLink to={`/player/${id}`} className={styles.playerLink}>
                 <PlayerCard player={player} />
               </NavLink>
             </div>

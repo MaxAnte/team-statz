@@ -1,0 +1,48 @@
+.gamePlayerCanvasWrap {
+  display: flex;
+  flex-direction: column;
+}
+.gamePlayerCanvasButtons {
+  display: flex;
+  justify-content: center;
+}
+.gamePlayerCanvasButtons .hit,
+.gamePlayerCanvasButtons .miss {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+  min-width: 50px;
+  margin: 0px 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+.gamePlayerCanvasButtons .hit {
+  border: 1px solid #00d000;
+  color: #00d000;
+}
+.gamePlayerCanvasButtons .hit:hover,
+.gamePlayerCanvasButtonsHitActive {
+  background: #00d000;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.gamePlayerCanvasButtons .miss {
+  border: 1px solid red;
+  color: red;
+}
+.gamePlayerCanvasButtons .miss:hover,
+.gamePlayerCanvasButtonsMissActive {
+  background: red;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.gamePlayerCanvas {
+  border: 1px solid #000000;
+  background: url("../../assets/images/courts/court-black.jpg");
+  background-size: contain;
+}

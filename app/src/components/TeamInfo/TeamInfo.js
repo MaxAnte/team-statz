@@ -2,7 +2,7 @@ import React from "react";
 
 import logo from "../../assets/images/logo-bc.png";
 
-import "./TeamInfo.scss";
+import styles from "./teamInfo.module.css";
 
 function TeamInfo({ players, games }) {
   const arrTotals = Array(4).fill(0);
@@ -10,24 +10,24 @@ function TeamInfo({ players, games }) {
   let offensiveRating = 0;
   let defensiveRating = 0;
   let winsCount = 0;
-  players.forEach(el => {
+  players.forEach((el) => {
     arrTotals[0] += el.reb;
     arrTotals[1] += el.ast;
     arrTotals[2] += el.blk;
     arrTotals[3] += el.stl;
   });
-  games.forEach(el => {
+  games.forEach((el) => {
     if (el.ourScore > el.enemyScore) winsCount++;
     offensiveRating += el.ourScore / games.length;
     defensiveRating += el.enemyScore / games.length;
   });
 
   return (
-    <>
-      <div className="team__info--left">
+    <div className={styles.teamInfo}>
+      <div className={styles.teamInfoLeft}>
         <img src={logo} alt="BC logo" />
       </div>
-      <div className="team__info--right">
+      <div className={styles.teamInfoRight}>
         <p>GP: {games.length}</p>
         <p>
           W/L: {winsCount}/{games.length - winsCount}
@@ -43,7 +43,7 @@ function TeamInfo({ players, games }) {
           );
         })}
       </div>
-    </>
+    </div>
   );
 }
 

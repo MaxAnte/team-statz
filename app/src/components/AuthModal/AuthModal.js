@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
 
-import "./authModal.scss";
+import styles from "./authModal.module.css";
 
 function AuthModal() {
   const auth = useContext(AuthContext);
@@ -38,10 +38,10 @@ function AuthModal() {
   };
 
   return (
-    <div className="auth-modal">
+    <div className={styles.authModal}>
       <h3 className="title">Authentication</h3>
-      <div className="auth-cont">
-        <div className="auth-input">
+      <div className={styles.authCont}>
+        <div className={styles.authInput}>
           <input
             type="text"
             name="login"
@@ -51,7 +51,7 @@ function AuthModal() {
           />
           <label htmlFor="login">Login</label>
         </div>
-        <div className="auth-input">
+        <div className={styles.authInput}>
           <input
             type="password"
             name="password"
@@ -61,7 +61,7 @@ function AuthModal() {
           />
           <label htmlFor="password">Password</label>
         </div>
-        <div className="auth-action">
+        <div className={styles.authAction}>
           <button
             className="btn-submit"
             onClick={loginHandler}

@@ -3,43 +3,43 @@ import { NavLink } from "react-router-dom";
 
 import AuthModal from "../AuthModal/AuthModal";
 
-import "./Header.scss";
+import styles from "./header.module.css";
 
 function Header() {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
   return (
-    <header>
-      <NavLink className="logo" exact={true} to="/">
+    <header className={styles.header}>
+      <NavLink className={styles.logo} exact={true} to="/">
         <h1>
           Team Stat<span>Z</span>
         </h1>
       </NavLink>
-      <nav>
+      <nav className={styles.navList}>
         <ul>
           <li>
-            <NavLink to="/team" activeClassName="is-active">
+            <NavLink to="/team" activeClassName={styles.isActive}>
               <span>Team</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/schedule" activeClassName="is-active">
+            <NavLink to="/schedule" activeClassName={styles.isActive}>
               <span>Schedule</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/stats" activeClassName="is-active">
+            <NavLink to="/stats" activeClassName={styles.isActive}>
               <span>Stats</span>
             </NavLink>
           </li>
         </ul>
       </nav>
-      <span className="auth" onClick={() => toggleModal()}>
+      <span className={styles.auth} onClick={() => toggleModal()}>
         <span>Moder</span>
       </span>
       {modal ? <AuthModal /> : null}
       {modal ? (
-        <div className="modal-bg" onClick={() => toggleModal()}></div>
+        <div className={styles.modalBg} onClick={() => toggleModal()}></div>
       ) : null}
     </header>
   );

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import "./GamePlayerCanvas.scss";
+import styles from "./gamePlayerCanvas.module.css";
 
 function GamePlayerCanvas({ coordinates, mode, canvID }) {
   const [newCoords, setNewCoords] = useState([]);
@@ -72,23 +72,27 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
   // };
 
   return (
-    <div className="gamePlayerCanvas__wrap">
+    <div className={styles.gamePlayerCanvasWrap}>
       <canvas
         ref={canvasRef}
-        className="gamePlayerCanvas"
+        className={styles.gamePlayerCanvas}
         id={canvID}
         // onClick={e => draw(e)}
       ></canvas>
       {mode !== "view" ? (
-        <div class="buttons">
+        <div class={styles.gamePlayerCanvasButtons}>
           <div
-            className={`hit ${drawType ? "is-active" : ""}`}
+            className={`hit ${
+              drawType ? styles.gamePlayerCanvasButtonsHitActive : ""
+            }`}
             onClick={() => setDrawType(!drawType)}
           >
             Hit
           </div>
           <div
-            className={`miss ${!drawType ? "is-active" : ""}`}
+            className={`miss ${
+              !drawType ? styles.gamePlayerCanvasButtonsMissActive : ""
+            }`}
             onClick={() => setDrawType(!drawType)}
           >
             Miss
