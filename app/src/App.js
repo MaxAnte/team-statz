@@ -17,7 +17,7 @@ import styles from "./background.module.css";
 function App({ store }) {
   const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
-  console.log("store:", store, "ready:", "isAuth:", isAuthenticated);
+  console.log("store:", store, "moder:", isAuthenticated);
 
   if (!ready) return <Loader />;
 
@@ -32,7 +32,7 @@ function App({ store }) {
 
   return (
     <AuthContext.Provider
-      value={(token, userId, login, logout, isAuthenticated)}
+      value={{ token, userId, login, logout, isAuthenticated }}
     >
       <Router>
         <div className={`app ${checkDate()}`}>

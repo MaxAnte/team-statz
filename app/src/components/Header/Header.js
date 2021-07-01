@@ -8,6 +8,7 @@ import styles from "./header.module.css";
 function Header() {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
+  const closeOnLogin = () => setModal(false);
   return (
     <header className={styles.header}>
       <NavLink className={styles.logo} exact={true} to="/">
@@ -37,7 +38,7 @@ function Header() {
       <span className={styles.auth} onClick={() => toggleModal()}>
         <span>Moder</span>
       </span>
-      {modal ? <AuthModal /> : null}
+      {modal ? <AuthModal closeOnLogin={closeOnLogin} /> : null}
       {modal ? (
         <div className={styles.modalBg} onClick={() => toggleModal()}></div>
       ) : null}

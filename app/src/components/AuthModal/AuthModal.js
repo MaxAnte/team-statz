@@ -4,9 +4,8 @@ import { useHttp } from "../../hooks/http.hook";
 
 import styles from "./authModal.module.css";
 
-function AuthModal() {
+function AuthModal({ closeOnLogin }) {
   const auth = useContext(AuthContext);
-  console.log(auth.token);
   const { loading, error, request } = useHttp();
   const [form, setForm] = useState({ login: "", password: "" });
 
@@ -26,7 +25,7 @@ function AuthModal() {
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
       auth.login(data.token, data.userId);
-      console.log("Data:", data, auth.login);
+      closeOnLogin();
     } catch (e) {}
   };
 
