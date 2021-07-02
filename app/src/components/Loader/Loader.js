@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./Loader.css";
+import styles from "./loader.module.css";
 
 function Footer() {
-  return <div className="loader"></div>;
+  return <div className={styles.loader}></div>;
 }
 
 export default Footer;

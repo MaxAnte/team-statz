@@ -8,7 +8,7 @@
 .logo {
   line-height: 1;
   text-decoration: none;
-  color: #000;
+  color: var(--color-black);
   position: relative;
   display: block;
   margin-right: auto;
@@ -23,8 +23,8 @@
   top: 60%;
   transform: translateY(-50%);
   font-size: 15px;
-  color: #fff;
-  background: #31ad31;
+  color: var(--color-white);
+  background: var(--color-button);
   border-radius: 50%;
   width: 22px;
   height: 22px;
@@ -55,15 +55,15 @@
   transition: all 0.3s ease;
 }
 .logo:hover::before {
-  border-left: 2px solid #000;
-  border-top: 2px solid #000;
+  border-left: 2px solid var(--color-black);
+  border-top: 2px solid var(--color-black);
   width: 40px;
   height: 40px;
   transition: all 0.3s ease;
 }
 .logo:hover::after {
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
+  border-right: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
   width: 40px;
   height: 40px;
   transition: all 0.3s ease;
@@ -79,7 +79,7 @@
   position: relative;
 }
 .navList ul li a {
-  color: #000;
+  color: var(--color-black);
   text-decoration: none;
 }
 .navList ul li a span {
@@ -128,7 +128,7 @@
   margin: 0 auto;
   bottom: -5px;
   height: 2px;
-  background-color: #000;
+  background-color: var(--color-black);
   width: 65%;
   opacity: 1 !important;
   transition: all 0.3s ease !important;
@@ -154,7 +154,7 @@
   content: "\e900";
   font-size: 36px;
   font-family: "icomoon";
-  color: #000;
+  color: var(--color-black);
 }
 .auth:hover span {
   transform: translateY(18px);

@@ -8,9 +8,9 @@
   margin-bottom: 35px;
 }
 .gamesAddBtn {
-  background-color: #31ad31;
+  background-color: var(--color-button);
   border: none;
-  color: #fff;
+  color: var(--color-white);
   font-size: 20px;
   padding: 10px 25px;
   border-radius: 5px;
@@ -19,6 +19,6 @@
   transition: all 0.3s ease;
 }
 .gamesAddBtn:hover {
-  background-color: #1a911a;
+  background-color: var(--color-button-hover);
   transition: all 0.3s ease;
 }

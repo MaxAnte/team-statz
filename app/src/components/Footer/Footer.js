@@ -1,11 +1,11 @@
 import React from "react";
 
-import "./Footer.css";
+import styles from "./footer.module.css";
 
-function Footer({children}) {
+function Footer({ children }) {
   return (
-    <footer>
-      <p className="copyright">{children}</p>
+    <footer className={styles.footer}>
+      <p>{children}</p>
     </footer>
   );
 }
