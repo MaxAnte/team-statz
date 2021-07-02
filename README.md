@@ -1,0 +1,41 @@
+# Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- npm run server - run server
+- npm run app - run react app
+- npm run dev - run full app (server + app) (http://localhost:3000)
+
+## Require versions
+
+Application working properly in the environment with following versions of services:
+
+- nodejs: 16.4.0
+- npm: 7.18.1
+- react, react-dom: 17.0.2
+- react-rounter-dom: 5.2.0
+- react-scripts: 4.0.3
+- web-vitals: 1.1.1
+
+- dayjs: 1.10.4
+- config: 3.3.6
+- express: 4.17.1
+- express-validator: 6.11.1
+- jsonwebtoken: 8.5.1
+- mongoose: 5.12.13
+- concurrently: 6.2.0
+- nodemon: 2.0.7
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
