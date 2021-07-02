@@ -2,12 +2,12 @@ import React from "react";
 
 import styles from "./playerCard.module.css";
 
-import blankPhoto from "../../assets/images/blank-silhouette.png";
-import basket from "../../assets/images/basket.svg";
-import glassCleaner from "../../assets/images/glass_cleaner.png";
-import assist from "../../assets/images/assist.png";
-import thief from "../../assets/images/thief.svg";
-import block from "../../assets/images/block.svg";
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+import basket from "../../assets/images/badges/basket.svg";
+import glassCleaner from "../../assets/images/badges/glass_cleaner.png";
+import assist from "../../assets/images/badges/assist.png";
+import thief from "../../assets/images/badges/thief.svg";
+import block from "../../assets/images/badges/block.svg";
 
 function PlayerCard({ player }) {
   return (

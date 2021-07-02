@@ -2,7 +2,7 @@ import React from "react";
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import styles from "./gamePlayerStat.module.css";
-import blankPhoto from "../../assets/images/blank-silhouette.png";
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function GamePlayerStat({ player, allPlayers, gameID }) {
   const curPlayerArr = allPlayers.filter((item) => item.id === player.id);
