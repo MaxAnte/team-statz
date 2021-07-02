@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "./gamePlayerCanvas.module.css";
 
 function GamePlayerCanvas({ coordinates, mode, canvID }) {
-  const [newCoords, setNewCoords] = useState([]);
+  // const [newCoords, setNewCoords] = useState([]);
   const [drawType, setDrawType] = useState(false);
   const canvasRef = useRef(null);
 
@@ -44,7 +44,7 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
         ctx.stroke();
       });
     }
-  }, []);
+  }, [DPI_HEIGHT, DPI_WIDTH, coordinates, mode]);
 
   // const draw = e => {
   //   if (mode !== "view") {

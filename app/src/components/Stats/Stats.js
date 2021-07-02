@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./stats.module.css";
+// import styles from "./stats.module.css";
 
 function Stats({ children }) {
   return (

@@ -58,7 +58,7 @@ function AddGamePopup({ closeHandler }) {
                   className={styles.playerCard}
                   onClick={() => handleCheck(i)}
                 >
-                  <img src={blankPhoto} />
+                  <img src={blankPhoto} alt="" />
                   <span>Player Name, Position</span>
                   <span className={styles.playerCheck}></span>
                   {!playersCheck[i] ? (
@@ -91,7 +91,7 @@ function AddGamePopup({ closeHandler }) {
                         key={`playerName_${i}`}
                         className={styles.playerCard}
                       >
-                        <img src={blankPhoto} />
+                        <img src={blankPhoto} alt="" />
                         <span>Player Name, Position</span>
                         <span className={styles.playerCheck}></span>
                       </div>

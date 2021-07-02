@@ -6,7 +6,7 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function GamePlayerStat({ player, allPlayers, gameID }) {
   const curPlayerArr = allPlayers.filter((item) => item.id === player.id);
-  const curPlayer = curPlayerArr[0];
+  const [curPlayer] = curPlayerArr;
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;
@@ -46,7 +46,7 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
       "Quadriple-Double",
       "Quntiple-Double",
     ];
-    countableStats.map((key) => {
+    countableStats.forEach((key) => {
       if (player[key] >= 10) count++;
       if (key === "dreb") dreb = player[key];
       if (key === "oreb") dreb += player[key];
