@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 
 import Select from "../Select/select";
-// import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
+import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 
 import CloseIcon from "../../assets/icons/CloseIcon";
 import CheckIcon from "../../assets/icons/CheckIcon";
@@ -35,11 +35,16 @@ function AddGamePopup({ closeHandler }) {
 
   const teamList = teams ? Object.values(teams).map((team) => team.name) : [];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
   return (
     <div className={styles.popupWrap}>
       <div className={styles.popupContainer}>
         <h3 className={styles.popupTitle}>Add Game Stats</h3>
-        <form className={styles.addGameForm}>
+        <form className={styles.addGameForm} onSubmit={handleSubmit}>
           <h4 className={styles.popupSubtitle}>Set general game information</h4>
           <div className={styles.popupSection}>
             <div className={styles.genGameInfo}>
@@ -116,11 +121,12 @@ function AddGamePopup({ closeHandler }) {
                         key={`playerName_${i}`}
                         className={styles.playerCard}
                       >
-                        {/* <AddGamePlayerStat /> */}
+                        <AddGamePlayerStat />
                       </div>
                     ))}
                 </div>
               </div>
+              <button className="btn__main">Save game info</button>
             </>
           ) : null}
         </form>

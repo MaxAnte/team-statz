@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 import styles from "./gamePlayerCanvas.module.css";
 
-function GamePlayerCanvas({ coordinates, mode, canvID }) {
+function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
   // const [newCoords, setNewCoords] = useState([]);
   const [drawType, setDrawType] = useState(false);
   const canvasRef = useRef(null);
@@ -79,8 +79,8 @@ function GamePlayerCanvas({ coordinates, mode, canvID }) {
         id={canvID}
         // onClick={e => draw(e)}
       ></canvas>
-      {mode !== "view" ? (
-        <div class={styles.gamePlayerCanvasButtons}>
+      {mode === "edit" ? (
+        <div className={styles.gamePlayerCanvasButtons}>
           <div
             className={`hit ${
               drawType ? styles.gamePlayerCanvasButtonsHitActive : ""
