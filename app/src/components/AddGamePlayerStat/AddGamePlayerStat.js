@@ -14,130 +14,139 @@ function AddGamePlayerStat() {
       <div className={styles.gpsRight}>
         <div className={styles.gpsStats}>
           <div className={styles.gpsStatsRow}>
-            <div>
-              <label htmlFor="playerPts">Points: </label>
-              <input
-                type="number"
-                min="0"
-                id="playerPts"
-                className={styles.gpsStatsRowTitle}
-                placeholder="0"
-              />
-            </div>
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="2pAtempted">2p Atempted: </label>
+                  <label htmlFor="playerPts">Points: </label>
                   <input
                     type="number"
                     min="0"
-                    id="2pAtempted"
+                    id="playerPts"
+                    className={styles.gpsStatsRowTitle}
                     placeholder="0"
                   />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="2pMade">2p Made: </label>
-                  <input type="number" min="0" id="2pMade" placeholder="0" />
-                </div>
-              </div>
-              {/* <div className={styles.gpsStatsRowItem}>
-                <div>
-                  3P%:
-                  <span>{getPercentage(player.three_pa, player.three_pm)}</span>
-                  <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.three_pa}</span>
-                    <span>Made: {player.three_pm}</span>
-                  </div>
+                  <label htmlFor="ast">AST: </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="ast"
+                    className={styles.gpsStatsRowTitle}
+                    placeholder="0"
+                  />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  FG%:
-                  <span>
-                    {getPercentage(
-                      player.two_pa + player.three_pa,
-                      player.two_pm + player.three_pm
-                    )}
-                  </span>
-                  <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.two_pa + player.three_pa}</span>
-                    <span>Made: {player.two_pm + player.three_pm}</span>
-                  </div>
+                  <label htmlFor="dreb">DREB: </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="dreb"
+                    className={styles.gpsStatsRowTitle}
+                    placeholder="0"
+                  />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  FT%:
-                  <span>{getPercentage(player.fta, player.ftm)}</span>
-                  <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.fta}</span>
-                    <span>Made: {player.ftm}</span>
-                  </div>
+                  <label htmlFor="dreb">OREB: </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="oreb"
+                    className={styles.gpsStatsRowTitle}
+                    placeholder="0"
+                  />
                 </div>
-              </div> */}
+              </div>
+              <div className={styles.gpsStatsRowItem}>
+                <div>
+                  <label htmlFor="stl">STL: </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="stl"
+                    className={styles.gpsStatsRowTitle}
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div className={styles.gpsStatsRowItem}>
+                <div>
+                  <label htmlFor="blk">BLK: </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="blk"
+                    className={styles.gpsStatsRowTitle}
+                    placeholder="0"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* <div className={styles.gpsStatsRow}>
-            <div className={styles.gpsStatsRowTitle}>Statistic:</div>
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  AST:
-                  <span>{player.ast}</span>
+                  <label htmlFor="2pa">2p Attempted: </label>
+                  <input type="number" min="0" id="2pa" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  REB:
-                  <span>{player.oreb + player.dreb}</span>
-                  <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Offensive: {player.oreb}</span>
-                    <span>Defensive: {player.dreb}</span>
-                  </div>
+                  <label htmlFor="2pm">2p Made: </label>
+                  <input type="number" min="0" id="2pm" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  STL:
-                  <span>{player.stl}</span>
+                  <label htmlFor="3pa">3p Attempted: </label>
+                  <input type="number" min="0" id="3pa" placeholder="0" />
+                </div>
+                <div>
+                  <label htmlFor="3pm">3p Made: </label>
+                  <input type="number" min="0" id="3pm" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  BLK:
-                  <span>{player.blk}</span>
+                  <label htmlFor="fta">FT Attempted: </label>
+                  <input type="number" min="0" id="fta" placeholder="0" />
+                </div>
+                <div>
+                  <label htmlFor="ftm">FT Made: </label>
+                  <input type="number" min="0" id="ftm" placeholder="0" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.gpsStatsRow}>
+            <div className={styles.gpsStatsRowStats}>
+              <div className={styles.gpsStatsRowItem}>
+                <div>
+                  <label htmlFor="tov">TOV: </label>
+                  <input type="number" min="0" id="tov" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  TOV:
-                  <span>{player.tov}</span>
+                  <label htmlFor="fouls">Fouls: </label>
+                  <input type="number" min="0" id="fouls" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  Fouls:
-                  <span>{player.fouls}</span>
-                </div>
-              </div>
-              <div className={styles.gpsStatsRowItem}>
-                <div>
-                  Minutes:
-                  <span>{player.minutes}</span>
-                </div>
-              </div>
-              <div className={styles.gpsStatsRowItem}>
-                <div>
-                  EFF:
-                  <span>{getEfficiencyRate(player)}</span>
+                  <label htmlFor="minutes">Minutes: </label>
+                  <input type="number" min="0" id="minutes" placeholder="0" />
                 </div>
               </div>
             </div>
             <div className={styles.gpsBadges}>{getBadges(player)}</div>
-          </div> */}
+          </div>
         </div>
         <div className={styles.gpsCanvas}>
           <GamePlayerCanvas canvID={`canv_game-1_player-1`} />
