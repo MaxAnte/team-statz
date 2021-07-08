@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
+
+import Select from "../Select/select";
+// import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 
 import CloseIcon from "../../assets/icons/CloseIcon";
 import CheckIcon from "../../assets/icons/CheckIcon";
@@ -10,11 +14,27 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 function AddGamePopup({ closeHandler }) {
   const [playersCheck, setPlayersCheck] = useState(Array(11).fill(false));
   const [checkListAccept, setCheckListAccept] = useState(false);
+  const [teams, setTeams] = useState(undefined);
+  const { loading, error, request } = useHttp();
   const handleCheck = (index) => {
     const newCheckSet = playersCheck;
     newCheckSet[index] = !newCheckSet[index];
     setPlayersCheck([...playersCheck]);
   };
+
+  const getTeams = async () => {
+    try {
+      const data = await request("/api/team/teams", "POST", {});
+      if (data) setTeams(data);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getTeams();
+  }, []);
+
+  const teamList = teams ? Object.values(teams).map((team) => team.name) : [];
+
   return (
     <div className={styles.popupWrap}>
       <div className={styles.popupContainer}>
@@ -39,11 +59,9 @@ function AddGamePopup({ closeHandler }) {
                 id="enemyScore"
                 className={styles.genGameInfoScore}
               />
-              <input
-                name="enemyName"
-                id="enemyName"
+              <Select
+                options={teamList ? teamList : []}
                 className={styles.genGameInfoNames}
-                placeholder="Enemy Team"
               />
             </div>
           </div>
@@ -98,8 +116,7 @@ function AddGamePopup({ closeHandler }) {
                         key={`playerName_${i}`}
                         className={styles.playerCard}
                       >
-                        <img src={blankPhoto} alt="" />
-                        <span>Player Name, Position</span>
+                        {/* <AddGamePlayerStat /> */}
                       </div>
                     ))}
                 </div>
