@@ -45,3 +45,18 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.btn__main {
+  background-color: var(--color-button);
+  border: none;
+  color: var(--color-white);
+  font-size: 20px;
+  padding: 10px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn__main:hover {
+  background-color: var(--color-button-hover);
+  transition: all 0.3s ease;
+}

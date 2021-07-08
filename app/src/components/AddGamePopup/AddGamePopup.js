@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import CloseIcon from "../../assets/icons/CloseIcon";
+import CheckIcon from "../../assets/icons/CheckIcon";
 
 import styles from "./addGamePopup.module.css";
 
@@ -60,7 +61,13 @@ function AddGamePopup({ closeHandler }) {
                 >
                   <img src={blankPhoto} alt="" />
                   <span>Player Name, Position</span>
-                  <span className={styles.playerCheck}></span>
+                  <div
+                    className={`${styles.playerCheck} ${
+                      playersCheck[i] ? styles.playerCheckActive : ""
+                    }`}
+                  >
+                    <CheckIcon width="14px" heigth="14px" color="green" />
+                  </div>
                   {!playersCheck[i] ? (
                     <div className={styles.disabler}></div>
                   ) : null}
@@ -70,7 +77,7 @@ function AddGamePopup({ closeHandler }) {
 
             {!checkListAccept ? (
               <button
-                className={styles.playersSelectAccept}
+                className={`btn__main ${styles.playersSelectAccept}`}
                 onClick={() => setCheckListAccept(true)}
               >
                 Save
@@ -93,7 +100,6 @@ function AddGamePopup({ closeHandler }) {
                       >
                         <img src={blankPhoto} alt="" />
                         <span>Player Name, Position</span>
-                        <span className={styles.playerCheck}></span>
                       </div>
                     ))}
                 </div>
