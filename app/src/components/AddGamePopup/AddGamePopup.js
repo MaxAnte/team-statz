@@ -15,7 +15,7 @@ function AddGamePopup({ closeHandler }) {
   const [playersCheck, setPlayersCheck] = useState(Array(11).fill(false));
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [teams, setTeams] = useState(undefined);
-  const { loading, error, request } = useHttp();
+  const { request } = useHttp();
   const handleCheck = (index) => {
     const newCheckSet = playersCheck;
     newCheckSet[index] = !newCheckSet[index];

@@ -14,7 +14,7 @@ function Games({ store }) {
   return (
     <div className="games page-wrapper">
       <h2 className="title">Season standings</h2>
-      <Table teams={teams} />
+      <Table />
       <h2 className="title">Games</h2>
       {isAuthenticated ? (
         <div className={styles.gamesAddBtn} onClick={() => setAddPopup(true)}>

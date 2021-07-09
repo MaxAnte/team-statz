@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
 
 import styles from "./table.module.css";
 
-function Table({ teams }) {
-  const teamsWinRate = teams;
-  teamsWinRate.forEach((el) => {
-    el.winRate = (el.wins * 100) / (el.wins + el.loses);
-    el.points = el.wins * 2 + el.loses * 1;
-  });
-  teamsWinRate.sort((a, b) => b.winRate - a.winRate);
+function Table() {
+  const [teams, setTeams] = useState(undefined);
+  const { request } = useHttp();
+
+  const getTeams = async () => {
+    try {
+      const data = await request("/api/team/teams", "POST", {});
+      if (data) setTeams(data);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getTeams();
+  }, []);
+  const teamList = teams ? Object.values(teams) : [];
+
+  if (teamList) {
+    teamList.forEach((el) => {
+      el.winRate = (el.wins * 100) / (el.wins + el.loses);
+      el.points = el.wins * 2 + el.loses * 1;
+    });
+    teamList.sort((a, b) => b.winRate - a.winRate);
+  }
 
   return (
     <div className={styles.tableWrap}>
@@ -19,17 +36,18 @@ function Table({ teams }) {
         <span className={styles.tableRowLoses}>L</span>
         <span className={styles.tableRowPoints}>Pts</span>
       </div>
-      {teamsWinRate.map((el, i) => {
-        return (
-          <div className={styles.tableRow} key={`tableRow${i}`}>
-            <span className={styles.tableRowPos}>{++i}</span>
-            <p className={styles.tableRowName}>{el.name}</p>
-            <span className={styles.tableRowWins}>{el.wins}</span>
-            <span className={styles.tableRowLoses}>{el.loses}</span>
-            <span className={styles.tableRowPoints}>{el.points}</span>
-          </div>
-        );
-      })}
+      {teamList &&
+        teamList.map((el, i) => {
+          return (
+            <div className={styles.tableRow} key={`tableRow${i}`}>
+              <span className={styles.tableRowPos}>{++i}</span>
+              <p className={styles.tableRowName}>{el.name}</p>
+              <span className={styles.tableRowWins}>{el.wins}</span>
+              <span className={styles.tableRowLoses}>{el.loses}</span>
+              <span className={styles.tableRowPoints}>{el.points}</span>
+            </div>
+          );
+        })}
     </div>
   );
 }
