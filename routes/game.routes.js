@@ -30,11 +30,11 @@ router.post("/games", async (req, res) => {
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
-  const game = await Game.find({});
+  const games = await Game.find({});
 
-  if (!game) return res.status(400).json({ message: "Game not found" });
+  if (!games) return res.status(400).json({ message: "Game not found" });
 
-  res.json({ enemy: game.enemy });
+  res.json(games);
 });
 
 module.exports = router;
