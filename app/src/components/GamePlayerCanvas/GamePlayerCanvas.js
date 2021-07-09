@@ -2,7 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 
 import styles from "./gamePlayerCanvas.module.css";
 
-function GamePlayerCanvas({ coordinates = [], mode = "edit", canvID }) {
+function GamePlayerCanvas({
+  coordinates = [],
+  mode = "edit",
+  canvID,
+  handleGetCoords = "",
+}) {
   const [newCoords, setNewCoords] = useState([]);
   const [canv, setCanv] = useState(undefined);
   const [canvBound, setCanvBound] = useState(undefined);
@@ -64,6 +69,7 @@ function GamePlayerCanvas({ coordinates = [], mode = "edit", canvID }) {
         ...oldState,
         { x: pos.x, y: pos.y, miss: !drawType },
       ]);
+      handleGetCoords(newCoords);
     }
   };
 

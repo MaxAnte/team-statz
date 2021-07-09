@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
 
 import styles from "./select.module.css";
 
-function Select({ options, className = "" }) {
+function Select({ options, className = "", getActive }) {
   const [active, setActive] = useState("Enemy Team");
   const [toggle, setToggle] = useState(false);
 
@@ -12,6 +12,10 @@ function Select({ options, className = "" }) {
     setActive(e.target.innerText);
     setToggle(false);
   };
+
+  useEffect(() => {
+    getActive(active);
+  }, [active]);
 
   return (
     <div className={`${styles.selectWrap} ${className}`}>

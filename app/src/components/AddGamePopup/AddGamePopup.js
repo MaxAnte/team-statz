@@ -15,7 +15,10 @@ function AddGamePopup({ closeHandler }) {
   const [playersCheck, setPlayersCheck] = useState(Array(11).fill(false));
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [teams, setTeams] = useState(undefined);
+  const [form, setForm] = useState({});
+
   const { request } = useHttp();
+
   const handleCheck = (index) => {
     const newCheckSet = playersCheck;
     newCheckSet[index] = !newCheckSet[index];
@@ -40,6 +43,16 @@ function AddGamePopup({ closeHandler }) {
     console.log(e);
   };
 
+  const handleGetActive = (enemy) => setForm((old) => ({ ...old, enemy }));
+  const handleChangeInput = (e) =>
+    setForm((old) => ({
+      ...old,
+      [e.target.name]:
+        e.target.name !== "enemy" ? +e.target.value : e.target.value,
+    }));
+  const handleGetCoords = (coordinates) =>
+    setForm((old) => ({ ...old, coordinates }));
+  console.log(form);
   return (
     <div className={styles.popupWrap}>
       <div className={styles.popupContainer}>
@@ -55,6 +68,7 @@ function AddGamePopup({ closeHandler }) {
                 name="ourScore"
                 id="ourScore"
                 className={styles.genGameInfoScore}
+                onChange={handleChangeInput}
               />
               <span>:</span>
               <input
@@ -63,10 +77,12 @@ function AddGamePopup({ closeHandler }) {
                 name="enemyScore"
                 id="enemyScore"
                 className={styles.genGameInfoScore}
+                onChange={handleChangeInput}
               />
               <Select
                 options={teamList ? teamList : []}
                 className={styles.genGameInfoNames}
+                getActive={handleGetActive}
               />
             </div>
           </div>
@@ -117,7 +133,10 @@ function AddGamePopup({ closeHandler }) {
                   .filter((el) => el)
                   .map((_, i) => (
                     <div key={`playerName_${i}`} className={styles.gpsPlayer}>
-                      <AddGamePlayerStat />
+                      <AddGamePlayerStat
+                        handleChangeInput={handleChangeInput}
+                        handleGetCoords={handleGetCoords}
+                      />
                     </div>
                   ))}
               </div>
