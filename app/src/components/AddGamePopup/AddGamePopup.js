@@ -15,9 +15,11 @@ function AddGamePopup({ closeHandler }) {
   const [playersCheck, setPlayersCheck] = useState(Array(11).fill(false));
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [teams, setTeams] = useState(undefined);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({ playersStats: [] });
 
   const { request } = useHttp();
+
+  const playersStatsArr = [];
 
   const handleCheck = (index) => {
     const newCheckSet = playersCheck;
@@ -38,21 +40,25 @@ function AddGamePopup({ closeHandler }) {
 
   const teamList = teams ? Object.values(teams).map((team) => team.name) : [];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
+    const data = await request("/api/game/add-game", "POST", { ...form });
+    console.log(data);
   };
 
-  const handleGetActive = (enemy) => setForm((old) => ({ ...old, enemy }));
+  const handleGetActive = (enemy) => {
+    setForm((prevState) => ({ ...prevState, enemy }));
+  };
+
   const handleChangeInput = (e) =>
-    setForm((old) => ({
-      ...old,
-      [e.target.name]:
-        e.target.name !== "enemy" ? +e.target.value : e.target.value,
+    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+
+  const handleChangePlayerStats = (playersStats) =>
+    setForm((prevState) => ({
+      ...prevState,
+      playersStats: playersStatsArr.concat(playersStats),
     }));
-  const handleGetCoords = (coordinates) =>
-    setForm((old) => ({ ...old, coordinates }));
-  console.log(form);
+
   return (
     <div className={styles.popupWrap}>
       <div className={styles.popupContainer}>
@@ -134,8 +140,7 @@ function AddGamePopup({ closeHandler }) {
                   .map((_, i) => (
                     <div key={`playerName_${i}`} className={styles.gpsPlayer}>
                       <AddGamePlayerStat
-                        handleChangeInput={handleChangeInput}
-                        handleGetCoords={handleGetCoords}
+                        handleChangePlayerStats={handleChangePlayerStats}
                       />
                     </div>
                   ))}

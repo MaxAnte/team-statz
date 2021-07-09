@@ -11,9 +11,10 @@ export const useHttp = () => {
         if (body) {
           body = JSON.stringify(body);
           headers["Content-Type"] = "application/json";
+          headers["Accept"] = "application/json";
         }
-
         const response = await fetch(url, { method, body, headers });
+        console.log(response);
         const data = await response.json();
         if (!response.ok)
           throw new Error(data.message || "Error occured while fetch");

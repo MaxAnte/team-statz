@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
+function AddGamePlayerStat({ playerID, handleChangePlayerStats }) {
+  const [playerStats, setPlayerStats] = useState({});
+
+  const handleChangeStats = (e) => {
+    setPlayerStats((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleGetCoords = (coords) =>
+    setPlayerStats((prevState) => ({ ...prevState, coordinates: coords }));
+
+  useEffect(() => {
+    handleChangePlayerStats(playerStats);
+  }, [playerStats]);
+
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
@@ -24,7 +39,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="playerPts"
                     name="pts"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -37,7 +52,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="ast"
                     name="ast"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -50,7 +65,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="dreb"
                     name="dreb"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -63,7 +78,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="oreb"
                     name="oreb"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -76,7 +91,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="stl"
                     name="stl"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -89,7 +104,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="blk"
                     name="blk"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -106,7 +121,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="two_pa"
                     name="two_pa"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -119,7 +134,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="two_pm"
                     name="two_pm"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -132,7 +147,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="three_pa"
                     name="three_pa"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -145,7 +160,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="three_pm"
                     name="three_pm"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -158,7 +173,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="fta"
                     name="fta"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -171,7 +186,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="ftm"
                     name="ftm"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -189,7 +204,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="tov"
                     name="tov"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -202,7 +217,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="fouls"
                     name="fouls"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
@@ -215,7 +230,7 @@ function AddGamePlayerStat({ handleChangeInput, handleGetCoords }) {
                     id="minutes"
                     name="minutes"
                     placeholder="0"
-                    onChange={handleChangeInput}
+                    onChange={handleChangeStats}
                   />
                 </div>
               </div>
