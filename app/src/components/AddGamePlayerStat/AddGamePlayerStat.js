@@ -18,76 +18,42 @@ function AddGamePlayerStat() {
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="playerPts">Points: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="playerPts"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="playerPts" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="ast">AST: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="ast"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="ast" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="dreb">DREB: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="dreb"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="dreb" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="dreb">OREB: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="oreb"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="oreb" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="stl">STL: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="stl"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="stl" placeholder="0" />
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="blk">BLK: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="blk"
-                    className={styles.gpsStatsRowTitle}
-                    placeholder="0"
-                  />
+                  <input type="number" min="0" id="blk" placeholder="0" />
                 </div>
               </div>
             </div>
+          </div>
+          <div className={styles.gpsStatsRow}>
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
@@ -106,6 +72,8 @@ function AddGamePlayerStat() {
                   <label htmlFor="3pa">3p Attempted: </label>
                   <input type="number" min="0" id="3pa" placeholder="0" />
                 </div>
+              </div>
+              <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="3pm">3p Made: </label>
                   <input type="number" min="0" id="3pm" placeholder="0" />
@@ -116,6 +84,8 @@ function AddGamePlayerStat() {
                   <label htmlFor="fta">FT Attempted: </label>
                   <input type="number" min="0" id="fta" placeholder="0" />
                 </div>
+              </div>
+              <div className={styles.gpsStatsRowItem}>
                 <div>
                   <label htmlFor="ftm">FT Made: </label>
                   <input type="number" min="0" id="ftm" placeholder="0" />
@@ -145,7 +115,6 @@ function AddGamePlayerStat() {
                 </div>
               </div>
             </div>
-            <div className={styles.gpsBadges}>{getBadges(player)}</div>
           </div>
         </div>
         <div className={styles.gpsCanvas}>

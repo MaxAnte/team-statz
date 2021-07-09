@@ -113,18 +113,13 @@ function AddGamePopup({ closeHandler }) {
             <>
               <h4 className={styles.popupSubtitle}>Add stats to each player</h4>
               <div className={styles.popupSection}>
-                <div className={styles.playersStats}>
-                  {playersCheck
-                    .filter((el) => el)
-                    .map((_, i) => (
-                      <div
-                        key={`playerName_${i}`}
-                        className={styles.playerCard}
-                      >
-                        <AddGamePlayerStat />
-                      </div>
-                    ))}
-                </div>
+                {playersCheck
+                  .filter((el) => el)
+                  .map((_, i) => (
+                    <div key={`playerName_${i}`} className={styles.gpsPlayer}>
+                      <AddGamePlayerStat />
+                    </div>
+                  ))}
               </div>
               <button className="btn__main">Save game info</button>
             </>

@@ -82,7 +82,7 @@ function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
       {mode === "edit" ? (
         <div className={styles.gamePlayerCanvasButtons}>
           <div
-            className={`hit ${
+            className={`${styles.hit} ${
               drawType ? styles.gamePlayerCanvasButtonsHitActive : ""
             }`}
             onClick={() => setDrawType(!drawType)}
@@ -90,7 +90,7 @@ function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
             Hit
           </div>
           <div
-            className={`miss ${
+            className={`${styles.miss} ${
               !drawType ? styles.gamePlayerCanvasButtonsMissActive : ""
             }`}
             onClick={() => setDrawType(!drawType)}

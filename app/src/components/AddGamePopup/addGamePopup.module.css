@@ -69,6 +69,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .genGameInfo {
   display: flex;
@@ -95,6 +96,11 @@
   font-size: 22px;
   margin: 0px 15px;
   max-width: 50px;
+  transition: all 0.3s ease;
+}
+.genGameInfoScore:focus {
+  border-color: var(--color-green-main);
+  transition: all 0.3s ease;
 }
 
 .playersSelect {
@@ -160,4 +166,25 @@
 
 .playersSelectAccept {
   margin-top: 35px;
+}
+.gpsPlayer {
+  position: relative;
+  padding: 35px 0px;
+}
+.gpsPlayer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1px;
+  width: 95%;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.gpsPlayer:last-child {
+  padding-bottom: 0px;
+}
+.gpsPlayer:last-child:after {
+  content: none;
 }
