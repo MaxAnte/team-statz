@@ -2,9 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 
 import styles from "./gamePlayerCanvas.module.css";
 
-function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
-  // const [newCoords, setNewCoords] = useState([]);
+function GamePlayerCanvas({ coordinates = [], mode = "edit", canvID }) {
+  const [newCoords, setNewCoords] = useState([]);
+  const [canv, setCanv] = useState(undefined);
+  const [canvBound, setCanvBound] = useState(undefined);
+  const [context, setContext] = useState(undefined);
   const [drawType, setDrawType] = useState(false);
+
   const canvasRef = useRef(null);
 
   const WIDTH = 290;
@@ -23,53 +27,56 @@ function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    setCanv(canvas);
+    setCanvBound(canvas.getBoundingClientRect());
     var ctx = canvas.getContext("2d");
+    setContext(ctx);
 
     canvas.style.width = WIDTH + "px";
     canvas.style.height = HEIGHT + "px";
     canvas.width = DPI_WIDTH;
     canvas.height = DPI_HEIGHT;
 
-    if (mode === "view") {
-      coordinates.forEach((el) => {
-        ctx.beginPath();
-        if (el.miss) {
-          drawMiss(ctx, el);
-        } else {
-          drawMade(ctx, el);
-        }
-        ctx.lineWidth = 5;
-        ctx.closePath();
-        el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");
-        ctx.stroke();
-      });
+    if (!coordinates.length) coordinates = newCoords;
+    coordinates.forEach((el) => {
+      ctx.beginPath();
+      if (el.miss) {
+        drawMiss(ctx, el);
+      } else {
+        drawMade(ctx, el);
+      }
+      ctx.lineWidth = 5;
+      ctx.closePath();
+      el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");
+      ctx.stroke();
+    });
+  }, [newCoords]);
+
+  const draw = (e) => {
+    if (mode !== "view") {
+      // if (!e.target.matches(canvID)) return;
+      var pos = getMousePos(e);
+      drawType === true
+        ? (context.fillStyle = "#008000")
+        : (context.fillStyle = "#ff0000");
+      context.fillRect(pos.x, pos.y, 15, 15);
+      setNewCoords((oldState) => [
+        ...oldState,
+        { x: pos.x, y: pos.y, miss: !drawType },
+      ]);
     }
-  }, [DPI_HEIGHT, DPI_WIDTH, coordinates, mode]);
+  };
 
-  // const draw = e => {
-  //   if (mode !== "view") {
-  //     console.log(e);
-  //     if (!e.target.matches(canvID)) return;
-  //     var pos = getMousePos(canvas, e);
-  //     console.log(pos);
-
-  //     let posx = pos.x;
-  //     let posy = pos.y;
-  //     drawType === true
-  //       ? (ctx.fillStyle = "#008000")
-  //       : (ctx.fillStyle = "#ff0000");
-  //     ctx.fillRect(posx, posy, 15, 15);
-  //     newCoords.push({ x: posx, y: posy, miss: !drawType });
-  //   }
-  // };
-
-  // const getMousePos = (canvas, evt) => {
-  //   var rect = canvas.getBoundingClientRect();
-  //   return {
-  //     x: ((evt.clientX - rect.left) / (rect.right - rect.left)) * canvas.width,
-  //     y: ((evt.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height
-  //   };
-  // };
+  const getMousePos = (evt) => {
+    return {
+      x:
+        ((evt.clientX - canvBound.left) / (canvBound.right - canvBound.left)) *
+        canv.width,
+      y:
+        ((evt.clientY - canvBound.top) / (canvBound.bottom - canvBound.top)) *
+        canv.height,
+    };
+  };
 
   return (
     <div className={styles.gamePlayerCanvasWrap}>
@@ -77,7 +84,7 @@ function GamePlayerCanvas({ coordinates = {}, mode = "edit", canvID }) {
         ref={canvasRef}
         className={styles.gamePlayerCanvas}
         id={canvID}
-        // onClick={e => draw(e)}
+        onClick={(e) => draw(e)}
       ></canvas>
       {mode === "edit" ? (
         <div className={styles.gamePlayerCanvasButtons}>
