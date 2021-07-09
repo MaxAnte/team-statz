@@ -16,6 +16,7 @@ function AddGamePopup({ closeHandler }) {
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [teams, setTeams] = useState(undefined);
   const [form, setForm] = useState({ playersStats: [] });
+  const [formClose, setFormClose] = useState(false);
 
   const { request } = useHttp();
 
@@ -44,6 +45,7 @@ function AddGamePopup({ closeHandler }) {
     e.preventDefault();
     const data = await request("/api/game/add-game", "POST", { ...form });
     console.log(data);
+    setFormClose(true);
   };
 
   const handleGetActive = (enemy) => {
@@ -61,95 +63,116 @@ function AddGamePopup({ closeHandler }) {
 
   return (
     <div className={styles.popupWrap}>
-      <div className={styles.popupContainer}>
-        <h3 className={styles.popupTitle}>Add Game Stats</h3>
-        <form className={styles.addGameForm} onSubmit={handleSubmit}>
-          <h4 className={styles.popupSubtitle}>Set general game information</h4>
-          <div className={styles.popupSection}>
-            <div className={styles.genGameInfo}>
-              <span className={styles.genGameInfoNames}>Basketball City</span>
-              <input
-                type="text"
-                maxLength="3"
-                name="ourScore"
-                id="ourScore"
-                className={styles.genGameInfoScore}
-                onChange={handleChangeInput}
-              />
-              <span>:</span>
-              <input
-                type="text"
-                maxLength="3"
-                name="enemyScore"
-                id="enemyScore"
-                className={styles.genGameInfoScore}
-                onChange={handleChangeInput}
-              />
-              <Select
-                options={teamList ? teamList : []}
-                className={styles.genGameInfoNames}
-                getActive={handleGetActive}
-              />
-            </div>
-          </div>
-
-          <h4 className={styles.popupSubtitle}>
-            Check players that have played that game
-          </h4>
-          <div className={styles.popupSection}>
-            <div className={styles.playersSelect}>
-              {playersCheck.map((_, i) => (
-                <div
-                  key={`playerName_${i}`}
-                  className={styles.playerCard}
-                  onClick={() => handleCheck(i)}
-                >
-                  <img src={blankPhoto} alt="" />
-                  <span>Player Name, Position</span>
-                  <div
-                    className={`${styles.playerCheck} ${
-                      playersCheck[i] ? styles.playerCheckActive : ""
-                    }`}
-                  >
-                    <CheckIcon width="14px" heigth="14px" color="green" />
-                  </div>
-                  {!playersCheck[i] ? (
-                    <div className={styles.disabler}></div>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-
-            {!checkListAccept ? (
-              <button
-                className={`btn__main ${styles.playersSelectAccept}`}
-                onClick={() => setCheckListAccept(true)}
-              >
-                Save
-              </button>
-            ) : null}
-          </div>
-
-          {!checkListAccept ? <span>Check players above</span> : null}
-          {checkListAccept ? (
-            <>
-              <h4 className={styles.popupSubtitle}>Add stats to each player</h4>
+      <div
+        className={`${styles.popupContainer} ${
+          formClose ? styles.centerAlign : ""
+        }`}
+      >
+        {!formClose ? (
+          <>
+            <h3 className={styles.popupTitle}>Add Game Stats</h3>
+            <form className={styles.addGameForm} onSubmit={handleSubmit}>
+              <h4 className={styles.popupSubtitle}>
+                Set general game information
+              </h4>
               <div className={styles.popupSection}>
-                {playersCheck
-                  .filter((el) => el)
-                  .map((_, i) => (
-                    <div key={`playerName_${i}`} className={styles.gpsPlayer}>
-                      <AddGamePlayerStat
-                        handleChangePlayerStats={handleChangePlayerStats}
-                      />
+                <div className={styles.genGameInfo}>
+                  <span className={styles.genGameInfoNames}>
+                    Basketball City
+                  </span>
+                  <input
+                    type="text"
+                    maxLength="3"
+                    name="ourScore"
+                    id="ourScore"
+                    className={styles.genGameInfoScore}
+                    onChange={handleChangeInput}
+                  />
+                  <span>:</span>
+                  <input
+                    type="text"
+                    maxLength="3"
+                    name="enemyScore"
+                    id="enemyScore"
+                    className={styles.genGameInfoScore}
+                    onChange={handleChangeInput}
+                  />
+                  <Select
+                    options={teamList ? teamList : []}
+                    className={styles.genGameInfoNames}
+                    getActive={handleGetActive}
+                  />
+                </div>
+              </div>
+
+              <h4 className={styles.popupSubtitle}>
+                Check players that have played that game
+              </h4>
+              <div className={styles.popupSection}>
+                <div className={styles.playersSelect}>
+                  {playersCheck.map((_, i) => (
+                    <div
+                      key={`playerName_${i}`}
+                      className={styles.playerCard}
+                      onClick={() => handleCheck(i)}
+                    >
+                      <img src={blankPhoto} alt="" />
+                      <span>Player Name, Position</span>
+                      <div
+                        className={`${styles.playerCheck} ${
+                          playersCheck[i] ? styles.playerCheckActive : ""
+                        }`}
+                      >
+                        <CheckIcon width="14px" heigth="14px" color="green" />
+                      </div>
+                      {!playersCheck[i] ? (
+                        <div className={styles.disabler}></div>
+                      ) : null}
                     </div>
                   ))}
-              </div>
-              <button className="btn__main">Save game info</button>
-            </>
-          ) : null}
-        </form>
+                </div>
 
+                {!checkListAccept ? (
+                  <button
+                    className={`btn__main ${styles.playersSelectAccept}`}
+                    onClick={() => setCheckListAccept(true)}
+                    disabled={!playersCheck.includes(true)}
+                  >
+                    Save
+                  </button>
+                ) : null}
+              </div>
+
+              {!checkListAccept ? <span>Check players above</span> : null}
+              {checkListAccept ? (
+                <>
+                  <h4 className={styles.popupSubtitle}>
+                    Add stats to each player
+                  </h4>
+                  <div className={styles.popupSection}>
+                    {playersCheck
+                      .filter((el) => el)
+                      .map((_, i) => (
+                        <div
+                          key={`playerName_${i}`}
+                          className={styles.gpsPlayer}
+                        >
+                          <AddGamePlayerStat
+                            handleChangePlayerStats={handleChangePlayerStats}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <button className="btn__main">Save game info</button>
+                </>
+              ) : null}
+            </form>
+          </>
+        ) : (
+          <span className={styles.successMessage}>
+            Information about game has been added successfully!
+          </span>
+        )}
         <div className={styles.closeBtn} onClick={() => closeHandler()}>
           <CloseIcon width="20px" heigth="20px" color="black" />
         </div>

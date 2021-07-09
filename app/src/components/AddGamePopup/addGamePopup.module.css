@@ -20,6 +20,9 @@
   align-items: center;
   padding: 0px 10px;
 }
+.centerAlign {
+  justify-content: center;
+}
 .popupContainer::-webkit-scrollbar {
   width: 5px;
 }
@@ -187,4 +190,8 @@
 }
 .gpsPlayer:last-child:after {
   content: none;
+}
+
+.successMessage {
+  font-size: 18px;
 }

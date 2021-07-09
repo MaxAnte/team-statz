@@ -60,3 +60,6 @@ input[type="number"] {
   background-color: var(--color-button-hover);
   transition: all 0.3s ease;
 }
+.btn__main:disabled {
+  background-color: var(--color-light-gray);
+}
