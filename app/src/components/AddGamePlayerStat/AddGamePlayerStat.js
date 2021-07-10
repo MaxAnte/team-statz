@@ -17,7 +17,7 @@ function AddGamePlayerStat({ playerID, handleChangePlayerStats }) {
     setPlayerStats((prevState) => ({ ...prevState, coordinates: coords }));
 
   useEffect(() => {
-    handleChangePlayerStats(playerStats);
+    handleChangePlayerStats(playerID, playerStats);
   }, [playerStats]);
 
   return (
