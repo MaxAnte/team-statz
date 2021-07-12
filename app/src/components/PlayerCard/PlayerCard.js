@@ -44,41 +44,31 @@ function PlayerCard({ player }) {
             <img src={basket} alt="Bucket mashine" />
             <span>Bucket mashine</span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
         {player.bestInReb ? (
           <div className={styles.playerBadge}>
             <img src={glassCleaner} alt="Glass cleaner" />
             <span>Glass cleaner</span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
         {player.bestInAst ? (
           <div className={styles.playerBadge}>
             <img src={assist} alt="Point GOD" />
             <span>Point GOD</span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
         {player.bestInBlk ? (
           <div className={styles.playerBadge}>
             <img src={block} alt="Block mashine" />
             <span>You shall NOT pass</span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
         {player.bestInStl ? (
           <div className={styles.playerBadge}>
             <img src={thief} alt="Thief" />
             <span>Thief</span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
       </div>
 
       <div className={styles.playerImg}>

@@ -17,8 +17,6 @@ function Team({ games }) {
     getPlayers();
   }, []);
 
-  console.log(players);
-
   let bestPts = { pts: 0, id: 0 };
   let bestReb = { reb: 0, id: 0 };
   let bestAst = { ast: 0, id: 0 };
@@ -46,23 +44,12 @@ function Team({ games }) {
       bestStl.id = el.id;
     }
   });
-  players.map((el) => {
-    if (el.id === bestPts.id) {
-      el.bestInPts = true;
-    }
-    if (el.id === bestReb.id) {
-      el.bestInReb = true;
-    }
-    if (el.id === bestAst.id) {
-      el.bestInAst = true;
-    }
-    if (el.id === bestBlk.id) {
-      el.bestInBlk = true;
-    }
-    if (el.id === bestStl.id) {
-      el.bestInStl = true;
-    }
-    return el;
+  players.forEach((el) => {
+    if (el.id === bestPts.id) el.bestInPts = true;
+    if (el.id === bestReb.id) el.bestInReb = true;
+    if (el.id === bestAst.id) el.bestInAst = true;
+    if (el.id === bestBlk.id) el.bestInBlk = true;
+    if (el.id === bestStl.id) el.bestInStl = true;
   });
 
   return (
