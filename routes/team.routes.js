@@ -1,10 +1,9 @@
 const { Router } = require("express");
-const { check, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const Team = require("../models/Team");
 const router = Router();
 
 router.post("/teams", [], async (req, res) => {
-  console.log("Req body:", req.body);
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty())

@@ -19,10 +19,6 @@ const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
   };
   const req = http.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
-
-    res.on("data", (d) => {
-      process.stdout.write(d);
-    });
   });
   req.on("error", (error) => {
     console.error(error);
@@ -31,17 +27,40 @@ const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
   req.end();
 };
 
+const updatePlayerDB = async (playersStats) => {
+  playersStats.forEach((player) => {
+    const data = JSON.stringify({ player });
+    const options = {
+      hostname: "localhost",
+      port: 3000,
+      path: "/api/player/update",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const req = http.request(options, (res) => {
+      console.log(`statusCode: ${res.statusCode}`);
+    });
+    req.on("error", (error) => {
+      console.error(error);
+    });
+    req.write(data);
+    req.end();
+  });
+};
+
 // /api/game/add-game
 router.post("/add-game", [], async (req, res) => {
-  console.log("Req body:", req.body);
   try {
     const game = new Game(req.body);
 
     const { enemy, ourScore, enemyScore, playersStats } = req.body;
 
     updateTeamDB(enemy, enemyScore, ourScore);
+    updatePlayerDB(playersStats);
 
-    // await game.save();
+    await game.save();
 
     res.status(201).json({ message: `${game} has been added!` });
   } catch (e) {
@@ -52,7 +71,6 @@ router.post("/add-game", [], async (req, res) => {
 
 // /api/game/games
 router.post("/games", async (req, res) => {
-  console.log("Req body:", req.body);
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty())

@@ -17,7 +17,6 @@ import styles from "./background.module.css";
 function App({ store }) {
   const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
-  console.log("store:", store, "moder:", isAuthenticated);
 
   if (!ready) return <Loader />;
 

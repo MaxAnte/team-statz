@@ -3,7 +3,7 @@ import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 
 import styles from "./gameCard.module.css";
 
-function GameCard({ game, players }) {
+function GameCard({ game }) {
   return (
     <div className={styles.gameCard}>
       <h4 className={styles.gameName}>vs. {game.enemy}</h4>
@@ -18,14 +18,9 @@ function GameCard({ game, players }) {
         :<span>{game.enemyScore}</span>
       </div>
       <div className={styles.gameDate}>{game.date}</div>
-      {game.playersStats.map((el) => {
+      {game.playersStats.map((player) => {
         return (
-          <GamePlayerStat
-            player={el}
-            allPlayers={players}
-            gameID={game.id}
-            key={el.id}
-          />
+          <GamePlayerStat player={player} gameID={game._id} key={player._id} />
         );
       })}
     </div>

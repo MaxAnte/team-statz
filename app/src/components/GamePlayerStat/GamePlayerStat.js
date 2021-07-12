@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import styles from "./gamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function GamePlayerStat({ player, allPlayers, gameID }) {
-  const curPlayerArr = allPlayers.filter((item) => item.id === player.id);
-  const [curPlayer] = curPlayerArr;
+function GamePlayerStat({ player, gameID }) {
+  const { request } = useHttp();
+  const [playerInfo, setPlayerInfo] = useState({ name: "", position: "" });
+
+  const getPlayerById = async () => {
+    try {
+      const data = await request("/api/player/id", "POST", { _id: player._id });
+      if (data) setPlayerInfo(data);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getPlayerById();
+  }, []);
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;
@@ -62,17 +74,13 @@ function GamePlayerStat({ player, allPlayers, gameID }) {
       </div>
     );
   };
-  // console.log(player);
 
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        <img
-          src={curPlayer.image_thumb ? curPlayer.image_thumb : blankPhoto}
-          alt={curPlayer.name}
-        />
+        <img src={blankPhoto} alt={playerInfo.name} />
         <h5>
-          {curPlayer.name}, {curPlayer.position}
+          {playerInfo.name}, {playerInfo.position}
         </h5>
       </div>
       <div className={styles.gpsRight}>

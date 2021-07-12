@@ -41,7 +41,6 @@ function Schedule({ games }) {
   const updateCalendar = (e) => {
     let curMonth;
     let curYear;
-    console.log(calendar.year);
     curYear = calendar.year;
     curMonth = +calendar.month;
 
@@ -146,8 +145,6 @@ function Schedule({ games }) {
   let nextMonthDays = createDaysForNextMonth(calendar.year, calendar.month);
 
   let days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
-
-  // console.log(games);
 
   return (
     <div className={`${styles.schedule} page-wrapper`}>

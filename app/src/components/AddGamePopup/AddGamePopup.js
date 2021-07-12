@@ -12,39 +12,52 @@ import styles from "./addGamePopup.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function AddGamePopup({ closeHandler }) {
-  const [playersCheck, setPlayersCheck] = useState(Array(11).fill(false));
+  const [players, setPlayers] = useState([]);
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [teams, setTeams] = useState(undefined);
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
-  const [playersStatsArr, setPlayersStatsArr] = useState(
-    playersCheck.filter((el) => !!el)
-  );
+  const [playersStatsArr, setPlayersStatsArr] = useState([]);
 
   const { request } = useHttp();
 
   const handleCheck = (index) => {
-    const newCheckSet = playersCheck;
-    newCheckSet[index] = !newCheckSet[index];
-    setPlayersCheck([...playersCheck]);
+    const checkSet = players;
+    checkSet[index].check = !checkSet[index].check;
+    setPlayers((prevState) => ({ ...prevState, ...checkSet }));
   };
 
   const getTeams = async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
-      if (data) setTeams(data);
+      if (data) setTeams(Object.values(data));
     } catch (e) {}
   };
 
+  const getPlayers = async () => {
+    try {
+      const data = await request("/api/player/players", "POST", {});
+      if (data) setPlayers(Object.values(data));
+    } catch (e) {}
+  };
+
+  const teamList = teams ? teams.map((team) => team.name) : [];
+  Object.values(players).map((player) => {
+    return {
+      name: player.name,
+      position: player.position,
+      check: false,
+    };
+  });
+
   useEffect(() => {
     getTeams();
+    getPlayers();
+    setPlayersStatsArr(players.filter((el) => !!el.check));
   }, []);
 
-  const teamList = teams ? Object.values(teams).map((team) => team.name) : [];
-
-  const handleGetActive = (enemy) => {
+  const handleGetActive = (enemy) =>
     setForm((prevState) => ({ ...prevState, enemy }));
-  };
 
   const handleChangeInput = (e) =>
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
@@ -65,8 +78,7 @@ function AddGamePopup({ closeHandler }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await request("/api/game/add-game", "POST", { ...form });
-    console.log(data);
+    await request("/api/game/add-game", "POST", { ...form });
     setFormClose(true);
   };
 
@@ -119,22 +131,24 @@ function AddGamePopup({ closeHandler }) {
               </h4>
               <div className={styles.popupSection}>
                 <div className={styles.playersSelect}>
-                  {playersCheck.map((_, i) => (
+                  {Object.values(players).map((player, i) => (
                     <div
                       key={`playerName_${i}`}
                       className={styles.playerCard}
                       onClick={() => handleCheck(i)}
                     >
                       <img src={blankPhoto} alt="" />
-                      <span>Player Name, Position</span>
+                      <span>
+                        {player.name}, {player.position}
+                      </span>
                       <div
                         className={`${styles.playerCheck} ${
-                          playersCheck[i] ? styles.playerCheckActive : ""
+                          player.check ? styles.playerCheckActive : ""
                         }`}
                       >
                         <CheckIcon width="14px" heigth="14px" color="green" />
                       </div>
-                      {!playersCheck[i] ? (
+                      {!player.check ? (
                         <div className={styles.disabler}></div>
                       ) : null}
                     </div>
@@ -145,7 +159,7 @@ function AddGamePopup({ closeHandler }) {
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
-                    disabled={!playersCheck.includes(true)}
+                    // disabled={!playersCheck.includes(true)}
                   >
                     Save
                   </button>
@@ -159,15 +173,15 @@ function AddGamePopup({ closeHandler }) {
                     Add stats to each player
                   </h4>
                   <div className={styles.popupSection}>
-                    {playersCheck
-                      .filter((el) => el)
-                      .map((_, i) => (
+                    {Object.values(players)
+                      .filter((player) => player.check)
+                      .map((player, i) => (
                         <div
                           key={`playerName_${i}`}
                           className={styles.gpsPlayer}
                         >
                           <AddGamePlayerStat
-                            playerID={i}
+                            player={player}
                             handleChangePlayerStats={handleChangePlayerStats}
                           />
                         </div>

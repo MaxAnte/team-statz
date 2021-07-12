@@ -33,9 +33,9 @@ function PlayerCard({ player }) {
         return blankPhoto;
     }
   };
+  const imgUrl = chooseImg(player.name);
   // rework area above
 
-  const imgUrl = chooseImg(player.name);
   return (
     <div className={styles.playerCard}>
       <div className={styles.playerBadges}>

@@ -4,12 +4,13 @@ import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePlayerStat({ playerID, handleChangePlayerStats }) {
+function AddGamePlayerStat({ player, handleChangePlayerStats }) {
   const [playerStats, setPlayerStats] = useState({});
 
   const handleChangeStats = (e) => {
     setPlayerStats((prevState) => ({
       ...prevState,
+      _id: player._id,
       [e.target.name]: e.target.value,
     }));
   };
@@ -17,14 +18,16 @@ function AddGamePlayerStat({ playerID, handleChangePlayerStats }) {
     setPlayerStats((prevState) => ({ ...prevState, coordinates: coords }));
 
   useEffect(() => {
-    handleChangePlayerStats(playerID, playerStats);
+    handleChangePlayerStats(player._id, playerStats);
   }, [playerStats]);
 
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
         <img src={blankPhoto} alt="" />
-        <h5>Player Name, Position</h5>
+        <h5>
+          {player.name}, {player.position}
+        </h5>
       </div>
       <div className={styles.gpsRight}>
         <div className={styles.gpsStats}>

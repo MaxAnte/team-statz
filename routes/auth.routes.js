@@ -14,7 +14,6 @@ router.post(
     check("password", "Minimum 6 symbols").isLength({ min: 5 }),
   ],
   async (req, res) => {
-    console.log("Req body:", req.body);
     try {
       const errors = validationResult(req);
 
@@ -52,7 +51,6 @@ router.post(
     check("password", "Minimum 5 symbols").isLength({ min: 5 }),
   ],
   async (req, res) => {
-    console.log("Req body:", req.body);
     try {
       const errors = validationResult(req);
 

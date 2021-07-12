@@ -25,31 +25,31 @@ function Team({ games }) {
   players.forEach((el) => {
     if (el.pts > bestPts.pts) {
       bestPts.pts = el.pts;
-      bestPts.id = el.id;
+      bestPts.id = el._id;
     }
     if (el.reb > bestReb.reb) {
       bestReb.reb = el.reb;
-      bestReb.id = el.id;
+      bestReb.id = el._id;
     }
     if (el.ast > bestAst.ast) {
       bestAst.ast = el.ast;
-      bestAst.id = el.id;
+      bestAst.id = el._id;
     }
     if (el.blk > bestBlk.blk) {
       bestBlk.blk = el.blk;
-      bestBlk.id = el.id;
+      bestBlk.id = el._id;
     }
     if (el.stl > bestStl.stl) {
       bestStl.stl = el.stl;
-      bestStl.id = el.id;
+      bestStl.id = el._id;
     }
   });
   players.forEach((el) => {
-    if (el.id === bestPts.id) el.bestInPts = true;
-    if (el.id === bestReb.id) el.bestInReb = true;
-    if (el.id === bestAst.id) el.bestInAst = true;
-    if (el.id === bestBlk.id) el.bestInBlk = true;
-    if (el.id === bestStl.id) el.bestInStl = true;
+    if (el._id === bestPts.id) el.bestInPts = true;
+    if (el._id === bestReb.id) el.bestInReb = true;
+    if (el._id === bestAst.id) el.bestInAst = true;
+    if (el._id === bestBlk.id) el.bestInBlk = true;
+    if (el._id === bestStl.id) el.bestInStl = true;
   });
 
   return (
