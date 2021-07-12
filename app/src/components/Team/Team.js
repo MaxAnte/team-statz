@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
 import { NavLink } from "react-router-dom";
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
 
 import styles from "./team.module.css";
 
-function Team({ players, games }) {
+function Team({ games }) {
+  const [players, setPlayers] = useState([]);
+  const { request } = useHttp();
+  const getPlayers = async () => {
+    const data = await request("/api/player/players", "POST", {});
+    if (data) setPlayers(Object.values(data));
+  };
+  useEffect(() => {
+    getPlayers();
+  }, []);
+
+  console.log(players);
+
   let bestPts = { pts: 0, id: 0 };
   let bestReb = { reb: 0, id: 0 };
   let bestAst = { ast: 0, id: 0 };

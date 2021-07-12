@@ -9,7 +9,33 @@ import assist from "../../assets/images/badges/assist.png";
 import thief from "../../assets/images/badges/thief.svg";
 import block from "../../assets/images/badges/block.svg";
 
+//temp
+import lebron from "../../assets/images/players/lebron.png";
+import stephen from "../../assets/images/players/stephen.png";
+import hakeem from "../../assets/images/players/hakeem.png";
+import nikola from "../../assets/images/players/nikola.png";
+import john from "../../assets/images/players/john.png";
+
 function PlayerCard({ player }) {
+  const chooseImg = (name) => {
+    switch (name) {
+      case "Lebron James":
+        return lebron;
+      case "Nikola Jokic":
+        return nikola;
+      case "Stephen Curry":
+        return stephen;
+      case "Hakeem Olajuwon":
+        return hakeem;
+      case "John Stockton":
+        return john;
+      default:
+        return blankPhoto;
+    }
+  };
+  // rework area above
+
+  const imgUrl = chooseImg(player.name);
   return (
     <div className={styles.playerCard}>
       <div className={styles.playerBadges}>
@@ -57,7 +83,7 @@ function PlayerCard({ player }) {
 
       <div className={styles.playerImg}>
         <img
-          src={player.image_thumb === "" ? blankPhoto : player.image_thumb}
+          src={player.image_thumb ? player.image_thumb : imgUrl}
           alt="Player"
         />
       </div>
