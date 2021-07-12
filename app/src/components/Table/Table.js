@@ -24,8 +24,10 @@ function Table() {
       el.winRate = (el.wins * 100) / (el.wins + el.loses);
       el.points = el.wins * 2 + el.loses * 1;
     });
-    teamList.sort((a, b) => b.winRate - a.winRate);
+    console.log("presort", teamList);
+    teamList.sort((a, b) => b.points - a.points);
   }
+  console.log(teamList);
 
   return (
     <div className={styles.tableWrap}>
