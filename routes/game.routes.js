@@ -1,15 +1,13 @@
 const { Router } = require("express");
-const { check, validationResult } = require("express-validator");
-const Game = require("../models/Game");
-const router = Router();
+const { validationResult } = require("express-validator");
 const http = require("http");
+const Game = require("../models/Game");
+
+const router = Router();
 
 const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
   const winFlag = enemyScore > ourScore;
-  console.log(winFlag);
-
   const data = JSON.stringify({ enemyName, winFlag });
-
   const options = {
     hostname: "localhost",
     port: 3000,
@@ -31,10 +29,6 @@ const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
   });
   req.write(data);
   req.end();
-  // await request("/api/team/update", "POST", {
-  //   enemyName,
-  //   winFlag,
-  // });
 };
 
 // /api/game/add-game

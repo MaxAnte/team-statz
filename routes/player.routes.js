@@ -1,9 +1,9 @@
 const { Router } = require("express");
-const { check, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const Player = require("../models/Player");
 const router = Router();
 
-// /api/auth/login
+// /api/player/players
 router.post("/players", async (req, res) => {
   console.log("Req body:", req.body);
   try {
@@ -15,11 +15,12 @@ router.post("/players", async (req, res) => {
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
-  const player = await Player.find({});
+  const players = await Player.find({});
 
-  if (!player) return res.status(400).json({ message: "Game not found" });
+  if (!players)
+    return res.status(400).json({ message: "There are no active players" });
 
-  res.json({ name: player.name });
+  res.json({ ...players });
 });
 
 module.exports = router;
