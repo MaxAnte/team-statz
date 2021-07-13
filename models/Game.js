@@ -4,8 +4,8 @@ const schema = new Schema({
   enemy: { type: String, required: true },
   ourScore: { type: Number, required: true },
   enemyScore: { type: Number, required: true },
-  // date: { type: Date, required: true },
-  // time: "17:00",
+  date: { type: String, required: true },
+  time: { type: String, required: true },
   playersStats: [
     {
       pID: { type: Types.ObjectId, ref: "Player" },
