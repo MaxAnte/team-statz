@@ -19,8 +19,7 @@ function GameCardCalendar({ game }) {
         </div>
       ) : (
         <div className={styles.calendarGameDate}>
-          <span>{game.date}</span>
-          <span>{game.time}</span>
+          <span>{game.date}</span>at<span>{game.time}</span>
         </div>
       )}
     </div>
