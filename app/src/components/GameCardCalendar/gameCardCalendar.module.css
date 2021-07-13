@@ -36,10 +36,10 @@
   color: var(--color-red);
 }
 .calendarGameDate {
-  position: absolute;
-  top: 7px;
-  right: 7px;
   font-size: 12px;
   font-weight: 500;
   color: var(--color-black);
+}
+.calendarGameDate span {
+  padding: 0px 5px;
 }
