@@ -10,6 +10,7 @@ app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/team", require("./routes/team.routes"));
 app.use("/api/game", require("./routes/game.routes"));
 app.use("/api/player", require("./routes/player.routes"));
+app.use("/api/date", require("./routes/date.routes"));
 
 const PORT = config.get("port") || 5000;
 

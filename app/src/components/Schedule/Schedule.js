@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
 import dayjs from "dayjs";
+
+import { AuthContext } from "../../context/AuthContext";
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
+import AddDatePopup from "../AddDatePopup/AddDatePopup";
+import PlusIcon from "../../assets/icons/PlusIcon";
 
 import styles from "./schedule.module.css";
 
 function Schedule({ games }) {
+  const [dates, setDates] = useState(null);
+  const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
+  const { isAuthenticated } = useContext(AuthContext);
+  const { request } = useHttp();
+
+  const getDates = async () => {
+    try {
+      const data = await request("/api/date/dates", "POST", {});
+      if (data) setDates(Object.values(data));
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getDates();
+  }, []);
+
+  const closeHandler = () => setAddDateForm({ form: false, date: "" });
+
   const weekday = require("dayjs/plugin/weekday");
   const weekOfYear = require("dayjs/plugin/weekOfYear");
   dayjs.extend(weekday);
@@ -170,25 +193,43 @@ function Schedule({ games }) {
           ))}
         </ol>
         <ol className={styles.daysGrid}>
-          {days.map((day) => (
-            <li
-              key={day.date}
-              className={`${styles.calendarDay} ${
-                !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
-              }
-              ${day.date === TODAY ? styles.calendarDayToday : ""}`}
-            >
-              <span>{day.dayOfMonth}</span>
-              {games.map((game) => {
-                if (game.date === day.date) {
-                  return <GameCardCalendar game={game} key={game.id} />;
+          {days.map((day) => {
+            return (
+              <li
+                key={day.date}
+                className={`${styles.calendarDay} ${
+                  !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
                 }
-                return false;
-              })}
-            </li>
-          ))}
+              ${day.date === TODAY ? styles.calendarDayToday : ""}`}
+                onClick={() => setAddDateForm({ form: true, date: day.date })}
+              >
+                <span>{day.dayOfMonth}</span>
+                {dates &&
+                  dates.map((game) => {
+                    if (game.date === day.date) {
+                      return <GameCardCalendar game={game} key={game.id} />;
+                    } else {
+                      if (day.isCurrentMonth && game.date !== day.date)
+                        return (
+                          <div className={styles.addGameDate}>
+                            <PlusIcon
+                              width="20px"
+                              heigth="20px"
+                              color="white"
+                            />
+                          </div>
+                        );
+                      return null;
+                    }
+                  })}
+              </li>
+            );
+          })}
         </ol>
       </div>
+      {isAuthenticated && addDateForm.form ? (
+        <AddDatePopup closeHandler={closeHandler} date={addDateForm.date} />
+      ) : null}
     </div>
   );
 }

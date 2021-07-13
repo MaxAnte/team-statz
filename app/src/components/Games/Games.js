@@ -7,7 +7,7 @@ import AddGamePopup from "../AddGamePopup/AddGamePopup";
 
 import styles from "./games.module.css";
 
-function Games({ store }) {
+function Games() {
   const [addPopup, setAddPopup] = useState(false);
   const [games, setGames] = useState(undefined);
   const { request } = useHttp();

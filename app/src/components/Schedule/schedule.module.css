@@ -73,6 +73,7 @@ li {
   background-color: var(--color-white);
   color: var(--color-light-gray);
   padding: 5px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,6 +91,7 @@ li {
 .calendarDayNotCurrent {
   background-color: var(--color-calendar);
   color: var(--color-calendar);
+  cursor: auto;
 }
 .calendarDayToday {
   padding-top: 4px;
@@ -98,4 +100,22 @@ li {
   color: var(--color-white);
   border-radius: 50%;
   background-color: var(--color-calendar);
+}
+
+.addGameDate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: var(--color-button);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  transition: all 0.2s ease;
+}
+.calendarDay:hover .addGameDate {
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.2s ease;
 }
