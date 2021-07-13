@@ -49,16 +49,37 @@ const updatePlayerDB = async (playersStats) => {
     req.end();
   });
 };
+const updateDateDB = async (date, time, enemy, enemyScore, ourScore) => {
+  const data = JSON.stringify({ date, time, enemy, enemyScore, ourScore });
+  const options = {
+    hostname: "localhost",
+    port: 3000,
+    path: "/api/date/update",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const req = http.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+  });
+  req.on("error", (error) => {
+    console.error(error);
+  });
+  req.write(data);
+  req.end();
+};
 
 // /api/game/add-game
 router.post("/add-game", [], async (req, res) => {
   try {
     const game = new Game(req.body);
 
-    const { enemy, ourScore, enemyScore, playersStats } = req.body;
+    const { enemy, ourScore, enemyScore, playersStats, date, time } = req.body;
 
     updateTeamDB(enemy, enemyScore, ourScore);
     updatePlayerDB(playersStats);
+    updateDateDB(date, time, enemy, enemyScore, ourScore);
 
     await game.save();
 

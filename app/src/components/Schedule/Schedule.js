@@ -9,7 +9,7 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 
 import styles from "./schedule.module.css";
 
-function Schedule({ games }) {
+function Schedule() {
   const [dates, setDates] = useState(null);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { isAuthenticated } = useContext(AuthContext);
@@ -201,7 +201,11 @@ function Schedule({ games }) {
                   !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
                 }
               ${day.date === TODAY ? styles.calendarDayToday : ""}`}
-                onClick={() => setAddDateForm({ form: true, date: day.date })}
+                onClick={() =>
+                  dates && dates.find((el) => el.date === day.date)
+                    ? null
+                    : setAddDateForm({ form: true, date: day.date })
+                }
               >
                 <span>{day.dayOfMonth}</span>
                 {dates &&
@@ -209,7 +213,11 @@ function Schedule({ games }) {
                     if (game.date === day.date) {
                       return <GameCardCalendar game={game} key={game.id} />;
                     } else {
-                      if (day.isCurrentMonth && game.date !== day.date)
+                      if (
+                        isAuthenticated &&
+                        day.isCurrentMonth &&
+                        game.date !== day.date
+                      )
                         return (
                           <div className={styles.addGameDate}>
                             <PlusIcon

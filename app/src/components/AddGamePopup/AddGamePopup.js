@@ -83,13 +83,6 @@ function AddGamePopup({ closeHandler }) {
     setFormClose(true);
   };
 
-  const getDateNow = () => {
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = today.getMonth();
-    const d = today.getDay();
-    return `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d}` : d}`;
-  };
   const handleChangeDate = (e) =>
     setForm((prevState) => ({ ...prevState, date: e.target.value }));
   const handleChangeTime = (e) =>
@@ -138,12 +131,7 @@ function AddGamePopup({ closeHandler }) {
                   />
                 </div>
                 <div className={styles.date}>
-                  <input
-                    type="date"
-                    name="date"
-                    value={getDateNow()}
-                    onChange={handleChangeDate}
-                  />
+                  <input type="date" name="date" onChange={handleChangeDate} />
                   <input
                     type="text"
                     name="time"

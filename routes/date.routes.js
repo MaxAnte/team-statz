@@ -36,4 +36,20 @@ router.post("/dates", async (req, res) => {
   res.json(dates);
 });
 
+// /api/date/update
+router.post("/update", [], async (req, res) => {
+  const { date, time, enemy, enemyScore, ourScore } = req.body;
+  const dateDB = await Date.findOne({ date });
+
+  if (!dateDB)
+    return res.status(400).json({ message: `${playerDB} Teams not found` });
+
+  if (dateDB.enemy === enemy && dateDB.time === time) {
+    dateDB.enemyScore = enemyScore;
+    dateDB.ourScore = ourScore;
+  }
+  dateDB.save();
+  res.json({ ...dateDB });
+});
+
 module.exports = router;
