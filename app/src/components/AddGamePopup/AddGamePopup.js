@@ -53,7 +53,8 @@ function AddGamePopup({ closeHandler }) {
   useEffect(() => {
     getTeams();
     getPlayers();
-    setPlayersStatsArr(players.filter((el) => !!el.check));
+    if (players && typeof players === "array")
+      setPlayersStatsArr(players.filter((el) => !!el.check));
   }, []);
 
   const handleGetActive = (enemy) =>
