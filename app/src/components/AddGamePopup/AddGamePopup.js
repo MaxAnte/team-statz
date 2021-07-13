@@ -185,7 +185,6 @@ function AddGamePopup({ closeHandler }) {
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
-                    // disabled={!playersCheck.includes(true)}
                   >
                     Save
                   </button>
