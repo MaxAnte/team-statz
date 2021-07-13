@@ -22,7 +22,7 @@ function GamePlayerStat({ player, gameID }) {
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;
-    return `${perc.toFixed(1)}%`;
+    return atempts ? `${perc.toFixed(1)}%` : `0%`;
   };
 
   const getEfficiencyRate = (player) => {
@@ -59,7 +59,7 @@ function GamePlayerStat({ player, gameID }) {
       "Quntiple-Double",
     ];
     countableStats.forEach((key) => {
-      if (player[key] >= 10) count++;
+      if (key !== "dreb" && key !== "oreb" && player[key] >= 10) count++;
       if (key === "dreb") dreb = player[key];
       if (key === "oreb") dreb += player[key];
     });
