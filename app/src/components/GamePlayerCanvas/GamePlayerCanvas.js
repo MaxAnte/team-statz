@@ -12,7 +12,7 @@ function GamePlayerCanvas({
   const [canv, setCanv] = useState(undefined);
   const [canvBound, setCanvBound] = useState(undefined);
   const [context, setContext] = useState(undefined);
-  const [drawType, setDrawType] = useState(false);
+  const [drawType, setDrawType] = useState(true);
 
   const canvasRef = useRef(null);
 
@@ -98,7 +98,7 @@ function GamePlayerCanvas({
             className={`${styles.hit} ${
               drawType ? styles.gamePlayerCanvasButtonsHitActive : ""
             }`}
-            onClick={() => setDrawType(!drawType)}
+            onClick={() => setDrawType(true)}
           >
             Hit
           </div>
@@ -106,7 +106,7 @@ function GamePlayerCanvas({
             className={`${styles.miss} ${
               !drawType ? styles.gamePlayerCanvasButtonsMissActive : ""
             }`}
-            onClick={() => setDrawType(!drawType)}
+            onClick={() => setDrawType(false)}
           >
             Miss
           </div>
