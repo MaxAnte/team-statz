@@ -1,0 +1,9 @@
+.black {
+  fill: var(--color-black);
+}
+.white {
+  fill: var(--color-white);
+}
+.green {
+  fill: var(--color-green-main);
+}

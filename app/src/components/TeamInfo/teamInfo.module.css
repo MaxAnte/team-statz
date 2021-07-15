@@ -1,0 +1,37 @@
+.teamInfo {
+  display: flex;
+  width: 100%;
+  padding: 25px;
+  margin-block: 25px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  background: var(--color-white);
+}
+.teamInfoLeft {
+  width: 15%;
+  padding-right: 25px;
+  text-align: center;
+  position: relative;
+}
+.teamInfoLeft::after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 75%;
+  background: var(--color-black);
+  opacity: 0.15;
+}
+.teamInfoRight {
+  width: 85%;
+  padding: 0px 0px 0px 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.teamInfoRight p {
+  font-size: 22px;
+  font-weight: 500;
+}

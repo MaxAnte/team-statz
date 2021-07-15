@@ -1,0 +1,46 @@
+.calendarGameCard {
+  padding: 25px;
+  background: var(--color-white);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  position: relative;
+  z-index: 2;
+
+  height: 70%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.calendarGameCard:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.35);
+  transition: all 0.5s ease;
+}
+.calendarGameName {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.calendarGameScore {
+  font-weight: 700;
+}
+.calendarGameScore span {
+  padding: 0px 3px;
+}
+.win {
+  color: var(--color-green-main);
+}
+.lose {
+  color: var(--color-red);
+}
+.calendarGameDate {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-black);
+}
+.calendarGameDate span {
+  padding: 0px 5px;
+}

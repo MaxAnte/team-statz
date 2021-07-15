@@ -1,0 +1,121 @@
+ol,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.calendarMonth {
+  position: relative;
+  background-color: var(--color-calendar);
+  width: 100%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.calendarMonthHeader {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-white);
+  padding: 10px;
+}
+
+.calendarMonthHeaderSelectedMonth {
+  font-size: 24px;
+  font-weight: 600;
+}
+.calendarMonthHeaderSelectedMonth > span {
+  padding: 0px 8px;
+  cursor: pointer;
+}
+
+.calendarMonthHeaderSelectors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+}
+.calendarMonthHeaderSelectors > * {
+  cursor: pointer;
+}
+
+.dayOfWeek {
+  color: var(--color-light-gray);
+  font-size: 18px;
+  background-color: #fff;
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+.dayOfWeek > * {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.dayOfWeek,
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.daysGrid {
+  height: 100%;
+  position: relative;
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  border-top: solid 1px var(--color-calendar);
+}
+
+.calendarDay {
+  position: relative;
+  min-height: 100px;
+  font-size: 16px;
+  background-color: var(--color-white);
+  color: var(--color-light-gray);
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calendarDay > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+}
+.calendarDayNotCurrent {
+  background-color: var(--color-calendar);
+  color: var(--color-calendar);
+  cursor: auto;
+}
+.calendarDayToday {
+  padding-top: 4px;
+}
+.calendarDayToday > span {
+  color: var(--color-white);
+  border-radius: 50%;
+  background-color: var(--color-calendar);
+}
+
+.addGameDate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: var(--color-button);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  transition: all 0.2s ease;
+}
+.calendarDay:hover .addGameDate {
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.2s ease;
+}

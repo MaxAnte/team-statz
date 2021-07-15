@@ -1,0 +1,13 @@
+.teamPlayers {
+  display: flex;
+  align-items: center;
+  margin: 0px -15px;
+}
+.playerItem {
+  width: 25%;
+  padding: 0px 15px;
+}
+.playerLink {
+  text-decoration: none;
+  color: var(--color-text-main);
+}
