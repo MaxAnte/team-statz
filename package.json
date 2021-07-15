@@ -4,10 +4,12 @@
   "description": "Team-played sports statistic app",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "cross-env NODE_ENV=production node app.js",
     "server": "nodemon app.js",
     "app": "npm run start --prefix app",
-    "dev": "concurrently \"npm run server\" \"npm run app\""
+    "app:install": "npm install --prefix app",
+    "app:build": "npm run build --prefix app",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run app\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.7"
   }
 }
