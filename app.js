@@ -1,6 +1,7 @@
 const express = require("express");
 const config = require("config");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const app = express();
 
@@ -11,6 +12,14 @@ app.use("/api/team", require("./routes/team.routes"));
 app.use("/api/game", require("./routes/game.routes"));
 app.use("/api/player", require("./routes/player.routes"));
 app.use("/api/date", require("./routes/date.routes"));
+
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "app", "build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "app", "build", "index.html"));
+  });
+}
 
 const PORT = config.get("port") || 5000;
 
