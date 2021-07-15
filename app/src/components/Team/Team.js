@@ -6,15 +6,21 @@ import PlayerCard from "../PlayerCard/PlayerCard";
 
 import styles from "./team.module.css";
 
-function Team({ games }) {
+function Team() {
   const [players, setPlayers] = useState([]);
+  const [games, setGames] = useState([]);
   const { request } = useHttp();
   const getPlayers = async () => {
     const data = await request("/api/player/players", "POST", {});
     if (data) setPlayers(Object.values(data));
   };
+  const getGames = async () => {
+    const data = await request("/api/game/games", "POST", {});
+    if (data) setGames(Object.values(data));
+  };
   useEffect(() => {
     getPlayers();
+    getGames();
   }, []);
 
   let bestPts = { pts: 0, id: 0 };

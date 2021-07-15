@@ -14,7 +14,7 @@ import { useAuth } from "./hooks/auth.hook";
 import "./App.css";
 import styles from "./background.module.css";
 
-function App({ store }) {
+function App() {
   const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
 
@@ -38,18 +38,10 @@ function App({ store }) {
           <Header />
           <main>
             <Switch>
-              <Route path="/" exact component={() => <Games store={store} />} />
-              <Route
-                path="/team"
-                component={() => (
-                  <Team players={store.players} games={store.games} />
-                )}
-              />
+              <Route path="/" exact component={Games} />
+              <Route path="/team" component={Team} />
               <Route path="/player/:id" component={PlayerCard} />
-              <Route
-                path="/schedule"
-                component={() => <Schedule games={store.games} />}
-              />
+              <Route path="/schedule" component={Schedule} />
               <Route path="/stats" component={Stats} />
             </Switch>
           </main>
