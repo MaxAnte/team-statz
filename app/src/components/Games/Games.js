@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { AuthContext } from "../../context/AuthContext";
+
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";
-import { AuthContext } from "../../context/AuthContext";
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
+import MiniLoader from "../Loader/MiniLoader";
 
 import styles from "./games.module.css";
 
 function Games() {
   const [addPopup, setAddPopup] = useState(false);
   const [games, setGames] = useState(undefined);
-  const { request } = useHttp();
+  const { loading, request } = useHttp();
   const { isAuthenticated } = useContext(AuthContext);
 
   const getGames = async () => {
@@ -23,6 +25,7 @@ function Games() {
   useEffect(() => {
     getGames();
   }, []);
+
   const gamesList = games ? Object.values(games) : [];
 
   const closeHandler = () => setAddPopup(false);
@@ -38,13 +41,17 @@ function Games() {
         </div>
       ) : null}
       <div className={styles.gamesWrapper}>
-        {gamesList.reverse().map((game, id) => {
-          return (
-            <div className={styles.gamesItem} key={id}>
-              <GameCard game={game} />
-            </div>
-          );
-        })}
+        {loading ? (
+          <MiniLoader />
+        ) : (
+          gamesList.reverse().map((game, id) => {
+            return (
+              <div className={styles.gamesItem} key={id}>
+                <GameCard game={game} />
+              </div>
+            );
+          })
+        )}
       </div>
       {isAuthenticated && addPopup ? (
         <AddGamePopup closeHandler={closeHandler} />

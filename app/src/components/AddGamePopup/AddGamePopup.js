@@ -3,6 +3,7 @@ import { useHttp } from "../../hooks/http.hook";
 
 import Select from "../Select/select";
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
+import MiniLoader from "../Loader/MiniLoader";
 
 import CloseIcon from "../../assets/icons/CloseIcon";
 import CheckIcon from "../../assets/icons/CheckIcon";
@@ -19,7 +20,7 @@ function AddGamePopup({ closeHandler }) {
   const [formClose, setFormClose] = useState(false);
   const [playersStatsArr, setPlayersStatsArr] = useState([]);
 
-  const { request } = useHttp();
+  const { loading, request } = useHttp();
 
   const handleCheck = (index) => {
     const checkSet = players;
@@ -148,37 +149,40 @@ function AddGamePopup({ closeHandler }) {
                 Check players that have played that game
               </h4>
               <div className={styles.popupSection}>
-                <div className={styles.playersSelect}>
-                  {Object.values(players).map((player, i) => (
-                    <div
-                      key={`playerName_${i}`}
-                      className={styles.playerCard}
-                      onClick={() => handleCheck(i)}
-                    >
-                      <img
-                        src={
-                          player.image_thumb ? player.image_thumb : blankPhoto
-                        }
-                        alt={player.name}
-                      />
-                      <span>
-                        {player.name}, {player.position}
-                      </span>
+                {!players.length ? (
+                  <MiniLoader />
+                ) : (
+                  <div className={styles.playersSelect}>
+                    {Object.values(players).map((player, i) => (
                       <div
-                        className={`${styles.playerCheck} ${
-                          player.check ? styles.playerCheckActive : ""
-                        }`}
+                        key={`playerName_${i}`}
+                        className={styles.playerCard}
+                        onClick={() => handleCheck(i)}
                       >
-                        <CheckIcon width="14px" heigth="14px" color="green" />
+                        <img
+                          src={
+                            player.image_thumb ? player.image_thumb : blankPhoto
+                          }
+                          alt={player.name}
+                        />
+                        <span>
+                          {player.name}, {player.position}
+                        </span>
+                        <div
+                          className={`${styles.playerCheck} ${
+                            player.check ? styles.playerCheckActive : ""
+                          }`}
+                        >
+                          <CheckIcon width="14px" heigth="14px" color="green" />
+                        </div>
+                        {!player.check ? (
+                          <div className={styles.disabler}></div>
+                        ) : null}
                       </div>
-                      {!player.check ? (
-                        <div className={styles.disabler}></div>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-
-                {!checkListAccept ? (
+                    ))}
+                  </div>
+                )}
+                {players.length && !checkListAccept ? (
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
@@ -188,7 +192,9 @@ function AddGamePopup({ closeHandler }) {
                 ) : null}
               </div>
 
-              {!checkListAccept ? <span>Check players above</span> : null}
+              {players.length && !checkListAccept ? (
+                <span>Check players above</span>
+              ) : null}
               {checkListAccept ? (
                 <>
                   <h4 className={styles.popupSubtitle}>

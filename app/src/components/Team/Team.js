@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { NavLink } from "react-router-dom";
+
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
+import MiniLoader from "../Loader/MiniLoader";
 
 import styles from "./team.module.css";
 
 function Team() {
   const [players, setPlayers] = useState([]);
   const [games, setGames] = useState([]);
-  const { request } = useHttp();
+  const { loading, request } = useHttp();
   const getPlayers = async () => {
     const data = await request("/api/player/players", "POST", {});
     if (data) setPlayers(Object.values(data));
@@ -63,15 +65,19 @@ function Team() {
       <h2 className="title">Basketball City Team</h2>
       <TeamInfo players={players} games={games} />
       <div className={styles.teamPlayers}>
-        {players.map((player, id) => {
-          return (
-            <div className={styles.playerItem} key={id}>
-              <NavLink to={`/player/${id}`} className={styles.playerLink}>
-                <PlayerCard player={player} />
-              </NavLink>
-            </div>
-          );
-        })}
+        {loading ? (
+          <MiniLoader />
+        ) : (
+          players.map((player, id) => {
+            return (
+              <div className={styles.playerItem} key={id}>
+                <NavLink to={`/player/${id}`} className={styles.playerLink}>
+                  <PlayerCard player={player} />
+                </NavLink>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
