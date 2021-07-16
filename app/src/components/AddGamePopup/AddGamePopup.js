@@ -57,6 +57,10 @@ function AddGamePopup({ closeHandler }) {
       setPlayersStatsArr(players.filter((el) => !!el.check));
   }, []);
 
+  useEffect(() => {
+    gatherGameInfo(Object.values(playersStatsArr));
+  }, [playersStatsArr]);
+
   const handleGetActive = (enemy) =>
     setForm((prevState) => ({ ...prevState, enemy }));
 
@@ -68,7 +72,6 @@ function AddGamePopup({ closeHandler }) {
       ...prevState,
       [playerID]: playersStats,
     }));
-    gatherGameInfo(Object.values(playersStatsArr));
   };
 
   const gatherGameInfo = (gameInfo) =>

@@ -14,8 +14,12 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleGetCoords = (coords) =>
-    setPlayerStats((prevState) => ({ ...prevState, coordinates: coords }));
+  const handleGetCoords = (coords) => {
+    setPlayerStats((prevState) => ({
+      ...prevState,
+      coordinates: coords.filter((el) => el.x > 0 && el.y > 0),
+    }));
+  };
 
   useEffect(() => {
     handleChangePlayerStats(player._id, playerStats);

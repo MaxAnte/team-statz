@@ -6,7 +6,7 @@ function GamePlayerCanvas({
   coordinates = [],
   mode = "edit",
   canvID,
-  handleGetCoords,
+  handleGetCoords = () => {},
 }) {
   const [newCoords, setNewCoords] = useState([]);
   const [canv, setCanv] = useState(undefined);
@@ -55,6 +55,7 @@ function GamePlayerCanvas({
       el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");
       ctx.stroke();
     });
+    handleGetCoords(newCoords);
   }, [newCoords]);
 
   const draw = (e) => {
@@ -67,7 +68,6 @@ function GamePlayerCanvas({
       x >= 0 && y >= 0
         ? setNewCoords((oldState) => [...oldState, { x, y, miss: !drawType }])
         : setNewCoords((oldState) => [...oldState, { x: 0, y: 0, miss: true }]);
-      handleGetCoords(newCoords);
     }
   };
 
