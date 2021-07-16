@@ -209,27 +209,17 @@ function Schedule() {
               >
                 <span>{day.dayOfMonth}</span>
                 {dates &&
-                  dates.map((game) => {
-                    if (game.date === day.date) {
-                      return <GameCardCalendar game={game} key={game.id} />;
-                    } else {
-                      if (
-                        isAuthenticated &&
-                        day.isCurrentMonth &&
-                        game.date !== day.date
-                      )
-                        return (
-                          <div className={styles.addGameDate}>
-                            <PlusIcon
-                              width="20px"
-                              heigth="20px"
-                              color="white"
-                            />
-                          </div>
-                        );
-                      return null;
-                    }
-                  })}
+                dates.filter((game) => game.date === day.date).length ? (
+                  dates
+                    .filter((game) => game.date === day.date)
+                    .map((game) => (
+                      <GameCardCalendar game={game} key={game.id} />
+                    ))
+                ) : isAuthenticated && day.isCurrentMonth ? (
+                  <div className={styles.addGameDate}>
+                    <PlusIcon width="20px" heigth="20px" color="white" />
+                  </div>
+                ) : null}
               </li>
             );
           })}
