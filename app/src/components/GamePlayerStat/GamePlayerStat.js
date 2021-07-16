@@ -7,7 +7,11 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function GamePlayerStat({ player, gameID }) {
   const { request } = useHttp();
-  const [playerInfo, setPlayerInfo] = useState({ name: "", position: "" });
+  const [playerInfo, setPlayerInfo] = useState({
+    name: "",
+    position: "",
+    image_thumb: "",
+  });
 
   const getPlayerById = async () => {
     try {
@@ -78,7 +82,10 @@ function GamePlayerStat({ player, gameID }) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        <img src={blankPhoto} alt={playerInfo.name} />
+        <img
+          src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
+          alt={playerInfo.name}
+        />
         <h5>
           {playerInfo.name}, {playerInfo.position}
         </h5>

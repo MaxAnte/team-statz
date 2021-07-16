@@ -24,7 +24,10 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        <img src={blankPhoto} alt="" />
+        <img
+          src={player.image_thumb ? player.image_thumb : blankPhoto}
+          alt={player.name}
+        />
         <h5>
           {player.name}, {player.position}
         </h5>

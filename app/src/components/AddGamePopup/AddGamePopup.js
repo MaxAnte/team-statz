@@ -152,7 +152,12 @@ function AddGamePopup({ closeHandler }) {
                       className={styles.playerCard}
                       onClick={() => handleCheck(i)}
                     >
-                      <img src={blankPhoto} alt="" />
+                      <img
+                        src={
+                          player.image_thumb ? player.image_thumb : blankPhoto
+                        }
+                        alt={player.name}
+                      />
                       <span>
                         {player.name}, {player.position}
                       </span>
