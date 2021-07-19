@@ -56,19 +56,19 @@ function PlayerCard({ player }) {
       </p>
       <div className={styles.playerStats}>
         <div className={styles.playerStatsItem}>
-          PPG: {player.pts ? player.pts.toFixed(2) : 0}
+          PPG: {player.pts ? parseFloat(player.pts.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          RPG: {player.reb ? player.reb.toFixed(2) : 0}
+          RPG: {player.reb ? parseFloat(player.reb.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          APG: {player.ast ? player.ast.toFixed(2) : 0}
+          APG: {player.ast ? parseFloat(player.ast.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          BPG: {player.blk ? player.blk.toFixed(2) : 0}
+          BPG: {player.blk ? parseFloat(player.blk.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          SPG: {player.stl ? player.stl.toFixed(2) : 0}
+          SPG: {player.stl ? parseFloat(player.stl.toFixed(2)) : 0}
         </div>
       </div>
     </div>
