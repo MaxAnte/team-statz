@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
+import BlockLoader from "../Loader/BlockLoader";
 
 import styles from "./gamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function GamePlayerStat({ player, gameID }) {
-  const { request } = useHttp();
+  const { loading, request } = useHttp();
   const [playerInfo, setPlayerInfo] = useState({
     name: "",
     position: "",
@@ -82,13 +84,19 @@ function GamePlayerStat({ player, gameID }) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        <img
-          src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
-          alt={playerInfo.name}
-        />
-        <h5>
-          {playerInfo.name}, {playerInfo.position}
-        </h5>
+        {loading ? (
+          <BlockLoader />
+        ) : (
+          <>
+            <img
+              src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
+              alt={playerInfo.name}
+            />
+            <h5>
+              {playerInfo.name}, {playerInfo.position}
+            </h5>
+          </>
+        )}
       </div>
       <div className={styles.gpsRight}>
         <div className={styles.gpsStats}>

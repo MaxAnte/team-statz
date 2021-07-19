@@ -11,6 +11,15 @@
   transform: translate(-50%, -50%);
 }
 
+.blockLoader {
+  border: 8px solid var(--color-light-gray);
+  border-top: 8px solid var(--color-green-main);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 0.75s linear infinite;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
