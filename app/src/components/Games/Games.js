@@ -5,11 +5,13 @@ import { useHttp } from "../../hooks/http.hook";
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";
 import MiniLoader from "../Loader/MiniLoader";
+import Select from "../Select/select";
 
 import styles from "./games.module.css";
 
 function Games() {
   const [games, setGames] = useState(undefined);
+  const [sort, setSort] = useState("All");
   const { loading, request } = useHttp();
 
   const getGames = async () => {
@@ -23,14 +25,28 @@ function Games() {
     getGames();
   }, []);
 
-  const gamesList = games ? Object.values(games) : [];
+  const gamesList = games
+    ? sort === "Pending"
+      ? Object.values(games).filter((game) => game.pending)
+      : sort === "Played"
+      ? Object.values(games).filter((game) => !game.pending)
+      : Object.values(games)
+    : [];
+
+  const handleGetActive = (option) => setSort(option);
 
   return (
     <div className="games page-wrapper">
       <h2 className="title">Season standings</h2>
       <Table />
-      <h2 className="title">Games</h2>
+      <h2 className="title">Recent Games</h2>
       <div className={styles.gamesWrapper}>
+        <Select
+          options={["All", "Pending", "Played"]}
+          className={styles.gamesSort}
+          getActive={handleGetActive}
+          defaultValue="All"
+        />
         {loading ? (
           <MiniLoader />
         ) : gamesList.length ? (

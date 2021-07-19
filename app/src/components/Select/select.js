@@ -4,8 +4,8 @@ import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
 
 import styles from "./select.module.css";
 
-function Select({ options, className = "", getActive }) {
-  const [active, setActive] = useState("Enemy Team");
+function Select({ options, className = "", getActive, defaultValue }) {
+  const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
 
   const clickHandle = (e) => {
