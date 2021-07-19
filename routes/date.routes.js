@@ -1,13 +1,37 @@
 const { Router } = require("express");
 const { validationResult } = require("express-validator");
+const http = require("http");
 const Date = require("../models/Date");
-
 const router = Router();
+
+const addGameInPending = async (dateObj) => {
+  const { enemy, date, time } = dateObj;
+  const data = JSON.stringify({ enemy, date, time });
+  const options = {
+    hostname: "localhost",
+    port: 3000,
+    path: "/api/game/add-game",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const req = http.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+  });
+  req.on("error", (error) => {
+    console.error(error);
+  });
+  req.write(data);
+  req.end();
+};
 
 // /api/game/add-date
 router.post("/add-date", [], async (req, res) => {
   try {
-    const date = new Date(req.body);
+    const date = new Date(req.body); // new Date (model)
+
+    addGameInPending(date);
 
     await date.save();
 

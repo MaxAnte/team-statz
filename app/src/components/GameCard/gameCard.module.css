@@ -12,6 +12,9 @@
   justify-content: center;
   width: 100%;
 }
+.pendingCard {
+  color: var(--color-light-gray);
+}
 .gameName {
   font-size: 22px;
   margin-bottom: 10px;

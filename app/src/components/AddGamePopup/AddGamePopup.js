@@ -83,7 +83,7 @@ function AddGamePopup({ closeHandler }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await request("/api/game/add-game", "POST", { ...form });
+    await request("/api/game/edit-game", "POST", { ...form });
     setFormClose(true);
   };
 
