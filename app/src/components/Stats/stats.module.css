@@ -8,27 +8,6 @@
 .loading {
   justify-content: center;
 }
-.gameCard {
-  margin: 0px 15px;
-  width: 14.7%;
-  position: relative;
-}
-
-.gameCard > div {
-  width: 100%;
-}
-.gameCard > a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-}
-.gameCard > a:hover + div {
-  box-shadow: 0px 0px 20px rgb(0 0 0 / 35%);
-  transition: all 0.5s ease;
-}
 .gameCard > span {
   position: absolute;
   top: 7px;
@@ -36,4 +15,91 @@
   color: var(--color-light-gray);
   font-size: 12px;
   z-index: 2;
+}
+.statsTop {
+  display: flex;
+  margin-bottom: 35px;
+}
+.canvasStats {
+  border: 1px solid var(--color-black);
+  background: url("../../assets/images/courts/court-black.jpg");
+  background-size: contain;
+}
+.statsPlayers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 50px;
+  margin-left: 35px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.15);
+  background-color: var(--color-white);
+}
+.statsPlayers span {
+  padding: 15px 0px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.statsPlayers span:hover {
+  color: var(--color-green-main);
+  transition: all 0.2s ease;
+}
+.activePlayerFilter {
+  color: var(--color-green-main);
+}
+
+.gameCard {
+  padding: 25px;
+  background: var(--color-white);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  position: relative;
+  z-index: 2;
+  margin: 0px 15px;
+  width: 14.7%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.calendarGameCard:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.35);
+  transition: all 0.5s ease;
+}
+.calendarGameName {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.calendarGameScore {
+  font-weight: 700;
+}
+.calendarGameScore span {
+  padding: 0px 3px;
+}
+.win {
+  color: var(--color-green-main);
+}
+.lose {
+  color: var(--color-red);
+}
+.calendarGameDate {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-black);
+}
+.calendarGameDate span {
+  padding: 0px 5px;
+}
+.activeCard {
+  background: var(--color-button);
+  color: var(--color-white);
+  box-shadow: 0px 0px 20px var(--color-button);
+}
+.activeCard > span {
+  color: var(--color-white);
 }
