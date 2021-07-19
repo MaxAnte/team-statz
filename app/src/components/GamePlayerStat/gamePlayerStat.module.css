@@ -41,6 +41,7 @@
   flex-wrap: wrap;
   margin: 0px -15px;
   text-align: left;
+  width: 100%;
 }
 .gpsStatsRow {
   width: 100%;
