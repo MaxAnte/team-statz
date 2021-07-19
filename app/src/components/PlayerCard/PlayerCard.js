@@ -55,11 +55,21 @@ function PlayerCard({ player }) {
         {player.name}, {player.position}
       </p>
       <div className={styles.playerStats}>
-        <div className={styles.playerStatsItem}>PPG: {player.pts}</div>
-        <div className={styles.playerStatsItem}>RPG: {player.reb}</div>
-        <div className={styles.playerStatsItem}>APG: {player.ast}</div>
-        <div className={styles.playerStatsItem}>BPG: {player.blk}</div>
-        <div className={styles.playerStatsItem}>SPG: {player.stl}</div>
+        <div className={styles.playerStatsItem}>
+          PPG: {player.pts ? player.pts.toFixed(2) : 0}
+        </div>
+        <div className={styles.playerStatsItem}>
+          RPG: {player.reb ? player.reb.toFixed(2) : 0}
+        </div>
+        <div className={styles.playerStatsItem}>
+          APG: {player.ast ? player.ast.toFixed(2) : 0}
+        </div>
+        <div className={styles.playerStatsItem}>
+          BPG: {player.blk ? player.blk.toFixed(2) : 0}
+        </div>
+        <div className={styles.playerStatsItem}>
+          SPG: {player.stl ? player.stl.toFixed(2) : 0}
+        </div>
       </div>
     </div>
   );
