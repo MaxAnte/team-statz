@@ -84,8 +84,8 @@ router.post("/add-game", [], async (req, res) => {
   }
 });
 
-// /api/game/edit-game
-router.post("/edit-game", [], async (req, res) => {
+// /api/game/complete-game
+router.post("/complete-game", [], async (req, res) => {
   try {
     let game = await Game.findOne({ date: req.body.date });
     const { enemy, time } = game;
