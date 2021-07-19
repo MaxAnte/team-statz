@@ -88,15 +88,13 @@ router.post("/add-game", [], async (req, res) => {
 router.post("/edit-game", [], async (req, res) => {
   try {
     let game = await Game.findOne({ date: req.body.date });
-
-    const { enemy, ourScore, enemyScore, playersStats, date, time } = req.body;
+    const { enemy, time } = game;
+    const { ourScore, enemyScore, playersStats, date } = req.body;
 
     game.pending = false;
     game.ourScore = ourScore;
     game.enemyScore = enemyScore;
     game.playersStats = playersStats;
-
-    console.log(game);
 
     updateTeamDB(enemy, enemyScore, ourScore);
     updatePlayerDB(playersStats);

@@ -42,22 +42,24 @@ router.post("/update", [], async (req, res) => {
     return res.status(400).json({ message: `${playerDB} Teams not found` });
 
   playerDB.gp += 1;
-  playerDB.mp = (playerDB.mp + player.minutes) / playerDB.gp;
-  playerDB.pts = (playerDB.pts + player.pts) / playerDB.gp;
-  playerDB.oreb += player.oreb;
-  playerDB.dreb += player.dreb;
-  playerDB.reb = (+playerDB.dreb + +player.oreb) / playerDB.gp;
-  playerDB.ast = (playerDB.ast + player.ast) / playerDB.gp;
-  playerDB.stl = (playerDB.stl + player.stl) / playerDB.gp;
-  playerDB.blk = (playerDB.blk + player.blk) / playerDB.gp;
-  playerDB.tov = (playerDB.tov + player.tov) / playerDB.gp;
-  playerDB.fouls = (playerDB.fouls + player.fouls) / playerDB.gp;
-  playerDB.fta = (playerDB.fta + player.fta) / playerDB.gp;
-  playerDB.ftm = (playerDB.ftm + player.ftm) / playerDB.gp;
-  playerDB.two_pa = (playerDB.two_pa + player.two_pa) / playerDB.gp;
-  playerDB.two_pm = (playerDB.two_pm + player.two_pm) / playerDB.gp;
-  playerDB.three_pa = (playerDB.three_pa + player.three_pa) / playerDB.gp;
-  playerDB.three_pm = (playerDB.three_pm + player.three_pm) / playerDB.gp;
+  playerDB.mp = (+playerDB.mp + +player.minutes || 0) / +playerDB.gp;
+  playerDB.pts = (+playerDB.pts + +player.pts || 0) / +playerDB.gp;
+  playerDB.oreb += +player.oreb || 0;
+  playerDB.dreb += +player.dreb || 0;
+  playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
+  playerDB.ast = (+playerDB.ast + +player.ast || 0) / +playerDB.gp;
+  playerDB.stl = (+playerDB.stl + +player.stl || 0) / +playerDB.gp;
+  playerDB.blk = (+playerDB.blk + +player.blk || 0) / +playerDB.gp;
+  playerDB.tov = (+playerDB.tov + +player.tov || 0) / +playerDB.gp;
+  playerDB.fouls = (+playerDB.fouls + +player.fouls || 0) / +playerDB.gp;
+  playerDB.fta = (+playerDB.fta + +player.fta || 0) / +playerDB.gp;
+  playerDB.ftm = (+playerDB.ftm + +player.ftm || 0) / +playerDB.gp;
+  playerDB.two_pa = (+playerDB.two_pa + +player.two_pa || 0) / +playerDB.gp;
+  playerDB.two_pm = (+playerDB.two_pm + +player.two_pm || 0) / +playerDB.gp;
+  playerDB.three_pa =
+    (+playerDB.three_pa + +player.three_pa || 0) / +playerDB.gp;
+  playerDB.three_pm =
+    (+playerDB.three_pm + +player.three_pm || 0) / +playerDB.gp;
 
   playerDB.save();
 

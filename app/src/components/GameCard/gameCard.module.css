@@ -40,3 +40,6 @@
   font-weight: 500;
   color: var(--color-light-gray);
 }
+.pendBtn {
+  margin-top: 15px;
+}

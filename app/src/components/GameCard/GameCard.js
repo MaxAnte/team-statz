@@ -35,7 +35,10 @@ function GameCard({ game }) {
           <>
             {isAuthenticated ? (
               <>
-                <div className="btn__main" onClick={() => handleEdit()}>
+                <div
+                  className={`${styles.pendBtn} btn__main`}
+                  onClick={() => handleEdit()}
+                >
                   Edit game info
                 </div>
                 <div className={styles.gameDate}>{game.date}</div>

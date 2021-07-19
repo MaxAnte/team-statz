@@ -38,7 +38,11 @@ function AddGamePopup({ closeHandler, date }) {
     setFormClose(true);
   };
   return (
-    <div className={styles.addDatePopup}>
+    <div
+      className={`${styles.addDatePopup} ${
+        formClose ? styles.closedPopup : ""
+      }`}
+    >
       {!formClose ? (
         <form className={styles.addDateForm} onSubmit={handleSubmit}>
           <h5 className={styles.title}>Add game into schedule</h5>
