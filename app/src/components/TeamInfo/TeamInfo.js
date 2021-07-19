@@ -5,6 +5,7 @@ import logo from "../../assets/images/logo-bc.png";
 import styles from "./teamInfo.module.css";
 
 function TeamInfo({ players, games }) {
+  console.log(players, games);
   const arrTotals = Array(4).fill(0);
   const properties = ["REB", "AST", "BLK", "STL"];
   let offensiveRating = 0;
@@ -16,11 +17,13 @@ function TeamInfo({ players, games }) {
     arrTotals[2] += el.blk;
     arrTotals[3] += el.stl;
   });
-  games.forEach((el) => {
-    if (el.ourScore > el.enemyScore) winsCount++;
-    offensiveRating += el.ourScore / games.length;
-    defensiveRating += el.enemyScore / games.length;
-  });
+  games
+    .filter((game) => !game.pending)
+    .forEach((el) => {
+      if (el.ourScore > el.enemyScore) winsCount++;
+      offensiveRating += el.ourScore / games.length;
+      defensiveRating += el.enemyScore / games.length;
+    });
 
   return (
     <div className={styles.teamInfo}>
