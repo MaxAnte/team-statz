@@ -5,7 +5,7 @@ import logo from "../../assets/images/logo-bc.png";
 import styles from "./teamInfo.module.css";
 
 function TeamInfo({ players, games }) {
-  console.log(players, games);
+  const actualGames = games.filter((game) => !game.pending);
   const arrTotals = Array(4).fill(0);
   const properties = ["REB", "AST", "BLK", "STL"];
   let offensiveRating = 0;
@@ -17,13 +17,11 @@ function TeamInfo({ players, games }) {
     arrTotals[2] += el.blk;
     arrTotals[3] += el.stl;
   });
-  games
-    .filter((game) => !game.pending)
-    .forEach((el) => {
-      if (el.ourScore > el.enemyScore) winsCount++;
-      offensiveRating += el.ourScore / games.length;
-      defensiveRating += el.enemyScore / games.length;
-    });
+  actualGames.forEach((el) => {
+    if (el.ourScore > el.enemyScore) winsCount++;
+    offensiveRating += el.ourScore / actualGames.length;
+    defensiveRating += el.enemyScore / actualGames.length;
+  });
 
   return (
     <div className={styles.teamInfo}>
@@ -31,9 +29,9 @@ function TeamInfo({ players, games }) {
         <img src={logo} alt="BC logo" />
       </div>
       <div className={styles.teamInfoRight}>
-        <p>GP: {games.length}</p>
+        <p>GP: {actualGames.length}</p>
         <p>
-          W/L: {winsCount}/{games.length - winsCount}
+          W/L: {winsCount}/{actualGames.length - winsCount}
         </p>
         <p>ORtg: {offensiveRating}</p>
         <p>DRtg: {defensiveRating}</p>
@@ -41,7 +39,7 @@ function TeamInfo({ players, games }) {
           return (
             <p key={i}>
               <span>{properties[i]}: </span>
-              {(el / games.length).toFixed(1)}
+              {(el / actualGames.length).toFixed(1)}
             </p>
           );
         })}
