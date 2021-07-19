@@ -12,7 +12,7 @@ function GameCard({ game }) {
   const [addPopup, setAddPopup] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
 
-  const { date, time } = game;
+  const { date, time, enemy } = game;
 
   useEffect(() => {
     const today = new Date();
@@ -39,7 +39,12 @@ function GameCard({ game }) {
                   Edit game info
                 </div>
                 <div className={styles.gameDate}>{game.date}</div>
-                {addPopup ? <AddGamePopup closeHandler={closeHandler} /> : null}
+                {addPopup ? (
+                  <AddGamePopup
+                    base={{ date, enemy }}
+                    closeHandler={closeHandler}
+                  />
+                ) : null}
               </>
             ) : (
               <div>

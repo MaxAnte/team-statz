@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 
 import GameCard from "../GameCard/GameCard";
@@ -32,7 +33,7 @@ function Games() {
       <div className={styles.gamesWrapper}>
         {loading ? (
           <MiniLoader />
-        ) : (
+        ) : gamesList.length ? (
           gamesList.reverse().map((game, id) => {
             return (
               <div className={styles.gamesItem} key={id}>
@@ -40,6 +41,14 @@ function Games() {
               </div>
             );
           })
+        ) : (
+          <div className={styles.noGames}>
+            No games has been added yet. Go to{" "}
+            <Link to="/schedule">
+              <strong>Schedule</strong>
+            </Link>{" "}
+            and add Game!
+          </div>
         )}
       </div>
     </div>

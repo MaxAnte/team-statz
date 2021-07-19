@@ -87,11 +87,16 @@ router.post("/add-game", [], async (req, res) => {
 // /api/game/edit-game
 router.post("/edit-game", [], async (req, res) => {
   try {
-    const game = new Game(req.body);
+    let game = await Game.findOne({ date: req.body.date });
 
     const { enemy, ourScore, enemyScore, playersStats, date, time } = req.body;
 
     game.pending = false;
+    game.ourScore = ourScore;
+    game.enemyScore = enemyScore;
+    game.playersStats = playersStats;
+
+    console.log(game);
 
     updateTeamDB(enemy, enemyScore, ourScore);
     updatePlayerDB(playersStats);

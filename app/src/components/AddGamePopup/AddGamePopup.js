@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 
-import Select from "../Select/select";
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 import MiniLoader from "../Loader/MiniLoader";
 
@@ -12,10 +11,9 @@ import styles from "./addGamePopup.module.css";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePopup({ closeHandler }) {
+function AddGamePopup({ closeHandler, base }) {
   const [players, setPlayers] = useState([]);
   const [checkListAccept, setCheckListAccept] = useState(false);
-  const [teams, setTeams] = useState(undefined);
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
   const [playersStatsArr, setPlayersStatsArr] = useState([]);
@@ -28,13 +26,6 @@ function AddGamePopup({ closeHandler }) {
     setPlayers((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getTeams = async () => {
-    try {
-      const data = await request("/api/team/teams", "POST", {});
-      if (data) setTeams(Object.values(data));
-    } catch (e) {}
-  };
-
   const getPlayers = async () => {
     try {
       const data = await request("/api/player/players", "POST", {});
@@ -42,7 +33,6 @@ function AddGamePopup({ closeHandler }) {
     } catch (e) {}
   };
 
-  const teamList = teams ? teams.map((team) => team.name) : [];
   Object.values(players).map((player) => {
     return {
       name: player.name,
@@ -52,7 +42,7 @@ function AddGamePopup({ closeHandler }) {
   });
 
   useEffect(() => {
-    getTeams();
+    setForm((prevState) => ({ ...prevState, date: base.date }));
     getPlayers();
     if (players && typeof players === "array")
       setPlayersStatsArr(players.filter((el) => !!el.check));
@@ -61,9 +51,6 @@ function AddGamePopup({ closeHandler }) {
   useEffect(() => {
     gatherGameInfo(Object.values(playersStatsArr));
   }, [playersStatsArr]);
-
-  const handleGetActive = (enemy) =>
-    setForm((prevState) => ({ ...prevState, enemy }));
 
   const handleChangeInput = (e) =>
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
@@ -86,11 +73,6 @@ function AddGamePopup({ closeHandler }) {
     await request("/api/game/edit-game", "POST", { ...form });
     setFormClose(true);
   };
-
-  const handleChangeDate = (e) =>
-    setForm((prevState) => ({ ...prevState, date: e.target.value }));
-  const handleChangeTime = (e) =>
-    setForm((prevState) => ({ ...prevState, time: e.target.value }));
 
   return (
     <div className={styles.popupWrap}>
@@ -128,20 +110,7 @@ function AddGamePopup({ closeHandler }) {
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
                   />
-                  <Select
-                    options={teamList ? teamList : []}
-                    className={styles.genGameInfoNames}
-                    getActive={handleGetActive}
-                  />
-                </div>
-                <div className={styles.date}>
-                  <input type="date" name="date" onChange={handleChangeDate} />
-                  <input
-                    type="text"
-                    name="time"
-                    placeholder="18:00"
-                    onChange={handleChangeTime}
-                  />
+                  <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
               </div>
 
@@ -149,7 +118,7 @@ function AddGamePopup({ closeHandler }) {
                 Check players that have played that game
               </h4>
               <div className={styles.popupSection}>
-                {!players.length ? (
+                {!Object.values(players).length ? (
                   <MiniLoader />
                 ) : (
                   <div className={styles.playersSelect}>
@@ -182,7 +151,7 @@ function AddGamePopup({ closeHandler }) {
                     ))}
                   </div>
                 )}
-                {players.length && !checkListAccept ? (
+                {Object.values(players).length && !checkListAccept ? (
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
@@ -192,7 +161,7 @@ function AddGamePopup({ closeHandler }) {
                 ) : null}
               </div>
 
-              {players.length && !checkListAccept ? (
+              {Object.values(players).length && !checkListAccept ? (
                 <span>Check players above</span>
               ) : null}
               {checkListAccept ? (
