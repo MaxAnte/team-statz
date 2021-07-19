@@ -23,7 +23,7 @@ function AddGamePopup({ closeHandler, date }) {
   const teamList = teams ? teams.map((team) => team.name) : [];
 
   useEffect(() => {
-    setForm((prevState) => ({ ...prevState, date }));
+    setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
     getTeams();
   }, []);
 
