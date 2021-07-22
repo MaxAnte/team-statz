@@ -41,12 +41,14 @@ function Games() {
       <Table />
       <h2 className="title">Recent Games</h2>
       <div className={styles.gamesWrapper}>
-        <Select
-          options={["All", "Pending", "Played"]}
-          className={styles.gamesSort}
-          getActive={handleGetActive}
-          defaultValue="All"
-        />
+        {gamesList.length ? (
+          <Select
+            options={["All", "Pending", "Played"]}
+            className={styles.gamesSort}
+            getActive={handleGetActive}
+            defaultValue="All"
+          />
+        ) : null}
         {loading ? (
           <MiniLoader />
         ) : gamesList.length ? (
