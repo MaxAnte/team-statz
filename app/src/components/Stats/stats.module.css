@@ -18,6 +18,8 @@
 }
 .statsTop {
   display: flex;
+  justify-content: center;
+  width: 100%;
   margin-bottom: 35px;
 }
 .canvasStats {
@@ -25,23 +27,44 @@
   background: url("../../assets/images/courts/court-black.jpg");
   background-size: contain;
 }
-.statsPlayers {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.statsColumn {
   padding: 15px 50px;
-  margin-left: 35px;
+  margin: 0px 35px;
   border-radius: 5px;
   box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.15);
   background-color: var(--color-white);
+  max-width: 350px;
+  width: 100%;
 }
-.statsPlayers span {
+.statsColumn h5 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 20px;
+  position: relative;
+}
+.statsColumn h5::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-black);
+  opacity: 0.2;
+}
+.statsColumnRows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.statsColumnRows span {
+  text-align: center;
   padding: 15px 0px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.statsPlayers span:hover {
+.statsColumnRows span:hover {
   color: var(--color-green-main);
   transition: all 0.2s ease;
 }

@@ -66,11 +66,19 @@ function Stats() {
       ? games.filter((game) => game.date === filterGame)
       : games;
 
-    // filteredGames = filterPlayer
-    //   ? filteredGames.filter((game) =>
-    //       game.playersStats.filter((player) => player.name === filterPlayer)
-    //     )
-    //   : filteredGames;
+    if (filterPlayer) {
+      // const filtByPlayer = filteredGames.map((game) =>
+      //   game.playersStats.forEach((player) =>
+      //     player._id === filterPlayer ? player.coordinates : null
+      //   )
+      // );
+      // console.log(filtByPlayer);
+      // console.log(
+      //   filteredGames.map((game) =>
+      //     game.playersStats.filter((player) => player._id === filterPlayer)
+      //   )
+      // );
+    }
 
     filteredGames.forEach((game) =>
       game.playersStats.forEach((player) =>
@@ -92,31 +100,207 @@ function Stats() {
     );
   }, [games, players, filterGame, filterPlayer]);
 
+  const countGameStats = (gameDate) => {
+    let pts = 0;
+    let reb = 0;
+    let ast = 0;
+    let stl = 0;
+    let blk = 0;
+    let fga = 0;
+    let fgm = 0;
+    let fgp = 0;
+    let two_fga = 0;
+    let two_fgm = 0;
+    let two_fgp = 0;
+    let three_fga = 0;
+    let three_fgm = 0;
+    let three_fgp = 0;
+    let fouls = 0;
+    let tovs = 0;
+    games
+      .filter((game) => game.date === gameDate)[0]
+      .playersStats.forEach((player) => {
+        pts += player.pts;
+        reb += player.oreb + player.dreb;
+        ast += player.ast;
+        stl += player.stl;
+        blk += player.blk;
+        tovs += player.tov;
+        fouls += player.fouls;
+        two_fga += player.two_pa;
+        two_fgm += player.two_pm;
+        two_fgp +=
+          two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+        three_fga += player.three_pa;
+        three_fgm += player.three_pm;
+        three_fgp +=
+          three_fga === 0 || three_fgm === 0
+            ? 0
+            : (three_fgm * 100) / three_fga;
+        fga += two_fga + three_fga;
+        fgm += two_fgm + three_fgm;
+        fgp += two_fgp + three_fgp;
+      });
+    return countStatsMarkup(
+      pts,
+      reb,
+      ast,
+      stl,
+      blk,
+      tovs,
+      fouls,
+      two_fga,
+      two_fgm,
+      two_fgp,
+      three_fga,
+      three_fgm,
+      three_fgp,
+      fga,
+      fgm,
+      fgp
+    );
+  };
+  const countOverallStats = () => {
+    let pts = 0;
+    let reb = 0;
+    let ast = 0;
+    let stl = 0;
+    let blk = 0;
+    let fga = 0;
+    let fgm = 0;
+    let fgp = 0;
+    let two_fga = 0;
+    let two_fgm = 0;
+    let two_fgp = 0;
+    let three_fga = 0;
+    let three_fgm = 0;
+    let three_fgp = 0;
+    let fouls = 0;
+    let tovs = 0;
+    games.forEach((game) =>
+      game.playersStats.forEach((player) => {
+        pts += player.pts;
+        reb += player.oreb + player.dreb;
+        ast += player.ast;
+        stl += player.stl;
+        blk += player.blk;
+        tovs += player.tov;
+        fouls += player.fouls;
+        two_fga += player.two_pa;
+        two_fgm += player.two_pm;
+        two_fgp +=
+          two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+        three_fga += player.three_pa;
+        three_fgm += player.three_pm;
+        three_fgp +=
+          three_fga === 0 || three_fgm === 0
+            ? 0
+            : (three_fgm * 100) / three_fga;
+        fga += two_fga + three_fga;
+        fgm += two_fgm + three_fgm;
+        fgp += two_fgp + three_fgp;
+      })
+    );
+    return countStatsMarkup(
+      pts,
+      reb,
+      ast,
+      stl,
+      blk,
+      tovs,
+      fouls,
+      two_fga,
+      two_fgm,
+      two_fgp,
+      three_fga,
+      three_fgm,
+      three_fgp,
+      fga,
+      fgm,
+      fgp
+    );
+  };
+
+  const countStatsMarkup = (
+    pts,
+    reb,
+    ast,
+    stl,
+    blk,
+    tovs,
+    fouls,
+    two_fga,
+    two_fgm,
+    two_fgp,
+    three_fga,
+    three_fgm,
+    three_fgp,
+    fga,
+    fgm,
+    fgp
+  ) => (
+    <>
+      <span>Pts: {pts}</span>
+      <span>Reb: {reb}</span>
+      <span>Ast: {ast}</span>
+      <span>Stl: {stl}</span>
+      <span>Blk: {blk}</span>
+      <span>Tov: {tovs}</span>
+      <span>Fouls: {fouls}</span>
+      <span>2PA: {two_fga}</span>
+      <span>2PM: {two_fgm}</span>
+      <span>2P%: {two_fgp}</span>
+      <span>3PA: {three_fga}</span>
+      <span>3PM: {three_fgm}</span>
+      <span>3P%: {three_fgp}</span>
+      <span>FGA: {fga}</span>
+      <span>FGM: {fgm}</span>
+      <span>FG%: {fgp}</span>
+    </>
+  );
+
   return (
     <div className="stats page-wrapper">
       <h2 className="title">Stats</h2>
       <div className={styles.statsTop}>
+        <div className={styles.statsColumn}>
+          <h5>Players</h5>
+          <div className={styles.statsColumnRows}>
+            {!loading ? (
+              players.map((player, i) => (
+                <span
+                  key={i}
+                  className={
+                    filterPlayer === player._id ? styles.activePlayerFilter : ""
+                  }
+                  onClick={() => setFilterPlayer(player._id)}
+                >
+                  {player.name}, {player.position}
+                </span>
+              ))
+            ) : (
+              <BlockLoader />
+            )}
+          </div>
+        </div>
         <canvas
           ref={canvasRef}
           className={styles.canvasStats}
           id="canvasStats"
         />
-        <div className={styles.statsPlayers}>
-          {!loading ? (
-            players.map((player, i) => (
-              <span
-                key={i}
-                className={
-                  filterPlayer === player.name ? styles.activePlayerFilter : ""
-                }
-                onClick={() => setFilterPlayer(player.name)}
-              >
-                {player.name}, {player.position}
-              </span>
-            ))
-          ) : (
-            <BlockLoader />
-          )}
+        <div className={styles.statsColumn}>
+          <h5>Game stats</h5>
+          <div className={styles.statsColumnRows}>
+            {!loading ? (
+              filterGame ? (
+                countGameStats(filterGame)
+              ) : (
+                countOverallStats()
+              )
+            ) : (
+              <BlockLoader />
+            )}
+          </div>
         </div>
       </div>
       <div className={`${styles.statsWrap} ${loading ? styles.loading : ""}`}>
