@@ -305,6 +305,11 @@ function Stats() {
                     filterPlayer === player._id ? styles.activePlayerFilter : ""
                   }
                   onClick={() => setFilterPlayer(player._id)}
+                  onClick={() =>
+                    setFilterPlayer(
+                      filterPlayer === player._id ? null : player._id
+                    )
+                  }
                 >
                   {player.name}, {player.position}
                 </span>
