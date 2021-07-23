@@ -81,14 +81,24 @@
   justify-content: center;
 }
 .statsColumnRows span {
-  text-align: center;
-  padding: 15px 0px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .statsColumnRows span:hover {
   color: var(--color-green-main);
   transition: all 0.2s ease;
+}
+.statsColumnRowsPlayersItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px 0px;
+}
+.playerColorStick {
+  height: 3px;
+  width: 15px;
+  margin-right: 5px;
 }
 .activePlayerFilter {
   color: var(--color-green-main);

@@ -24,6 +24,30 @@ function Stats() {
   const DPI_WIDTH = WIDTH * 2;
   const DPI_HEIGHT = HEIGHT * 2;
   const MULTIPLIER = 2.4;
+  const COLORS = [
+    "#FF0032",
+    "#F700FF",
+    "#8000FF",
+    "#469990",
+    "#008FFF",
+    "#00FF83",
+    "#F0FF00",
+    "#FFA600",
+    "#FF5900",
+    "#bfef45",
+    "#42d4f4",
+    "#ffd8b1",
+    "#fffac8",
+    "#aaffc3",
+    "#ffffff",
+  ];
+  const POINTER_COLORS =
+    players &&
+    Array(players.length)
+      .fill(0)
+      .map((_, i) => {
+        return { _id: players[i]._id, color: COLORS[i] };
+      });
 
   const getGames = async () => {
     try {
@@ -92,9 +116,11 @@ function Stats() {
           }
           ctx.lineWidth = 7;
           ctx.closePath();
-          coord.miss
-            ? (ctx.strokeStyle = "#ff0000")
-            : (ctx.strokeStyle = "#00d000");
+          players.length
+            ? (ctx.strokeStyle = POINTER_COLORS.find(
+                (el) => el._id === player._id
+              ).color)
+            : (ctx.strokeStyle = "#ff0000");
           ctx.stroke();
         })
       )
@@ -299,20 +325,29 @@ function Stats() {
           <div className={styles.statsColumnRows}>
             {!loading ? (
               players.map((player, i) => (
-                <span
-                  key={i}
-                  className={
-                    filterPlayer === player._id ? styles.activePlayerFilter : ""
-                  }
-                  onClick={() => setFilterPlayer(player._id)}
-                  onClick={() =>
-                    setFilterPlayer(
-                      filterPlayer === player._id ? null : player._id
-                    )
-                  }
-                >
-                  {player.name}, {player.position}
-                </span>
+                <div className={styles.statsColumnRowsPlayersItem} key={i}>
+                  <span
+                    className={styles.playerColorStick}
+                    style={{
+                      backgroundColor: players && POINTER_COLORS[i].color,
+                    }}
+                  ></span>
+                  <span
+                    className={
+                      filterPlayer === player._id
+                        ? styles.activePlayerFilter
+                        : ""
+                    }
+                    onClick={() => setFilterPlayer(player._id)}
+                    onClick={() =>
+                      setFilterPlayer(
+                        filterPlayer === player._id ? null : player._id
+                      )
+                    }
+                  >
+                    {player.name}, {player.position}
+                  </span>
+                </div>
               ))
             ) : (
               <BlockLoader />
