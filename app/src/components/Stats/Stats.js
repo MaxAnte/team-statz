@@ -49,16 +49,14 @@ function Stats() {
         return { _id: players[i]._id, color: COLORS[i] };
       });
 
-  const getGames = async () => {
+  const getDB = async () => {
     try {
-      const data = await request("/api/game/games", "POST", {});
-      if (data) setGames(Object.values(data).filter((game) => !game.pending));
-    } catch (e) {}
-  };
-  const getPlayers = async () => {
-    try {
-      const data = await request("/api/player/players", "POST", {});
-      if (data) setPlayers(Object.values(data).filter((game) => !game.pending));
+      const gamesData = await request("/api/game/games", "POST", {});
+      const playersData = await request("/api/player/players", "POST", {});
+      if (gamesData && playersData) {
+        setGames(Object.values(gamesData).filter((game) => !game.pending));
+        setPlayers(Object.values(playersData).filter((game) => !game.pending));
+      }
     } catch (e) {}
   };
 
@@ -71,10 +69,7 @@ function Stats() {
   const drawMade = (ctx, element) =>
     ctx.arc(element.x * MULTIPLIER, element.y * MULTIPLIER, 12, 0, 2 * Math.PI);
 
-  useEffect(() => {
-    getGames();
-    getPlayers();
-  }, []);
+  useEffect(() => getDB(), []);
 
   useEffect(() => {
     const canv = canvasRef.current;
@@ -86,7 +81,6 @@ function Stats() {
     setCanvas(canv);
     setCanvasBound(canv.getBoundingClientRect());
     setContext(ctx);
-
     let filteredGames = filterGame
       ? games.filter((game) => game.date === filterGame)
       : games;
@@ -123,7 +117,7 @@ function Stats() {
         })
       )
     );
-  }, [games, players, filterGame, filterPlayer]);
+  }, [filterGame, filterPlayer]);
 
   const countGameStats = (gameDate) => {
     let pts = 0;
@@ -145,26 +139,51 @@ function Stats() {
     games
       .filter((game) => game.date === gameDate)[0]
       .playersStats.forEach((player) => {
-        pts += player.pts;
-        reb += player.oreb + player.dreb;
-        ast += player.ast;
-        stl += player.stl;
-        blk += player.blk;
-        tovs += player.tov;
-        fouls += player.fouls;
-        two_fga += player.two_pa;
-        two_fgm += player.two_pm;
-        two_fgp +=
-          two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
-        three_fga += player.three_pa;
-        three_fgm += player.three_pm;
-        three_fgp +=
-          three_fga === 0 || three_fgm === 0
-            ? 0
-            : (three_fgm * 100) / three_fga;
-        fga += two_fga + three_fga;
-        fgm += two_fgm + three_fgm;
-        fgp += two_fgp + three_fgp;
+        if (filterPlayer) {
+          if (filterPlayer === player._id) {
+            pts += player.pts;
+            reb += player.oreb + player.dreb;
+            ast += player.ast;
+            stl += player.stl;
+            blk += player.blk;
+            tovs += player.tov;
+            fouls += player.fouls;
+            two_fga += player.two_pa;
+            two_fgm += player.two_pm;
+            two_fgp +=
+              two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+            three_fga += player.three_pa;
+            three_fgm += player.three_pm;
+            three_fgp +=
+              three_fga === 0 || three_fgm === 0
+                ? 0
+                : (three_fgm * 100) / three_fga;
+            fga += two_fga + three_fga;
+            fgm += two_fgm + three_fgm;
+            fgp += two_fgp + three_fgp;
+          }
+        } else {
+          pts += player.pts;
+          reb += player.oreb + player.dreb;
+          ast += player.ast;
+          stl += player.stl;
+          blk += player.blk;
+          tovs += player.tov;
+          fouls += player.fouls;
+          two_fga += player.two_pa;
+          two_fgm += player.two_pm;
+          two_fgp +=
+            two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+          three_fga += player.three_pa;
+          three_fgm += player.three_pm;
+          three_fgp +=
+            three_fga === 0 || three_fgm === 0
+              ? 0
+              : (three_fgm * 100) / three_fga;
+          fga += two_fga + three_fga;
+          fgm += two_fgm + three_fgm;
+          fgp += two_fgp + three_fgp;
+        }
       });
     return countStatsMarkup(
       pts,
@@ -202,30 +221,63 @@ function Stats() {
     let three_fgp = 0;
     let fouls = 0;
     let tovs = 0;
-    games.forEach((game) =>
-      game.playersStats.forEach((player) => {
-        pts += player.pts;
-        reb += player.oreb + player.dreb;
-        ast += player.ast;
-        stl += player.stl;
-        blk += player.blk;
-        tovs += player.tov;
-        fouls += player.fouls;
-        two_fga += player.two_pa;
-        two_fgm += player.two_pm;
-        two_fgp +=
-          two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
-        three_fga += player.three_pa;
-        three_fgm += player.three_pm;
-        three_fgp +=
-          three_fga === 0 || three_fgm === 0
-            ? 0
-            : (three_fgm * 100) / three_fga;
-        fga += two_fga + three_fga;
-        fgm += two_fgm + three_fgm;
-        fgp += two_fgp + three_fgp;
-      })
-    );
+    console.log("overall");
+    games.forEach((game) => {
+      if (filterPlayer) {
+        if (
+          game.playersStats.filter((player) => player._id === filterPlayer)
+            .length
+        ) {
+          game.playersStats
+            .filter((player) => player._id === filterPlayer)
+            .forEach((stats) => {
+              pts += stats.pts;
+              reb += stats.oreb + stats.dreb;
+              ast += stats.ast;
+              stl += stats.stl;
+              blk += stats.blk;
+              tovs += stats.tov;
+              fouls += stats.fouls;
+              two_fga += stats.two_pa;
+              two_fgm += stats.two_pm;
+              two_fgp +=
+                two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+              three_fga += stats.three_pa;
+              three_fgm += stats.three_pm;
+              three_fgp +=
+                three_fga === 0 || three_fgm === 0
+                  ? 0
+                  : (three_fgm * 100) / three_fga;
+              fga += two_fga + three_fga;
+              fgm += two_fgm + three_fgm;
+              fgp += two_fgp + three_fgp;
+            });
+        }
+      } else {
+        game.playersStats.forEach((player) => {
+          pts += player.pts;
+          reb += player.oreb + player.dreb;
+          ast += player.ast;
+          stl += player.stl;
+          blk += player.blk;
+          tovs += player.tov;
+          fouls += player.fouls;
+          two_fga += player.two_pa;
+          two_fgm += player.two_pm;
+          two_fgp +=
+            two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+          three_fga += player.three_pa;
+          three_fgm += player.three_pm;
+          three_fgp +=
+            three_fga === 0 || three_fgm === 0
+              ? 0
+              : (three_fgm * 100) / three_fga;
+          fga += two_fga + three_fga;
+          fgm += two_fgm + three_fgm;
+          fgp += two_fgp + three_fgp;
+        });
+      }
+    });
     return countStatsMarkup(
       pts,
       reb,
@@ -263,56 +315,77 @@ function Stats() {
     fga,
     fgm,
     fgp
-  ) => (
-    <div className={styles.statsColumnRowsInfo}>
-      {!filterGame ? (
-        <div className={styles.allGamesStatsTabs}>
-          <button
-            onClick={() => setStatsTabAverage(true)}
-            className={`${statsTabAverage ? styles.activeTab : ""}`}
-          >
-            Average
-          </button>
-          <button
-            onClick={() => setStatsTabAverage(false)}
-            className={`${!statsTabAverage ? styles.activeTab : ""}`}
-          >
-            Overall
-          </button>
+  ) => {
+    console.log(
+      "l",
+      pts,
+      reb,
+      ast,
+      stl,
+      blk,
+      tovs,
+      fouls,
+      two_fga,
+      two_fgm,
+      two_fgp,
+      three_fga,
+      three_fgm,
+      three_fgp,
+      fga,
+      fgm,
+      fgp
+    );
+    return (
+      <div className={styles.statsColumnRowsInfo}>
+        {!filterGame ? (
+          <div className={styles.allGamesStatsTabs}>
+            <button
+              onClick={() => setStatsTabAverage(true)}
+              className={`${statsTabAverage ? styles.activeTab : ""}`}
+            >
+              Average
+            </button>
+            <button
+              onClick={() => setStatsTabAverage(false)}
+              className={`${!statsTabAverage ? styles.activeTab : ""}`}
+            >
+              Overall
+            </button>
+          </div>
+        ) : null}
+        <div className={styles.statsColumnRowsItem}>
+          <span>Pts: {statsTabAverage ? pts / games.length : pts}</span>
         </div>
-      ) : null}
-      <div className={styles.statsColumnRowsItem}>
-        <span>Pts: {statsTabAverage ? pts / games.length : pts}</span>
+        <div className={styles.statsColumnRowsItem}>
+          <span>2PA: {statsTabAverage ? two_fga / games.length : two_fga}</span>
+          <span>2PM: {statsTabAverage ? two_fgm / games.length : two_fgm}</span>
+          <span>2P%: {two_fgp / games.length}</span>
+        </div>
+        <div className={styles.statsColumnRowsItem}>
+          <span>
+            3PA: {statsTabAverage ? three_fga / games.length : three_fga}
+          </span>
+          <span>
+            3PM: {statsTabAverage ? three_fgm / games.length : three_fgm}
+          </span>
+          <span>3P%: {three_fgp / games.length}</span>
+        </div>
+        <div className={styles.statsColumnRowsItem}>
+          <span>FGA: {statsTabAverage ? fga / games.length : fga}</span>
+          <span>FGM: {statsTabAverage ? fgm / games.length : fgm}</span>
+          <span>FG%: {fgp / games.length}</span>
+        </div>
+        <div className={styles.statsColumnRowsItem}>
+          <span>Reb: {statsTabAverage ? reb / games.length : reb}</span>
+          <span>Ast: {statsTabAverage ? ast / games.length : ast}</span>
+          <span>Stl: {statsTabAverage ? stl / games.length : stl}</span>
+          <span>Blk: {statsTabAverage ? blk / games.length : blk}</span>
+          <span>Tov: {statsTabAverage ? tovs / games.length : tovs}</span>
+          <span>Fouls: {statsTabAverage ? fouls / games.length : fouls}</span>
+        </div>
       </div>
-      <div className={styles.statsColumnRowsItem}>
-        <span>2PA: {statsTabAverage ? two_fga / games.length : two_fga}</span>
-        <span>2PM: {statsTabAverage ? two_fgm / games.length : two_fgm}</span>
-        <span>2P%: {two_fgp / games.length}</span>
-      </div>
-      <div className={styles.statsColumnRowsItem}>
-        <span>
-          3PA: {statsTabAverage ? three_fga / games.length : three_fga}
-        </span>
-        <span>
-          3PM: {statsTabAverage ? three_fgm / games.length : three_fgm}
-        </span>
-        <span>3P%: {three_fgp / games.length}</span>
-      </div>
-      <div className={styles.statsColumnRowsItem}>
-        <span>FGA: {statsTabAverage ? fga / games.length : fga}</span>
-        <span>FGM: {statsTabAverage ? fgm / games.length : fgm}</span>
-        <span>FG%: {fgp / games.length}</span>
-      </div>
-      <div className={styles.statsColumnRowsItem}>
-        <span>Reb: {statsTabAverage ? reb / games.length : reb}</span>
-        <span>Ast: {statsTabAverage ? ast / games.length : ast}</span>
-        <span>Stl: {statsTabAverage ? stl / games.length : stl}</span>
-        <span>Blk: {statsTabAverage ? blk / games.length : blk}</span>
-        <span>Tov: {statsTabAverage ? tovs / games.length : tovs}</span>
-        <span>Fouls: {statsTabAverage ? fouls / games.length : fouls}</span>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="stats page-wrapper">
@@ -336,7 +409,6 @@ function Stats() {
                         ? styles.activePlayerFilter
                         : ""
                     }
-                    onClick={() => setFilterPlayer(player._id)}
                     onClick={() =>
                       setFilterPlayer(
                         filterPlayer === player._id ? null : player._id
