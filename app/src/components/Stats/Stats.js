@@ -91,20 +91,6 @@ function Stats() {
       ? games.filter((game) => game.date === filterGame)
       : games;
 
-    if (filterPlayer) {
-      // const filtByPlayer = filteredGames.map((game) =>
-      //   game.playersStats.forEach((player) =>
-      //     player._id === filterPlayer ? player.coordinates : null
-      //   )
-      // );
-      // console.log(filtByPlayer);
-      // console.log(
-      //   filteredGames.map((game) =>
-      //     game.playersStats.filter((player) => player._id === filterPlayer)
-      //   )
-      // );
-    }
-
     filteredGames.forEach((game) =>
       game.playersStats.forEach((player) =>
         player.coordinates.forEach((coord) => {
@@ -114,13 +100,25 @@ function Stats() {
           } else {
             drawMade(ctx, coord);
           }
-          ctx.lineWidth = 7;
+          filterPlayer === player._id
+            ? (ctx.lineWidth = 9)
+            : (ctx.lineWidth = 7);
           ctx.closePath();
-          players.length
-            ? (ctx.strokeStyle = POINTER_COLORS.find(
-                (el) => el._id === player._id
-              ).color)
-            : (ctx.strokeStyle = "#ff0000");
+          if (players.length) {
+            filterPlayer
+              ? player._id === filterPlayer
+                ? (ctx.strokeStyle = POINTER_COLORS.find(
+                    (el) => el._id === player._id
+                  ).color)
+                : (ctx.strokeStyle = `${
+                    POINTER_COLORS.find((el) => el._id === player._id).color
+                  }33`)
+              : (ctx.strokeStyle = POINTER_COLORS.find(
+                  (el) => el._id === player._id
+                ).color);
+          } else {
+            ctx.strokeStyle = "#c1c1c1";
+          }
           ctx.stroke();
         })
       )
@@ -329,7 +327,7 @@ function Stats() {
                   <span
                     className={styles.playerColorStick}
                     style={{
-                      backgroundColor: players && POINTER_COLORS[i].color,
+                      backgroundColor: POINTER_COLORS[i].color,
                     }}
                   ></span>
                   <span
