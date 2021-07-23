@@ -28,7 +28,7 @@
   background-size: contain;
 }
 .statsColumn {
-  padding: 15px 50px;
+  padding: 15px 20px;
   margin: 0px 35px;
   border-radius: 5px;
   box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.15);
@@ -38,7 +38,7 @@
 }
 .statsColumn h5 {
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   font-size: 20px;
   position: relative;
 }
@@ -52,6 +52,28 @@
   height: 1px;
   background-color: var(--color-black);
   opacity: 0.2;
+}
+.allGamesStatsTabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.allGamesStatsTabs button {
+  padding: 5px 10px;
+  margin: 0px 5px;
+  border: 1px solid var(--color-green-main);
+  border-radius: 5px;
+  background-color: var(--color-white);
+  font-size: 18px;
+  color: var(--color-green-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.allGamesStatsTabs button:hover,
+.allGamesStatsTabs .activeTab {
+  background-color: var(--color-green-main);
+  color: var(--color-white);
+  transition: all 0.2s ease;
 }
 .statsColumnRows {
   display: flex;
@@ -71,7 +93,45 @@
 .activePlayerFilter {
   color: var(--color-green-main);
 }
-
+.statsColumnRowsInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.statsColumnRowsInfo span {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.statsColumnRowsInfo span:hover {
+  box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+.statsColumnRowsItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  margin-bottom: 25px;
+}
+.statsColumnRowsItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: -13px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1px;
+  width: 50%;
+  background-color: var(--color-black);
+  opacity: 0.15;
+}
 .gameCard {
   padding: 25px;
   background: var(--color-white);
@@ -90,7 +150,7 @@
   cursor: pointer;
   transition: all 0.5s ease;
 }
-.calendarGameCard:hover {
+.gameCard:hover {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.35);
   transition: all 0.5s ease;
 }

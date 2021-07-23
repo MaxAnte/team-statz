@@ -8,6 +8,7 @@ import styles from "./stats.module.css";
 function Stats() {
   const [games, setGames] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [statsTabAverage, setStatsTabAverage] = useState(true);
   const [canvasBound, setCanvasBound] = useState(undefined);
   const [context, setContext] = useState(undefined);
   const [canvas, setCanvas] = useState(null);
@@ -239,24 +240,54 @@ function Stats() {
     fgm,
     fgp
   ) => (
-    <>
-      <span>Pts: {pts}</span>
-      <span>Reb: {reb}</span>
-      <span>Ast: {ast}</span>
-      <span>Stl: {stl}</span>
-      <span>Blk: {blk}</span>
-      <span>Tov: {tovs}</span>
-      <span>Fouls: {fouls}</span>
-      <span>2PA: {two_fga}</span>
-      <span>2PM: {two_fgm}</span>
-      <span>2P%: {two_fgp}</span>
-      <span>3PA: {three_fga}</span>
-      <span>3PM: {three_fgm}</span>
-      <span>3P%: {three_fgp}</span>
-      <span>FGA: {fga}</span>
-      <span>FGM: {fgm}</span>
-      <span>FG%: {fgp}</span>
-    </>
+    <div className={styles.statsColumnRowsInfo}>
+      {!filterGame ? (
+        <div className={styles.allGamesStatsTabs}>
+          <button
+            onClick={() => setStatsTabAverage(true)}
+            className={`${statsTabAverage ? styles.activeTab : ""}`}
+          >
+            Average
+          </button>
+          <button
+            onClick={() => setStatsTabAverage(false)}
+            className={`${!statsTabAverage ? styles.activeTab : ""}`}
+          >
+            Overall
+          </button>
+        </div>
+      ) : null}
+      <div className={styles.statsColumnRowsItem}>
+        <span>Pts: {statsTabAverage ? pts / games.length : pts}</span>
+      </div>
+      <div className={styles.statsColumnRowsItem}>
+        <span>2PA: {statsTabAverage ? two_fga / games.length : two_fga}</span>
+        <span>2PM: {statsTabAverage ? two_fgm / games.length : two_fgm}</span>
+        <span>2P%: {two_fgp / games.length}</span>
+      </div>
+      <div className={styles.statsColumnRowsItem}>
+        <span>
+          3PA: {statsTabAverage ? three_fga / games.length : three_fga}
+        </span>
+        <span>
+          3PM: {statsTabAverage ? three_fgm / games.length : three_fgm}
+        </span>
+        <span>3P%: {three_fgp / games.length}</span>
+      </div>
+      <div className={styles.statsColumnRowsItem}>
+        <span>FGA: {statsTabAverage ? fga / games.length : fga}</span>
+        <span>FGM: {statsTabAverage ? fgm / games.length : fgm}</span>
+        <span>FG%: {fgp / games.length}</span>
+      </div>
+      <div className={styles.statsColumnRowsItem}>
+        <span>Reb: {statsTabAverage ? reb / games.length : reb}</span>
+        <span>Ast: {statsTabAverage ? ast / games.length : ast}</span>
+        <span>Stl: {statsTabAverage ? stl / games.length : stl}</span>
+        <span>Blk: {statsTabAverage ? blk / games.length : blk}</span>
+        <span>Tov: {statsTabAverage ? tovs / games.length : tovs}</span>
+        <span>Fouls: {statsTabAverage ? fouls / games.length : fouls}</span>
+      </div>
+    </div>
   );
 
   return (
@@ -290,17 +321,15 @@ function Stats() {
         />
         <div className={styles.statsColumn}>
           <h5>Game stats</h5>
-          <div className={styles.statsColumnRows}>
-            {!loading ? (
-              filterGame ? (
-                countGameStats(filterGame)
-              ) : (
-                countOverallStats()
-              )
+          {!loading ? (
+            filterGame ? (
+              countGameStats(filterGame)
             ) : (
-              <BlockLoader />
-            )}
-          </div>
+              countOverallStats()
+            )
+          ) : (
+            <BlockLoader />
+          )}
         </div>
       </div>
       <div className={`${styles.statsWrap} ${loading ? styles.loading : ""}`}>
