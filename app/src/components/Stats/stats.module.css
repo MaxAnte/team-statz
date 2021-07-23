@@ -35,6 +35,9 @@
   background-color: var(--color-white);
   max-width: 350px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .statsColumn h5 {
   text-align: center;
@@ -78,6 +81,7 @@
 .statsColumnRows {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 .statsColumnRows span {

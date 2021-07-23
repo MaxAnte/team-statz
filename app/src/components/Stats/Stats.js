@@ -117,7 +117,7 @@ function Stats() {
         })
       )
     );
-  }, [filterGame, filterPlayer]);
+  }, [players, games, filterGame, filterPlayer]);
 
   const countGameStats = (gameDate) => {
     let pts = 0;
@@ -221,7 +221,6 @@ function Stats() {
     let three_fgp = 0;
     let fouls = 0;
     let tovs = 0;
-    console.log("overall");
     games.forEach((game) => {
       if (filterPlayer) {
         if (
@@ -316,25 +315,6 @@ function Stats() {
     fgm,
     fgp
   ) => {
-    console.log(
-      "l",
-      pts,
-      reb,
-      ast,
-      stl,
-      blk,
-      tovs,
-      fouls,
-      two_fga,
-      two_fgm,
-      two_fgp,
-      three_fga,
-      three_fgm,
-      three_fgp,
-      fga,
-      fgm,
-      fgp
-    );
     return (
       <div className={styles.statsColumnRowsInfo}>
         {!filterGame ? (
@@ -354,34 +334,65 @@ function Stats() {
           </div>
         ) : null}
         <div className={styles.statsColumnRowsItem}>
-          <span>Pts: {statsTabAverage ? pts / games.length : pts}</span>
+          <span>
+            Pts: {statsTabAverage && !filterGame ? pts / games.length : pts}
+          </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
-          <span>2PA: {statsTabAverage ? two_fga / games.length : two_fga}</span>
-          <span>2PM: {statsTabAverage ? two_fgm / games.length : two_fgm}</span>
+          <span>
+            2PA:{" "}
+            {statsTabAverage && !filterGame ? two_fga / games.length : two_fga}
+          </span>
+          <span>
+            2PM:{" "}
+            {statsTabAverage && !filterGame ? two_fgm / games.length : two_fgm}
+          </span>
           <span>2P%: {two_fgp / games.length}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            3PA: {statsTabAverage ? three_fga / games.length : three_fga}
+            3PA:{" "}
+            {statsTabAverage && !filterGame
+              ? three_fga / games.length
+              : three_fga}
           </span>
           <span>
-            3PM: {statsTabAverage ? three_fgm / games.length : three_fgm}
+            3PM:{" "}
+            {statsTabAverage && !filterGame
+              ? three_fgm / games.length
+              : three_fgm}
           </span>
           <span>3P%: {three_fgp / games.length}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
-          <span>FGA: {statsTabAverage ? fga / games.length : fga}</span>
-          <span>FGM: {statsTabAverage ? fgm / games.length : fgm}</span>
+          <span>
+            FGA: {statsTabAverage && !filterGame ? fga / games.length : fga}
+          </span>
+          <span>
+            FGM: {statsTabAverage && !filterGame ? fgm / games.length : fgm}
+          </span>
           <span>FG%: {fgp / games.length}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
-          <span>Reb: {statsTabAverage ? reb / games.length : reb}</span>
-          <span>Ast: {statsTabAverage ? ast / games.length : ast}</span>
-          <span>Stl: {statsTabAverage ? stl / games.length : stl}</span>
-          <span>Blk: {statsTabAverage ? blk / games.length : blk}</span>
-          <span>Tov: {statsTabAverage ? tovs / games.length : tovs}</span>
-          <span>Fouls: {statsTabAverage ? fouls / games.length : fouls}</span>
+          <span>
+            Reb: {statsTabAverage && !filterGame ? reb / games.length : reb}
+          </span>
+          <span>
+            Ast: {statsTabAverage && !filterGame ? ast / games.length : ast}
+          </span>
+          <span>
+            Stl: {statsTabAverage && !filterGame ? stl / games.length : stl}
+          </span>
+          <span>
+            Blk: {statsTabAverage && !filterGame ? blk / games.length : blk}
+          </span>
+          <span>
+            Tov: {statsTabAverage && !filterGame ? tovs / games.length : tovs}
+          </span>
+          <span>
+            Fouls:{" "}
+            {statsTabAverage && !filterGame ? fouls / games.length : fouls}
+          </span>
         </div>
       </div>
     );
