@@ -134,6 +134,9 @@ function Stats() {
     let three_fga = 0;
     let three_fgm = 0;
     let three_fgp = 0;
+    let fta = 0;
+    let ftm = 0;
+    let ftp = 0;
     let fouls = 0;
     let tovs = 0;
     let gPlayed = 0;
@@ -158,6 +161,8 @@ function Stats() {
               two_fgm += stats.two_pm;
               three_fga += stats.three_pa;
               three_fgm += stats.three_pm;
+              fta += stats.fta;
+              ftm += stats.ftm;
             });
         }
       } else {
@@ -173,11 +178,14 @@ function Stats() {
           two_fgm += player.two_pm;
           three_fga += player.three_pa;
           three_fgm += player.three_pm;
+          fta += player.fta;
+          ftm += player.ftm;
         });
       }
       if (i === games.length - 1) {
         two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
         three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+        ftp += fta ? (ftm * 100) / fta : 0;
         fga = two_fga + three_fga;
         fgm = two_fgm + three_fgm;
         fgp = fga ? (fgm * 100) / fga : 0;
@@ -197,6 +205,9 @@ function Stats() {
       three_fga,
       three_fgm,
       three_fgp,
+      fta,
+      ftm,
+      ftp,
       fga,
       fgm,
       fgp,
@@ -219,6 +230,9 @@ function Stats() {
     let three_fga = 0;
     let three_fgm = 0;
     let three_fgp = 0;
+    let fta = 0;
+    let ftm = 0;
+    let ftp = 0;
     let fouls = 0;
     let tovs = 0;
     games
@@ -239,6 +253,9 @@ function Stats() {
             three_fga += player.three_pa;
             three_fgm += player.three_pm;
             three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+            fta += player.fta;
+            ftm += player.ftm;
+            ftp += fta ? (ftm * 100) / fta : 0;
             fga += two_fga + three_fga;
             fgm += two_fgm + three_fgm;
             fgp += fga ? (fgm * 100) / fga : 0;
@@ -255,6 +272,8 @@ function Stats() {
           two_fgm += player.two_pm;
           three_fga += player.three_pa;
           three_fgm += player.three_pm;
+          fta += player.fta;
+          ftm += player.ftm;
           if (
             i ===
             games.filter((game) => game.date === gameDate)[0].playersStats
@@ -263,6 +282,7 @@ function Stats() {
           ) {
             two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
             three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+            ftp += fta ? (ftm * 100) / fta : 0;
             fga += two_fga + three_fga;
             fgm += two_fgm + three_fgm;
             fgp += fga ? (fgm * 100) / fga : 0;
@@ -283,6 +303,9 @@ function Stats() {
       three_fga,
       three_fgm,
       three_fgp,
+      fta,
+      ftm,
+      ftp,
       fga,
       fgm,
       fgp
@@ -303,6 +326,9 @@ function Stats() {
     three_fga,
     three_fgm,
     three_fgp,
+    fta,
+    ftm,
+    ftp,
     fga,
     fgm,
     fgp,
@@ -364,6 +390,21 @@ function Stats() {
               : parseFloat(three_fgm.toFixed(2))}
           </span>
           <span>3P%: {parseFloat(three_fgp.toFixed(2))}</span>
+        </div>
+        <div className={styles.statsColumnRowsItem}>
+          <span>
+            FTA:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((fta / gPlayed).toFixed(2))
+              : parseFloat(fta.toFixed(2))}
+          </span>
+          <span>
+            FTM:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((ftm / gPlayed).toFixed(2))
+              : parseFloat(ftm.toFixed(2))}
+          </span>
+          <span>FT%: {parseFloat(ftp.toFixed(2))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
@@ -478,31 +519,34 @@ function Stats() {
         </div>
       </div>
       <div className={`${styles.statsWrap} ${loading ? styles.loading : ""}`}>
+        <h3 className="title">Games</h3>
         {!loading ? (
-          games.map((game, i) => (
-            <div
-              className={`${styles.gameCard} ${
-                filterGame === game.date ? styles.activeCard : ""
-              }`}
-              onClick={() =>
-                setFilterGame(filterGame === game.date ? null : game.date)
-              }
-              key={i}
-            >
-              <h4 className={styles.calendarGameName}>vs. {game.enemy}</h4>
-              <div className={styles.calendarGameScore}>
-                <span
-                  className={`our ${
-                    game.ourScore > game.enemyScore ? styles.win : styles.lose
-                  }`}
-                >
-                  {game.ourScore}
-                </span>
-                :<span>{game.enemyScore}</span>
+          <div className={styles.gamesWrap}>
+            {games.map((game, i) => (
+              <div
+                className={`${styles.gameCard} ${
+                  filterGame === game.date ? styles.activeCard : ""
+                }`}
+                onClick={() =>
+                  setFilterGame(filterGame === game.date ? null : game.date)
+                }
+                key={i}
+              >
+                <h4 className={styles.calendarGameName}>vs. {game.enemy}</h4>
+                <div className={styles.calendarGameScore}>
+                  <span
+                    className={`our ${
+                      game.ourScore > game.enemyScore ? styles.win : styles.lose
+                    }`}
+                  >
+                    {game.ourScore}
+                  </span>
+                  :<span>{game.enemyScore}</span>
+                </div>
+                <span>{game.date}</span>
               </div>
-              <span>{game.date}</span>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
           <BlockLoader />
         )}

@@ -1,5 +1,11 @@
 .statsWrap {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.gamesWrap {
+  display: flex;
   align-items: center;
   flex-wrap: wrap;
   margin: 0px -15px;
