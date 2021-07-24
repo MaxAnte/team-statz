@@ -23,7 +23,7 @@ function Stats() {
   const HEIGHT = 750;
   const DPI_WIDTH = WIDTH * 2;
   const DPI_HEIGHT = HEIGHT * 2;
-  const MULTIPLIER = 2.4;
+  const MULTIPLIER = 2.41379310345;
   const COLORS = [
     "#FF0032",
     "#F700FF",
@@ -119,6 +119,91 @@ function Stats() {
     );
   }, [players, games, filterGame, filterPlayer]);
 
+  const countOverallStats = () => {
+    let pts = 0;
+    let reb = 0;
+    let ast = 0;
+    let stl = 0;
+    let blk = 0;
+    let fga = 0;
+    let fgm = 0;
+    let fgp = 0;
+    let two_fga = 0;
+    let two_fgm = 0;
+    let two_fgp = 0;
+    let three_fga = 0;
+    let three_fgm = 0;
+    let three_fgp = 0;
+    let fouls = 0;
+    let tovs = 0;
+    let gPlayed = 0;
+    games.forEach((game, i) => {
+      if (filterPlayer) {
+        if (
+          game.playersStats.filter((player) => player._id === filterPlayer)
+            .length
+        ) {
+          gPlayed++;
+          game.playersStats
+            .filter((player) => player._id === filterPlayer)
+            .forEach((stats) => {
+              pts += stats.pts;
+              reb += stats.oreb + stats.dreb;
+              ast += stats.ast;
+              stl += stats.stl;
+              blk += stats.blk;
+              tovs += stats.tov;
+              fouls += stats.fouls;
+              two_fga += stats.two_pa;
+              two_fgm += stats.two_pm;
+              three_fga += stats.three_pa;
+              three_fgm += stats.three_pm;
+            });
+        }
+      } else {
+        game.playersStats.forEach((player) => {
+          pts += player.pts;
+          reb += player.oreb + player.dreb;
+          ast += player.ast;
+          stl += player.stl;
+          blk += player.blk;
+          tovs += player.tov;
+          fouls += player.fouls;
+          two_fga += player.two_pa;
+          two_fgm += player.two_pm;
+          three_fga += player.three_pa;
+          three_fgm += player.three_pm;
+        });
+      }
+      if (i === games.length - 1) {
+        two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+        three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+        fga = two_fga + three_fga;
+        fgm = two_fgm + three_fgm;
+        fgp = fga ? (fgm * 100) / fga : 0;
+      }
+    });
+    return countStatsMarkup(
+      pts,
+      reb,
+      ast,
+      stl,
+      blk,
+      tovs,
+      fouls,
+      two_fga,
+      two_fgm,
+      two_fgp,
+      three_fga,
+      three_fgm,
+      three_fgp,
+      fga,
+      fgm,
+      fgp,
+      gPlayed
+    );
+  };
+
   const countGameStats = (gameDate) => {
     let pts = 0;
     let reb = 0;
@@ -138,7 +223,7 @@ function Stats() {
     let tovs = 0;
     games
       .filter((game) => game.date === gameDate)[0]
-      .playersStats.forEach((player) => {
+      .playersStats.forEach((player, i) => {
         if (filterPlayer) {
           if (filterPlayer === player._id) {
             pts += player.pts;
@@ -150,17 +235,13 @@ function Stats() {
             fouls += player.fouls;
             two_fga += player.two_pa;
             two_fgm += player.two_pm;
-            two_fgp +=
-              two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
+            two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
             three_fga += player.three_pa;
             three_fgm += player.three_pm;
-            three_fgp +=
-              three_fga === 0 || three_fgm === 0
-                ? 0
-                : (three_fgm * 100) / three_fga;
+            three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
             fga += two_fga + three_fga;
             fgm += two_fgm + three_fgm;
-            fgp += two_fgp + three_fgp;
+            fgp += fga ? (fgm * 100) / fga : 0;
           }
         } else {
           pts += player.pts;
@@ -172,111 +253,22 @@ function Stats() {
           fouls += player.fouls;
           two_fga += player.two_pa;
           two_fgm += player.two_pm;
-          two_fgp +=
-            two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
           three_fga += player.three_pa;
           three_fgm += player.three_pm;
-          three_fgp +=
-            three_fga === 0 || three_fgm === 0
-              ? 0
-              : (three_fgm * 100) / three_fga;
-          fga += two_fga + three_fga;
-          fgm += two_fgm + three_fgm;
-          fgp += two_fgp + three_fgp;
+          if (
+            i ===
+            games.filter((game) => game.date === gameDate)[0].playersStats
+              .length -
+              1
+          ) {
+            two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+            three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+            fga += two_fga + three_fga;
+            fgm += two_fgm + three_fgm;
+            fgp += fga ? (fgm * 100) / fga : 0;
+          }
         }
       });
-    return countStatsMarkup(
-      pts,
-      reb,
-      ast,
-      stl,
-      blk,
-      tovs,
-      fouls,
-      two_fga,
-      two_fgm,
-      two_fgp,
-      three_fga,
-      three_fgm,
-      three_fgp,
-      fga,
-      fgm,
-      fgp
-    );
-  };
-  const countOverallStats = () => {
-    let pts = 0;
-    let reb = 0;
-    let ast = 0;
-    let stl = 0;
-    let blk = 0;
-    let fga = 0;
-    let fgm = 0;
-    let fgp = 0;
-    let two_fga = 0;
-    let two_fgm = 0;
-    let two_fgp = 0;
-    let three_fga = 0;
-    let three_fgm = 0;
-    let three_fgp = 0;
-    let fouls = 0;
-    let tovs = 0;
-    games.forEach((game) => {
-      if (filterPlayer) {
-        if (
-          game.playersStats.filter((player) => player._id === filterPlayer)
-            .length
-        ) {
-          game.playersStats
-            .filter((player) => player._id === filterPlayer)
-            .forEach((stats) => {
-              pts += stats.pts;
-              reb += stats.oreb + stats.dreb;
-              ast += stats.ast;
-              stl += stats.stl;
-              blk += stats.blk;
-              tovs += stats.tov;
-              fouls += stats.fouls;
-              two_fga += stats.two_pa;
-              two_fgm += stats.two_pm;
-              two_fgp +=
-                two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
-              three_fga += stats.three_pa;
-              three_fgm += stats.three_pm;
-              three_fgp +=
-                three_fga === 0 || three_fgm === 0
-                  ? 0
-                  : (three_fgm * 100) / three_fga;
-              fga += two_fga + three_fga;
-              fgm += two_fgm + three_fgm;
-              fgp += two_fgp + three_fgp;
-            });
-        }
-      } else {
-        game.playersStats.forEach((player) => {
-          pts += player.pts;
-          reb += player.oreb + player.dreb;
-          ast += player.ast;
-          stl += player.stl;
-          blk += player.blk;
-          tovs += player.tov;
-          fouls += player.fouls;
-          two_fga += player.two_pa;
-          two_fgm += player.two_pm;
-          two_fgp +=
-            two_fga === 0 || two_fgm === 0 ? 0 : (two_fgm * 100) / two_fga;
-          three_fga += player.three_pa;
-          three_fgm += player.three_pm;
-          three_fgp +=
-            three_fga === 0 || three_fgm === 0
-              ? 0
-              : (three_fgm * 100) / three_fga;
-          fga += two_fga + three_fga;
-          fgm += two_fgm + three_fgm;
-          fgp += two_fgp + three_fgp;
-        });
-      }
-    });
     return countStatsMarkup(
       pts,
       reb,
@@ -313,8 +305,10 @@ function Stats() {
     three_fgp,
     fga,
     fgm,
-    fgp
+    fgp,
+    gPlayed = 0
   ) => {
+    if (!gPlayed) gPlayed = games.length;
     return (
       <div className={styles.statsColumnRowsInfo}>
         {!filterGame ? (
@@ -335,63 +329,93 @@ function Stats() {
         ) : null}
         <div className={styles.statsColumnRowsItem}>
           <span>
-            Pts: {statsTabAverage && !filterGame ? pts / games.length : pts}
+            Pts:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((pts / gPlayed).toFixed(2))
+              : parseFloat(pts.toFixed(2))}
           </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             2PA:{" "}
-            {statsTabAverage && !filterGame ? two_fga / games.length : two_fga}
+            {statsTabAverage && !filterGame
+              ? parseFloat((two_fga / gPlayed).toFixed(2))
+              : parseFloat(two_fga.toFixed(2))}
           </span>
           <span>
             2PM:{" "}
-            {statsTabAverage && !filterGame ? two_fgm / games.length : two_fgm}
+            {statsTabAverage && !filterGame
+              ? parseFloat((two_fgm / gPlayed).toFixed(2))
+              : parseFloat(two_fgm.toFixed(2))}
           </span>
-          <span>2P%: {two_fgp / games.length}</span>
+          <span>2P%: {parseFloat(two_fgp.toFixed(2))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             3PA:{" "}
             {statsTabAverage && !filterGame
-              ? three_fga / games.length
-              : three_fga}
+              ? parseFloat((three_fga / gPlayed).toFixed(2))
+              : parseFloat(three_fga.toFixed(2))}
           </span>
           <span>
             3PM:{" "}
             {statsTabAverage && !filterGame
-              ? three_fgm / games.length
-              : three_fgm}
+              ? parseFloat((three_fgm / gPlayed).toFixed(2))
+              : parseFloat(three_fgm.toFixed(2))}
           </span>
-          <span>3P%: {three_fgp / games.length}</span>
+          <span>3P%: {parseFloat(three_fgp.toFixed(2))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            FGA: {statsTabAverage && !filterGame ? fga / games.length : fga}
+            FGA:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((fga / gPlayed).toFixed(2))
+              : parseFloat(fga.toFixed(2))}
           </span>
           <span>
-            FGM: {statsTabAverage && !filterGame ? fgm / games.length : fgm}
+            FGM:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((fgm / gPlayed).toFixed(2))
+              : parseFloat(fgm.toFixed(2))}
           </span>
-          <span>FG%: {fgp / games.length}</span>
+          <span>FG%: {parseFloat(fgp.toFixed(2))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            Reb: {statsTabAverage && !filterGame ? reb / games.length : reb}
+            Reb:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((reb / gPlayed).toFixed(2))
+              : parseFloat(reb.toFixed(2))}
           </span>
           <span>
-            Ast: {statsTabAverage && !filterGame ? ast / games.length : ast}
+            Ast:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat(ast / gPlayed.toFixed(2))
+              : parseFloat(ast.toFixed(2))}
           </span>
           <span>
-            Stl: {statsTabAverage && !filterGame ? stl / games.length : stl}
+            Stl:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((stl / gPlayed).toFixed(2))
+              : parseFloat(stl.toFixed(2))}
           </span>
           <span>
-            Blk: {statsTabAverage && !filterGame ? blk / games.length : blk}
+            Blk:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((blk / gPlayed).toFixed(2))
+              : parseFloat(blk.toFixed(2))}
           </span>
           <span>
-            Tov: {statsTabAverage && !filterGame ? tovs / games.length : tovs}
+            Tov:{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((tovs / gPlayed).toFixed(2))
+              : parseFloat(tovs.toFixed(2))}
           </span>
           <span>
             Fouls:{" "}
-            {statsTabAverage && !filterGame ? fouls / games.length : fouls}
+            {statsTabAverage && !filterGame
+              ? parseFloat((fouls / gPlayed).toFixed(2))
+              : parseFloat(fouls.toFixed(2))}
           </span>
         </div>
       </div>
