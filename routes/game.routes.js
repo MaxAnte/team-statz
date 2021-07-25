@@ -6,8 +6,8 @@ const Game = require("../models/Game");
 const router = Router();
 
 const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
-  const winFlag = enemyScore > ourScore;
-  const data = JSON.stringify({ enemyName, winFlag });
+  const enemyWin = +enemyScore > +ourScore;
+  const data = JSON.stringify({ enemyName, enemyWin });
   const options = {
     hostname: "localhost",
     port: 3000,

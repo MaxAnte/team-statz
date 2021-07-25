@@ -22,15 +22,15 @@ router.post("/teams", [], async (req, res) => {
 });
 
 router.post("/update", [], async (req, res) => {
-  const { enemyName, winFlag } = req.body;
+  const { enemyName, enemyWin } = req.body;
   const team = await Team.findOne({ name: enemyName });
   const ourTeam = await Team.findOne({ name: "Basketball City" });
-  if (winFlag) {
-    team.loses += 1;
-    ourTeam.wins += 1;
+  if (enemyWin) {
+    team.wins = +team.wins + 1;
+    ourTeam.loses = +ourTeam.loses + 1;
   } else {
-    team.wins += 1;
-    ourTeam.loses += 1;
+    team.loses = +team.loses + 1;
+    ourTeam.wins = +ourTeam.wins + 1;
   }
   if (!team)
     return res.status(400).json({ message: `${enemyName} Teams not found` });
