@@ -11,6 +11,8 @@ import Loader from "./components/Loader/Loader";
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from "./hooks/auth.hook";
 
+import "./i18n/config";
+
 import "./App.css";
 import styles from "./background.module.css";
 

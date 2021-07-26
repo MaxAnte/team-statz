@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import AuthModal from "../AuthModal/AuthModal";
 
@@ -7,6 +8,8 @@ import styles from "./header.module.css";
 
 function Header() {
   const [modal, setModal] = useState(false);
+  const { t } = useTranslation();
+
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
   return (
@@ -20,23 +23,23 @@ function Header() {
         <ul>
           <li>
             <NavLink to="/team" activeClassName={styles.isActive}>
-              <span>Team</span>
+              <span>{t("Team")}</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/schedule" activeClassName={styles.isActive}>
-              <span>Schedule</span>
+              <span>{t("Schedule")}</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/stats" activeClassName={styles.isActive}>
-              <span>Stats</span>
+              <span>{t("Stats")}</span>
             </NavLink>
           </li>
         </ul>
       </nav>
       <span className={styles.auth} onClick={() => toggleModal()}>
-        <span>Moder</span>
+        <span>{t("Moder")}</span>
       </span>
       {modal ? <AuthModal closeOnLogin={closeOnLogin} /> : null}
       {modal ? (

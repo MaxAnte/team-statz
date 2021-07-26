@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";
@@ -13,6 +14,7 @@ function Games() {
   const [games, setGames] = useState(undefined);
   const [sort, setSort] = useState("All");
   const { loading, request } = useHttp();
+  const { t } = useTranslation();
 
   const getGames = async () => {
     try {
@@ -37,9 +39,9 @@ function Games() {
 
   return (
     <div className="games page-wrapper">
-      <h2 className="title">Season standings</h2>
+      <h2 className="title">{t("Season standings")}</h2>
       <Table />
-      <h2 className="title">Recent Games</h2>
+      <h2 className="title">{t("Recent Games")}</h2>
       <div className={styles.gamesWrapper}>
         {gamesList.length ? (
           <Select
@@ -61,11 +63,11 @@ function Games() {
           })
         ) : (
           <div className={styles.noGames}>
-            No games has been added yet. Go to{" "}
+            {t("No games has been added yet. Go to")}
             <Link to="/schedule">
-              <strong>Schedule</strong>
+              <strong>{t("Schedule")}</strong>
             </Link>{" "}
-            and add Game!
+            {t("and add Game!")}
           </div>
         )}
       </div>
