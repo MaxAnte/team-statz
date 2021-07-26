@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 import { AuthContext } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import MiniLoader from "../Loader/MiniLoader";
@@ -11,6 +12,7 @@ function GameCard({ game }) {
   const [editMode, setEditMode] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const { date, time, enemy } = game;
 
@@ -39,7 +41,7 @@ function GameCard({ game }) {
                   className={`${styles.pendBtn} btn__main`}
                   onClick={() => handleEdit()}
                 >
-                  Edit game info
+                  {t("Edit game info")}
                 </div>
                 <div className={styles.gameDate}>{game.date}</div>
                 {addPopup ? (
@@ -51,14 +53,14 @@ function GameCard({ game }) {
               </>
             ) : (
               <div>
-                <span>Waiting for info from that game</span>
+                <span>{t("Waiting for info from that game")}</span>
                 <MiniLoader />
               </div>
             )}
           </>
         ) : (
           <span>
-            Game will be played {game.date} at {game.time}
+            {t("Game will be played")} {game.date} {t("at")} {game.time}
           </span>
         )
       ) : (

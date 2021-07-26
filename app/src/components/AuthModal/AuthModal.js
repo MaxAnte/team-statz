@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import styles from "./authModal.module.css";
 
@@ -8,6 +9,7 @@ function AuthModal({ closeOnLogin }) {
   const auth = useContext(AuthContext);
   const { loading, error, request } = useHttp();
   const [form, setForm] = useState({ login: "", password: "" });
+  const { t } = useTranslation();
 
   // TODO: Errors handler
   // const useEffect(() => {
@@ -38,7 +40,7 @@ function AuthModal({ closeOnLogin }) {
 
   return (
     <div className={styles.authModal}>
-      <h3 className="title">Authentication</h3>
+      <h3 className="title">{t("Authentication")}</h3>
       <div className={styles.authCont}>
         <div className={styles.authInput}>
           <input
@@ -48,7 +50,7 @@ function AuthModal({ closeOnLogin }) {
             placeholder="Login"
             onChange={changeHandler}
           />
-          <label htmlFor="login">Login</label>
+          <label htmlFor="login">{t("Login")}</label>
         </div>
         <div className={styles.authInput}>
           <input
@@ -58,7 +60,7 @@ function AuthModal({ closeOnLogin }) {
             placeholder="Password"
             onChange={changeHandler}
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{t("Password")}</label>
         </div>
         <div className={styles.authAction}>
           <button
@@ -66,14 +68,14 @@ function AuthModal({ closeOnLogin }) {
             onClick={loginHandler}
             disabled={loading}
           >
-            Login
+            {t("Login")}
           </button>
           {/* <button
             className="btn-submit"
             onClick={registerHandler}
             disabled={loading}
           >
-            Register
+            {t("Register")}
           </button> */}
         </div>
       </div>

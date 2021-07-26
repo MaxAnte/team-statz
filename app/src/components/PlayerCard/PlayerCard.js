@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import styles from "./playerCard.module.css";
 
@@ -10,37 +11,38 @@ import thief from "../../assets/images/badges/thief.svg";
 import block from "../../assets/images/badges/block.svg";
 
 function PlayerCard({ player }) {
+  const { t } = useTranslation();
   return (
     <div className={styles.playerCard}>
       <div className={styles.playerBadges}>
         {player.bestInPts ? (
           <div className={styles.playerBadge}>
             <img src={basket} alt="Bucket mashine" />
-            <span>Bucket mashine</span>
+            <span>{t("Bucket mashine")}</span>
           </div>
         ) : null}
         {player.bestInReb ? (
           <div className={styles.playerBadge}>
             <img src={glassCleaner} alt="Glass cleaner" />
-            <span>Glass cleaner</span>
+            <span>{t("Glass cleaner")}</span>
           </div>
         ) : null}
         {player.bestInAst ? (
           <div className={styles.playerBadge}>
             <img src={assist} alt="Point GOD" />
-            <span>Point GOD</span>
+            <span>{t("Point GOD")}</span>
           </div>
         ) : null}
         {player.bestInBlk ? (
           <div className={styles.playerBadge}>
             <img src={block} alt="Block mashine" />
-            <span>You shall NOT pass</span>
+            <span>{t("You shall NOT pass")}</span>
           </div>
         ) : null}
         {player.bestInStl ? (
           <div className={styles.playerBadge}>
             <img src={thief} alt="Thief" />
-            <span>Thief</span>
+            <span>{t("Thief")}</span>
           </div>
         ) : null}
       </div>
@@ -56,19 +58,19 @@ function PlayerCard({ player }) {
       </p>
       <div className={styles.playerStats}>
         <div className={styles.playerStatsItem}>
-          PPG: {player.pts ? parseFloat(player.pts.toFixed(2)) : 0}
+          {t("PPG")}: {player.pts ? parseFloat(player.pts.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          RPG: {player.reb ? parseFloat(player.reb.toFixed(2)) : 0}
+          {t("RPG")}: {player.reb ? parseFloat(player.reb.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          APG: {player.ast ? parseFloat(player.ast.toFixed(2)) : 0}
+          {t("APG")}: {player.ast ? parseFloat(player.ast.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          BPG: {player.blk ? parseFloat(player.blk.toFixed(2)) : 0}
+          {t("BPG")}: {player.blk ? parseFloat(player.blk.toFixed(2)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          SPG: {player.stl ? parseFloat(player.stl.toFixed(2)) : 0}
+          {t("SPG")}: {player.stl ? parseFloat(player.stl.toFixed(2)) : 0}
         </div>
       </div>
     </div>

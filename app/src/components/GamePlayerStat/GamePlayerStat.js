@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 import BlockLoader from "../Loader/BlockLoader";
@@ -14,6 +15,7 @@ function GamePlayerStat({ player, gameID }) {
     position: "",
     image_thumb: "",
   });
+  const { t } = useTranslation();
 
   const getPlayerById = async () => {
     try {
@@ -101,31 +103,41 @@ function GamePlayerStat({ player, gameID }) {
       <div className={styles.gpsRight}>
         <div className={styles.gpsStats}>
           <div className={styles.gpsStatsRow}>
-            <div className={styles.gpsStatsRowTitle}>Points: {player.pts}</div>
+            <div className={styles.gpsStatsRowTitle}>
+              {t("Points")}: {player.pts}
+            </div>
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  2P%:
+                  {t("2P")}%:
                   <span>{getPercentage(player.two_pa, player.two_pm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.two_pa}</span>
-                    <span>Made: {player.two_pm}</span>
+                    <span>
+                      {t("Atempted")}: {player.two_pa}
+                    </span>
+                    <span>
+                      {t("Made")}: {player.two_pm}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  3P%:
+                  {t("3P")}%:
                   <span>{getPercentage(player.three_pa, player.three_pm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.three_pa}</span>
-                    <span>Made: {player.three_pm}</span>
+                    <span>
+                      {t("Atempted")}: {player.three_pa}
+                    </span>
+                    <span>
+                      {t("Made")}: {player.three_pm}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  FG%:
+                  {t("FG")}%:
                   <span>
                     {getPercentage(
                       player.two_pa + player.three_pa,
@@ -133,18 +145,26 @@ function GamePlayerStat({ player, gameID }) {
                     )}
                   </span>
                   <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.two_pa + player.three_pa}</span>
-                    <span>Made: {player.two_pm + player.three_pm}</span>
+                    <span>
+                      {t("Atempted")}: {player.two_pa + player.three_pa}
+                    </span>
+                    <span>
+                      {t("Made")}: {player.two_pm + player.three_pm}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  FT%:
+                  {t("FT")}%:
                   <span>{getPercentage(player.fta, player.ftm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Atempted: {player.fta}</span>
-                    <span>Made: {player.ftm}</span>
+                    <span>
+                      {t("Atempted")}: {player.fta}
+                    </span>
+                    <span>
+                      {t("Made")}: {player.ftm}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -152,58 +172,54 @@ function GamePlayerStat({ player, gameID }) {
           </div>
 
           <div className={styles.gpsStatsRow}>
-            <div className={styles.gpsStatsRowTitle}>Statistic:</div>
+            <div className={styles.gpsStatsRowTitle}>{t("Statistic")}:</div>
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  AST:
-                  <span>{player.ast}</span>
+                  {t("AST")}:<span>{player.ast}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  REB:
-                  <span>{player.oreb + player.dreb}</span>
+                  {t("REB")}:<span>{player.oreb + player.dreb}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
-                    <span>Offensive: {player.oreb}</span>
-                    <span>Defensive: {player.dreb}</span>
+                    <span>
+                      {t("Offensive")}: {player.oreb}
+                    </span>
+                    <span>
+                      {t("Defensive")}: {player.dreb}
+                    </span>
                   </div>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  STL:
-                  <span>{player.stl}</span>
+                  {t("STL")}:<span>{player.stl}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  BLK:
-                  <span>{player.blk}</span>
+                  {t("BLK")}:<span>{player.blk}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  TOV:
-                  <span>{player.tov}</span>
+                  {t("TOV")}:<span>{player.tov}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  Fouls:
-                  <span>{player.fouls}</span>
+                  {t("Fouls")}:<span>{player.fouls}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  Minutes:
-                  <span>{player.minutes}</span>
+                  {t("Minutes")}:<span>{player.minutes}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  EFF:
-                  <span>{getEfficiencyRate(player)}</span>
+                  {t("EFF")}:<span>{getEfficiencyRate(player)}</span>
                 </div>
               </div>
             </div>

@@ -45,10 +45,10 @@ function Games() {
       <div className={styles.gamesWrapper}>
         {gamesList.length ? (
           <Select
-            options={["All", "Pending", "Played"]}
+            options={[`${t("All")}`, `${t("Pending")}`, `${t("Played")}`]}
             className={styles.gamesSort}
             getActive={handleGetActive}
-            defaultValue="All"
+            defaultValue={t("All")}
           />
         ) : null}
         {loading ? (

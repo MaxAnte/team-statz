@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 
 import styles from "./addGamePlayerStat.module.css";
@@ -6,6 +8,7 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 function AddGamePlayerStat({ player, handleChangePlayerStats }) {
   const [playerStats, setPlayerStats] = useState({});
+  const { t } = useTranslation();
 
   const handleChangeStats = (e) => {
     setPlayerStats((prevState) => ({
@@ -42,7 +45,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="playerPts">Points: </label>
+                  <label htmlFor="playerPts">{t("Points")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -55,7 +58,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="ast">AST: </label>
+                  <label htmlFor="ast">{t("AST")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -68,7 +71,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="dreb">DREB: </label>
+                  <label htmlFor="dreb">{t("DREB")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -81,7 +84,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="dreb">OREB: </label>
+                  <label htmlFor="dreb">{t("OREB")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -94,7 +97,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="stl">STL: </label>
+                  <label htmlFor="stl">{t("STL")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -107,7 +110,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="blk">BLK: </label>
+                  <label htmlFor="blk">{t("BLK")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -124,7 +127,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="two_pa">2p Attempted: </label>
+                  <label htmlFor="two_pa">{t("2p Attempted")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -137,7 +140,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="two_pm">2p Made: </label>
+                  <label htmlFor="two_pm">{t("2p Made")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -150,7 +153,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="three_pa">3p Attempted: </label>
+                  <label htmlFor="three_pa">{t("3p Attempted")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -163,7 +166,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="three_pm">3p Made: </label>
+                  <label htmlFor="three_pm">{t("3p Made")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -176,7 +179,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="fta">FT Attempted: </label>
+                  <label htmlFor="fta">{t("FT Attempted")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -189,7 +192,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="ftm">FT Made: </label>
+                  <label htmlFor="ftm">{t("FT Made")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -207,7 +210,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
             <div className={styles.gpsStatsRowStats}>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="tov">TOV: </label>
+                  <label htmlFor="tov">{t("TOV")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -220,7 +223,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="fouls">Fouls: </label>
+                  <label htmlFor="fouls">{t("Fouls")}: </label>
                   <input
                     type="number"
                     min="0"
@@ -233,7 +236,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="minutes">Minutes: </label>
+                  <label htmlFor="minutes">{t("Minutes")}: </label>
                   <input
                     type="number"
                     min="0"

@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
 import { AuthContext } from "../../context/AuthContext";
@@ -14,6 +15,7 @@ function Schedule() {
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { isAuthenticated } = useContext(AuthContext);
   const { request } = useHttp();
+  const { t } = useTranslation();
 
   const getDates = async () => {
     try {
@@ -33,20 +35,28 @@ function Schedule() {
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
 
-  const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const WEEKDAYS = [
+    `${t("Mon")}`,
+    `${t("Tue")}`,
+    `${t("Wed")}`,
+    `${t("Thu")}`,
+    `${t("Fri")}`,
+    `${t("Sat")}`,
+    `${t("Sun")}`,
+  ];
   const MONTHS = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    `${t("January")}`,
+    `${t("February")}`,
+    `${t("March")}`,
+    `${t("April")}`,
+    `${t("May")}`,
+    `${t("June")}`,
+    `${t("July")}`,
+    `${t("August")}`,
+    `${t("September")}`,
+    `${t("October")}`,
+    `${t("November")}`,
+    `${t("December")}`,
   ];
   const TODAY = dayjs().format("YYYY-MM-DD");
 
@@ -171,7 +181,7 @@ function Schedule() {
 
   return (
     <div className={`${styles.schedule} page-wrapper`}>
-      <h1 className="title">Schedule</h1>
+      <h1 className="title">{t("Schedule")}</h1>
       <div className={styles.calendarMonth}>
         <section className={styles.calendarMonthHeader}>
           <div

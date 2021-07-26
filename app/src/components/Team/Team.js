@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
@@ -12,6 +13,8 @@ function Team() {
   const [players, setPlayers] = useState([]);
   const [games, setGames] = useState([]);
   const { loading, request } = useHttp();
+  const { t } = useTranslation();
+
   const getPlayers = async () => {
     const data = await request("/api/player/players", "POST", {});
     if (data) setPlayers(Object.values(data));
@@ -62,7 +65,7 @@ function Team() {
 
   return (
     <div className="team page-wrapper">
-      <h2 className="title">Basketball City Team</h2>
+      <h2 className="title">Basketball City {t("Team")}</h2>
       <TeamInfo players={players} games={games} />
       <div className={styles.teamPlayers}>
         {loading ? (

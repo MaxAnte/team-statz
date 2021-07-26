@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 import MiniLoader from "../Loader/MiniLoader";
@@ -17,6 +18,7 @@ function AddGamePopup({ closeHandler, base }) {
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
   const [playersStatsArr, setPlayersStatsArr] = useState([]);
+  const { t } = useTranslation();
 
   const { loading, request } = useHttp();
 
@@ -86,7 +88,7 @@ function AddGamePopup({ closeHandler, base }) {
             <h3 className={styles.popupTitle}>Add Game Stats</h3>
             <form className={styles.addGameForm} onSubmit={handleSubmit}>
               <h4 className={styles.popupSubtitle}>
-                Set general game information
+                {t("Set general game information")}
               </h4>
               <div className={styles.popupSection}>
                 <div className={styles.genGameInfo}>
@@ -115,7 +117,7 @@ function AddGamePopup({ closeHandler, base }) {
               </div>
 
               <h4 className={styles.popupSubtitle}>
-                Check players that have played that game
+                {t("Check players that have played that game")}
               </h4>
               <div className={styles.popupSection}>
                 {!Object.values(players).length ? (
@@ -156,18 +158,18 @@ function AddGamePopup({ closeHandler, base }) {
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
                   >
-                    Save
+                    {t("Save")}
                   </button>
                 ) : null}
               </div>
 
               {Object.values(players).length && !checkListAccept ? (
-                <span>Check players above</span>
+                <span>{t("Check players above")}</span>
               ) : null}
               {checkListAccept ? (
                 <>
                   <h4 className={styles.popupSubtitle}>
-                    Add stats to each player
+                    {t("Add stats to each player")}
                   </h4>
                   <div className={styles.popupSection}>
                     {Object.values(players)
@@ -184,14 +186,14 @@ function AddGamePopup({ closeHandler, base }) {
                         </div>
                       ))}
                   </div>
-                  <button className="btn__main">Save game info</button>
+                  <button className="btn__main">{t("Save game info")}</button>
                 </>
               ) : null}
             </form>
           </>
         ) : (
           <span className={styles.successMessage}>
-            Information about game has been added successfully!
+            {t("Information about game has been added successfully!")}
           </span>
         )}
         <div className={styles.closeBtn} onClick={() => closeHandler()}>

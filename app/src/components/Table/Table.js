@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import MiniLoader from "../Loader/MiniLoader";
 
@@ -8,6 +9,7 @@ import styles from "./table.module.css";
 function Table() {
   const [teams, setTeams] = useState(undefined);
   const { loading, request } = useHttp();
+  const { t } = useTranslation();
 
   const getTeams = async () => {
     try {
@@ -33,10 +35,10 @@ function Table() {
     <div className={styles.tableWrap}>
       <div className={styles.tableHead}>
         <span className={styles.tableRowPos}>№</span>
-        <p className={styles.tableRowName}>Team</p>
-        <span className={styles.tableRowWins}>W</span>
-        <span className={styles.tableRowLoses}>L</span>
-        <span className={styles.tableRowPoints}>Pts</span>
+        <p className={styles.tableRowName}>{t("Team")}</p>
+        <span className={styles.tableRowWins}>{t("W")}</span>
+        <span className={styles.tableRowLoses}>{t("L")}</span>
+        <span className={styles.tableRowPoints}>{t("Pts")}</span>
       </div>
       {loading ? (
         <MiniLoader />

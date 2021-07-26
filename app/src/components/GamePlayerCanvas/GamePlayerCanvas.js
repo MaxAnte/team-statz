@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import styles from "./gamePlayerCanvas.module.css";
 
@@ -13,6 +14,7 @@ function GamePlayerCanvas({
   const [canvBound, setCanvBound] = useState(undefined);
   const [context, setContext] = useState(undefined);
   const [drawType, setDrawType] = useState(true);
+  const { t } = useTranslation();
 
   const canvasRef = useRef(null);
 
@@ -98,7 +100,7 @@ function GamePlayerCanvas({
             }`}
             onClick={() => setDrawType(true)}
           >
-            Hit
+            {t("Hit")}
           </div>
           <div
             className={`${styles.miss} ${
@@ -106,7 +108,7 @@ function GamePlayerCanvas({
             }`}
             onClick={() => setDrawType(false)}
           >
-            Miss
+            {t("Miss")}
           </div>
         </div>
       ) : null}

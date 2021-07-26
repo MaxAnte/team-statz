@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import BlockLoader from "../Loader/BlockLoader";
 
@@ -14,6 +15,7 @@ function Stats() {
   const [canvas, setCanvas] = useState(null);
   const [filterGame, setFilterGame] = useState(null);
   const [filterPlayer, setFilterPlayer] = useState(null);
+  const { t } = useTranslation();
 
   const { loading, request } = useHttp();
 
@@ -343,19 +345,19 @@ function Stats() {
               onClick={() => setStatsTabAverage(true)}
               className={`${statsTabAverage ? styles.activeTab : ""}`}
             >
-              Average
+              {t("Average")}
             </button>
             <button
               onClick={() => setStatsTabAverage(false)}
               className={`${!statsTabAverage ? styles.activeTab : ""}`}
             >
-              Overall
+              {t("Overall")}
             </button>
           </div>
         ) : null}
         <div className={styles.statsColumnRowsItem}>
           <span>
-            Pts:{" "}
+            {t("Pts")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((pts / gPlayed).toFixed(2))
               : parseFloat(pts.toFixed(2))}
@@ -363,43 +365,47 @@ function Stats() {
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            2PA:{" "}
+            {t("2PA")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((two_fga / gPlayed).toFixed(2))
               : parseFloat(two_fga.toFixed(2))}
           </span>
           <span>
-            2PM:{" "}
+            {t("2PM")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((two_fgm / gPlayed).toFixed(2))
               : parseFloat(two_fgm.toFixed(2))}
           </span>
-          <span>2P%: {parseFloat(two_fgp.toFixed(2))}</span>
+          <span>
+            {t("2P")}%: {parseFloat(two_fgp.toFixed(2))}
+          </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            3PA:{" "}
+            {t("3PA")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((three_fga / gPlayed).toFixed(2))
               : parseFloat(three_fga.toFixed(2))}
           </span>
           <span>
-            3PM:{" "}
+            {t("3PM")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((three_fgm / gPlayed).toFixed(2))
               : parseFloat(three_fgm.toFixed(2))}
           </span>
-          <span>3P%: {parseFloat(three_fgp.toFixed(2))}</span>
+          <span>
+            {t("3P")}%: {parseFloat(three_fgp.toFixed(2))}
+          </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            FTA:{" "}
+            {t("FTA")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((fta / gPlayed).toFixed(2))
               : parseFloat(fta.toFixed(2))}
           </span>
           <span>
-            FTM:{" "}
+            {t("FTM")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((ftm / gPlayed).toFixed(2))
               : parseFloat(ftm.toFixed(2))}
@@ -408,13 +414,13 @@ function Stats() {
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            FGA:{" "}
+            {t("FGA")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((fga / gPlayed).toFixed(2))
               : parseFloat(fga.toFixed(2))}
           </span>
           <span>
-            FGM:{" "}
+            {t("FGM")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((fgm / gPlayed).toFixed(2))
               : parseFloat(fgm.toFixed(2))}
@@ -423,37 +429,37 @@ function Stats() {
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
-            Reb:{" "}
+            {t("Reb")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((reb / gPlayed).toFixed(2))
               : parseFloat(reb.toFixed(2))}
           </span>
           <span>
-            Ast:{" "}
+            {t("Ast")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat(ast / gPlayed.toFixed(2))
               : parseFloat(ast.toFixed(2))}
           </span>
           <span>
-            Stl:{" "}
+            {t("Stl")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((stl / gPlayed).toFixed(2))
               : parseFloat(stl.toFixed(2))}
           </span>
           <span>
-            Blk:{" "}
+            {t("Blk")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((blk / gPlayed).toFixed(2))
               : parseFloat(blk.toFixed(2))}
           </span>
           <span>
-            Tov:{" "}
+            {t("Tov")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((tovs / gPlayed).toFixed(2))
               : parseFloat(tovs.toFixed(2))}
           </span>
           <span>
-            Fouls:{" "}
+            {t("Fouls")}:{" "}
             {statsTabAverage && !filterGame
               ? parseFloat((fouls / gPlayed).toFixed(2))
               : parseFloat(fouls.toFixed(2))}
@@ -468,7 +474,7 @@ function Stats() {
       <h2 className="title">Stats</h2>
       <div className={styles.statsTop}>
         <div className={styles.statsColumn}>
-          <h5>Players</h5>
+          <h5>{t("Players")}</h5>
           <div className={styles.statsColumnRows}>
             {!loading ? (
               players.map((player, i) => (
@@ -506,7 +512,7 @@ function Stats() {
           id="canvasStats"
         />
         <div className={styles.statsColumn}>
-          <h5>Game stats</h5>
+          <h5>{t("Game stats")}</h5>
           {!loading ? (
             filterGame ? (
               countGameStats(filterGame)
@@ -519,7 +525,7 @@ function Stats() {
         </div>
       </div>
       <div className={`${styles.statsWrap} ${loading ? styles.loading : ""}`}>
-        <h3 className="title">Games</h3>
+        <h3 className="title">{t("Games")}</h3>
         {!loading ? (
           <div className={styles.gamesWrap}>
             {games.map((game, i) => (
@@ -532,7 +538,9 @@ function Stats() {
                 }
                 key={i}
               >
-                <h4 className={styles.calendarGameName}>vs. {game.enemy}</h4>
+                <h4 className={styles.calendarGameName}>
+                  {t("vs.")} {game.enemy}
+                </h4>
                 <div className={styles.calendarGameScore}>
                   <span
                     className={`our ${

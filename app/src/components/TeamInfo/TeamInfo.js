@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import logo from "../../assets/images/logo-bc.png";
 
 import styles from "./teamInfo.module.css";
 
 function TeamInfo({ players, games }) {
+  const { t } = useTranslation();
   const actualGames = games.filter((game) => !game.pending);
   const arrTotals = Array(4).fill(0);
   const properties = ["REB", "AST", "BLK", "STL"];
@@ -29,12 +31,18 @@ function TeamInfo({ players, games }) {
         <img src={logo} alt="BC logo" />
       </div>
       <div className={styles.teamInfoRight}>
-        <p>GP: {actualGames.length}</p>
         <p>
-          W/L: {winsCount}/{actualGames.length - winsCount}
+          {t("GP")}: {actualGames.length}
         </p>
-        <p>ORtg: {offensiveRating}</p>
-        <p>DRtg: {defensiveRating}</p>
+        <p>
+          {t("W")}/{t("L")}: {winsCount}/{actualGames.length - winsCount}
+        </p>
+        <p>
+          {t("ORtg")}: {offensiveRating}
+        </p>
+        <p>
+          {t("DRtg")}: {defensiveRating}
+        </p>
         {arrTotals.map((el, i) => {
           return (
             <p key={i}>

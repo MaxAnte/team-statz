@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useTranslation } from "react-i18next";
 
 import Select from "../Select/select";
 
@@ -12,6 +13,7 @@ function AddGamePopup({ closeHandler, date }) {
   const [form, setForm] = useState([]);
   const [formClose, setFormClose] = useState(false);
   const { request } = useHttp();
+  const { t } = useTranslation();
 
   const getTeams = async () => {
     try {
@@ -45,7 +47,7 @@ function AddGamePopup({ closeHandler, date }) {
     >
       {!formClose ? (
         <form className={styles.addDateForm} onSubmit={handleSubmit}>
-          <h5 className={styles.title}>Add game into schedule</h5>
+          <h5 className={styles.title}>{t("Add game into schedule")}</h5>
           <div className={styles.dateWrap}>
             <span>{date} </span>
             <input
@@ -59,12 +61,14 @@ function AddGamePopup({ closeHandler, date }) {
             options={teamList ? teamList : []}
             className={styles.selectWrap}
             getActive={handleGetActive}
-            defaultValue="Enemy Team"
+            defaultValue={t("Enemy Team")}
           />
-          <button className="btn__main">Add</button>
+          <button className="btn__main">{t("Add")}</button>
         </form>
       ) : (
-        <div className={styles.addDateForm}>Date is added successfully</div>
+        <div className={styles.addDateForm}>
+          {t("Date is added successfully")}
+        </div>
       )}
       <div className={styles.closeBtn} onClick={() => closeHandler()}>
         <CloseIcon width="20px" heigth="20px" color="black" />
