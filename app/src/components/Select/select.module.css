@@ -18,8 +18,8 @@
   transform: translateY(-50%) rotate(180deg);
   transition: all 0.2s ease;
 }
-.optionActive {
-  padding-right: 10px;
+.optionActive svg {
+  margin-left: 10px;
 }
 .optionsHidden {
   display: none;

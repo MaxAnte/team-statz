@@ -170,3 +170,10 @@
   z-index: 19;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.languageSwitcher {
+  background-color: transparent;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+}

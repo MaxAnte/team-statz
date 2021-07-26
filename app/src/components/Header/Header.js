@@ -3,15 +3,17 @@ import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import AuthModal from "../AuthModal/AuthModal";
+import Select from "../Select/select";
 
 import styles from "./header.module.css";
 
 function Header() {
   const [modal, setModal] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
+  const handleGetActive = (option) => i18n.changeLanguage(option);
   return (
     <header className={styles.header}>
       <NavLink className={styles.logo} exact={true} to="/">
@@ -38,6 +40,13 @@ function Header() {
           </li>
         </ul>
       </nav>
+      <Select
+        options={[`${t("en")}`, `${t("ru")}`, `${t("uk")}`]}
+        className={styles.languageSwitcher}
+        getActive={handleGetActive}
+        defaultValue={t("en")}
+        arrow={false}
+      />
       <span className={styles.auth} onClick={() => toggleModal()}>
         <span>{t("Moder")}</span>
       </span>

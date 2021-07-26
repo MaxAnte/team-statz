@@ -4,30 +4,36 @@ import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
 
 import styles from "./select.module.css";
 
-function Select({ options, className = "", getActive, defaultValue }) {
+function Select({
+  options,
+  className = "",
+  getActive,
+  defaultValue,
+  arrow = true,
+}) {
   const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
 
   const clickHandle = (e) => {
-    setActive(e.target.innerText);
+    setActive(e.target.innerText.toLowerCase());
     setToggle(false);
   };
 
-  useEffect(() => {
-    getActive(active);
-  }, [active]);
+  useEffect(() => getActive(active), [active]);
 
   return (
     <div className={`${styles.selectWrap} ${className}`}>
       <div className={styles.optionActive} onClick={() => setToggle(!toggle)}>
         {active}
-        <SelectArrowIcon
-          width="12px"
-          heigth="12px"
-          className={`${styles.selectArrow} ${
-            toggle ? styles.selectArrowFlipped : ""
-          }`}
-        />
+        {arrow ? (
+          <SelectArrowIcon
+            width="12px"
+            heigth="12px"
+            className={`${styles.selectArrow} ${
+              toggle ? styles.selectArrowFlipped : ""
+            }`}
+          />
+        ) : null}
       </div>
       <div
         className={`${styles.optionsHidden} ${
