@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useTranslation } from "react-i18next";
 
@@ -14,6 +14,7 @@ function Games() {
   const [games, setGames] = useState(undefined);
   const [sort, setSort] = useState("All");
   const { loading, request } = useHttp();
+  const { pathname, hash } = useLocation();
   const { t } = useTranslation();
 
   const getGames = async () => {
@@ -23,9 +24,21 @@ function Games() {
     } catch (e) {}
   };
 
+  useEffect(() => getGames(), []);
+
   useEffect(() => {
-    getGames();
-  }, []);
+    if (hash === "") {
+      window.scrollTo(0, 0);
+    } else {
+      setTimeout(() => {
+        const id = hash.replace("#", "");
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 1000);
+    }
+  }, [pathname]);
 
   const gamesList = games
     ? sort === "Pending"
@@ -56,7 +69,7 @@ function Games() {
         ) : gamesList.length ? (
           gamesList.reverse().map((game, id) => {
             return (
-              <div className={styles.gamesItem} key={id}>
+              <div className={styles.gamesItem} key={id} id={game.date}>
                 <GameCard game={game} />
               </div>
             );

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
@@ -223,7 +224,10 @@ function Schedule() {
                   dates
                     .filter((game) => game.date === day.date)
                     .map((game) => (
-                      <GameCardCalendar game={game} key={game.id} />
+                      <>
+                        <Link to={`/#${game.date}`}></Link>
+                        <GameCardCalendar game={game} key={game.id} />
+                      </>
                     ))
                 ) : isAuthenticated && day.isCurrentMonth ? (
                   <div className={styles.addGameDate}>
