@@ -85,7 +85,7 @@ function AddGamePopup({ closeHandler, base }) {
       >
         {!formClose ? (
           <>
-            <h3 className={styles.popupTitle}>Add Game Stats</h3>
+            <h3 className={styles.popupTitle}>{t("Add Game Stats")}</h3>
             <form className={styles.addGameForm} onSubmit={handleSubmit}>
               <h4 className={styles.popupSubtitle}>
                 {t("Set general game information")}
