@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import styles from "./authModal.module.css";
 
 function AuthModal({ closeOnLogin }) {
   const auth = useContext(AuthContext);
-  const { loading, error, request } = useHttp();
+  const message = useMessage();
+  const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({ login: "", password: "" });
   const { t } = useTranslation();
 
   // TODO: Errors handler
-  // const useEffect(() => {
-  //   effect
-  //   return () => {
-  //     cleanup
-  //   }
-  // }, [input])
+  useEffect(() => {
+    message(error);
+  }, [error, message, clearError]);
 
   const changeHandler = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
