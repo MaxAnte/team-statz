@@ -41,10 +41,10 @@ function Header() {
         </ul>
       </nav>
       <Select
-        options={[`${t("en")}`, `${t("ru")}`, `${t("uk")}`]}
+        options={["en", "ru", "uk"]}
         className={styles.languageSwitcher}
         getActive={handleGetActive}
-        defaultValue={t("en")}
+        defaultValue="en"
         arrow={false}
       />
       <span className={styles.auth} onClick={() => toggleModal()}>

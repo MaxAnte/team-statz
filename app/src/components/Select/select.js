@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
 
@@ -13,9 +14,10 @@ function Select({
 }) {
   const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
+  const { t } = useTranslation();
 
   const clickHandle = (e) => {
-    setActive(e.target.innerText.toLowerCase());
+    setActive(e.target.dataset.option);
     setToggle(false);
   };
 
@@ -24,7 +26,7 @@ function Select({
   return (
     <div className={`${styles.selectWrap} ${className}`}>
       <div className={styles.optionActive} onClick={() => setToggle(!toggle)}>
-        {active}
+        {t(active)}
         {arrow ? (
           <SelectArrowIcon
             width="12px"
@@ -43,8 +45,12 @@ function Select({
         {options
           .filter((option) => option !== active && option !== "Basketball City")
           .map((option) => (
-            <div key={`option_${option}`} onClick={(e) => clickHandle(e)}>
-              {option}
+            <div
+              key={`option_${option}`}
+              onClick={(e) => clickHandle(e)}
+              data-option={option}
+            >
+              {t(option)}
             </div>
           ))}
       </div>

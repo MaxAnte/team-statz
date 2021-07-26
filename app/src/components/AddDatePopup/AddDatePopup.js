@@ -61,7 +61,7 @@ function AddGamePopup({ closeHandler, date }) {
             options={teamList ? teamList : []}
             className={styles.selectWrap}
             getActive={handleGetActive}
-            defaultValue={t("Enemy Team")}
+            defaultValue="Enemy Team"
           />
           <button className="btn__main">{t("Add")}</button>
         </form>
