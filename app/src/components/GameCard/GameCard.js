@@ -31,7 +31,9 @@ function GameCard({ game }) {
         game.pending && !editMode ? styles.pendingCard : ""
       }`}
     >
-      <h4 className={styles.gameName}>vs. {game.enemy}</h4>
+      <h4 className={styles.gameName}>
+        {t("vs.")} {game.enemy}
+      </h4>
       {game.pending ? (
         editMode ? (
           <>
@@ -41,7 +43,7 @@ function GameCard({ game }) {
                   className={`${styles.pendBtn} btn__main`}
                   onClick={() => handleEdit()}
                 >
-                  {t("Edit game info")}
+                  {t("Complete game info")}
                 </div>
                 <div className={styles.gameDate}>{game.date}</div>
                 {addPopup ? (

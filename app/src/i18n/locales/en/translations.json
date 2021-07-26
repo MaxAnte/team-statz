@@ -58,7 +58,7 @@
   "Login": "Login",
   "Password": "Password",
   "Register": "Register",
-  "Edit game info": "Edit game info",
+  "Complete game info": "Complete game info",
   "Waiting for info from that game": "Waiting for info from that game",
   "Game will be played": "Game will be played",
   "at": "at",
@@ -109,8 +109,5 @@
   "Enemy Team": "Enemy Team",
   "All": "All",
   "Pending": "Pending",
-  "Played": "Played",
-  "en": "en",
-  "ru": "ru",
-  "uk": "uk"
+  "Played": "Played"
 }

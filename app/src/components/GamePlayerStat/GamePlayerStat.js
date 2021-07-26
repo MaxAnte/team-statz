@@ -113,7 +113,7 @@ function GamePlayerStat({ player, gameID }) {
                   <span>{getPercentage(player.two_pa, player.two_pm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
                     <span>
-                      {t("Atempted")}: {player.two_pa}
+                      {t("Attempted")}: {player.two_pa}
                     </span>
                     <span>
                       {t("Made")}: {player.two_pm}
@@ -127,7 +127,7 @@ function GamePlayerStat({ player, gameID }) {
                   <span>{getPercentage(player.three_pa, player.three_pm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
                     <span>
-                      {t("Atempted")}: {player.three_pa}
+                      {t("Attempted")}: {player.three_pa}
                     </span>
                     <span>
                       {t("Made")}: {player.three_pm}
@@ -146,7 +146,7 @@ function GamePlayerStat({ player, gameID }) {
                   </span>
                   <div className={styles.gpsStatsRowItemInfo}>
                     <span>
-                      {t("Atempted")}: {player.two_pa + player.three_pa}
+                      {t("Attempted")}: {player.two_pa + player.three_pa}
                     </span>
                     <span>
                       {t("Made")}: {player.two_pm + player.three_pm}
@@ -160,7 +160,7 @@ function GamePlayerStat({ player, gameID }) {
                   <span>{getPercentage(player.fta, player.ftm)}</span>
                   <div className={styles.gpsStatsRowItemInfo}>
                     <span>
-                      {t("Atempted")}: {player.fta}
+                      {t("Attempted")}: {player.fta}
                     </span>
                     <span>
                       {t("Made")}: {player.ftm}
