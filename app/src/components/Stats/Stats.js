@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import BlockLoader from "../Loader/BlockLoader";
@@ -17,7 +18,8 @@ function Stats() {
   const [filterPlayer, setFilterPlayer] = useState(null);
   const { t } = useTranslation();
 
-  const { loading, request } = useHttp();
+  const { loading, request, error, clearError } = useHttp();
+  const message = useMessage();
 
   const canvasRef = useRef(null);
 
@@ -70,6 +72,11 @@ function Stats() {
   };
   const drawMade = (ctx, element) =>
     ctx.arc(element.x * MULTIPLIER, element.y * MULTIPLIER, 12, 0, 2 * Math.PI);
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   useEffect(() => getDB(), []);
 

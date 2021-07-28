@@ -74,12 +74,9 @@ const updateDateDB = async (date, time, enemy, enemyScore, ourScore) => {
 router.post("/add-game", [], async (req, res) => {
   try {
     const game = new Game(req.body);
-
     await game.save();
-
     res.status(201).json({ message: `${game} has been added!` });
   } catch (e) {
-    console.log("Error:", e.message);
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
 });
@@ -121,11 +118,8 @@ router.post("/games", async (req, res) => {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
   const games = await Game.find({});
-
   games.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
-
   if (!games) return res.status(400).json({ message: "Game not found" });
-
   res.json(games);
 });
 

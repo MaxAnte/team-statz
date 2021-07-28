@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-
 import { AuthContext } from "../../context/AuthContext";
+
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 import AddDatePopup from "../AddDatePopup/AddDatePopup";
 import PlusIcon from "../../assets/icons/PlusIcon";
@@ -15,7 +16,8 @@ function Schedule() {
   const [dates, setDates] = useState(null);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { isAuthenticated } = useContext(AuthContext);
-  const { request } = useHttp();
+  const { request, error, clearError } = useHttp();
+  const message = useMessage();
   const { t } = useTranslation();
 
   const getDates = async () => {
@@ -24,6 +26,11 @@ function Schedule() {
       if (data) setDates(Object.values(data));
     } catch (e) {}
   };
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   useEffect(() => {
     getDates();

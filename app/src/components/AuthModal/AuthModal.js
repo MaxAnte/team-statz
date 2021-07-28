@@ -13,9 +13,9 @@ function AuthModal({ closeOnLogin }) {
   const [form, setForm] = useState({ login: "", password: "" });
   const { t } = useTranslation();
 
-  // TODO: Errors handler
   useEffect(() => {
     message(error);
+    clearError();
   }, [error, message, clearError]);
 
   const changeHandler = (e) => {

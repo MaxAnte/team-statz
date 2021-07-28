@@ -63,3 +63,27 @@ input[type="number"] {
 .btn__main:disabled {
   background-color: var(--color-light-gray);
 }
+
+.errorWrap {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  z-index: 100;
+  background: var(--color-red);
+  color: var(--color-white);
+  padding: 10px 20px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.2s ease-in;
+}
+.errorWrap.fadeIn {
+  transform: translateY(0px);
+  opacity: 1;
+  transition: all 0.2s ease-in;
+}
+.errorWrap.fadeAway {
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.2s ease-in;
+}

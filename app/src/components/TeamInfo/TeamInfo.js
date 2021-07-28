@@ -38,10 +38,10 @@ function TeamInfo({ players, games }) {
           {t("W")}/{t("L")}: {winsCount}/{actualGames.length - winsCount}
         </p>
         <p>
-          {t("ORtg")}: {offensiveRating}
+          {t("ORtg")}: {parseFloat(offensiveRating.toFixed(2))}
         </p>
         <p>
-          {t("DRtg")}: {defensiveRating}
+          {t("DRtg")}: {parseFloat(defensiveRating.toFixed(2))}
         </p>
         {arrTotals.map((el, i) => {
           return (

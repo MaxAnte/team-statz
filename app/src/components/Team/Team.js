@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
-import MiniLoader from "../Loader/MiniLoader";
+import BlockLoader from "../Loader/BlockLoader";
 
 import styles from "./team.module.css";
 
 function Team() {
   const [players, setPlayers] = useState([]);
   const [games, setGames] = useState([]);
-  const { loading, request } = useHttp();
+  const { loading, request, error, clearError } = useHttp();
+  const message = useMessage();
   const { t } = useTranslation();
 
   const getPlayers = async () => {
@@ -23,6 +25,12 @@ function Team() {
     const data = await request("/api/game/games", "POST", {});
     if (data) setGames(Object.values(data));
   };
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
+
   useEffect(() => {
     getPlayers();
     getGames();
@@ -66,22 +74,24 @@ function Team() {
   return (
     <div className="team page-wrapper">
       <h2 className="title">Basketball City {t("Team")}</h2>
-      <TeamInfo players={players} games={games} />
-      <div className={styles.teamPlayers}>
-        {loading ? (
-          <MiniLoader />
-        ) : (
-          players.map((player, id) => {
-            return (
-              <div className={styles.playerItem} key={id}>
-                <NavLink to={`/player/${id}`} className={styles.playerLink}>
-                  <PlayerCard player={player} />
-                </NavLink>
-              </div>
-            );
-          })
-        )}
-      </div>
+      {loading ? (
+        <BlockLoader />
+      ) : (
+        <>
+          <TeamInfo players={players} games={games} />
+          <div className={styles.teamPlayers}>
+            {players.map((player, id) => {
+              return (
+                <div className={styles.playerItem} key={id}>
+                  <NavLink to={`/player/${id}`} className={styles.playerLink}>
+                    <PlayerCard player={player} />
+                  </NavLink>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import GameCard from "../GameCard/GameCard";
@@ -13,8 +14,9 @@ import styles from "./games.module.css";
 function Games() {
   const [games, setGames] = useState(undefined);
   const [sort, setSort] = useState("All");
-  const { loading, request } = useHttp();
+  const { loading, request, error, clearError } = useHttp();
   const { pathname, hash } = useLocation();
+  const message = useMessage();
   const { t } = useTranslation();
 
   const getGames = async () => {
@@ -23,6 +25,11 @@ function Games() {
       if (data) setGames(data);
     } catch (e) {}
   };
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   useEffect(() => getGames(), []);
 
@@ -76,7 +83,7 @@ function Games() {
           })
         ) : (
           <div className={styles.noGames}>
-            {t("No games has been added yet. Go to")}
+            {t("No games has been added yet. Go to")}{" "}
             <Link to="/schedule">
               <strong>{t("Schedule")}</strong>
             </Link>{" "}

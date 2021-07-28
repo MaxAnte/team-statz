@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import MiniLoader from "../Loader/MiniLoader";
@@ -8,7 +9,8 @@ import styles from "./table.module.css";
 
 function Table() {
   const [teams, setTeams] = useState(undefined);
-  const { loading, request } = useHttp();
+  const { loading, request, error, clearError } = useHttp();
+  const message = useMessage();
   const { t } = useTranslation();
 
   const getTeams = async () => {
@@ -17,6 +19,11 @@ function Table() {
       if (data) setTeams(data);
     } catch (e) {}
   };
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   useEffect(() => {
     getTeams();
