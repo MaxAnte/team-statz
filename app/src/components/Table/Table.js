@@ -29,40 +29,55 @@ function Table() {
     getTeams();
   }, []);
   const teamList = teams ? Object.values(teams) : [];
-
+  const groups = [];
   if (teamList) {
     teamList.forEach((el) => {
       el.winRate = (el.wins * 100) / (el.wins + el.loses);
       el.points = el.wins * 2 + el.loses * 1;
     });
     teamList.sort((a, b) => b.points - a.points);
+    teamList
+      .map((team) => team.group)
+      .map((group) => {
+        if (!groups.includes(group)) groups.push(group);
+      });
   }
-
   return (
-    <div className={styles.tableWrap}>
-      <div className={styles.tableHead}>
-        <span className={styles.tableRowPos}>№</span>
-        <p className={styles.tableRowName}>{t("Team")}</p>
-        <span className={styles.tableRowWins}>{t("W")}</span>
-        <span className={styles.tableRowLoses}>{t("L")}</span>
-        <span className={styles.tableRowPoints}>{t("Pts")}</span>
-      </div>
-      {loading ? (
-        <MiniLoader />
-      ) : (
-        teamList &&
-        teamList.map((el, i) => {
-          return (
-            <div className={styles.tableRow} key={`tableRow${i}`}>
-              <span className={styles.tableRowPos}>{++i}</span>
-              <p className={styles.tableRowName}>{el.name}</p>
-              <span className={styles.tableRowWins}>{el.wins}</span>
-              <span className={styles.tableRowLoses}>{el.loses}</span>
-              <span className={styles.tableRowPoints}>{el.points}</span>
+    <div className={styles.tables}>
+      {groups.map((group) => (
+        <div className={styles.tableCont}>
+          {groups.length > 1 ? (
+            <span className={styles.groupName}>{t(`Group ${group}`)}</span>
+          ) : null}
+          <div className={styles.tableWrap}>
+            <div className={styles.tableHead}>
+              <span className={styles.tableRowPos}>№</span>
+              <p className={styles.tableRowName}>{t("Team")}</p>
+              <span className={styles.tableRowWins}>{t("W")}</span>
+              <span className={styles.tableRowLoses}>{t("L")}</span>
+              <span className={styles.tableRowPoints}>{t("Pts")}</span>
             </div>
-          );
-        })
-      )}
+            {loading ? (
+              <MiniLoader />
+            ) : (
+              teamList &&
+              teamList
+                .filter((el) => el.group === group)
+                .map((el, i) => {
+                  return (
+                    <div className={styles.tableRow} key={`tableRow${i}`}>
+                      <span className={styles.tableRowPos}>{++i}</span>
+                      <p className={styles.tableRowName}>{el.name}</p>
+                      <span className={styles.tableRowWins}>{el.wins}</span>
+                      <span className={styles.tableRowLoses}>{el.loses}</span>
+                      <span className={styles.tableRowPoints}>{el.points}</span>
+                    </div>
+                  );
+                })
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
