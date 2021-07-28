@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const config = require("config");
 const Team = require("../models/Team");
 const router = Router();
 
@@ -11,7 +12,7 @@ router.post("/teams", [], async (req, res) => {
 router.post("/update", [], async (req, res) => {
   const { enemyName, enemyWin } = req.body;
   const team = await Team.findOne({ name: enemyName });
-  const ourTeam = await Team.findOne({ name: "Basketball City" });
+  const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
   if (enemyWin) {
     team.wins = +team.wins + 1;
     ourTeam.loses = +ourTeam.loses + 1;

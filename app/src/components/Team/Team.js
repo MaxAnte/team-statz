@@ -3,6 +3,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { TEAMNAME } from "../../project.const";
 
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
@@ -73,7 +74,9 @@ function Team() {
 
   return (
     <div className="team page-wrapper">
-      <h2 className="title">Basketball City {t("Team")}</h2>
+      <h2 className="title">
+        {TEAMNAME} {t("Team")}
+      </h2>
       {loading ? (
         <BlockLoader />
       ) : (

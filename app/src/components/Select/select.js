@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { TEAMNAME } from "../../project.const";
 
 import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
 
@@ -43,7 +44,7 @@ function Select({
         }`}
       >
         {options
-          .filter((option) => option !== active && option !== "Basketball City")
+          .filter((option) => option !== active && option !== TEAMNAME)
           .map((option) => (
             <div
               key={`option_${option}`}
