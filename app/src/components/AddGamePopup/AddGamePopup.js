@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
@@ -18,9 +19,10 @@ function AddGamePopup({ closeHandler, base }) {
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
   const [playersStatsArr, setPlayersStatsArr] = useState([]);
+  const message = useMessage();
   const { t } = useTranslation();
 
-  const { loading, request } = useHttp();
+  const { request, error, clearError } = useHttp();
 
   const handleCheck = (index) => {
     const checkSet = players;
@@ -42,6 +44,11 @@ function AddGamePopup({ closeHandler, base }) {
       check: false,
     };
   });
+
+  useEffect(() => {
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, date: base.date }));
