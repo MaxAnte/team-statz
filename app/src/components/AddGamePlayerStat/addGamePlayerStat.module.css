@@ -219,4 +219,16 @@
     margin: 15px auto;
     padding-left: 0;
   }
+  .gpsStats {
+    margin: 0;
+  }
+  .gpsStatsRowItem > div > label {
+    font-size: 16px;
+  }
+  .gpsStatsRowItem > div > input {
+    width: 35px;
+  }
+  .gamePlayerStat::before {
+    top: -50px;
+  }
 }
