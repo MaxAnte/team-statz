@@ -135,3 +135,20 @@ li {
   box-shadow: 0px 0px 20px rgb(0 0 0 / 35%);
   transition: all 0.5s ease;
 }
+
+@media (max-width: 1600px) {
+  .dayCell {
+    width: 95%;
+  }
+}
+@media (max-width: 767px) {
+  .dayOfWeek {
+    display: none;
+  }
+  .daysGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .calendarDayNotCurrent {
+    display: none;
+  }
+}

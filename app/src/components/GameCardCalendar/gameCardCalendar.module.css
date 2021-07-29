@@ -44,3 +44,47 @@
 .calendarGameDate span {
   padding: 0px 5px;
 }
+
+@media (max-width: 1600px) {
+  .calendarGameCard {
+    padding: 5px;
+  }
+  .calendarGameCard > span {
+    font-size: 10px;
+  }
+  .calendarGameCard > div {
+    display: none;
+  }
+  .calendarGameName {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .calendarGameScore {
+    font-size: 12px;
+  }
+  .calendarGameDate {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .calendarGameCard {
+    padding: 25px;
+  }
+  .calendarGameCard > span {
+    font-size: 18px;
+  }
+  .calendarGameCard > div {
+    display: block;
+  }
+  .calendarGameName {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  .calendarGameScore {
+    font-size: 18px;
+  }
+  .calendarGameDate {
+    font-size: 16px;
+  }
+}

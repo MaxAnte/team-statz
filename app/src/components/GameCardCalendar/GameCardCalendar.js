@@ -14,7 +14,7 @@ function GameCardCalendar({ game }) {
       </h4>
       {new Date() > new Date(game.date) ? (
         game.ourScore ? (
-          <div className={styles.calendarGameScore}>
+          <p className={styles.calendarGameScore}>
             <span
               className={`our ${
                 game.ourScore > game.enemyScore ? styles.win : styles.lose
@@ -23,7 +23,7 @@ function GameCardCalendar({ game }) {
               {game.ourScore}
             </span>
             :<span>{game.enemyScore}</span>
-          </div>
+          </p>
         ) : (
           <>
             <span>{t("Waiting for game info")}</span>
@@ -31,10 +31,10 @@ function GameCardCalendar({ game }) {
           </>
         )
       ) : (
-        <div className={styles.calendarGameDate}>
+        <p className={styles.calendarGameDate}>
           {t("at")}
           <span>{game.time}</span>
-        </div>
+        </p>
       )}
     </div>
   );
