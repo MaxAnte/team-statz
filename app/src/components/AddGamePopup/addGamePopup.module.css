@@ -215,3 +215,42 @@
 .successMessage {
   font-size: 18px;
 }
+
+@media (max-width: 1600px) {
+  .playersSelect {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .popupWrap {
+    padding: 35px;
+  }
+  .closeBtn svg {
+    width: 10px;
+  }
+  .gpsPlayer:first-child {
+    padding-top: 0px;
+  }
+}
+@media (max-width: 1279px) {
+  .popupTitle {
+    margin-bottom: 25px;
+  }
+  .playersSelect {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 1023px) {
+  .playersSelect {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .playersSelect {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .popupTitle {
+    font-size: var(--font-size-title-mob);
+  }
+  .popupSubtitle {
+    font-size: 16px;
+  }
+}
