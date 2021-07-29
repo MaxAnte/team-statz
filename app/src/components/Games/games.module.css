@@ -58,3 +58,23 @@
   top: -75px;
   width: 130px;
 }
+
+@media (max-width: 1279px) {
+  .gamesItem {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .gamesSort {
+    width: 110px;
+    padding-left: 0px;
+  }
+}
+@media (max-width: 767px) {
+  .gamesSort {
+    position: relative;
+    top: -10px;
+    margin: 0 auto 10px;
+  }
+}
