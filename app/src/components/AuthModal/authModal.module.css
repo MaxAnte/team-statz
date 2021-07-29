@@ -84,3 +84,9 @@
   background-color: var(--color-button-hover);
   transition: all 0.3s ease;
 }
+
+@media (max-width: 767px) {
+  .authModal {
+    width: calc(100% - 30px);
+  }
+}
