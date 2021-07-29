@@ -46,3 +46,8 @@
   background: url("../../assets/images/courts/court-black.jpg");
   background-size: contain;
 }
+@media (max-width: 767px) {
+  .gamePlayerCanvasWrap {
+    align-items: center;
+  }
+}

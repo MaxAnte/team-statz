@@ -22,7 +22,9 @@ body {
   font-size: var(--font-size-title);
   margin-bottom: 35px;
 }
-
+input {
+  -webkit-appearance: none;
+}
 main {
   max-width: 1920px;
   padding: 0px 25px;
