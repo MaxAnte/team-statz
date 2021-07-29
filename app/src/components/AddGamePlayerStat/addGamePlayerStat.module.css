@@ -192,6 +192,11 @@
 }
 
 @media (max-width: 767px) {
+  .gpsStatsRowItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .gpsRight {
     flex-direction: column;
   }

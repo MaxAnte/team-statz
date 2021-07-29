@@ -71,9 +71,7 @@ function Team() {
 
   return (
     <div className="team page-wrapper">
-      <h2 className="title">
-        {TEAMNAME} {t("Team")}
-      </h2>
+      <h2 className="title">{t("TeamName", { teamName: TEAMNAME })}</h2>
       {loading ? (
         <BlockLoader />
       ) : (

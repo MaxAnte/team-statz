@@ -250,6 +250,12 @@
   }
 }
 @media (max-width: 767px) {
+  .playerCard {
+    padding: 10px;
+  }
+  .gpsPlayer::after {
+    bottom: 15px;
+  }
   .popupWrap {
     width: calc(100% - 30px);
     padding: 35px 5px;

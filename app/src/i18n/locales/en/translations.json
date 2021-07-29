@@ -112,6 +112,7 @@
   "ORtg": "ORtg",
   "DRtg": "DRtg",
   "Enemy Team": "Enemy Team",
+  "TeamName": "{{teamName}} Team",
   "All": "All",
   "Pending": "Pending",
   "Played": "Played"
