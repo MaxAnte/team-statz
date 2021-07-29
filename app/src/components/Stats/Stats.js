@@ -366,110 +366,110 @@ function Stats() {
           <span>
             {t("Pts")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((pts / gPlayed).toFixed(2))
-              : parseFloat(pts.toFixed(2))}
+              ? parseFloat((pts / gPlayed).toFixed(1))
+              : parseFloat(pts.toFixed(1))}
           </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             {t("2PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((two_fga / gPlayed).toFixed(2))
-              : parseFloat(two_fga.toFixed(2))}
+              ? parseFloat((two_fga / gPlayed).toFixed(1))
+              : parseFloat(two_fga.toFixed(1))}
           </span>
           <span>
             {t("2PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((two_fgm / gPlayed).toFixed(2))
-              : parseFloat(two_fgm.toFixed(2))}
+              ? parseFloat((two_fgm / gPlayed).toFixed(1))
+              : parseFloat(two_fgm.toFixed(1))}
           </span>
           <span>
-            {t("2P")}%: {parseFloat(two_fgp.toFixed(2))}
+            {t("2P")}%: {parseFloat(two_fgp.toFixed(1))}
           </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             {t("3PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((three_fga / gPlayed).toFixed(2))
-              : parseFloat(three_fga.toFixed(2))}
+              ? parseFloat((three_fga / gPlayed).toFixed(1))
+              : parseFloat(three_fga.toFixed(1))}
           </span>
           <span>
             {t("3PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((three_fgm / gPlayed).toFixed(2))
-              : parseFloat(three_fgm.toFixed(2))}
+              ? parseFloat((three_fgm / gPlayed).toFixed(1))
+              : parseFloat(three_fgm.toFixed(1))}
           </span>
           <span>
-            {t("3P")}%: {parseFloat(three_fgp.toFixed(2))}
+            {t("3P")}%: {parseFloat(three_fgp.toFixed(1))}
           </span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             {t("FTA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fta / gPlayed).toFixed(2))
-              : parseFloat(fta.toFixed(2))}
+              ? parseFloat((fta / gPlayed).toFixed(1))
+              : parseFloat(fta.toFixed(1))}
           </span>
           <span>
             {t("FTM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((ftm / gPlayed).toFixed(2))
-              : parseFloat(ftm.toFixed(2))}
+              ? parseFloat((ftm / gPlayed).toFixed(1))
+              : parseFloat(ftm.toFixed(1))}
           </span>
-          <span>FT%: {parseFloat(ftp.toFixed(2))}</span>
+          <span>FT%: {parseFloat(ftp.toFixed(1))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             {t("FGA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fga / gPlayed).toFixed(2))
-              : parseFloat(fga.toFixed(2))}
+              ? parseFloat((fga / gPlayed).toFixed(1))
+              : parseFloat(fga.toFixed(1))}
           </span>
           <span>
             {t("FGM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fgm / gPlayed).toFixed(2))
-              : parseFloat(fgm.toFixed(2))}
+              ? parseFloat((fgm / gPlayed).toFixed(1))
+              : parseFloat(fgm.toFixed(1))}
           </span>
-          <span>FG%: {parseFloat(fgp.toFixed(2))}</span>
+          <span>FG%: {parseFloat(fgp.toFixed(1))}</span>
         </div>
         <div className={styles.statsColumnRowsItem}>
           <span>
             {t("Reb")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((reb / gPlayed).toFixed(2))
-              : parseFloat(reb.toFixed(2))}
+              ? parseFloat((reb / gPlayed).toFixed(1))
+              : parseFloat(reb.toFixed(1))}
           </span>
           <span>
             {t("Ast")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat(ast / gPlayed.toFixed(2))
-              : parseFloat(ast.toFixed(2))}
+              ? parseFloat((ast / gPlayed).toFixed(1))
+              : parseFloat(ast.toFixed(1))}
           </span>
           <span>
             {t("Stl")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((stl / gPlayed).toFixed(2))
-              : parseFloat(stl.toFixed(2))}
+              ? parseFloat((stl / gPlayed).toFixed(1))
+              : parseFloat(stl.toFixed(1))}
           </span>
           <span>
             {t("Blk")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((blk / gPlayed).toFixed(2))
-              : parseFloat(blk.toFixed(2))}
+              ? parseFloat((blk / gPlayed).toFixed(1))
+              : parseFloat(blk.toFixed(1))}
           </span>
           <span>
             {t("Tov")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((tovs / gPlayed).toFixed(2))
-              : parseFloat(tovs.toFixed(2))}
+              ? parseFloat((tovs / gPlayed).toFixed(1))
+              : parseFloat(tovs.toFixed(1))}
           </span>
           <span>
             {t("Fouls")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fouls / gPlayed).toFixed(2))
-              : parseFloat(fouls.toFixed(2))}
+              ? parseFloat((fouls / gPlayed).toFixed(1))
+              : parseFloat(fouls.toFixed(1))}
           </span>
         </div>
       </div>

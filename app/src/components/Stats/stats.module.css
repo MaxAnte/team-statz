@@ -32,10 +32,10 @@
   border: 1px solid var(--color-black);
   background: url("../../assets/images/courts/court-black.jpg");
   background-size: contain;
+  margin: 0px 35px;
 }
 .statsColumn {
   padding: 15px 20px;
-  margin: 0px 35px;
   border-radius: 5px;
   box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.15);
   background-color: var(--color-white);
@@ -44,17 +44,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 750px;
+  overflow: auto;
 }
 .statsColumn h5 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   font-size: 20px;
   position: relative;
 }
 .statsColumn h5::after {
   content: "";
   position: absolute;
-  bottom: -15px;
+  bottom: -10px;
   left: 0;
   right: 0;
   width: 100%;
@@ -140,6 +142,9 @@
   position: relative;
   margin-bottom: 25px;
 }
+.statsColumnRowsItem:last-child {
+  margin-bottom: 0;
+}
 .statsColumnRowsItem:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -159,7 +164,7 @@
   border-radius: 5px;
   position: relative;
   z-index: 2;
-  margin: 0px 15px;
+  margin: 0px 15px 30px;
   width: 14.7%;
 
   display: flex;
@@ -205,4 +210,59 @@
 }
 .activeCard > span {
   color: var(--color-white);
+}
+
+@media (max-width: 1279px) {
+  .statsTop {
+    flex-wrap: wrap;
+  }
+  .statsColumn {
+    width: 45%;
+    max-width: 100%;
+    margin: 0px 15px 30px;
+    max-height: none;
+  }
+  .canvasStats {
+    order: 1;
+    width: 100%;
+  }
+  .gameCard {
+    width: 21%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .gameCard {
+    width: 29%;
+  }
+}
+@media (max-width: 767px) {
+  .statsTop {
+    flex-direction: column-reverse;
+    margin-bottom: 0px;
+  }
+  .statsColumn {
+    width: 100%;
+    margin: 0px 0px 30px;
+  }
+  .canvasStats {
+    order: unset;
+    margin: 0px 0px 30px;
+  }
+  .gameCard {
+    width: 100%;
+    margin: 0px 0px 15px;
+  }
+}
+@media (max-width: 425px) {
+  .canvasStats {
+    height: 424px !important;
+    width: 395px !important;
+  }
+}
+@media (max-width: 424px) {
+  .canvasStats {
+    height: 370px !important;
+    width: 345px !important;
+  }
 }
