@@ -177,3 +177,49 @@
   font-weight: 500;
   font-size: 18px;
 }
+
+@media (max-width: 767px) {
+  .header {
+    padding: 15px;
+  }
+  .logo::before,
+  .logo::after {
+    content: none;
+  }
+  .logo h1 {
+    font-size: 1.5em;
+  }
+  .logo span {
+    right: -20px;
+    top: 62%;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+  }
+  .auth {
+    padding: 0px 0px 0px 8px;
+  }
+  .navList ul li {
+    padding: 0px 8px;
+  }
+  .languageSwitcher {
+    padding: 5px;
+  }
+  .auth::before,
+  .navList ul li a::before {
+    font-size: 30px;
+  }
+  .navList ul li a span {
+    display: none;
+  }
+}
+
+@media (max-width: 424px) {
+  .logo h1 {
+    font-size: 1.3em;
+  }
+  .auth::before,
+  .navList ul li a::before {
+    font-size: 26px;
+  }
+}

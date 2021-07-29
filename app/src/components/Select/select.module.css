@@ -41,3 +41,10 @@
 .optionsVisible {
   display: block;
 }
+
+@media (max-width: 767px) {
+  .optionsHidden div {
+    padding: 5px;
+    font-size: 14px;
+  }
+}
