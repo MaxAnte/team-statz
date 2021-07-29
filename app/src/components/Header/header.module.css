@@ -203,7 +203,8 @@
     height: 18px;
   }
   .auth {
-    padding: 0px 0px 0px 8px;
+    padding: 0px;
+    margin-left: 8px;
   }
   .navList ul li {
     padding: 0px 8px;
@@ -215,7 +216,8 @@
   .navList ul li a::before {
     font-size: 30px;
   }
-  .navList ul li a span {
+  .navList ul li a span,
+  .auth span {
     display: none;
   }
 }

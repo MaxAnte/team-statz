@@ -82,9 +82,9 @@ function Team() {
           <div className={styles.teamPlayers}>
             {players.map((player, id) => (
               <div className={styles.playerItem} key={id}>
-                <NavLink to={`/player/${id}`} className={styles.playerLink}>
-                  <PlayerCard player={player} />
-                </NavLink>
+                {/* <NavLink to={`/player/${id}`} className={styles.playerLink}> */}
+                <PlayerCard player={player} />
+                {/* </NavLink> */}
               </div>
             ))}
           </div>

@@ -142,6 +142,14 @@ li {
   }
 }
 @media (max-width: 767px) {
+  .dayCell {
+    width: 87%;
+    height: 100%;
+  }
+  .calendarDay {
+    padding: 25px 5px;
+    min-height: 50px;
+  }
   .dayOfWeek {
     display: none;
   }
