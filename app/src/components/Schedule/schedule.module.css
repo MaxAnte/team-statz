@@ -88,18 +88,6 @@ li {
   width: 20px;
   height: 20px;
 }
-.calendarDay > a {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 4;
-}
-.calendarDay > a:hover + div {
-  box-shadow: 0px 0px 20px rgb(0 0 0 / 35%);
-  transition: all 0.5s ease;
-}
 .calendarDayNotCurrent {
   background-color: var(--color-calendar);
   color: var(--color-calendar);
@@ -130,4 +118,20 @@ li {
 .calendarDay:hover .addGameDate {
   transform: translate(-50%, -50%) scale(1);
   transition: all 0.2s ease;
+}
+.dayCell {
+  width: 90%;
+  height: 70%;
+}
+.dayCell > a {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
+}
+.dayCell > a:hover + div {
+  box-shadow: 0px 0px 20px rgb(0 0 0 / 35%);
+  transition: all 0.5s ease;
 }

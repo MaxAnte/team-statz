@@ -207,43 +207,41 @@ function Schedule() {
         </section>
         <ol className={styles.dayOfWeek}>
           {WEEKDAYS.map((weekday, i) => (
-            <li key={i}>{weekday}</li>
+            <li key={weekday}>{weekday}</li>
           ))}
         </ol>
         <ol className={styles.daysGrid}>
-          {days.map((day) => {
-            return (
-              <li
-                key={day.date}
-                className={`${styles.calendarDay} ${
-                  !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
-                }
+          {days.map((day) => (
+            <li
+              key={day.date}
+              className={`${styles.calendarDay} ${
+                !day.isCurrentMonth ? styles.calendarDayNotCurrent : ""
+              }
               ${day.date === TODAY ? styles.calendarDayToday : ""}`}
-                onClick={() =>
-                  dates && dates.find((el) => el.date === day.date)
-                    ? null
-                    : setAddDateForm({ form: true, date: day.date })
-                }
-              >
-                <span>{day.dayOfMonth}</span>
-                {dates &&
-                dates.filter((game) => game.date === day.date).length ? (
-                  dates
-                    .filter((game) => game.date === day.date)
-                    .map((game) => (
-                      <>
-                        <Link to={`/#${game.date}`}></Link>
-                        <GameCardCalendar game={game} key={game.id} />
-                      </>
-                    ))
-                ) : isAuthenticated && day.isCurrentMonth ? (
-                  <div className={styles.addGameDate}>
-                    <PlusIcon width="20px" heigth="20px" color="white" />
-                  </div>
-                ) : null}
-              </li>
-            );
-          })}
+              onClick={() =>
+                dates && dates.find((el) => el.date === day.date)
+                  ? null
+                  : setAddDateForm({ form: true, date: day.date })
+              }
+            >
+              <span>{day.dayOfMonth}</span>
+              {dates &&
+              dates.filter((game) => game.date === day.date).length ? (
+                dates
+                  .filter((game) => game.date === day.date)
+                  .map((game) => (
+                    <div className={styles.dayCell} key={game.id}>
+                      <Link to={`/#${game.date}`}></Link>
+                      <GameCardCalendar game={game} />
+                    </div>
+                  ))
+              ) : isAuthenticated && day.isCurrentMonth ? (
+                <div className={styles.addGameDate}>
+                  <PlusIcon width="20px" heigth="20px" color="white" />
+                </div>
+              ) : null}
+            </li>
+          ))}
         </ol>
       </div>
       {isAuthenticated && addDateForm.form ? (

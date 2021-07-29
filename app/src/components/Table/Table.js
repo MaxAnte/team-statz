@@ -45,7 +45,7 @@ function Table() {
   return (
     <div className={styles.tables}>
       {groups.map((group) => (
-        <div className={styles.tableCont}>
+        <div className={styles.tableCont} key={group}>
           {groups.length > 1 ? (
             <span className={styles.groupName}>{t(`Group ${group}`)}</span>
           ) : null}
