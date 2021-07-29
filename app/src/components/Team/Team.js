@@ -18,13 +18,11 @@ function Team() {
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getPlayers = async () => {
-    const data = await request("/api/player/players", "POST", {});
-    if (data) setPlayers(Object.values(data));
-  };
-  const getGames = async () => {
-    const data = await request("/api/game/games", "POST", {});
-    if (data) setGames(Object.values(data));
+  const getDB = async () => {
+    const dataPlayers = await request("/api/player/players", "POST", {});
+    if (dataPlayers) setPlayers(Object.values(dataPlayers));
+    const dataGames = await request("/api/game/games", "POST", {});
+    if (dataGames) setGames(Object.values(dataGames));
   };
 
   useEffect(() => {
@@ -33,8 +31,7 @@ function Team() {
   }, [error, message, clearError]);
 
   useEffect(() => {
-    getPlayers();
-    getGames();
+    getDB();
   }, []);
 
   let bestPts = { pts: 0, id: 0 };
@@ -83,15 +80,13 @@ function Team() {
         <>
           <TeamInfo players={players} games={games} />
           <div className={styles.teamPlayers}>
-            {players.map((player, id) => {
-              return (
-                <div className={styles.playerItem} key={id}>
-                  <NavLink to={`/player/${id}`} className={styles.playerLink}>
-                    <PlayerCard player={player} />
-                  </NavLink>
-                </div>
-              );
-            })}
+            {players.map((player, id) => (
+              <div className={styles.playerItem} key={id}>
+                <NavLink to={`/player/${id}`} className={styles.playerLink}>
+                  <PlayerCard player={player} />
+                </NavLink>
+              </div>
+            ))}
           </div>
         </>
       )}

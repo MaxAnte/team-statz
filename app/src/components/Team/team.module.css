@@ -1,13 +1,30 @@
 .teamPlayers {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin: 0px -15px;
 }
 .playerItem {
-  width: 25%;
+  width: 20%;
   padding: 0px 15px;
+  margin-bottom: 30px;
 }
 .playerLink {
   text-decoration: none;
   color: var(--color-text-main);
+}
+@media (max-width: 1279px) {
+  .playerItem {
+    width: 33.333%;
+  }
+}
+@media (max-width: 1023px) {
+  .playerItem {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .playerItem {
+    width: 100%;
+  }
 }
