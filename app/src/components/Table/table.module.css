@@ -43,3 +43,27 @@
   padding-bottom: 15px;
   font-size: 20px;
 }
+
+@media (max-width: 1023px) {
+  .tableCont {
+    margin: 0px 15px;
+  }
+  .tableHead {
+    padding: 10px;
+    grid-template-columns: 0.2fr 1fr 0.2fr 0.2fr 0.2fr;
+  }
+  .tableRow {
+    padding: 12px 10px;
+    grid-template-columns: 0.2fr 1fr 0.2fr 0.2fr 0.2fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .tables {
+    flex-direction: column;
+  }
+  .tableCont {
+    margin: 0px;
+    width: 100%;
+  }
+}
