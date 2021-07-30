@@ -478,7 +478,7 @@ function Stats() {
 
   return (
     <div className="stats page-wrapper">
-      <h2 className="title">Stats</h2>
+      <h2 className="title">{t("Stats")}</h2>
       <div className={styles.statsTop}>
         <div className={styles.statsColumn}>
           <h5>{t("Players")}</h5>
