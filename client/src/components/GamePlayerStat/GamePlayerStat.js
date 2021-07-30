@@ -30,7 +30,7 @@ function GamePlayerStat({ player, gameID }) {
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;
-    return atempts ? `${perc.toFixed(1)}%` : `0%`;
+    return atempts ? `${parseFloat(perc.toFixed(1))}%` : `0%`;
   };
 
   const getEfficiencyRate = (player) => {
@@ -53,7 +53,7 @@ function GamePlayerStat({ player, gameID }) {
     const fgm = two_pm + three_pm;
     let perc =
       pts + oreb + dreb + ast + stl + blk - (fga - fgm + fta - ftm + tov);
-    return `${perc.toFixed(1)}%`;
+    return `${parseFloat(perc.toFixed(1))}%`;
   };
 
   const getBadges = (player) => {
