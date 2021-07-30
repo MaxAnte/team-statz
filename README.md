@@ -1,14 +1,14 @@
 # Team StatZ App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The source for your Team improvements!
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 - npm run server - run server
-- npm run app - run react app
-- npm run dev - run full app (server + app) (http://localhost:3000)
+- npm run client - run react client
+- npm run dev - run full app (server + client) (http://localhost:3000)
 
 ## Required versions
 

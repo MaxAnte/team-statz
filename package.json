@@ -2,14 +2,14 @@
   "name": "team-statz",
   "version": "1.0.0",
   "description": "Team-played sports statistic app",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app.js",
-    "server": "nodemon app.js",
-    "app": "npm run start --prefix app",
-    "app:install": "npm install --prefix app",
-    "app:build": "npm run build --prefix app",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run app\""
+    "start": "cross-env NODE_ENV=production node server.js",
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix client",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

@@ -5,18 +5,18 @@
 /.pnp
 .pnp.js
 /.vscode
-app/node_modules
-app/.pnp
-app/.pnp.js
-app/.vscode
+client/node_modules
+client/.pnp
+client/.pnp.js
+client/.vscode
 
 # testing
 /coverage
-app/coverage
+client/coverage
 
 # production
 /build
-app/build
+client/build
 
 # misc
 .DS_Store
