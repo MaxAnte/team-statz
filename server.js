@@ -1,8 +1,8 @@
 const express = require("express");
 const config = require("config");
-require("dotenv").config();
 const mongoose = require("mongoose");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 
@@ -22,11 +22,18 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT =
+  (process.env.NODE_ENV === "development"
+    ? config.get("port")
+    : process.env.PORT) || 5000;
+const MONGO_URI =
+  process.env.NODE_ENV === "development"
+    ? config.get("mongoUri")
+    : process.env.MONGO_URI;
 
 async function start() {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
