@@ -3,13 +3,21 @@ const { validationResult } = require("express-validator");
 const http = require("http");
 const Date = require("../models/Date");
 const router = Router();
+const config = require("config");
+require("dotenv").config();
 
 const addGameInPending = async (dateObj) => {
   const { enemy, date, time } = dateObj;
   const data = JSON.stringify({ enemy, date, time });
   const options = {
-    hostname: "localhost",
-    port: 3000,
+    hostname:
+      process.env.NODE_ENV === "development"
+        ? "localhost"
+        : "teamstatz.herokuapp.com",
+    port:
+      (process.env.NODE_ENV === "development"
+        ? config.get("port")
+        : process.env.PORT) || 5000,
     path: "/api/game/add-game",
     method: "POST",
     headers: {

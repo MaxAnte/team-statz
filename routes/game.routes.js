@@ -2,6 +2,8 @@ const { Router } = require("express");
 const { validationResult } = require("express-validator");
 const http = require("http");
 const Game = require("../models/Game");
+const config = require("config");
+require("dotenv").config();
 
 const router = Router();
 
@@ -9,8 +11,14 @@ const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
   const enemyWin = +enemyScore > +ourScore;
   const data = JSON.stringify({ enemyName, enemyWin });
   const options = {
-    hostname: "localhost",
-    port: 3000,
+    hostname:
+      process.env.NODE_ENV === "development"
+        ? "localhost"
+        : "teamstatz.herokuapp.com",
+    port:
+      (process.env.NODE_ENV === "development"
+        ? config.get("port")
+        : process.env.PORT) || 5000,
     path: "/api/team/update",
     method: "POST",
     headers: {
@@ -31,8 +39,14 @@ const updatePlayerDB = async (playersStats) => {
   playersStats.forEach((player) => {
     const data = JSON.stringify({ player });
     const options = {
-      hostname: "localhost",
-      port: 3000,
+      hostname:
+        process.env.NODE_ENV === "development"
+          ? "localhost"
+          : "teamstatz.herokuapp.com",
+      port:
+        (process.env.NODE_ENV === "development"
+          ? config.get("port")
+          : process.env.PORT) || 5000,
       path: "/api/player/update",
       method: "POST",
       headers: {
@@ -52,8 +66,14 @@ const updatePlayerDB = async (playersStats) => {
 const updateDateDB = async (date, time, enemy, enemyScore, ourScore) => {
   const data = JSON.stringify({ date, time, enemy, enemyScore, ourScore });
   const options = {
-    hostname: "localhost",
-    port: 3000,
+    hostname:
+      process.env.NODE_ENV === "development"
+        ? "localhost"
+        : "teamstatz.herokuapp.com",
+    port:
+      (process.env.NODE_ENV === "development"
+        ? config.get("port")
+        : process.env.PORT) || 5000,
     path: "/api/date/update",
     method: "POST",
     headers: {

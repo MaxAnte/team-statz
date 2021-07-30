@@ -14,6 +14,8 @@ app.use("/api/game", require("./routes/game.routes"));
 app.use("/api/player", require("./routes/player.routes"));
 app.use("/api/date", require("./routes/date.routes"));
 
+console.log("NODE_ENV:", process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
 
