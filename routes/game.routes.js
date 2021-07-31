@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { validationResult } = require("express-validator");
-const https = require("https");
+const http = require("http");
 const Game = require("../models/Game");
 const config = require("config");
 require("dotenv").config();
@@ -25,7 +25,7 @@ const updateTeamDB = async (enemyName, enemyScore, ourScore) => {
       "Content-Type": "application/json",
     },
   };
-  const req = https.request(options, (res) => {
+  const req = http.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
   });
   req.on("error", (error) => {
