@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { validationResult } = require("express-validator");
-const http = require("http");
+const https = require("https");
 const Date = require("../models/Date");
 const router = Router();
 const config = require("config");
@@ -24,7 +24,7 @@ const addGameInPending = async (dateObj) => {
       "Content-Type": "application/json",
     },
   };
-  const req = http.request(options, (res) => {
+  const req = https.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
   });
   req.on("error", (error) => {
