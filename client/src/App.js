@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Games from "./components/Games/Games";
 import Team from "./components/Team/Team";
-import PlayerCard from "./components/PlayerCard/PlayerCard";
+import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
 import Loader from "./components/Loader/Loader";
@@ -42,7 +42,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Games} />
               <Route path="/team" component={Team} />
-              <Route path="/player/:id" component={PlayerCard} />
+              <Route path="/player/:id" component={Player} />
               <Route path="/schedule" component={Schedule} />
               <Route path="/stats" component={Stats} />
             </Switch>
