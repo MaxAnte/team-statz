@@ -11,8 +11,8 @@ function PlayerCanvas() {
 
   const canvasRef = useRef(null);
 
-  const WIDTH = 290;
-  const HEIGHT = 310;
+  const WIDTH = 381;
+  const HEIGHT = 355;
   const DPI_WIDTH = WIDTH * 2;
   const DPI_HEIGHT = HEIGHT * 2;
 
@@ -27,6 +27,19 @@ function PlayerCanvas() {
     setCanv(canvas);
     setCanvBound(canvas.getBoundingClientRect());
     setContext(ctx);
+
+    ctx.strokeStyle = "#f00";
+    ctx.fillStyle = "#f00";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(200, 0);
+    ctx.lineTo(280, 305);
+    ctx.arc(280, 545, 240, (Math.PI * 3) / 2, Math.PI, true);
+    ctx.stroke();
+    ctx.fill();
+    ctx.moveTo(50, 605);
+    ctx.lineTo(0, 600);
+    ctx.closePath();
   }, []);
 
   return (
