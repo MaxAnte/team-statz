@@ -1,3 +1,57 @@
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.top img {
+  width: 100%;
+  max-width: 450px;
+}
+.info {
+  width: 100%;
+  margin: 0px 15px;
+}
 .name {
+  font-size: 28px;
   margin-bottom: 25px;
+}
+.general {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.general ul {
+  padding-left: 15px;
+}
+.general ul li {
+  padding: 5px 0px;
+}
+.zones {
+  width: 100%;
+  max-width: 350px;
+  position: relative;
+}
+.seasons {
+  display: flex;
+  position: absolute;
+  top: -35px;
+  right: 50px;
+  margin: 0px -5px;
+}
+.seasons span {
+  font-size: 16px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-green-main);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0px 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.seasons span.activeSeason,
+.seasons span:hover {
+  background-color: var(--color-green-main);
+  color: var(--color-white);
+  transition: all 0.3s ease;
 }
