@@ -8,14 +8,15 @@
   padding: 15px 0px;
 }
 .gamePlayerCanvasButtons .hit,
-.gamePlayerCanvasButtons .miss {
+.gamePlayerCanvasButtons .miss,
+.gamePlayerCanvasButtons .undo {
   background: var(--color-white);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 30px;
   min-width: 50px;
-  margin: 0px 10px;
+  margin: 0px 7px;
   padding: 0px 5px;
   border-radius: 5px;
   font-weight: 500;
@@ -41,6 +42,14 @@
   background: var(--color-red) !important;
   color: var(--color-white) !important;
   transition: all 0.3s ease;
+}
+.gamePlayerCanvasButtons .undo {
+  border: 1px solid var(--color-black);
+  color: var(--color-black);
+}
+.gamePlayerCanvasButtons .undo:hover {
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 .gamePlayerCanvas {
   border: 1px solid var(--color-black);

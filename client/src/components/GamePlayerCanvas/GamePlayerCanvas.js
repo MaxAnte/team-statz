@@ -84,6 +84,9 @@ function GamePlayerCanvas({
     };
   };
 
+  const handleUndo = () =>
+    setNewCoords(newCoords.filter((_, id) => id !== newCoords.length - 1));
+
   return (
     <div className={styles.gamePlayerCanvasWrap}>
       <canvas
@@ -109,6 +112,9 @@ function GamePlayerCanvas({
             onClick={() => setDrawType(false)}
           >
             {t("Miss")}
+          </div>
+          <div className={styles.undo} onClick={() => handleUndo()}>
+            {t("Undo")}
           </div>
         </div>
       ) : null}
