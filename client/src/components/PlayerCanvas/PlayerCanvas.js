@@ -28,18 +28,15 @@ function PlayerCanvas() {
     setCanvBound(canvas.getBoundingClientRect());
     setContext(ctx);
 
-    ctx.strokeStyle = "#f00";
-    ctx.fillStyle = "#f00";
+    ctx.fillStyle = "rgb(255, 255, 0, 0.35)";
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(200, 0);
-    ctx.lineTo(280, 305);
-    ctx.arc(280, 545, 240, (Math.PI * 3) / 2, Math.PI, true);
-    ctx.stroke();
-    ctx.fill();
-    ctx.moveTo(50, 605);
+    ctx.lineTo(280, 300);
+    ctx.quadraticCurveTo(55, 375, 40, 600);
     ctx.lineTo(0, 600);
-    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
   }, []);
 
   return (
