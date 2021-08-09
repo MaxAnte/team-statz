@@ -20,10 +20,10 @@
   margin-bottom: 5px;
   font-size: 18px;
 }
-.general ul {
+ul.general {
   padding-left: 15px;
 }
-.general ul li {
+ul.general li {
   padding: 5px 0px;
 }
 .zones {
