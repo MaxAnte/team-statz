@@ -68,6 +68,7 @@ function PlayerCanvas({ player, games }) {
     ctx.arc(element.x * MULTIPLIER, element.y * MULTIPLIER, 10, 0, 2 * Math.PI);
 
   const drawZones = (ctx) => {
+    // remember about that canvas is rotated in css
     // 3pt right top
     ctx.strokeStyle = "#000000";
     ctx.fillStyle = "rgb(255, 255, 0, 0.15)";
