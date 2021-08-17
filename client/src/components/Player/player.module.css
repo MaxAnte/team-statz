@@ -56,3 +56,26 @@ ul.general li {
   color: var(--color-white);
   transition: all 0.3s ease;
 }
+
+.graphics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.05);
+  padding: 25px;
+}
+.graphicsOvr {
+  width: 45%;
+  padding-right: 15px;
+}
+.graphicsPerc {
+  width: 30%;
+  padding-left: 15px;
+}
+
+.highlights {
+  margin-top: 35px;
+}

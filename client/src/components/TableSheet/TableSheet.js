@@ -1,37 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import styles from "./tableSheet.module.css";
 
-function TableSheet({ player, games }) {
-  const [stats, setStats] = useState([]);
-
-  useEffect(() => {
-    setStats(
-      games.length &&
-        games
-          .filter((game) => !game.pending)
-          .map((game) => game.playersStats.find((pl) => pl._id === player))
-          .reduce((acc, cur, index) => ({
-            pts: acc.pts + cur.pts,
-            oreb: acc.oreb + cur.oreb,
-            dreb: acc.dreb + cur.dreb,
-            ast: acc.ast + cur.ast,
-            stl: acc.stl + cur.stl,
-            blk: acc.blk + cur.blk,
-            fouls: acc.fouls + cur.fouls,
-            tov: acc.tov + cur.tov,
-            two_pa: acc.two_pa + cur.two_pa,
-            two_pm: acc.two_pm + cur.two_pm,
-            three_pa: acc.three_pa + cur.three_pa,
-            three_pm: acc.three_pm + cur.three_pm,
-            fta: acc.fta + cur.fta,
-            ftm: acc.ftm + cur.ftm,
-            minutes: acc.minutes + cur.minutes,
-            gp: index + 1,
-          }))
-    );
-  }, [games]);
-
+function TableSheet({ stats }) {
   return (
     <div className={styles.tableWrap}>
       <table>
