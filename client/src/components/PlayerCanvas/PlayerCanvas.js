@@ -36,8 +36,8 @@ function PlayerCanvas({ player, games }) {
     canvas.width = DPI_WIDTH;
     canvas.height = DPI_HEIGHT;
     var ctx = canvas.getContext("2d");
-    const zonesPoints = Array(14).fill(0);
-
+    const zonesAttempts = Array(14).fill(0);
+    const zonesMade = Array(14).fill(0);
     setCanv(canvas);
     setCanvBound(canvas.getBoundingClientRect());
     setContext(ctx);
@@ -47,26 +47,52 @@ function PlayerCanvas({ player, games }) {
         zones.forEach((zone, id) => {
           if (
             ctx.isPointInPath(zone.path, el.x * MULTIPLIER, el.y * MULTIPLIER)
-          )
-            zonesPoints[id] += 1;
+          ) {
+            zonesAttempts[id] += 1;
+            zonesMade[id] += el.miss ? 0 : 1;
+          }
         });
       });
 
-    drawZones(ctx, zonesPoints);
+    const zonesPerc = zonesMade.map((el, id) =>
+      el ? parseFloat(((el * 100) / zonesAttempts[id]).toFixed(1)) : 0
+    );
+
+    drawZones(ctx, zonesPerc);
   }, [coords]);
 
-  const drawZones = (ctx, zonesPoints) => {
+  const drawZones = (ctx, zonesPerc) => {
     ctx.strokeStyle = "#000000";
     ctx.lineWidth = 4;
     zones.forEach((zone, id) => {
       ctx.beginPath();
-      ctx.fillStyle = "rgb(255, 255, 0, 0.15)";
+      if (id < 5) {
+        ctx.fillStyle =
+          zonesPerc[id] > 30
+            ? zonesPerc[id] > 35
+              ? "rgb(0, 179, 0, 0.5)"
+              : "rgba(255, 255, 0, 0.5)"
+            : "rgba(255, 0, 0, 0.5)";
+      } else if (id >= 5 && id < 13) {
+        ctx.fillStyle =
+          zonesPerc[id] > 35
+            ? zonesPerc[id] > 40
+              ? "rgb(0, 179, 0, 0.5)"
+              : "rgba(255, 255, 0, 0.5)"
+            : "rgba(255, 0, 0, 0.5)";
+      } else {
+        ctx.fillStyle =
+          zonesPerc[id] > 50
+            ? zonesPerc[id] > 70
+              ? "rgb(0, 179, 0, 0.5)"
+              : "rgba(255, 255, 0, 0.5)"
+            : "rgba(255, 0, 0, 0.5)";
+      }
       ctx.stroke(zone.path);
       ctx.fill(zone.path);
-
       ctx.font = "48px serif";
       ctx.fillStyle = "#000000";
-      ctx.fillText(zonesPoints[id], zone.tPoint.x, zone.tPoint.y);
+      ctx.fillText(`${zonesPerc[id]}%`, zone.tPoint.x, zone.tPoint.y);
     });
   };
 
