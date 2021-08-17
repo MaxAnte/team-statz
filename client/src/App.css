@@ -22,6 +22,9 @@ body {
   font-size: var(--font-size-title);
   margin-bottom: 35px;
 }
+.text-center {
+  text-align: center;
+}
 input {
   -webkit-appearance: none;
 }

@@ -1,0 +1,18 @@
+.tableWrap {
+  margin: 35px 0px;
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.05);
+  padding: 10px;
+}
+
+.tableWrap thead tr {
+  background-color: var(--color-soft-gray);
+}
+
+.tableWrap table th,
+.tableWrap table td {
+  font-weight: 400;
+  font-size: 18px;
+  padding: 4px 8px;
+}
