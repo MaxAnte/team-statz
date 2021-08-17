@@ -77,11 +77,11 @@ function Player() {
           </div>
           <div className={styles.zones}>
             <PlayerCanvas player={player._id} games={games} />
-            <div className={styles.seasons}>
+            {/* <div className={styles.seasons}>
               <span>2019</span>
               <span className={styles.activeSeason}>2020</span>
               <span>2021</span>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
