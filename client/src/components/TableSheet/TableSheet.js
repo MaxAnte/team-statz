@@ -1,39 +1,41 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import styles from "./tableSheet.module.css";
 
 function TableSheet({ stats }) {
+  const { t } = useTranslation();
   return (
     <div className={styles.tableWrap}>
       <table>
         <thead>
           <tr>
-            <th>SEASON</th>
-            <th>GP</th>
-            <th>MPG</th>
-            <th>PPG</th>
-            <th>RPG</th>
-            <th>APG</th>
-            <th>SPG</th>
-            <th>BPG</th>
-            <th>TPG</th>
-            <th>FGM</th>
-            <th>FGA</th>
-            <th>FG%</th>
-            <th>3PM</th>
-            <th>3PA</th>
-            <th>3P%</th>
-            <th>FTM</th>
-            <th>FTA</th>
-            <th>FT%</th>
-            <th>MIN</th>
-            <th>PTS</th>
-            <th>REB</th>
-            <th>AST</th>
-            <th>STL</th>
-            <th>BLK</th>
-            <th>TOV</th>
-            <th>PF</th>
+            <th>{t("SEASON")}</th>
+            <th>{t("GP")}</th>
+            <th>{t("MPG")}</th>
+            <th>{t("PPG")}</th>
+            <th>{t("APG")}</th>
+            <th>{t("RPG")}</th>
+            <th>{t("SPG")}</th>
+            <th>{t("BPG")}</th>
+            <th>{t("TPG")}</th>
+            <th>{t("FGM")}</th>
+            <th>{t("FGA")}</th>
+            <th>{t("FG%")}</th>
+            <th>{t("3PM")}</th>
+            <th>{t("3PA")}</th>
+            <th>{t("3P%")}</th>
+            <th>{t("FTM")}</th>
+            <th>{t("FTA")}</th>
+            <th>{t("FT%")}</th>
+            <th>{t("MIN")}</th>
+            <th>{t("PTS")}</th>
+            <th>{t("REB")}</th>
+            <th>{t("AST")}</th>
+            <th>{t("STL")}</th>
+            <th>{t("BLK")}</th>
+            <th>{t("TOV")}</th>
+            <th>{t("PF")}</th>
             <th>+/-</th>
           </tr>
         </thead>

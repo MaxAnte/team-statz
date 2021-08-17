@@ -14,6 +14,7 @@
   "Add game into schedule": "Add game into schedule",
   "Add": "Add",
   "Date is added successfully": "Date is added successfully",
+  "SEASON": "SEASON",
   "Points": "Points",
   "Pts": "Pts",
   "Assists": "Assists",
@@ -35,11 +36,13 @@
   "Attempted": "Attempted",
   "Made": "Made",
   "2P": "2P",
+  "2PT": "2PT",
   "2PA": "2PA",
   "2p Attempted": "2p Attempted",
   "2PM": "2PM",
   "2p Made": "2p Made",
   "3P": "3P",
+  "3PT": "3PT",
   "3p Attempted": "3p Attempted",
   "3p Made": "3p Made",
   "FG": "FG",
@@ -133,5 +136,6 @@
   "kg": "kg",
   "cm": "cm",
   "m": "m",
-  "Stats through career": "Stats through career"
+  "Stats through career": "Stats through career",
+  "Hightlights": "Hightlights"
 }

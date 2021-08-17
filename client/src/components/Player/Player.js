@@ -129,21 +129,21 @@ function Player() {
                     labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
                     datasets: [
                       {
-                        label: "Points",
+                        label: `${t("Points")}`,
                         data: [stats.pts, 115, 77, 50, 100, 105],
                         fill: false,
                         backgroundColor: "rgb(255, 99, 132)",
                         borderColor: "rgba(255, 99, 132, 0.2)",
                       },
                       {
-                        label: "Rebounds",
+                        label: `${t("Rebounds")}`,
                         data: [stats.oreb + stats.dreb, 20, 5, 25, 13, 0],
                         fill: false,
                         backgroundColor: "rgb(203, 99, 255)",
                         borderColor: "rgba(203, 99, 255, 0.2)",
                       },
                       {
-                        label: "Assists",
+                        label: `${t("Assists")}`,
                         data: [stats.ast, 25, 30, 50, 15, 20],
                         fill: false,
                         backgroundColor: "rgb(99, 255, 198)",
@@ -167,7 +167,7 @@ function Player() {
               <div className={styles.graphicsPerc}>
                 <Doughnut
                   data={{
-                    labels: ["2PT%", "3PT%", "FT%"],
+                    labels: [`${t("2PT")}%`, `${t("3PT")}%`, `${t("FT")}%`],
                     datasets: [
                       {
                         label: "",
@@ -194,7 +194,7 @@ function Player() {
               </div>
             </div>
             <div className={styles.highlights}>
-              <h5 className="title text-center">Hightlights</h5>
+              <h5 className="title text-center">{t("Hightlights")}</h5>
               <div className={styles.highlightsVideos}>
                 <YouTube
                   videoId="tQDxeuu6tcU"
