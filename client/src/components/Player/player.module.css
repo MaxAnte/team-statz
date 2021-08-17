@@ -21,11 +21,17 @@
   margin-bottom: 5px;
   font-size: 18px;
 }
-ul.general {
-  padding-left: 15px;
-}
 ul.general li {
-  padding: 5px 0px;
+  padding: 5px 0px 5px 15px;
+}
+.generalInfo {
+  display: flex;
+  align-items: center;
+  margin: 0px -3px 7px;
+  font-size: 18px;
+}
+.generalInfo svg {
+  margin: 0px 3px;
 }
 .zones {
   width: 100%;
@@ -68,7 +74,7 @@ ul.general li {
   padding: 25px;
 }
 .graphicsOvr {
-  width: 45%;
+  width: 60%;
   padding-right: 15px;
 }
 .graphicsPerc {

@@ -39,11 +39,11 @@ const center = new Path2D(
 );
 
 export const zones = [
-  { path: three_l_b, tPoint: { x: 450, y: 780 } },
+  { path: three_l_b, tPoint: { x: 450, y: 790 } },
   { path: three_l_t, tPoint: { x: 170, y: 680 } },
   { path: three_m_t, tPoint: { x: 130, y: 420 } },
   { path: three_r_t, tPoint: { x: 180, y: 130 } },
-  { path: three_r_b, tPoint: { x: 450, y: 50 } },
+  { path: three_r_b, tPoint: { x: 450, y: 40 } },
   { path: two_l_b, tPoint: { x: 600, y: 705 } },
   { path: two_l_t, tPoint: { x: 415, y: 610 } },
   { path: two_m_t, tPoint: { x: 320, y: 420 } },

@@ -10,7 +10,11 @@ import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
 import BlockLoader from "../Loader/BlockLoader";
 
+import HeightIcon from "../../assets/icons/HeightIcon";
+
 import styles from "./player.module.css";
+import WeightIcon from "../../assets/icons/WeightIcon";
+import JerseyIcon from "../../assets/icons/JerseyIcon";
 
 function Player() {
   const [player, setPlayer] = useState({});
@@ -77,8 +81,11 @@ function Player() {
             <img src={player.image_thumb} />
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>
-              <p className={styles.general}>
-                6'6", 216 {t("lbs")} | {player.position}, #{player.number}
+              <p className={styles.generalInfo}>
+                <HeightIcon width="18px" heigth="18px" />
+                6'6", <WeightIcon width="22px" heigth="22px" />
+                216 {t("lbs")} | {player.position},{" "}
+                <JerseyIcon width="22px" heigth="22px" />#{player.number}
               </p>
               <p className={styles.general}>
                 <strong>{t("Born")}:</strong> {t("February")} 17, 1963 {t("in")}{" "}

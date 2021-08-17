@@ -65,37 +65,43 @@ function PlayerCanvas({ player, games }) {
     ctx.strokeStyle = "#000000";
     ctx.lineWidth = 4;
     zones.forEach((zone, id) => {
+      ctx.beginPath();
       if (zonesAttempts[id]) {
-        ctx.beginPath();
         if (id < 5) {
           ctx.fillStyle =
             zonesPerc[id] > 30
               ? zonesPerc[id] > 35
-                ? "rgb(0, 179, 0, 0.5)"
-                : "rgba(255, 255, 0, 0.5)"
-              : "rgba(255, 0, 0, 0.5)";
+                ? "rgb(49, 173, 49, 0.65)"
+                : "rgba(255, 255, 0, 0.65)"
+              : "rgba(255, 0, 0, 0.65)";
         } else if (id >= 5 && id < 13) {
           ctx.fillStyle =
             zonesPerc[id] > 35
               ? zonesPerc[id] > 40
-                ? "rgb(0, 179, 0, 0.5)"
-                : "rgba(255, 255, 0, 0.5)"
-              : "rgba(255, 0, 0, 0.5)";
+                ? "rgb(49, 173, 49, 0.65)"
+                : "rgba(255, 255, 0, 0.65)"
+              : "rgba(255, 0, 0, 0.65)";
         } else {
           ctx.fillStyle =
             zonesPerc[id] > 50
               ? zonesPerc[id] > 70
-                ? "rgb(0, 179, 0, 0.5)"
-                : "rgba(255, 255, 0, 0.5)"
-              : "rgba(255, 0, 0, 0.5)";
+                ? "rgb(49, 173, 49, 0.65)"
+                : "rgba(255, 255, 0, 0.65)"
+              : "rgba(255, 0, 0, 0.65)";
         }
-        ctx.stroke(zone.path);
-        ctx.fill(zone.path);
-
-        ctx.font = "48px serif";
-        ctx.fillStyle = "#000000";
-        ctx.fillText(`${zonesPerc[id]}%`, zone.tPoint.x, zone.tPoint.y);
+      } else {
+        ctx.fillStyle = "rgb(50, 50, 50, 0.5)";
       }
+      ctx.stroke(zone.path);
+      ctx.fill(zone.path);
+
+      ctx.font = "48px serif";
+      ctx.fillStyle = "#000000";
+      ctx.fillText(
+        `${zonesAttempts[id] ? `${zonesPerc[id]}%` : "--"}`,
+        zone.tPoint.x,
+        zone.tPoint.y
+      );
     });
   };
 
