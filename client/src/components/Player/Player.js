@@ -78,7 +78,10 @@ function Player() {
       ) : (
         <>
           <div className={styles.top}>
-            <img src={player.image_thumb} />
+            <h2 className={styles.nameMob}>{player.name}</h2>
+            <div className={styles.image}>
+              <img src={player.image_thumb} />
+            </div>
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>
               <p className={styles.generalInfo}>
@@ -216,7 +219,6 @@ function Player() {
                   onReady={_onReady}
                 />
               </div>
-              ;
             </div>
           </div>
         </>

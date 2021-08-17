@@ -1,5 +1,12 @@
 .tableWrap {
-  margin: 35px 0px;
+  margin: 35px auto;
+
+  width: 1550px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tableWrap table {
   background-color: var(--color-white);
   border-radius: 5px;
   box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.05);
@@ -15,4 +22,22 @@
   font-weight: 400;
   font-size: 18px;
   padding: 4px 8px;
+}
+
+@media (max-width: 1600px) {
+  .tableWrap {
+    width: 1300px;
+  }
+}
+
+@media (max-width: 1370px) {
+  .tableWrap {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .tableWrap {
+    margin: 25px 0px 35px;
+  }
 }
