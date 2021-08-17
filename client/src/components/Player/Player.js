@@ -44,34 +44,35 @@ function Player() {
           <div className={styles.info}>
             <h2 className={styles.name}>{player.name}</h2>
             <p className={styles.general}>
-              6'6", 216 lbs | {player.position}, #{player.number}
+              6'6", 216 {t("lbs")} | {player.position}, #{player.number}
             </p>
             <p className={styles.general}>
-              <strong>Born:</strong> February 17, 1963 in Brooklyn, NY
+              <strong>{t("Born")}:</strong> {t("February")} 17, 1963 {t("in")}{" "}
+              {t("CityOf", { city: "Brooklyn" })}, NY
             </p>
             <p className={styles.general}>
-              <strong>Experience:</strong> 15 years
+              <strong>{t("Experience")}:</strong> 15 {t("years")}
             </p>
             <p className={styles.general}>
-              <strong>Seasons in team:</strong> 5
+              <strong>{t("Seasons in team")}:</strong> 5
             </p>
             <ul className={styles.general}>
-              <strong>Best totals:</strong>
+              <strong>{t("Best totals")}:</strong>
 
               <li>
-                <strong>Points:</strong> 35.5 <span>(2020-2021)</span>
+                <strong>{t("Points")}:</strong> 35.5 <span>(2020-2021)</span>
               </li>
               <li>
-                <strong>Rebounds:</strong> 7.1 <span>(2018-2019)</span>
+                <strong>{t("Rebounds")}:</strong> 7.1 <span>(2018-2019)</span>
               </li>
               <li>
-                <strong>Asists:</strong> 10.2 <span>(2015-2016)</span>
+                <strong>{t("Assists")}:</strong> 10.2 <span>(2015-2016)</span>
               </li>
               <li>
-                <strong>Steals:</strong> 1.6 <span>(2016-2017)</span>
+                <strong>{t("Steals")}:</strong> 1.6 <span>(2016-2017)</span>
               </li>
               <li>
-                <strong>Blocks:</strong> 0.2 <span>(2020-2021)</span>
+                <strong>{t("Blocks")}:</strong> 0.2 <span>(2020-2021)</span>
               </li>
             </ul>
           </div>
