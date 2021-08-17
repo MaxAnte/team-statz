@@ -4,6 +4,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { Line, Doughnut } from "react-chartjs-2";
+import YouTube from "react-youtube";
 
 import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
@@ -60,6 +61,11 @@ function Player() {
   useEffect(() => {
     getDB();
   }, []);
+
+  const _onReady = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+  };
 
   return (
     <div className="player page-wrapper">
@@ -189,6 +195,21 @@ function Player() {
             </div>
             <div className={styles.highlights}>
               <h5 className="title text-center">Hightlights</h5>
+              <div className={styles.highlightsVideos}>
+                <YouTube
+                  videoId="tQDxeuu6tcU"
+                  opts={{
+                    height: "390",
+                    width: "640",
+                    playerVars: {
+                      // https://developers.google.com/youtube/player_parameters
+                      autoplay: 0,
+                    },
+                  }}
+                  onReady={_onReady}
+                />
+              </div>
+              ;
             </div>
           </div>
         </>

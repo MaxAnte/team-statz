@@ -79,3 +79,8 @@ ul.general li {
 .highlights {
   margin-top: 35px;
 }
+.highlightsVideos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
