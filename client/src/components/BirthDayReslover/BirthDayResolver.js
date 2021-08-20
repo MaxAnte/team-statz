@@ -32,7 +32,7 @@ function BirthDayResolver() {
   useEffect(() => checkBirthDate(), []);
 
   const closeHandler = () => {
-    Cookies.set("BirthDayEventWatched", true);
+    Cookies.set("BirthDayEventWatched", true, { expires: 1 });
     setIsClosed(true);
   };
 
