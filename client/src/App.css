@@ -9,6 +9,7 @@
 body {
   font-family: var(--font-main);
   color: var(--color-text-main);
+  overflow-x: hidden;
 }
 
 .app {
@@ -20,6 +21,10 @@ body {
 
 .title {
   font-size: var(--font-size-title);
+  margin-bottom: 35px;
+}
+.subtitle {
+  font-size: var(--font-size-subtitle);
   margin-bottom: 35px;
 }
 .text-center {
@@ -96,6 +101,10 @@ input[type="number"] {
 @media (max-width: 767px) {
   .title {
     font-size: var(--font-size-title-mob);
+    margin-bottom: 25px;
+  }
+  .subtitle {
+    font-size: var(--font-size-subtitle-mob);
     margin-bottom: 25px;
   }
   main {

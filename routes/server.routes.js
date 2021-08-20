@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const router = Router();
 
 const User = require("../models/User");
-const Date = require("../models/Date");
+const DateModel = require("../models/Date");
 const Game = require("../models/Game");
 const Team = require("../models/Team");
 const Player = require("../models/Player");
@@ -90,7 +90,7 @@ router.post(
 // /api/date/add-date
 router.post("/date/add-date", [], async (req, res) => {
   try {
-    const date = new Date(req.body); // new Date (model)
+    const date = new DateModel(req.body);
     const game = new Game(date);
 
     await game.save();
@@ -113,7 +113,7 @@ router.post("/date/dates", async (req, res) => {
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
-  const dates = await Date.find({});
+  const dates = await DateModel.find({});
 
   if (!dates) return res.status(400).json({ message: "Game not found" });
 
@@ -179,7 +179,7 @@ router.post("/game/complete-game", [], async (req, res) => {
       playerDB.save();
     });
 
-    const dateDB = await Date.findOne({ date });
+    const dateDB = await DateModel.findOne({ date });
 
     if (!dateDB)
       return res.status(400).json({ message: `${dateDB} Date not found` });
@@ -235,6 +235,25 @@ router.post("/player/players", async (req, res) => {
     return res.status(400).json({ message: "There are no active players" });
 
   res.json({ ...players });
+});
+
+// /api/player/birthDay
+router.post("/player/birthDay", async (req, res) => {
+  const today = new Date();
+  const todayToLocalUsedStr = `${today.getFullYear()}-${
+    today.getMonth() + 1 < 10
+      ? `0${today.getMonth() + 1}`
+      : today.getMonth() + 1
+  }-${today.getDate()}`;
+  const players = await Player.find({});
+  if (!players)
+    return res.status(400).json({ message: "There are no active players" });
+
+  const birthDays = players.filter(
+    (player) => player.birthDate === todayToLocalUsedStr
+  );
+
+  res.json({ ...birthDays });
 });
 
 // /api/player/id

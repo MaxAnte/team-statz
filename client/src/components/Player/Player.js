@@ -5,6 +5,7 @@ import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { Line, Doughnut } from "react-chartjs-2";
 import YouTube from "react-youtube";
+import { MONTHS } from "../../helpers/time.helpers";
 
 import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
@@ -28,6 +29,7 @@ function Player() {
   const getDB = async () => {
     const playerData = await request("/api/player/id", "POST", { _id: id });
     const gamesData = await request("/api/game/games", "POST", {});
+
     if (gamesData && playerData) {
       setPlayer(playerData);
       setGames(gamesData);
@@ -57,6 +59,7 @@ function Player() {
       );
     }
   };
+
   useEffect(() => {
     message(error);
     clearError();
@@ -69,6 +72,11 @@ function Player() {
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
+  };
+
+  const buildBirthDateString = (date) => {
+    const [year, month, day] = date.split("-");
+    return `${MONTHS[+month - 1]} ${day}, ${year}`;
   };
 
   return (
@@ -90,10 +98,13 @@ function Player() {
                 216 {t("lbs")} | {player.position},{" "}
                 <JerseyIcon width="22px" heigth="22px" />#{player.number}
               </p>
-              <p className={styles.general}>
-                <strong>{t("Born")}:</strong> {t("February")} 17, 1963 {t("in")}{" "}
-                {t("CityOf", { city: "Brooklyn" })}, NY
-              </p>
+              {player.birthDate && (
+                <p className={styles.general}>
+                  <strong>{t("Born")}:</strong>{" "}
+                  {buildBirthDateString(player.birthDate)}{" "}
+                  {t("CityOf", { city: "Brooklyn" })}, NY
+                </p>
+              )}
               <p className={styles.general}>
                 <strong>{t("Experience")}:</strong> 15 {t("years")}
               </p>

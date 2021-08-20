@@ -1,5 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
+import { useAuth } from "./hooks/auth.hook";
+import { checkDate } from "./helpers/time.helpers";
+
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Games from "./components/Games/Games";
@@ -8,13 +12,12 @@ import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
 import Loader from "./components/Loader/Loader";
-import { AuthContext } from "./context/AuthContext";
-import { useAuth } from "./hooks/auth.hook";
 
 import "./i18n/config";
 
 import "./App.css";
 import styles from "./background.module.css";
+import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
 
 function App() {
   const { token, login, logout, userId, ready } = useAuth();
@@ -22,21 +25,12 @@ function App() {
 
   if (!ready) return <Loader />;
 
-  const checkDate = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const christmas = new Date(`${year} December 17`);
-    const endChristmas = new Date(`${year + 1} January 10`);
-    if (now >= christmas && now <= endChristmas) return styles.christmas;
-    return styles.baseBg;
-  };
-
   return (
     <AuthContext.Provider
       value={{ token, userId, login, logout, isAuthenticated }}
     >
       <Router>
-        <div className={`app ${checkDate()}`}>
+        <div className={`app ${styles[checkDate()]}`}>
           <Header />
           <main>
             <Switch>
@@ -47,6 +41,7 @@ function App() {
               <Route path="/stats" component={Stats} />
             </Switch>
           </main>
+          <BirthDayResolver />
           <Footer>© Max Zahorskyi 2021</Footer>
         </div>
       </Router>

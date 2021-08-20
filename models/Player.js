@@ -5,6 +5,7 @@ const schema = new Schema({
   position: { type: String },
   image_thumb: { type: String },
   age: { type: Number },
+  birthDate: { type: String },
   number: { type: Number },
   gp: { type: Number },
   gs: { type: Number },

@@ -5,6 +5,7 @@ import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { AuthContext } from "../../context/AuthContext";
+import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 import AddDatePopup from "../AddDatePopup/AddDatePopup";
@@ -43,29 +44,6 @@ function Schedule() {
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
 
-  const WEEKDAYS = [
-    `${t("Mon")}`,
-    `${t("Tue")}`,
-    `${t("Wed")}`,
-    `${t("Thu")}`,
-    `${t("Fri")}`,
-    `${t("Sat")}`,
-    `${t("Sun")}`,
-  ];
-  const MONTHS = [
-    `${t("January")}`,
-    `${t("February")}`,
-    `${t("March")}`,
-    `${t("April")}`,
-    `${t("May")}`,
-    `${t("June")}`,
-    `${t("July")}`,
-    `${t("August")}`,
-    `${t("September")}`,
-    `${t("October")}`,
-    `${t("November")}`,
-    `${t("December")}`,
-  ];
   const TODAY = dayjs().format("YYYY-MM-DD");
 
   const INITIAL_YEAR = dayjs().format("YYYY");
@@ -199,7 +177,7 @@ function Schedule() {
             <span id="prev" onClick={(e) => updateCalendar(e)}>
               {"<"}
             </span>
-            {CURRENT_MONTH}, {CURRENT_YEAR}
+            {t(CURRENT_MONTH)}, {CURRENT_YEAR}
             <span id="next" onClick={(e) => updateCalendar(e)}>
               {">"}
             </span>
@@ -207,7 +185,7 @@ function Schedule() {
         </section>
         <ol className={styles.dayOfWeek}>
           {WEEKDAYS.map((weekday, i) => (
-            <li key={weekday}>{weekday}</li>
+            <li key={weekday}>{t(weekday)}</li>
           ))}
         </ol>
         <ol className={styles.daysGrid}>
