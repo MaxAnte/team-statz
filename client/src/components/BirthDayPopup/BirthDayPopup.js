@@ -35,7 +35,7 @@ function BirthDayPopup({ players, closeHandler }) {
         </h5>
         <div className={styles.playersWrap}>
           {players.map((player) => (
-            <div key={player.id} className={styles.player}>
+            <div key={player._id} className={styles.player}>
               <img src={player.image_thumb} />
               <span>{player.name}</span>
             </div>

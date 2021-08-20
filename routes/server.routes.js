@@ -250,7 +250,7 @@ router.post("/player/birthDay", async (req, res) => {
     return res.status(400).json({ message: "There are no active players" });
 
   const birthDays = players.filter(
-    (player) => player.birthDate === todayToLocalUsedStr
+    (player) => player.birthDate.slice(5) === todayToLocalUsedStr.slice(5)
   );
 
   res.json({ ...birthDays });
