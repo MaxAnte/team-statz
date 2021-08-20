@@ -30,7 +30,7 @@ function GamePlayerStat({ player, gameID }) {
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;
-    return atempts ? `${parseFloat(perc.toFixed(1))}%` : `0%`;
+    return atempts ? `${parseFloat(perc.toFixed(1))}%` : !made ? "100%" : "0%";
   };
 
   const getEfficiencyRate = (player) => {
