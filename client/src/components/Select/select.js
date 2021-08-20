@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Cookie from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
@@ -11,6 +12,7 @@ function Select({
   className = "",
   getActive,
   defaultValue,
+  type = "",
   arrow = true,
 }) {
   const [active, setActive] = useState(defaultValue);
@@ -19,10 +21,14 @@ function Select({
 
   const clickHandle = (e) => {
     setActive(e.target.dataset.option);
+    type === "language" &&
+      Cookie.set("language", e.target.dataset.option, { expires: 1 });
     setToggle(false);
   };
 
-  useEffect(() => getActive(active), [active]);
+  useEffect(() => {
+    getActive(active);
+  }, [active]);
 
   return (
     <div className={`${styles.selectWrap} ${className}`}>

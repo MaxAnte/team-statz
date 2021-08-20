@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookie from "js-cookie";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -11,9 +12,15 @@ function Header() {
   const [modal, setModal] = useState(false);
   const { t, i18n } = useTranslation();
 
+  useEffect(() => {
+    const lang = Cookie.get("language");
+    i18n.changeLanguage(lang);
+  }, []);
+
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
   const handleGetActive = (option) => i18n.changeLanguage(option);
+
   return (
     <header className={styles.header}>
       <NavLink className={styles.logo} exact={true} to="/">
@@ -45,6 +52,7 @@ function Header() {
         className={styles.languageSwitcher}
         getActive={handleGetActive}
         defaultValue="en"
+        type="language"
         arrow={false}
       />
       <span className={styles.auth} onClick={() => toggleModal()}>
