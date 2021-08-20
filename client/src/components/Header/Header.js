@@ -51,7 +51,7 @@ function Header() {
         options={["en", "ru", "uk"]}
         className={styles.languageSwitcher}
         getActive={handleGetActive}
-        defaultValue="en"
+        defaultValue={Cookie.get("language") || "en"}
         type="language"
         arrow={false}
       />
