@@ -20,7 +20,7 @@ function GamePlayerStat({ player, gameID }) {
   const getPlayerById = async () => {
     try {
       const data = await request("/api/player/id", "POST", { _id: player._id });
-      if (data) setPlayerInfo(data);
+      if (Object.keys(data).length) setPlayerInfo(data);
     } catch (e) {}
   };
 

@@ -17,7 +17,7 @@ function BirthDayResolver() {
   const checkBirthDate = async () => {
     try {
       const data = await request("/api/player/birthDay", "POST", {});
-      if (data) {
+      if (Object.keys(data).length) {
         setIsBirthDay(true);
         setBirthdayPlayers(Object.values(data));
       }

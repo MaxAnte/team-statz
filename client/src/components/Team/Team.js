@@ -19,10 +19,13 @@ function Team() {
   const { t } = useTranslation();
 
   const getDB = async () => {
-    const dataPlayers = await request("/api/player/players", "POST", {});
-    if (dataPlayers) setPlayers(Object.values(dataPlayers));
-    const dataGames = await request("/api/game/games", "POST", {});
-    if (dataGames) setGames(Object.values(dataGames));
+    const playersData = await request("/api/player/players", "POST", {});
+    const gamesData = await request("/api/game/games", "POST", {});
+
+    if (Object.keys(gamesData).length && Object.keys(playersData).length) {
+      setGames(Object.values(gamesData));
+      setPlayers(Object.values(playersData));
+    }
   };
 
   useEffect(() => {

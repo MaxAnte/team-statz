@@ -30,7 +30,7 @@ function Player() {
     const playerData = await request("/api/player/id", "POST", { _id: id });
     const gamesData = await request("/api/game/games", "POST", {});
 
-    if (gamesData && playerData) {
+    if (Object.keys(gamesData).length && Object.keys(playerData).length) {
       setPlayer(playerData);
       setGames(gamesData);
       setStats(

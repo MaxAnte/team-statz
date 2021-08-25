@@ -32,7 +32,7 @@ function AddGamePopup({ closeHandler, base }) {
   const getPlayers = async () => {
     try {
       const data = await request("/api/player/players", "POST", {});
-      if (data) setPlayers(Object.values(data));
+      if (Object.keys(data).length) setPlayers(Object.values(data));
     } catch (e) {}
   };
 

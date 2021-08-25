@@ -22,7 +22,7 @@ function Games() {
   const getGames = async () => {
     try {
       const data = await request("/api/game/games", "POST", {});
-      if (data) setGames(data);
+      if (Object.keys(data).length) setGames(data);
     } catch (e) {}
   };
 

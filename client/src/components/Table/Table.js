@@ -16,7 +16,7 @@ function Table() {
   const getTeams = async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
-      if (data) setTeams(data);
+      if (Object.keys(data).length) setTeams(data);
     } catch (e) {}
   };
 

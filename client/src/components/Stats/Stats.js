@@ -57,7 +57,7 @@ function Stats() {
     try {
       const gamesData = await request("/api/game/games", "POST", {});
       const playersData = await request("/api/player/players", "POST", {});
-      if (gamesData && playersData) {
+      if (Object.keys(gamesData).length && Object.keys(playersData).length) {
         setGames(Object.values(gamesData).filter((game) => !game.pending));
         setPlayers(Object.values(playersData).filter((game) => !game.pending));
       }

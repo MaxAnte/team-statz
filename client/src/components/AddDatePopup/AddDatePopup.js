@@ -18,7 +18,7 @@ function AddGamePopup({ closeHandler, date }) {
   const getTeams = async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
-      if (data) setTeams(Object.values(data));
+      if (Object.keys(data).length) setTeams(Object.values(data));
     } catch (e) {}
   };
 

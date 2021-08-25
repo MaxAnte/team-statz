@@ -24,7 +24,7 @@ function Schedule() {
   const getDates = async () => {
     try {
       const data = await request("/api/date/dates", "POST", {});
-      if (data) setDates(Object.values(data));
+      if (Object.keys(data).length) setDates(Object.values(data));
     } catch (e) {}
   };
 
