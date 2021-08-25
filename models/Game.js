@@ -16,6 +16,7 @@ const schema = new Schema({
       ast: { type: Number, default: 0 },
       blk: { type: Number, default: 0 },
       stl: { type: Number, default: 0 },
+      plus_minus: { type: Number, default: 0 },
       two_pa: { type: Number, default: 0 },
       two_pm: { type: Number, default: 0 },
       three_pa: { type: Number, default: 0 },

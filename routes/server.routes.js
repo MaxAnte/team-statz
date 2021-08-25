@@ -167,6 +167,8 @@ router.post("/game/complete-game", [], async (req, res) => {
       playerDB.blk = (+playerDB.blk + +player.blk || 0) / +playerDB.gp;
       playerDB.tov = (+playerDB.tov + +player.tov || 0) / +playerDB.gp;
       playerDB.fouls = (+playerDB.fouls + +player.fouls || 0) / +playerDB.gp;
+      playerDB.plus_minus =
+        (+playerDB.plus_minus + +player.plus_minus || 0) / +playerDB.gp;
       playerDB.fta = (+playerDB.fta + +player.fta || 0) / +playerDB.gp;
       playerDB.ftm = (+playerDB.ftm + +player.ftm || 0) / +playerDB.gp;
       playerDB.two_pa = (+playerDB.two_pa + +player.two_pa || 0) / +playerDB.gp;

@@ -219,6 +219,11 @@ function GamePlayerStat({ player, gameID }) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
+                  <span>+/-</span> :<span>{player.plus_minus}</span>
+                </div>
+              </div>
+              <div className={styles.gpsStatsRowItem}>
+                <div>
                   {t("EFF")}:<span>{getEfficiencyRate(player)}</span>
                 </div>
               </div>

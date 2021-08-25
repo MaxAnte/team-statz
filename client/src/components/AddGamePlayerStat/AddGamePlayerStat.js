@@ -247,6 +247,19 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                   />
                 </div>
               </div>
+              <div className={styles.gpsStatsRowItem}>
+                <div>
+                  <label htmlFor="plus_minus">{"+/-"} : </label>
+                  <input
+                    type="number"
+                    min="0"
+                    id="plus_minus"
+                    name="plus_minus"
+                    placeholder="0"
+                    onChange={handleChangeStats}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
