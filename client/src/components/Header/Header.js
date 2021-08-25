@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Cookie from "js-cookie";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -15,11 +15,14 @@ function Header() {
   useEffect(() => {
     const lang = Cookie.get("language");
     i18n.changeLanguage(lang);
-  }, []);
+  }, [i18n]);
 
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
-  const handleGetActive = (option) => i18n.changeLanguage(option);
+  const handleGetActive = useCallback(
+    (option) => i18n.changeLanguage(option),
+    [i18n]
+  );
 
   return (
     <header className={styles.header}>

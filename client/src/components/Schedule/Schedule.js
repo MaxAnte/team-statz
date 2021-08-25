@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -14,28 +14,26 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import styles from "./schedule.module.css";
 
 function Schedule() {
-  const [dates, setDates] = useState(null);
+  const [dates, setDates] = useState([]);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { isAuthenticated } = useContext(AuthContext);
   const { request, error, clearError } = useHttp();
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getDates = async () => {
+  const getDates = useCallback(async () => {
     try {
       const data = await request("/api/date/dates", "POST", {});
       if (Object.keys(data).length) setDates(Object.values(data));
     } catch (e) {}
-  };
+  }, [request]);
 
   useEffect(() => {
     message(error);
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => {
-    getDates();
-  }, []);
+  useEffect(() => getDates(), [getDates]);
 
   const closeHandler = () => setAddDateForm({ form: false, date: "" });
 
@@ -91,13 +89,11 @@ function Schedule() {
   };
 
   const createDaysForCurrentMonth = (year, month) => {
-    return [...Array(getNumberOfDaysInMonth(year, month))].map((day, index) => {
-      return {
-        date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
-        dayOfMonth: index + 1,
-        isCurrentMonth: true,
-      };
-    });
+    return [...Array(getNumberOfDaysInMonth(year, month))].map((_, index) => ({
+      date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
+      dayOfMonth: index + 1,
+      isCurrentMonth: true,
+    }));
   };
 
   const createDaysForPreviousMonth = (year, month) => {
@@ -112,19 +108,15 @@ function Schedule() {
       .subtract(visibleNumberOfDaysFromPreviousMonth, "day")
       .date();
 
-    return [...Array(visibleNumberOfDaysFromPreviousMonth)].map(
-      (day, index) => {
-        return {
-          date: dayjs(
-            `${previousMonth.year()}-${previousMonth.month() + 1}-${
-              previousMonthLastMondayDayOfMonth + index
-            }`
-          ).format("YYYY-MM-DD"),
-          dayOfMonth: previousMonthLastMondayDayOfMonth + index,
-          isCurrentMonth: false,
-        };
-      }
-    );
+    return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((_, index) => ({
+      date: dayjs(
+        `${previousMonth.year()}-${previousMonth.month() + 1}-${
+          previousMonthLastMondayDayOfMonth + index
+        }`
+      ).format("YYYY-MM-DD"),
+      dayOfMonth: previousMonthLastMondayDayOfMonth + index,
+      isCurrentMonth: false,
+    }));
   };
 
   const createDaysForNextMonth = (year, month) => {
@@ -138,15 +130,13 @@ function Schedule() {
       ? 7 - lastDayOfTheMonthWeekday
       : lastDayOfTheMonthWeekday;
 
-    return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
-      return {
-        date: dayjs(
-          `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
-        ).format("YYYY-MM-DD"),
-        dayOfMonth: index + 1,
-        isCurrentMonth: false,
-      };
-    });
+    return [...Array(visibleNumberOfDaysFromNextMonth)].map((_, index) => ({
+      date: dayjs(
+        `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
+      ).format("YYYY-MM-DD"),
+      dayOfMonth: index + 1,
+      isCurrentMonth: false,
+    }));
   };
 
   const getWeekday = (date) => {
@@ -184,7 +174,7 @@ function Schedule() {
           </div>
         </section>
         <ol className={styles.dayOfWeek}>
-          {WEEKDAYS.map((weekday, i) => (
+          {WEEKDAYS.map((weekday) => (
             <li key={weekday}>{t(weekday)}</li>
           ))}
         </ol>
@@ -208,7 +198,7 @@ function Schedule() {
                 dates
                   .filter((game) => game.date === day.date)
                   .map((game) => (
-                    <div className={styles.dayCell} key={game.id}>
+                    <div key={game._id} className={styles.dayCell}>
                       <Link to={`/#${game.date}`}></Link>
                       <GameCardCalendar game={game} />
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -13,21 +13,20 @@ function Table() {
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getTeams = async () => {
+  const getTeams = useCallback(async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
       if (Object.keys(data).length) setTeams(data);
     } catch (e) {}
-  };
+  }, [request]);
 
   useEffect(() => {
     message(error);
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => {
-    getTeams();
-  }, []);
+  useEffect(() => getTeams(), [getTeams]);
+
   const teamList = teams ? Object.values(teams) : [];
   const groups = [];
   if (teamList) {

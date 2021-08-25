@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useTranslation } from "react-i18next";
 
@@ -17,16 +17,16 @@ function GamePlayerStat({ player, gameID }) {
   });
   const { t } = useTranslation();
 
-  const getPlayerById = async () => {
+  const getPlayerById = useCallback(async () => {
     try {
       const data = await request("/api/player/id", "POST", { _id: player._id });
       if (Object.keys(data).length) setPlayerInfo(data);
     } catch (e) {}
-  };
+  }, [request, player._id]);
 
   useEffect(() => {
     getPlayerById();
-  }, []);
+  }, [getPlayerById]);
 
   const getPercentage = (atempts, made) => {
     let perc = (made * 100) / atempts;

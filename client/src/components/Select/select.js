@@ -26,9 +26,7 @@ function Select({
     setToggle(false);
   };
 
-  useEffect(() => {
-    getActive(active);
-  }, [active]);
+  useEffect(() => getActive(active), [active, getActive]);
 
   return (
     <div className={`${styles.selectWrap} ${className}`}>

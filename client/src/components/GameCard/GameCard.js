@@ -14,7 +14,7 @@ function GameCard({ game }) {
   const { isAuthenticated } = useContext(AuthContext);
   const { t } = useTranslation();
 
-  const { date, time, enemy } = game;
+  const { date, enemy } = game;
 
   useEffect(() => {
     const today = new Date();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -19,19 +19,19 @@ function Games() {
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getGames = async () => {
+  const getGames = useCallback(async () => {
     try {
       const data = await request("/api/game/games", "POST", {});
       if (Object.keys(data).length) setGames(data);
     } catch (e) {}
-  };
+  }, [request]);
 
   useEffect(() => {
     message(error);
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => getGames(), []);
+  useEffect(() => getGames(), [getGames]);
 
   useEffect(() => {
     if (hash === "") {
@@ -45,7 +45,7 @@ function Games() {
         }
       }, 1000);
     }
-  }, [pathname]);
+  }, [pathname, hash]);
 
   const gamesList = games
     ? sort === "Pending"
@@ -55,7 +55,7 @@ function Games() {
       : Object.values(games)
     : [];
 
-  const handleGetActive = (option) => setSort(option);
+  const handleGetActive = useCallback((option) => setSort(option), []);
 
   return (
     <div className="games page-wrapper">

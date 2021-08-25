@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -26,7 +26,7 @@ function Player() {
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getDB = async () => {
+  const getDB = useCallback(async () => {
     const playerData = await request("/api/player/id", "POST", { _id: id });
     const gamesData = await request("/api/game/games", "POST", {});
 
@@ -58,16 +58,14 @@ function Player() {
             }))
       );
     }
-  };
+  }, [request, id]);
 
   useEffect(() => {
     message(error);
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => {
-    getDB();
-  }, []);
+  useEffect(() => getDB(), [getDB]);
 
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
@@ -88,7 +86,7 @@ function Player() {
           <div className={styles.top}>
             <h2 className={styles.nameMob}>{player.name}</h2>
             <div className={styles.image}>
-              <img src={player.image_thumb} />
+              <img src={player.image_thumb} alt={player.name} />
             </div>
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>

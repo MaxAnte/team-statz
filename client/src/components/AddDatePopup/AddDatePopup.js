@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useTranslation } from "react-i18next";
 
@@ -15,22 +15,24 @@ function AddGamePopup({ closeHandler, date }) {
   const { request } = useHttp();
   const { t } = useTranslation();
 
-  const getTeams = async () => {
+  const getTeams = useCallback(async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
       if (Object.keys(data).length) setTeams(Object.values(data));
     } catch (e) {}
-  };
+  }, [request]);
 
   const teamList = teams ? teams.map((team) => team.name) : [];
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
     getTeams();
-  }, []);
+  }, [date, getTeams]);
 
-  const handleGetActive = (enemy) =>
-    setForm((prevState) => ({ ...prevState, enemy }));
+  const handleGetActive = useCallback(
+    (enemy) => setForm((prevState) => ({ ...prevState, enemy })),
+    []
+  );
   const handleChangeTime = (e) =>
     setForm((prevState) => ({ ...prevState, time: e.target.value }));
 

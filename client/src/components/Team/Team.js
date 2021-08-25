@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { NavLink } from "react-router-dom";
@@ -18,7 +18,7 @@ function Team() {
   const message = useMessage();
   const { t } = useTranslation();
 
-  const getDB = async () => {
+  const getDB = useCallback(async () => {
     const playersData = await request("/api/player/players", "POST", {});
     const gamesData = await request("/api/game/games", "POST", {});
 
@@ -26,16 +26,14 @@ function Team() {
       setGames(Object.values(gamesData));
       setPlayers(Object.values(playersData));
     }
-  };
+  }, [request]);
 
   useEffect(() => {
     message(error);
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => {
-    getDB();
-  }, []);
+  useEffect(() => getDB(), [getDB]);
 
   let bestPts = { pts: 0, id: 0 };
   let bestReb = { reb: 0, id: 0 };
