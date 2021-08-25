@@ -3,6 +3,7 @@ const { Schema, model, Types } = require("mongoose");
 const schema = new Schema({
   enemy: { type: String, required: true },
   ourScore: { type: Number },
+  quarters: [{ our: Number, enemy: Number }],
   enemyScore: { type: Number },
   date: { type: String, required: true },
   time: { type: String, required: true },

@@ -7,6 +7,7 @@ import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import MiniLoader from "../Loader/MiniLoader";
 
 import styles from "./gameCard.module.css";
+import TableQuarters from "../TableQuarters/TableQuarters";
 
 function GameCard({ game }) {
   const [editMode, setEditMode] = useState(false);
@@ -78,6 +79,7 @@ function GameCard({ game }) {
             :<span>{game.enemyScore}</span>
           </div>
           <div className={styles.gameDate}>{game.date}</div>
+          <TableQuarters quarters={game.quarters} />
           {game.playersStats.map((player) => {
             return (
               <GamePlayerStat

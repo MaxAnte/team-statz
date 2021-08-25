@@ -12,6 +12,7 @@ import CheckIcon from "../../assets/icons/CheckIcon";
 import styles from "./addGamePopup.module.css";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+import TableQuarters from "../TableQuarters/TableQuarters";
 
 function AddGamePopup({ closeHandler, base }) {
   const [players, setPlayers] = useState([]);
@@ -76,6 +77,12 @@ function AddGamePopup({ closeHandler, base }) {
       playersStats: gameInfo,
     }));
 
+  const handleGetQuarters = (quarters) =>
+    setForm((prevState) => ({
+      ...prevState,
+      quarters,
+    }));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await request("/api/game/complete-game", "POST", { ...form });
@@ -118,6 +125,10 @@ function AddGamePopup({ closeHandler, base }) {
                   />
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
+                <TableQuarters
+                  mode="edit"
+                  handleGetQuarters={handleGetQuarters}
+                />
               </div>
 
               <h4 className={styles.popupSubtitle}>
