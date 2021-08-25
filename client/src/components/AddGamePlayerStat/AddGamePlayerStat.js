@@ -252,7 +252,6 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                   <label htmlFor="plus_minus">{"+/-"} : </label>
                   <input
                     type="number"
-                    min="0"
                     id="plus_minus"
                     name="plus_minus"
                     placeholder="0"

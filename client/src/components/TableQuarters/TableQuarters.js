@@ -26,6 +26,7 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
     handleGetQuarters(newQuarters);
   };
 
+  if (quarters && quarters.length < 4) return null;
   return (
     <div className={styles.quartersTable}>
       <table>
@@ -96,15 +97,17 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
           </tr>
         </tbody>
       </table>
-      <button
-        className={styles.addQuarterBtn}
-        type="button"
-        onClick={() =>
-          setEditableQuaters(editableQuaters.concat({ our: 0, enemy: 0 }))
-        }
-      >
-        <PlusIcon width="10px" heigth="10px" color="white" />
-      </button>
+      {mode && (
+        <button
+          className={styles.addQuarterBtn}
+          type="button"
+          onClick={() =>
+            setEditableQuaters(editableQuaters.concat({ our: 0, enemy: 0 }))
+          }
+        >
+          <PlusIcon width="10px" heigth="10px" color="white" />
+        </button>
+      )}
     </div>
   );
 }
