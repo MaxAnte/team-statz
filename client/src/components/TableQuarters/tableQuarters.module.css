@@ -72,6 +72,10 @@
   color: var(--color-red);
   font-weight: 500;
 }
+.even {
+  color: var(--color-yellow);
+  font-weight: 500;
+}
 
 .addQuarterBtn {
   position: absolute;

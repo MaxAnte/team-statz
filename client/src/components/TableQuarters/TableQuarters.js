@@ -49,12 +49,7 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
-                  <td
-                    key={i}
-                    className={`${
-                      quarter.our > quarter.enemy ? styles.win : styles.lose
-                    }`}
-                  >
+                  <td key={i}>
                     <input
                       type="number"
                       id={`our_${i}`}
@@ -69,7 +64,11 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
                   <td
                     key={i}
                     className={`${
-                      quarter.our > quarter.enemy ? styles.win : styles.lose
+                      quarter.our > quarter.enemy
+                        ? styles.win
+                        : quarter.our < quarter.enemy
+                        ? styles.lose
+                        : styles.even
                     }`}
                   >
                     {quarter.our}

@@ -127,12 +127,13 @@ router.post("/game/complete-game", [], async (req, res) => {
   try {
     let game = await Game.findOne({ date: req.body.date });
     const { enemy, time } = game;
-    const { ourScore, enemyScore, playersStats, date } = req.body;
+    const { ourScore, enemyScore, playersStats, date, quarters } = req.body;
 
     game.pending = false;
     game.ourScore = ourScore;
     game.enemyScore = enemyScore;
     game.playersStats = playersStats;
+    game.quarters = quarters;
 
     const enemyWin = +enemyScore > +ourScore;
     const team = await Team.findOne({ name: enemy });
