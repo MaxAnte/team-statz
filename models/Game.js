@@ -2,8 +2,8 @@ const { Schema, model, Types } = require("mongoose");
 
 const schema = new Schema({
   enemy: { type: String, required: true },
-  ourScore: { type: Number, required: true },
-  enemyScore: { type: Number, required: true },
+  ourScore: { type: Number, default: 0, required: true },
+  enemyScore: { type: Number, default: 0, required: true },
   quarters: [{ our: Number, enemy: Number }],
   date: { type: String, required: true },
   time: { type: String, required: true },
