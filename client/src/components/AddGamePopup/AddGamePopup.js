@@ -85,8 +85,15 @@ function AddGamePopup({ closeHandler, base }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await request("/api/game/complete-game", "POST", { ...form });
-    setFormClose(true);
+    try {
+      await request("/api/game/complete-game", "POST", {
+        ...form,
+      });
+      setFormClose(true);
+    } catch (e) {
+      message(t("Something is missing..."));
+      clearError();
+    }
   };
 
   return (
@@ -113,6 +120,7 @@ function AddGamePopup({ closeHandler, base }) {
                     id="ourScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
+                    required
                   />
                   <span>:</span>
                   <input
@@ -122,6 +130,7 @@ function AddGamePopup({ closeHandler, base }) {
                     id="enemyScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
+                    required
                   />
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
