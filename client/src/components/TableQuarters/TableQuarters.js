@@ -7,12 +7,14 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import styles from "./tableQuarters.module.css";
 
 function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
-  const [editableQuaters, setEditableQuaters] = useState([
-    { our: 0, enemy: 0 },
-    { our: 0, enemy: 0 },
-    { our: 0, enemy: 0 },
-    { our: 0, enemy: 0 },
-  ]);
+  const [editableQuaters, setEditableQuaters] = useState(
+    quarters || [
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+    ]
+  );
 
   const handleQuarterChange = (e) => {
     const newQuarters = editableQuaters.map((quarter, i) => {

@@ -43,6 +43,24 @@
 .pendBtn {
   margin-top: 15px;
 }
+.editGameInfoBtn {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  transition: all 0.3s ease;
+}
+.editGameInfoBtn button {
+  outline: none;
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+  padding: 1px 3px;
+  background: var(--color-white);
+  cursor: pointer;
+}
+.editGameInfoBtn:hover {
+  box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
 
 @media (max-width: 1279px) {
   .gameScore {

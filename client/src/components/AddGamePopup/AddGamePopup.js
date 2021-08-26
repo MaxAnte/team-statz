@@ -37,13 +37,11 @@ function AddGamePopup({ closeHandler, base }) {
     } catch (e) {}
   };
 
-  Object.values(players).map((player) => {
-    return {
-      name: player.name,
-      position: player.position,
-      check: false,
-    };
-  });
+  Object.values(players).map((player) => ({
+    name: player.name,
+    position: player.position,
+    check: false,
+  }));
 
   useEffect(() => {
     message(error);
@@ -51,7 +49,8 @@ function AddGamePopup({ closeHandler, base }) {
   }, [error, message, clearError]);
 
   useEffect(() => {
-    setForm((prevState) => ({ ...prevState, date: base.date }));
+    console.log(base);
+    setForm((prevState) => ({ ...prevState, ...base }));
     getPlayers();
     if (players && typeof players === "array")
       setPlayersStatsArr(players.filter((el) => !!el.check));
@@ -120,6 +119,7 @@ function AddGamePopup({ closeHandler, base }) {
                     id="ourScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
+                    placeholder={base.ourScore || ""}
                     required
                   />
                   <span>:</span>
@@ -130,11 +130,13 @@ function AddGamePopup({ closeHandler, base }) {
                     id="enemyScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
+                    placeholder={base.enemyScore || ""}
                     required
                   />
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
                 <TableQuarters
+                  quarters={base.quarters || []}
                   mode="edit"
                   handleGetQuarters={handleGetQuarters}
                 />

@@ -4,10 +4,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
+import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
+import EditIcon from "../../assets/icons/EditIcon";
+
 import styles from "./gameCard.module.css";
-import TableQuarters from "../TableQuarters/TableQuarters";
 
 function GameCard({ game }) {
   const [editMode, setEditMode] = useState(false);
@@ -91,6 +93,16 @@ function GameCard({ game }) {
           })}
         </>
       )}
+      {isAuthenticated && game.ourScore ? (
+        <div className={styles.editGameInfoBtn}>
+          <button type="button" onClick={() => setAddPopup(true)}>
+            <EditIcon width="24px" height="24px" />
+          </button>
+          {addPopup ? (
+            <AddGamePopup base={game} closeHandler={closeHandler} />
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }
