@@ -5,22 +5,21 @@ import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
-import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
+import TableQuarters from "../TableQuarters/TableQuarters";
 
 import CloseIcon from "../../assets/icons/CloseIcon";
 import CheckIcon from "../../assets/icons/CheckIcon";
 
-import styles from "./addGamePopup.module.css";
+import styles from "./EditGamePopup.module.css";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePopup({ closeHandler, base }) {
+function EditGamePopup({ closeHandler, base }) {
   const [players, setPlayers] = useState([]);
-  const [checkListAccept, setCheckListAccept] = useState(false);
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
-  const [playersStatsArr, setPlayersStatsArr] = useState([]);
+  const [playersStatsArr, setPlayersStatsArr] = useState(base.playersStats);
   const message = useMessage();
   const { t } = useTranslation();
   const { request, error, clearError } = useHttp();
@@ -34,7 +33,17 @@ function AddGamePopup({ closeHandler, base }) {
   const getPlayers = async () => {
     try {
       const data = await request("/api/player/players", "POST", {});
-      if (Object.keys(data).length) setPlayers(Object.values(data));
+      if (Object.keys(data).length) {
+        Object.values(data).map((player) => {
+          base.playersStats.forEach((p) => {
+            if (player._id === p._id) {
+              player.check = true;
+            }
+          });
+          return player;
+        });
+        setPlayers(Object.values(data));
+      }
     } catch (e) {}
   };
 
@@ -46,8 +55,6 @@ function AddGamePopup({ closeHandler, base }) {
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
     getPlayers();
-    if (players && typeof players === "array")
-      setPlayersStatsArr(players.filter((el) => !!el.check));
   }, []);
 
   useEffect(() => {
@@ -79,10 +86,12 @@ function AddGamePopup({ closeHandler, base }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await request("/api/game/complete-game", "POST", {
-        ...form,
-      });
-      setFormClose(true);
+      console.log(base);
+      console.log(form);
+      // await request("/api/game/edit-game", "POST", {
+      //   ...form,
+      // });
+      // setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
       clearError();
@@ -98,10 +107,10 @@ function AddGamePopup({ closeHandler, base }) {
       >
         {!formClose ? (
           <>
-            <h3 className={styles.popupTitle}>{t("Add Game Stats")}</h3>
+            <h3 className={styles.popupTitle}>{t("Edit game info")}</h3>
             <form className={styles.addGameForm} onSubmit={handleSubmit}>
               <h4 className={styles.popupSubtitle}>
-                {t("Set general game information")}
+                {t("General game information")}
               </h4>
               <div className={styles.popupSection}>
                 <div className={styles.genGameInfo}>
@@ -111,10 +120,9 @@ function AddGamePopup({ closeHandler, base }) {
                     maxLength="3"
                     name="ourScore"
                     id="ourScore"
-                    placeholder="0"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
-                    required
+                    placeholder={base.ourScore || ""}
                   />
                   <span>:</span>
                   <input
@@ -122,21 +130,21 @@ function AddGamePopup({ closeHandler, base }) {
                     maxLength="3"
                     name="enemyScore"
                     id="enemyScore"
-                    placeholder="0"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
-                    required
+                    placeholder={base.enemyScore || ""}
                   />
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
                 <TableQuarters
+                  quarters={base.quarters || []}
                   mode="edit"
                   handleGetQuarters={handleGetQuarters}
                 />
               </div>
 
               <h4 className={styles.popupSubtitle}>
-                {t("Check players that have played that game")}
+                {t("Players that have played that game")}
               </h4>
               <div className={styles.popupSection}>
                 {!Object.values(players).length ? (
@@ -172,42 +180,26 @@ function AddGamePopup({ closeHandler, base }) {
                     ))}
                   </div>
                 )}
-                {Object.values(players).length && !checkListAccept ? (
-                  <button
-                    className={`btn__main ${styles.playersSelectAccept}`}
-                    onClick={() => setCheckListAccept(true)}
-                  >
-                    {t("Save")}
-                  </button>
-                ) : null}
               </div>
-
-              {Object.values(players).length && !checkListAccept ? (
-                <span>{t("Check players above")}</span>
-              ) : null}
-              {checkListAccept ? (
-                <>
-                  <h4 className={styles.popupSubtitle}>
-                    {t("Add stats to each player")}
-                  </h4>
-                  <div className={styles.popupSection}>
-                    {Object.values(players)
-                      .filter((player) => player.check)
-                      .map((player, i) => (
-                        <div
-                          key={`playerName_${i}`}
-                          className={styles.gpsPlayer}
-                        >
-                          <AddGamePlayerStat
-                            player={player}
-                            handleChangePlayerStats={handleChangePlayerStats}
-                          />
-                        </div>
-                      ))}
-                  </div>
-                  <button className="btn__main">{t("Save game info")}</button>
-                </>
-              ) : null}
+              <h4 className={styles.popupSubtitle}>
+                {t("Stats of each player")}
+              </h4>
+              <div className={styles.popupSection}>
+                {Object.values(players)
+                  .filter((player) => player.check)
+                  .map((player, i) => (
+                    <div key={`playerName_${i}`} className={styles.gpsPlayer}>
+                      <AddGamePlayerStat
+                        player={player}
+                        basePlayer={base.playersStats.find(
+                          (bPlayer) => bPlayer._id === player._id
+                        )}
+                        handleChangePlayerStats={handleChangePlayerStats}
+                      />
+                    </div>
+                  ))}
+              </div>
+              <button className="btn__main">{t("Save")}</button>
             </form>
           </>
         ) : (
@@ -223,4 +215,4 @@ function AddGamePopup({ closeHandler, base }) {
   );
 }
 
-export default AddGamePopup;
+export default EditGamePopup;

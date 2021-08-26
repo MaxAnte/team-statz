@@ -9,7 +9,7 @@ function GamePlayerCanvas({
   canvID,
   handleGetCoords = () => {},
 }) {
-  const [newCoords, setNewCoords] = useState([]);
+  const [newCoords, setNewCoords] = useState(coordinates);
   const [canv, setCanv] = useState(undefined);
   const [canvBound, setCanvBound] = useState(undefined);
   const [context, setContext] = useState(undefined);
@@ -44,14 +44,9 @@ function GamePlayerCanvas({
     setCanvBound(canvas.getBoundingClientRect());
     setContext(ctx);
 
-    if (!coordinates.length) coordinates = newCoords;
-    coordinates.forEach((el) => {
+    newCoords.forEach((el) => {
       ctx.beginPath();
-      if (el.miss) {
-        drawMiss(ctx, el);
-      } else {
-        drawMade(ctx, el);
-      }
+      el.miss ? drawMiss(ctx, el) : drawMade(ctx, el);
       ctx.lineWidth = 5;
       ctx.closePath();
       el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");

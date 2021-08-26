@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
+import EditGamePopup from "../EditGamePopup/EditGamePopup";
 import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
@@ -14,6 +15,7 @@ import styles from "./gameCard.module.css";
 function GameCard({ game }) {
   const [editMode, setEditMode] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
+  const [editPopup, setEditPopup] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
   const { t } = useTranslation();
 
@@ -25,8 +27,10 @@ function GameCard({ game }) {
     if (today > gameDay) setEditMode(true);
   }, []);
 
-  const handleEdit = () => setAddPopup(true);
-  const closeHandler = () => setAddPopup(false);
+  const closeHandler = () => {
+    setAddPopup(false);
+    setEditPopup(false);
+  };
 
   return (
     <div
@@ -44,7 +48,7 @@ function GameCard({ game }) {
               <>
                 <div
                   className={`${styles.pendBtn} btn__main`}
-                  onClick={() => handleEdit()}
+                  onClick={() => setAddPopup(true)}
                 >
                   {t("Complete game info")}
                 </div>
@@ -95,11 +99,11 @@ function GameCard({ game }) {
       )}
       {isAuthenticated && game.ourScore ? (
         <div className={styles.editGameInfoBtn}>
-          <button type="button" onClick={() => setAddPopup(true)}>
+          <button type="button" onClick={() => setEditPopup(true)}>
             <EditIcon width="24px" height="24px" />
           </button>
-          {addPopup ? (
-            <AddGamePopup base={game} closeHandler={closeHandler} />
+          {editPopup ? (
+            <EditGamePopup base={game} closeHandler={closeHandler} />
           ) : null}
         </div>
       ) : null}

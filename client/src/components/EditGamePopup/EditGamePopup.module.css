@@ -1,0 +1,284 @@
+.popupWrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white);
+  border-radius: 10px;
+  width: calc(100% - 45px);
+  height: calc(100% - 30px);
+  padding: 50px;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.popupContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 10px;
+}
+.centerAlign {
+  justify-content: center;
+}
+.popupContainer::-webkit-scrollbar {
+  width: 5px;
+}
+.popupContainer::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+.popupContainer::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-main);
+  border-radius: 2px;
+}
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.popupTitle {
+  font-size: 32px;
+  margin-bottom: 35px;
+  position: relative;
+}
+.popupTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-black);
+}
+.popupSubtitle {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.addGameForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popupSection {
+  padding: 35px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.genGameInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.genGameInfo input {
+  background: transparent;
+  border: 1px solid var(--color-light-gray);
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  min-height: 40px;
+}
+.genGameInfoNames {
+  text-align: center;
+  font-size: 26px;
+  margin: 0px 15px;
+  min-width: 220px;
+  cursor: default;
+}
+.genGameInfoScore {
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 15px;
+  max-width: 50px;
+  transition: all 0.3s ease;
+}
+.genGameInfoScore:focus {
+  border-color: var(--color-green-main);
+  transition: all 0.3s ease;
+}
+.playersSelect {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 15px;
+  background-color: var(--color-soft-gray);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
+  padding: 15px;
+}
+.date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+}
+.date input {
+  outline: none;
+  border: 1px solid var(--color-light-gray);
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin: 0px 5px;
+}
+.date input[type="text"] {
+  font-size: 16px;
+  padding: 5px;
+  height: 26px;
+  width: 60px;
+  text-align: center;
+}
+
+.playerCard {
+  background-color: var(--color-white);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  padding: 25px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+.playerCard:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
+}
+.playerCard > span {
+  margin-bottom: 15px;
+}
+.playerCard img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.disabler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-soft-gray);
+  opacity: 0.8;
+}
+.playerCard:hover .disabler {
+  opacity: 0;
+}
+.playerCheck {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 50%;
+}
+.playerCheck svg {
+  transform: scale(0);
+  transition: transform 0.2s ease;
+}
+.playerCheckActive svg {
+  transform: scale(1) !important;
+  transition: transform 0.2s ease !important;
+}
+
+.playersSelectAccept {
+  margin-top: 35px;
+}
+.gpsPlayer {
+  position: relative;
+  padding: 35px 0px;
+}
+.gpsPlayer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 1px;
+  width: 95%;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.gpsPlayer:last-child {
+  padding-bottom: 0px;
+}
+.gpsPlayer:last-child:after {
+  content: none;
+}
+
+.successMessage {
+  font-size: 18px;
+}
+
+@media (max-width: 1600px) {
+  .playersSelect {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .popupWrap {
+    padding: 35px;
+  }
+  .closeBtn svg {
+    width: 10px;
+  }
+  .gpsPlayer:first-child {
+    padding-top: 0px;
+  }
+}
+@media (max-width: 1279px) {
+  .popupTitle {
+    margin-bottom: 25px;
+  }
+  .playersSelect {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 1023px) {
+  .playersSelect {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .playerCard {
+    padding: 10px;
+  }
+  .gpsPlayer::after {
+    bottom: 15px;
+  }
+  .popupWrap {
+    width: calc(100% - 30px);
+    padding: 35px 5px;
+  }
+  .genGameInfoNames {
+    min-width: auto;
+    margin: 0px 5px;
+    font-size: 16px;
+  }
+  .genGameInfo input {
+    font-size: 16px;
+    margin: 0px 5px;
+    max-width: 40px;
+    padding: 3px;
+    min-height: 32px;
+  }
+  .playersSelect {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .popupTitle {
+    font-size: var(--font-size-title-mob);
+  }
+  .popupSubtitle {
+    font-size: 16px;
+  }
+}

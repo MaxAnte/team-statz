@@ -6,7 +6,11 @@ import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
 import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePlayerStat({ player, handleChangePlayerStats }) {
+function AddGamePlayerStat({
+  player,
+  basePlayer = {},
+  handleChangePlayerStats,
+}) {
   const [playerStats, setPlayerStats] = useState({});
   const { t } = useTranslation();
 
@@ -51,7 +55,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="playerPts"
                     name="pts"
-                    placeholder="0"
+                    placeholder={basePlayer.pts || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -64,7 +68,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="ast"
                     name="ast"
-                    placeholder="0"
+                    placeholder={basePlayer.ast || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -77,7 +81,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="dreb"
                     name="dreb"
-                    placeholder="0"
+                    placeholder={basePlayer.dreb || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -90,7 +94,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="oreb"
                     name="oreb"
-                    placeholder="0"
+                    placeholder={basePlayer.oreb || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -103,7 +107,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="stl"
                     name="stl"
-                    placeholder="0"
+                    placeholder={basePlayer.stl || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -116,7 +120,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="blk"
                     name="blk"
-                    placeholder="0"
+                    placeholder={basePlayer.blk || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -133,7 +137,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="two_pa"
                     name="two_pa"
-                    placeholder="0"
+                    placeholder={basePlayer.two_pa || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -146,7 +150,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="two_pm"
                     name="two_pm"
-                    placeholder="0"
+                    placeholder={basePlayer.two_pm || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -159,7 +163,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="three_pa"
                     name="three_pa"
-                    placeholder="0"
+                    placeholder={basePlayer.three_pa || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -172,7 +176,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="three_pm"
                     name="three_pm"
-                    placeholder="0"
+                    placeholder={basePlayer.three_pm || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -185,7 +189,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="fta"
                     name="fta"
-                    placeholder="0"
+                    placeholder={basePlayer.fta || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -198,7 +202,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="ftm"
                     name="ftm"
-                    placeholder="0"
+                    placeholder={basePlayer.ftm || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -216,7 +220,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="tov"
                     name="tov"
-                    placeholder="0"
+                    placeholder={basePlayer.tov || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -229,7 +233,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="fouls"
                     name="fouls"
-                    placeholder="0"
+                    placeholder={basePlayer.fouls || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -242,7 +246,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     min="0"
                     id="minutes"
                     name="minutes"
-                    placeholder="0"
+                    placeholder={basePlayer.minutes || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -254,7 +258,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
                     type="number"
                     id="plus_minus"
                     name="plus_minus"
-                    placeholder="0"
+                    placeholder={basePlayer.plus_minus || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -264,7 +268,7 @@ function AddGamePlayerStat({ player, handleChangePlayerStats }) {
         </div>
         <div className={styles.gpsCanvas}>
           <GamePlayerCanvas
-            canvID={`canv_game-1_player-1`}
+            coordinates={basePlayer.coordinates}
             handleGetCoords={handleGetCoords}
           />
         </div>
