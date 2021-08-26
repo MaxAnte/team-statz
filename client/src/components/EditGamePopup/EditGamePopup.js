@@ -19,7 +19,7 @@ function EditGamePopup({ closeHandler, base }) {
   const [players, setPlayers] = useState([]);
   const [form, setForm] = useState({ playersStats: [] });
   const [formClose, setFormClose] = useState(false);
-  const [playersStatsArr, setPlayersStatsArr] = useState(base.playersStats);
+  const [playersStatsArr, setPlayersStatsArr] = useState([]);
   const message = useMessage();
   const { t } = useTranslation();
   const { request, error, clearError } = useHttp();
@@ -86,12 +86,10 @@ function EditGamePopup({ closeHandler, base }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(base);
-      console.log(form);
-      // await request("/api/game/edit-game", "POST", {
-      //   ...form,
-      // });
-      // setFormClose(true);
+      await request("/api/game/edit-game", "POST", {
+        ...form,
+      });
+      setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
       clearError();
@@ -204,7 +202,7 @@ function EditGamePopup({ closeHandler, base }) {
           </>
         ) : (
           <span className={styles.successMessage}>
-            {t("Information about game has been added successfully!")}
+            {t("Information about game has been changed successfully!")}
           </span>
         )}
         <div className={styles.closeBtn} onClick={() => closeHandler()}>

@@ -11,7 +11,7 @@ function AddGamePlayerStat({
   basePlayer = {},
   handleChangePlayerStats,
 }) {
-  const [playerStats, setPlayerStats] = useState({});
+  const [playerStats, setPlayerStats] = useState(basePlayer);
   const { t } = useTranslation();
 
   const handleChangeStats = (e) => {
