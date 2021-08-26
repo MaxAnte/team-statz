@@ -148,6 +148,7 @@ function Stats() {
     let ftp = 0;
     let fouls = 0;
     let tovs = 0;
+    let plus_minus = 0;
     let gPlayed = 0;
     games.forEach((game, i) => {
       if (filterPlayer) {
@@ -166,6 +167,7 @@ function Stats() {
               blk += stats.blk;
               tovs += stats.tov;
               fouls += stats.fouls;
+              plus_minus += stats.plus_minus;
               two_fga += stats.two_pa;
               two_fgm += stats.two_pm;
               three_fga += stats.three_pa;
@@ -183,6 +185,7 @@ function Stats() {
           blk += player.blk;
           tovs += player.tov;
           fouls += player.fouls;
+          plus_minus += player.plus_minus;
           two_fga += player.two_pa;
           two_fgm += player.two_pm;
           three_fga += player.three_pa;
@@ -208,6 +211,7 @@ function Stats() {
       blk,
       tovs,
       fouls,
+      plus_minus,
       two_fga,
       two_fgm,
       two_fgp,
@@ -244,6 +248,7 @@ function Stats() {
     let ftp = 0;
     let fouls = 0;
     let tovs = 0;
+    let plus_minus = 0;
     games
       .filter((game) => game.date === gameDate)[0]
       .playersStats.forEach((player, i) => {
@@ -256,6 +261,7 @@ function Stats() {
             blk += player.blk;
             tovs += player.tov;
             fouls += player.fouls;
+            plus_minus += player.plus_minus;
             two_fga += player.two_pa;
             two_fgm += player.two_pm;
             two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
@@ -277,6 +283,7 @@ function Stats() {
           blk += player.blk;
           tovs += player.tov;
           fouls += player.fouls;
+          plus_minus += player.plus_minus;
           two_fga += player.two_pa;
           two_fgm += player.two_pm;
           three_fga += player.three_pa;
@@ -306,6 +313,7 @@ function Stats() {
       blk,
       tovs,
       fouls,
+      plus_minus,
       two_fga,
       two_fgm,
       two_fgp,
@@ -329,6 +337,7 @@ function Stats() {
     blk,
     tovs,
     fouls,
+    plus_minus,
     two_fga,
     two_fgm,
     two_fgp,
@@ -470,6 +479,12 @@ function Stats() {
             {statsTabAverage && !filterGame
               ? parseFloat((fouls / gPlayed).toFixed(1))
               : parseFloat(fouls.toFixed(1))}
+          </span>
+          <span>
+            {"+/-"} :{" "}
+            {statsTabAverage && !filterGame
+              ? parseFloat((plus_minus / gPlayed).toFixed(1))
+              : parseFloat(plus_minus.toFixed(1))}
           </span>
         </div>
       </div>

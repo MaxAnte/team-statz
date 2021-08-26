@@ -24,6 +24,7 @@ function PlayerCanvas({ player, games }) {
         games
           .filter((game) => !game.pending)
           .map((game) => game.playersStats.find((pl) => pl._id === player))
+          .filter((game) => Boolean(game))
           .map((p) => p.coordinates)
           .reduce((prev, cur) => prev.concat(cur))
     );

@@ -129,7 +129,7 @@ function TableSheet({ stats }) {
             <td>{stats.blk}</td>
             <td>{stats.tov}</td>
             <td>{stats.fouls}</td>
-            <td>?</td>
+            <td>{stats.plus_minus}</td>
           </tr>
         </tbody>
       </table>
