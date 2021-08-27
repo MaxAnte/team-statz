@@ -122,6 +122,23 @@ router.post("/date/dates", async (req, res) => {
 
 // ===================== GAME ===================
 
+// /api/game/games
+router.post("/game/games", async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res
+        .status(400)
+        .json({ errors: errors.array(), message: "Wrong login or password" });
+  } catch (e) {
+    res.status(500).json({ message: "Server error! Please, try again!" });
+  }
+  const games = await Game.find({});
+  games.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
+  if (!games) return res.status(400).json({ message: "Game not found" });
+  res.json(games);
+});
+
 // /api/game/complete-game
 router.post("/game/complete-game", [], async (req, res) => {
   try {
@@ -197,7 +214,7 @@ router.post("/game/complete-game", [], async (req, res) => {
 
     await game.save();
 
-    res.status(201).json({ message: `${game} has been added!` });
+    res.status(201).json({ message: `${game._id} has been added!` });
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
@@ -333,27 +350,110 @@ router.post("/game/edit-game", [], async (req, res) => {
 
     await game.save();
 
-    res.status(201).json({ message: `${game} has been added!` });
+    res.status(201).json({ message: `${game._id} has been updated!` });
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
 });
 
-// /api/game/games
-router.post("/game/games", async (req, res) => {
+// /api/game/delete-game
+router.post("/game/delete-game", [], async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res
-        .status(400)
-        .json({ errors: errors.array(), message: "Wrong login or password" });
+    let game = await Game.findOne({ _id: req.body._id });
+
+    const { date, enemy } = game;
+
+    const enemyWin = +game.enemyScore > +game.ourScore;
+    const enemyTeam = await Team.findOne({ name: enemy });
+    const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+
+    if (game.ourScore !== 0 && game.enemyScore !== 0) {
+      if (enemyWin) {
+        enemyTeam.wins = enemyTeam.wins - 1;
+        ourTeam.loses = ourTeam.loses - 1;
+      } else {
+        enemyTeam.loses = enemyTeam.loses - 1;
+        ourTeam.wins = ourTeam.wins - 1;
+      }
+      if (!enemyTeam)
+        return res.status(400).json({ message: `${enemyName} team not found` });
+
+      enemyTeam.save();
+      ourTeam.save();
+    }
+
+    game.playersStats.forEach(async (player) => {
+      const playerDB = await Player.findOne({ _id: player._id });
+
+      if (!playerDB)
+        return res
+          .status(400)
+          .json({ message: `${playerDB.name} Teams not found` });
+
+      playerDB.mp =
+        (+playerDB.mp * +playerDB.gp - +player.minutes || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.pts =
+        (+playerDB.pts * +playerDB.gp - +player.pts || 0) / (+playerDB.gp - 1);
+
+      playerDB.oreb = +playerDB.oreb - +player.oreb || 0;
+      playerDB.dreb = +playerDB.dreb - +player.dreb || 0;
+      playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
+
+      playerDB.ast =
+        (+playerDB.ast * +playerDB.gp - +player.ast || 0) / (+playerDB.gp - 1);
+
+      playerDB.stl =
+        (+playerDB.stl * +playerDB.gp - +player.stl || 0) / (+playerDB.gp - 1);
+
+      playerDB.blk =
+        (+playerDB.blk * +playerDB.gp - +player.blk || 0) / (+playerDB.gp - 1);
+
+      playerDB.tov =
+        (+playerDB.tov * +playerDB.gp - +player.tov || 0) / (+playerDB.gp - 1);
+
+      playerDB.fouls =
+        (+playerDB.fouls * +playerDB.gp - +player.fouls || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.plus_minus =
+        (+playerDB.plus_minus * +playerDB.gp - +player.plus_minus || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.fta =
+        (+playerDB.fta * +playerDB.gp - +player.fta || 0) / (+playerDB.gp - 1);
+
+      playerDB.ftm =
+        (+playerDB.ftm * +playerDB.gp - +player.ftm || 0) / (+playerDB.gp - 1);
+
+      playerDB.two_pa =
+        (+playerDB.two_pa * +playerDB.gp - +player.two_pa || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.two_pm =
+        (+playerDB.two_pm * +playerDB.gp - +player.two_pm || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.three_pa =
+        (+playerDB.three_pa * +playerDB.gp - +player.three_pa || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.three_pm =
+        (+playerDB.three_pm * +playerDB.gp - +player.three_pm || 0) /
+        (+playerDB.gp - 1);
+
+      playerDB.gp -= 1;
+      playerDB.save();
+    });
+
+    await DateModel.remove({ date });
+    await Game.remove({ _id: req.body._id });
+
+    res.status(201).json({ message: `${game._id} has been removed!` });
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
-  const games = await Game.find({});
-  games.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
-  if (!games) return res.status(400).json({ message: "Game not found" });
-  res.json(games);
 });
 
 // ===================== PLAYER ===================

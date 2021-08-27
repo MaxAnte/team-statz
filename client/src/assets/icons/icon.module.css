@@ -7,3 +7,6 @@
 .green {
   fill: var(--color-green-main);
 }
+.red {
+  fill: var(--color-red);
+}

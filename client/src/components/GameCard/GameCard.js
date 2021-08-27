@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 import { AuthContext } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import EditGamePopup from "../EditGamePopup/EditGamePopup";
@@ -9,6 +11,7 @@ import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
 import EditIcon from "../../assets/icons/EditIcon";
+import RemoveIcon from "../../assets/icons/RemoveIcon";
 
 import styles from "./gameCard.module.css";
 
@@ -18,6 +21,8 @@ function GameCard({ game }) {
   const [editPopup, setEditPopup] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
   const { t } = useTranslation();
+  const message = useMessage();
+  const { request, clearError } = useHttp();
 
   const { date, enemy } = game;
 
@@ -30,6 +35,17 @@ function GameCard({ game }) {
   const closeHandler = () => {
     setAddPopup(false);
     setEditPopup(false);
+  };
+
+  const handleDeleteGame = async () => {
+    try {
+      await request("/api/game/delete-game", "POST", {
+        _id: game._id,
+      });
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
   };
 
   return (
@@ -52,7 +68,7 @@ function GameCard({ game }) {
                 >
                   {t("Complete game info")}
                 </div>
-                <div className={styles.gameDate}>{game.date}</div>
+                <div className={styles.gameDateAdmin}>{game.date}</div>
                 {addPopup ? (
                   <AddGamePopup
                     base={{ date, enemy }}
@@ -62,6 +78,7 @@ function GameCard({ game }) {
               </>
             ) : (
               <div>
+                <div className={styles.gameDate}>{game.date}</div>
                 <span>{t("Waiting for info from that game")}</span>
                 <MiniLoader />
               </div>
@@ -84,7 +101,13 @@ function GameCard({ game }) {
             </span>
             :<span>{game.enemyScore}</span>
           </div>
-          <div className={styles.gameDate}>{game.date}</div>
+          <div
+            className={`${
+              isAuthenticated ? styles.gameDateAdmin : styles.gameDate
+            }`}
+          >
+            {game.date}
+          </div>
           <TableQuarters quarters={game.quarters} />
           {game.playersStats.map((player) => {
             return (
@@ -97,10 +120,19 @@ function GameCard({ game }) {
           })}
         </>
       )}
-      {isAuthenticated && game.ourScore ? (
-        <div className={styles.editGameInfoBtn}>
-          <button type="button" onClick={() => setEditPopup(true)}>
-            <EditIcon width="24px" height="24px" />
+      {isAuthenticated ? (
+        <div className={styles.editGameControls}>
+          {game.ourScore ? (
+            <button type="button" onClick={() => setEditPopup(true)}>
+              <EditIcon width="24px" height="24px" />
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => handleDeleteGame()}
+            className={styles.removeBtn}
+          >
+            <RemoveIcon width="24px" height="24px" color="red" />
           </button>
           {editPopup ? (
             <EditGamePopup base={game} closeHandler={closeHandler} />
