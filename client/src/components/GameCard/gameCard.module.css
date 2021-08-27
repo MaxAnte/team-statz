@@ -79,11 +79,26 @@
   transition: all 0.3s ease;
 }
 
+@media (max-width: 1370px) {
+  .editGameControls {
+    top: 20px;
+    right: 15px;
+  }
+  .editGameControls > button {
+    padding: 1px 3px 0px 3px;
+  }
+  .editGameControls > button > svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 @media (max-width: 1279px) {
   .gameScore {
     font-size: 28px;
   }
 }
+
 @media (max-width: 1023px) {
   .gameName {
     margin-bottom: 5px;
@@ -96,5 +111,12 @@
     top: 10px;
     right: 10px;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .editGameControls > button > svg {
+    width: 15px;
+    height: 15px;
   }
 }
