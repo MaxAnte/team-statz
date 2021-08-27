@@ -112,6 +112,15 @@
     right: 10px;
     font-size: 14px;
   }
+  .gameDateAdmin {
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+  }
+  .editGameControls {
+    top: 10px;
+    right: 10px;
+  }
 }
 
 @media (max-width: 767px) {
