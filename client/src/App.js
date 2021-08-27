@@ -12,12 +12,13 @@ import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
 import Loader from "./components/Loader/Loader";
+import Playoffs from "./components/Playoff/Playoffs";
+import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
 
 import "./i18n/config";
 
 import "./App.css";
 import styles from "./background.module.css";
-import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
 
 function App() {
   const { token, login, logout, userId, ready } = useAuth();
@@ -39,6 +40,7 @@ function App() {
               <Route path="/player/:id" component={Player} />
               <Route path="/schedule" component={Schedule} />
               <Route path="/stats" component={Stats} />
+              <Route path="/playoffs" component={Playoffs} />
             </Switch>
           </main>
           <BirthDayResolver />
