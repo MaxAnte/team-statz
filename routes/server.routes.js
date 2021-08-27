@@ -447,8 +447,8 @@ router.post("/game/delete-game", [], async (req, res) => {
       playerDB.save();
     });
 
-    await DateModel.remove({ date });
-    await Game.remove({ _id: req.body._id });
+    await DateModel.deleteOne({ date });
+    await Game.deleteOne({ _id: req.body._id });
 
     res.status(201).json({ message: `${game._id} has been removed!` });
   } catch (e) {
