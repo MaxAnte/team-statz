@@ -36,6 +36,9 @@ input {
 main {
   max-width: 1920px;
   padding: 0px 25px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .page-wrapper {
