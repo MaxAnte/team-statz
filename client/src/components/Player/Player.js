@@ -38,6 +38,7 @@ function Player() {
           gamesData
             .filter((game) => !game.pending)
             .map((game) => game.playersStats.find((pl) => pl._id === id))
+            .filter((game) => Boolean(game))
             .reduce((acc, cur, index) => ({
               pts: acc.pts + cur.pts,
               oreb: acc.oreb + cur.oreb,
