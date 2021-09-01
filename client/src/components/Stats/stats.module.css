@@ -113,7 +113,7 @@
   margin-right: 5px;
 }
 .activePlayerFilter {
-  color: var(--color-green-main);
+  color: var(--color-green-main) !important;
 }
 .statsColumnRowsInfo {
   display: flex;
@@ -248,6 +248,10 @@
   .canvasStats {
     order: unset;
     margin: 0px 0px 30px;
+  }
+  .statsColumnRows span:hover {
+    color: var(--color-text-main);
+    transition: all 0.2s ease;
   }
   .gameCard {
     width: 100%;
