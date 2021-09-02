@@ -61,10 +61,7 @@ function PlayerCard({ player }) {
           {t("PPG")}: {player.pts ? parseFloat(player.pts.toFixed(1)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          {t("RPG")}:{" "}
-          {player.reb && player.gp
-            ? parseFloat((player.reb / player.gp).toFixed(1))
-            : 0}
+          {t("RPG")}: {player.reb ? parseFloat(player.reb.toFixed(1)) : 0}
         </div>
         <div className={styles.playerStatsItem}>
           {t("APG")}: {player.ast ? parseFloat(player.ast.toFixed(1)) : 0}
