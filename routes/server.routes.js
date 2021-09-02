@@ -553,32 +553,32 @@ module.exports = router;
 // CLEAN ALL PLAYERS STATS
 
 // /api/game/edit-game
-router.post("/players/clean", [], async (req, res) => {
-  try {
-    const players = await Player.find({});
-    players.forEach((player) => {
-      player.mp = 0;
-      player.pts = 0;
-      player.oreb = 0;
-      player.dreb = 0;
-      player.reb = 0;
-      player.ast = 0;
-      player.stl = 0;
-      player.blk = 0;
-      player.tov = 0;
-      player.fouls = 0;
-      player.plus_minus = 0;
-      player.fta = 0;
-      player.ftm = 0;
-      player.two_pa = 0;
-      player.two_pm = 0;
-      player.three_pa = 0;
-      player.three_pm = 0;
-      player.save();
-    });
+// router.post("/players/clean", [], async (req, res) => {
+//   try {
+//     const players = await Player.find({});
+//     players.forEach((player) => {
+//       player.mp = 0;
+//       player.pts = 0;
+//       player.oreb = 0;
+//       player.dreb = 0;
+//       player.reb = 0;
+//       player.ast = 0;
+//       player.stl = 0;
+//       player.blk = 0;
+//       player.tov = 0;
+//       player.fouls = 0;
+//       player.plus_minus = 0;
+//       player.fta = 0;
+//       player.ftm = 0;
+//       player.two_pa = 0;
+//       player.two_pm = 0;
+//       player.three_pa = 0;
+//       player.three_pm = 0;
+//       player.save();
+//     });
 
-    res.status(201).json({ message: "Good!" });
-  } catch (e) {
-    res.status(500).json({ message: "Server error! Please, try again!" });
-  }
-});
+//     res.status(201).json({ message: "Good!" });
+//   } catch (e) {
+//     res.status(500).json({ message: "Server error! Please, try again!" });
+//   }
+// });
