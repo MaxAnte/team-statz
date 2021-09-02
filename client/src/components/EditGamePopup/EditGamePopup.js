@@ -87,8 +87,12 @@ function EditGamePopup({ closeHandler, base }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const onlyCheckedPlayers = form;
+      onlyCheckedPlayers.playersStats = form.playersStats.filter(
+        (p) => Object.values(players).find((pid) => pid._id === p._id).check
+      );
       await request("/api/game/edit-game", "POST", {
-        ...form,
+        ...onlyCheckedPlayers,
       });
       setFormClose(true);
     } catch (e) {
