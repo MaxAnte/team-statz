@@ -13,7 +13,9 @@ function ErrorPage() {
       </h1>
       <p className={styles.errorDescription}>
         {t("That's the wrong neighborhood, fam.")} {t("Let's do a")}{" "}
-        <a href="javascript:history.back()">{t("Step back")}</a>{" "}
+        <a href="javascript:history.back()">
+          <strong>{t("Step back")}</strong>
+        </a>{" "}
         {t("outta here")}!
       </p>
     </div>

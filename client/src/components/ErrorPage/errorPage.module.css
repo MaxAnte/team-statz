@@ -17,19 +17,33 @@
   font-weight: 500;
 }
 .errorDescription > a {
-  font-weight: 700;
+  position: relative;
+  display: inline-block;
   text-decoration: none;
-  padding: 3px 7px;
-  border-radius: 4px;
-  border: 2px solid var(--color-button);
-  background-color: var(--color-button);
-  color: var(--color-white);
+  color: var(--color-text-main);
+  transition: all 0.15s ease;
+}
+.errorDescription > a::before {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  height: 1px;
+  background-color: var(--color-text-main);
+  transition: all 0.15s ease;
 }
 
 .errorDescription > a:hover {
-  background-color: transparent;
-  color: var(--color-button);
-  transition: all 0.3s ease;
+  color: var(--color-green-main);
+  transition: all 0.15s ease;
+}
+
+.errorDescription > a:hover::before {
+  background-color: var(--color-green-main);
+  transition: all 0.15s ease;
 }
 
 @media (max-width: 768px) {
@@ -39,5 +53,8 @@
   }
   .errorDescription {
     font-size: 14px;
+  }
+  .errorDescription > a::before {
+    bottom: 4px;
   }
 }
