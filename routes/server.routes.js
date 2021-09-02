@@ -406,76 +406,76 @@ router.post("/game/delete-game", [], async (req, res) => {
           .status(400)
           .json({ message: `${playerDB.name} Teams not found` });
 
+      playerDB.gp -= 1;
       playerDB.mp = +playerDB.gp
-        ? (+playerDB.mp * +playerDB.gp - +player.minutes || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.mp * (+playerDB.gp + 1) - +player.minutes || 0) /
+          +playerDB.gp
         : 0;
 
       playerDB.pts = +playerDB.gp
-        ? (+playerDB.pts * +playerDB.gp - +player.pts || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.pts * (+playerDB.gp + 1) - +player.pts || 0) / +playerDB.gp
         : 0;
 
       playerDB.oreb = +playerDB.gp ? +playerDB.oreb - +player.oreb || 0 : 0;
       playerDB.dreb = +playerDB.gp ? +playerDB.dreb - +player.dreb || 0 : 0;
       playerDB.reb = +playerDB.gp
-        ? (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp
+        ? (+playerDB.dreb + +playerDB.oreb) / (+playerDB.gp + 1)
         : 0;
 
       playerDB.ast = +playerDB.gp
-        ? (+playerDB.ast * +playerDB.gp - +player.ast || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.ast * (+playerDB.gp + 1) - +player.ast || 0) / +playerDB.gp
         : 0;
 
       playerDB.stl = +playerDB.gp
-        ? (+playerDB.stl * +playerDB.gp - +player.stl || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.stl * (+playerDB.gp + 1) - +player.stl || 0) / +playerDB.gp
         : 0;
 
       playerDB.blk = +playerDB.gp
-        ? (+playerDB.blk * +playerDB.gp - +player.blk || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.blk * (+playerDB.gp + 1) - +player.blk || 0) / +playerDB.gp
         : 0;
 
       playerDB.tov = +playerDB.gp
-        ? (+playerDB.tov * +playerDB.gp - +player.tov || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.tov * (+playerDB.gp + 1) - +player.tov || 0) / +playerDB.gp
         : 0;
 
       playerDB.fouls = +playerDB.gp
-        ? (+playerDB.fouls * +playerDB.gp - +player.fouls || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.fouls * (+playerDB.gp + 1) - +player.fouls || 0) /
+          +playerDB.gp
         : 0;
 
       playerDB.plus_minus = +playerDB.gp
-        ? (+playerDB.plus_minus * +playerDB.gp - +player.plus_minus || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.plus_minus * (+playerDB.gp + 1) - +player.plus_minus ||
+            0) / +playerDB.gp
         : 0;
 
       playerDB.fta = +playerDB.gp
-        ? (+playerDB.fta * +playerDB.gp - +player.fta || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.fta * (+playerDB.gp + 1) - +player.fta || 0) / +playerDB.gp
         : 0;
 
       playerDB.ftm = +playerDB.gp
-        ? (+playerDB.ftm * +playerDB.gp - +player.ftm || 0) / (+playerDB.gp - 1)
+        ? (+playerDB.ftm * (+playerDB.gp + 1) - +player.ftm || 0) / +playerDB.gp
         : 0;
 
       playerDB.two_pa = +playerDB.gp
-        ? (+playerDB.two_pa * +playerDB.gp - +player.two_pa || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.two_pa * (+playerDB.gp + 1) - +player.two_pa || 0) /
+          +playerDB.gp
         : 0;
 
       playerDB.two_pm = +playerDB.gp
-        ? (+playerDB.two_pm * +playerDB.gp - +player.two_pm || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.two_pm * (+playerDB.gp + 1) - +player.two_pm || 0) /
+          +playerDB.gp
         : 0;
 
       playerDB.three_pa = +playerDB.gp
-        ? (+playerDB.three_pa * +playerDB.gp - +player.three_pa || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.three_pa * (+playerDB.gp + 1) - +player.three_pa || 0) /
+          +playerDB.gp
         : 0;
 
       playerDB.three_pm = +playerDB.gp
-        ? (+playerDB.three_pm * +playerDB.gp - +player.three_pm || 0) /
-          (+playerDB.gp - 1)
+        ? (+playerDB.three_pm * (+playerDB.gp + 1) - +player.three_pm || 0) /
+          +playerDB.gp
         : 0;
 
-      playerDB.gp -= 1;
       playerDB.save();
     });
 
