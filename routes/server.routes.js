@@ -255,21 +255,33 @@ router.post("/game/edit-game", [], async (req, res) => {
     game.enemyScore = enemyScore;
     game.quarters = quarters;
 
-    playersStats.forEach(async (player) => {
+    playersStats.forEach(async (player, i) => {
       const playerDB = await Player.findOne({ _id: player._id });
       const prevPlayerDB = game.playersStats.find(
         (p) => p._id.toString() === player._id
       );
 
       if (!playerDB)
-        return res
-          .status(400)
-          .json({ message: `${playerDB.name} Teams not found` });
+        return res.status(400).json({ message: `${playerDB.name} not found` });
 
+      console.log("prev:", playerDB.mp);
+      console.log(
+        "params:",
+        "playerDB.mp:",
+        playerDB.mp,
+        "playerDB.gp:",
+        playerDB.gp,
+        "prevPlayerDB.minutes:",
+        prevPlayerDB.minutes,
+        "player.minutes:",
+        player.minutes
+      );
       playerDB.mp =
         (+playerDB.mp * +playerDB.gp -
           +prevPlayerDB.minutes +
           +player.minutes || 0) / +playerDB.gp;
+
+      console.log("past:", playerDB.mp);
 
       playerDB.pts =
         (+playerDB.pts * +playerDB.gp - +prevPlayerDB.pts + +player.pts || 0) /
@@ -333,9 +345,13 @@ router.post("/game/edit-game", [], async (req, res) => {
           +player.three_pm || 0) / +playerDB.gp;
 
       playerDB.save();
-    });
+      console.log(i);
 
-    game.playersStats = playersStats;
+      if (i === playersStats.length - 1) {
+        console.log(i, "last");
+        game.playersStats = playersStats;
+      }
+    });
 
     const dateDB = await DateModel.findOne({ date });
 
@@ -390,58 +406,74 @@ router.post("/game/delete-game", [], async (req, res) => {
           .status(400)
           .json({ message: `${playerDB.name} Teams not found` });
 
-      playerDB.mp =
-        (+playerDB.mp * +playerDB.gp - +player.minutes || 0) /
-        (+playerDB.gp - 1);
+      playerDB.mp = +playerDB.gp
+        ? (+playerDB.mp * +playerDB.gp - +player.minutes || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.pts =
-        (+playerDB.pts * +playerDB.gp - +player.pts || 0) / (+playerDB.gp - 1);
+      playerDB.pts = +playerDB.gp
+        ? (+playerDB.pts * +playerDB.gp - +player.pts || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.oreb = +playerDB.oreb - +player.oreb || 0;
-      playerDB.dreb = +playerDB.dreb - +player.dreb || 0;
-      playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
+      playerDB.oreb = +playerDB.gp ? +playerDB.oreb - +player.oreb || 0 : 0;
+      playerDB.dreb = +playerDB.gp ? +playerDB.dreb - +player.dreb || 0 : 0;
+      playerDB.reb = +playerDB.gp
+        ? (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp
+        : 0;
 
-      playerDB.ast =
-        (+playerDB.ast * +playerDB.gp - +player.ast || 0) / (+playerDB.gp - 1);
+      playerDB.ast = +playerDB.gp
+        ? (+playerDB.ast * +playerDB.gp - +player.ast || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.stl =
-        (+playerDB.stl * +playerDB.gp - +player.stl || 0) / (+playerDB.gp - 1);
+      playerDB.stl = +playerDB.gp
+        ? (+playerDB.stl * +playerDB.gp - +player.stl || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.blk =
-        (+playerDB.blk * +playerDB.gp - +player.blk || 0) / (+playerDB.gp - 1);
+      playerDB.blk = +playerDB.gp
+        ? (+playerDB.blk * +playerDB.gp - +player.blk || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.tov =
-        (+playerDB.tov * +playerDB.gp - +player.tov || 0) / (+playerDB.gp - 1);
+      playerDB.tov = +playerDB.gp
+        ? (+playerDB.tov * +playerDB.gp - +player.tov || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.fouls =
-        (+playerDB.fouls * +playerDB.gp - +player.fouls || 0) /
-        (+playerDB.gp - 1);
+      playerDB.fouls = +playerDB.gp
+        ? (+playerDB.fouls * +playerDB.gp - +player.fouls || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.plus_minus =
-        (+playerDB.plus_minus * +playerDB.gp - +player.plus_minus || 0) /
-        (+playerDB.gp - 1);
+      playerDB.plus_minus = +playerDB.gp
+        ? (+playerDB.plus_minus * +playerDB.gp - +player.plus_minus || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.fta =
-        (+playerDB.fta * +playerDB.gp - +player.fta || 0) / (+playerDB.gp - 1);
+      playerDB.fta = +playerDB.gp
+        ? (+playerDB.fta * +playerDB.gp - +player.fta || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.ftm =
-        (+playerDB.ftm * +playerDB.gp - +player.ftm || 0) / (+playerDB.gp - 1);
+      playerDB.ftm = +playerDB.gp
+        ? (+playerDB.ftm * +playerDB.gp - +player.ftm || 0) / (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.two_pa =
-        (+playerDB.two_pa * +playerDB.gp - +player.two_pa || 0) /
-        (+playerDB.gp - 1);
+      playerDB.two_pa = +playerDB.gp
+        ? (+playerDB.two_pa * +playerDB.gp - +player.two_pa || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.two_pm =
-        (+playerDB.two_pm * +playerDB.gp - +player.two_pm || 0) /
-        (+playerDB.gp - 1);
+      playerDB.two_pm = +playerDB.gp
+        ? (+playerDB.two_pm * +playerDB.gp - +player.two_pm || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.three_pa =
-        (+playerDB.three_pa * +playerDB.gp - +player.three_pa || 0) /
-        (+playerDB.gp - 1);
+      playerDB.three_pa = +playerDB.gp
+        ? (+playerDB.three_pa * +playerDB.gp - +player.three_pa || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
-      playerDB.three_pm =
-        (+playerDB.three_pm * +playerDB.gp - +player.three_pm || 0) /
-        (+playerDB.gp - 1);
+      playerDB.three_pm = +playerDB.gp
+        ? (+playerDB.three_pm * +playerDB.gp - +player.three_pm || 0) /
+          (+playerDB.gp - 1)
+        : 0;
 
       playerDB.gp -= 1;
       playerDB.save();
@@ -516,3 +548,37 @@ router.post("/team/teams", [], async (req, res) => {
 });
 
 module.exports = router;
+
+// WARNING: DO NOT UNCOMMENT THIS IF YOU DONT WANT TO BREAK EVERYTHNIG
+// CLEAN ALL PLAYERS STATS
+
+// /api/game/edit-game
+router.post("/players/clean", [], async (req, res) => {
+  try {
+    const players = await Player.find({});
+    players.forEach((player) => {
+      player.mp = 0;
+      player.pts = 0;
+      player.oreb = 0;
+      player.dreb = 0;
+      player.reb = 0;
+      player.ast = 0;
+      player.stl = 0;
+      player.blk = 0;
+      player.tov = 0;
+      player.fouls = 0;
+      player.plus_minus = 0;
+      player.fta = 0;
+      player.ftm = 0;
+      player.two_pa = 0;
+      player.two_pm = 0;
+      player.three_pa = 0;
+      player.three_pm = 0;
+      player.save();
+    });
+
+    res.status(201).json({ message: "Good!" });
+  } catch (e) {
+    res.status(500).json({ message: "Server error! Please, try again!" });
+  }
+});

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from "./hooks/auth.hook";
+import { useHttp } from "./hooks/http.hook";
 import { checkDate } from "./helpers/time.helpers";
 
 import Header from "./components/Header/Header";
@@ -24,6 +25,17 @@ import styles from "./background.module.css";
 function App() {
   const { token, login, logout, userId, ready } = useAuth();
   const isAuthenticated = !!token;
+  const { request } = useHttp();
+
+  // const cleanAllPlayersStats = useCallback(async () => {
+  //   try {
+  //     await request("/api/players/clean", "POST", {});
+  //   } catch (e) {}
+  // }, [request]);
+
+  // useEffect(() => {
+  //   cleanAllPlayersStats();
+  // }, [cleanAllPlayersStats]);
 
   if (!ready) return <Loader />;
 
