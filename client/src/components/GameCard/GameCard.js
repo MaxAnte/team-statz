@@ -15,7 +15,7 @@ import RemoveIcon from "../../assets/icons/RemoveIcon";
 
 import styles from "./gameCard.module.css";
 
-function GameCard({ game }) {
+function GameCard({ game, handleChangeGames }) {
   const [editMode, setEditMode] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
@@ -24,13 +24,11 @@ function GameCard({ game }) {
   const message = useMessage();
   const { request, clearError } = useHttp();
 
-  const { date, enemy } = game;
-
   useEffect(() => {
     const today = new Date();
-    const gameDay = new Date(date);
+    const gameDay = new Date(game.date);
     if (today > gameDay) setEditMode(true);
-  }, []);
+  }, [game]);
 
   const closeHandler = () => {
     setAddPopup(false);
@@ -39,6 +37,7 @@ function GameCard({ game }) {
 
   const handleDeleteGame = async () => {
     try {
+      handleChangeGames(game._id);
       await request("/api/game/delete-game", "POST", {
         _id: game._id,
       });
@@ -71,7 +70,7 @@ function GameCard({ game }) {
                 <div className={styles.gameDateAdmin}>{game.date}</div>
                 {addPopup ? (
                   <AddGamePopup
-                    base={{ date, enemy }}
+                    base={{ date: game.date, enemy: game.enemy }}
                     closeHandler={closeHandler}
                   />
                 ) : null}

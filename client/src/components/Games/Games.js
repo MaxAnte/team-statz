@@ -13,6 +13,7 @@ import styles from "./games.module.css";
 
 function Games() {
   const [games, setGames] = useState([]);
+  const [sortedGames, setSortedGames] = useState(games);
   const [sort, setSort] = useState("All");
   const { loading, request, error, clearError } = useHttp();
   const { pathname, hash } = useLocation();
@@ -47,15 +48,19 @@ function Games() {
     }
   }, [pathname, hash]);
 
-  const gamesList = games.length
-    ? sort === "Pending"
-      ? Object.values(games).filter((game) => game.pending)
-      : sort === "Played"
-      ? Object.values(games).filter((game) => !game.pending)
-      : Object.values(games)
-    : [];
+  useEffect(() => {
+    setSortedGames(
+      sort === "Pending"
+        ? Object.values(games).filter((game) => game.pending)
+        : sort === "Played"
+        ? Object.values(games).filter((game) => !game.pending)
+        : Object.values(games)
+    );
+  }, [sort, games]);
 
   const handleGetActive = useCallback((option) => setSort(option), []);
+  const handleChangeGames = (gameID) =>
+    setGames(games.filter((game) => game._id !== gameID));
 
   return (
     <div className="games page-wrapper">
@@ -63,7 +68,7 @@ function Games() {
       <Table />
       <h2 className="title">{t("Recent Games")}</h2>
       <div className={styles.gamesWrapper}>
-        {gamesList.length ? (
+        {games.length ? (
           <Select
             options={["All", "Pending", "Played"]}
             className={styles.gamesSort}
@@ -73,14 +78,16 @@ function Games() {
         ) : null}
         {loading ? (
           <MiniLoader />
-        ) : gamesList.length ? (
-          gamesList.reverse().map((game, id) => {
-            return (
-              <div className={styles.gamesItem} key={id} id={game.date}>
-                <GameCard game={game} />
-              </div>
-            );
-          })
+        ) : games.length ? (
+          Object.values(sortedGames)
+            .reverse()
+            .map((game, id) => {
+              return (
+                <div className={styles.gamesItem} key={id} id={game.date}>
+                  <GameCard game={game} handleChangeGames={handleChangeGames} />
+                </div>
+              );
+            })
         ) : (
           <div className={styles.noGames}>
             {t("No games has been added yet")}. {t("Go to")}{" "}
