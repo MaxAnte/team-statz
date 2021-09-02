@@ -19,15 +19,17 @@ function PlayerCanvas({ player, games }) {
   const MULTIPLIER = 1.289655172;
 
   useEffect(() => {
-    setCoords(
-      games.length &&
-        games
-          .filter((game) => !game.pending)
-          .map((game) => game.playersStats.find((pl) => pl._id === player))
-          .filter((game) => Boolean(game))
-          .map((p) => p.coordinates)
-          .reduce((prev, cur) => prev.concat(cur))
-    );
+    if (games.length) {
+      const filteredGames = games
+        .filter((game) => !game.pending)
+        .map((game) => game.playersStats.find((pl) => pl._id === player))
+        .filter((game) => Boolean(game))
+        .map((p) => p.coordinates);
+
+      if (filteredGames.length) {
+        setCoords(filteredGames.reduce((prev, cur) => prev.concat(cur)));
+      }
+    }
   }, [games]);
 
   useEffect(() => {
