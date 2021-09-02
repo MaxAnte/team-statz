@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import Select from "../Select/select";
@@ -8,11 +9,12 @@ import CloseIcon from "../../assets/icons/CloseIcon";
 
 import styles from "./addDatePopup.module.css";
 
-function AddGamePopup({ closeHandler, date }) {
+function AddGamePopup({ closeHandler, date, handleChangeDates }) {
   const [teams, setTeams] = useState(undefined);
   const [form, setForm] = useState([]);
   const [formClose, setFormClose] = useState(false);
-  const { request } = useHttp();
+  const message = useMessage();
+  const { request, clearError } = useHttp();
   const { t } = useTranslation();
 
   const getTeams = useCallback(async () => {
@@ -38,8 +40,14 @@ function AddGamePopup({ closeHandler, date }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await request("/api/date/add-date", "POST", { ...form });
-    setFormClose(true);
+    try {
+      await request("/api/date/add-date", "POST", { ...form });
+      handleChangeDates(form);
+      setFormClose(true);
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
   };
   return (
     <div

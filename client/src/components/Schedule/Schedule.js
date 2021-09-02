@@ -155,6 +155,9 @@ function Schedule() {
 
   let days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
+  const handleChangeDates = (newDate) =>
+    setDates((prevDates) => [...prevDates, newDate]);
+
   return (
     <div className={`${styles.schedule} page-wrapper`}>
       <h1 className="title">{t("Schedule")}</h1>
@@ -213,7 +216,11 @@ function Schedule() {
         </ol>
       </div>
       {isAuthenticated && addDateForm.form ? (
-        <AddDatePopup closeHandler={closeHandler} date={addDateForm.date} />
+        <AddDatePopup
+          closeHandler={closeHandler}
+          date={addDateForm.date}
+          handleChangeDates={handleChangeDates}
+        />
       ) : null}
     </div>
   );
