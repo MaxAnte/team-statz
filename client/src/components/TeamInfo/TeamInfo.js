@@ -38,16 +38,18 @@ function TeamInfo({ players, games }) {
           {t("W")}/{t("L")}: {winsCount}/{actualGames.length - winsCount}
         </p>
         <p>
-          {t("ORtg")}: {parseFloat(offensiveRating.toFixed(2))}
+          {t("ORtg")}: {parseFloat(offensiveRating.toFixed(1))}
         </p>
         <p>
-          {t("DRtg")}: {parseFloat(defensiveRating.toFixed(2))}
+          {t("DRtg")}: {parseFloat(defensiveRating.toFixed(1))}
         </p>
         {arrTotals.map((el, i) => {
           return (
             <p key={i}>
               <span>{properties[i]}: </span>
-              {actualGames.length ? (el / actualGames.length).toFixed(1) : 0}
+              {actualGames.length
+                ? parseFloat((el / actualGames.length).toFixed(1))
+                : 0}
             </p>
           );
         })}
