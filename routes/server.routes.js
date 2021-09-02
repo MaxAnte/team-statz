@@ -345,28 +345,26 @@ router.post("/game/edit-game", [], async (req, res) => {
           +player.three_pm || 0) / +playerDB.gp;
 
       playerDB.save();
-      console.log(i);
 
       if (i === playersStats.length - 1) {
-        console.log(i, "last");
+        console.log("LETS GOOOO");
         game.playersStats = playersStats;
+
+        const dateDB = await DateModel.findOne({ date });
+
+        if (!dateDB)
+          return res.status(400).json({ message: `${dateDB} Date not found` });
+
+        if (dateDB.enemy === enemy && dateDB.time === time) {
+          dateDB.enemyScore = enemyScore;
+          dateDB.ourScore = ourScore;
+        }
+        dateDB.save();
+
+        await game.save();
+        res.status(201).json({ message: `${game._id} has been updated!` });
       }
     });
-
-    const dateDB = await DateModel.findOne({ date });
-
-    if (!dateDB)
-      return res.status(400).json({ message: `${dateDB} Date not found` });
-
-    if (dateDB.enemy === enemy && dateDB.time === time) {
-      dateDB.enemyScore = enemyScore;
-      dateDB.ourScore = ourScore;
-    }
-    dateDB.save();
-
-    await game.save();
-
-    res.status(201).json({ message: `${game._id} has been updated!` });
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
@@ -551,7 +549,7 @@ router.post("/team/teams", [], async (req, res) => {
 //DO NOT UNCOMMENT THIS IF YOU DONT WANT TO BREAK EVERYTHNIG
 // CLEAN ALL PLAYERS STATS
 
-// /api/game/edit-game
+// // /api/game/edit-game
 // router.post("/players/clean", [], async (req, res) => {
 //   try {
 //     const players = await Player.find({});
