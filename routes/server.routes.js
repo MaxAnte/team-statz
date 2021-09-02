@@ -264,94 +264,102 @@ router.post("/game/edit-game", [], async (req, res) => {
       if (!playerDB)
         return res.status(400).json({ message: `${playerDB.name} not found` });
 
-      console.log("prev:", playerDB.mp);
-      console.log(
-        "params:",
-        "playerDB.mp:",
-        playerDB.mp,
-        "playerDB.gp:",
-        playerDB.gp,
-        "prevPlayerDB.minutes:",
-        prevPlayerDB.minutes,
-        "player.minutes:",
-        player.minutes
-      );
+      // console.log("prev:", playerDB.mp);
+      // console.log(
+      //   "params:",
+      //   "playerDB.mp:",
+      //   playerDB.mp,
+      //   "playerDB.gp:",
+      //   playerDB.gp,
+      //   "prevPlayerDB.minutes:",
+      //   prevPlayerDB.minutes,
+      //   "player.minutes:",
+      //   player.minutes
+      // );
+
       playerDB.mp =
         (+playerDB.mp * +playerDB.gp -
-          +prevPlayerDB.minutes +
+          (+prevPlayerDB?.minutes || 0) +
           +player.minutes || 0) / +playerDB.gp;
 
-      console.log("past:", playerDB.mp);
+      // console.log("past:", playerDB.mp);
 
       playerDB.pts =
-        (+playerDB.pts * +playerDB.gp - +prevPlayerDB.pts + +player.pts || 0) /
-        +playerDB.gp;
+        (+playerDB.pts * +playerDB.gp -
+          (+prevPlayerDB?.pts || 0) +
+          +player.pts || 0) / +playerDB.gp;
 
-      playerDB.oreb = +playerDB.oreb - +prevPlayerDB.oreb + +player.oreb || 0;
-      playerDB.dreb = +playerDB.dreb - +prevPlayerDB.dreb + +player.dreb || 0;
+      playerDB.oreb =
+        +playerDB.oreb - (+prevPlayerDB?.oreb || 0) + +player.oreb || 0;
+      playerDB.dreb =
+        +playerDB.dreb - (+prevPlayerDB?.dreb || 0) + +player.dreb || 0;
       playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
 
       playerDB.ast =
-        (+playerDB.ast * +playerDB.gp - +prevPlayerDB.ast + +player.ast || 0) /
-        +playerDB.gp;
+        (+playerDB.ast * +playerDB.gp -
+          (+prevPlayerDB?.ast || 0) +
+          +player.ast || 0) / +playerDB.gp;
 
       playerDB.stl =
-        (+playerDB.stl * +playerDB.gp - +prevPlayerDB.stl + +player.stl || 0) /
-        +playerDB.gp;
+        (+playerDB.stl * +playerDB.gp -
+          (+prevPlayerDB?.stl || 0) +
+          +player.stl || 0) / +playerDB.gp;
 
       playerDB.blk =
-        (+playerDB.blk * +playerDB.gp - +prevPlayerDB.blk + +player.blk || 0) /
-        +playerDB.gp;
+        (+playerDB.blk * +playerDB.gp -
+          (+prevPlayerDB?.blk || 0) +
+          +player.blk || 0) / +playerDB.gp;
 
       playerDB.tov =
-        (+playerDB.tov * +playerDB.gp - +prevPlayerDB.tov + +player.tov || 0) /
-        +playerDB.gp;
+        (+playerDB.tov * +playerDB.gp -
+          (+prevPlayerDB?.tov || 0) +
+          +player.tov || 0) / +playerDB.gp;
 
       playerDB.fouls =
-        (+playerDB.fouls * +playerDB.gp - +prevPlayerDB.fouls + +player.fouls ||
-          0) / +playerDB.gp;
+        (+playerDB.fouls * +playerDB.gp -
+          (+prevPlayerDB?.fouls || 0) +
+          +player.fouls || 0) / +playerDB.gp;
 
       playerDB.plus_minus =
         (+playerDB.plus_minus * +playerDB.gp -
-          +prevPlayerDB.plus_minus +
+          (+prevPlayerDB?.plus_minus || 0) +
           +player.plus_minus || 0) / +playerDB.gp;
 
       playerDB.fta =
-        (+playerDB.fta * +playerDB.gp - +prevPlayerDB.fta + +player.fta || 0) /
-        +playerDB.gp;
+        (+playerDB.fta * +playerDB.gp -
+          (+prevPlayerDB?.fta || 0) +
+          +player.fta || 0) / +playerDB.gp;
 
       playerDB.ftm =
-        (+playerDB.ftm * +playerDB.gp - +prevPlayerDB.ftm + +player.ftm || 0) /
-        +playerDB.gp;
+        (+playerDB.ftm * +playerDB.gp -
+          (+prevPlayerDB?.ftm || 0) +
+          +player.ftm || 0) / +playerDB.gp;
 
       playerDB.two_pa =
         (+playerDB.two_pa * +playerDB.two_pa -
-          +prevPlayerDB.two_pa +
+          (+prevPlayerDB?.two_pa || 0) +
           +player.two_pa || 0) / +playerDB.gp;
 
       playerDB.two_pm =
         (+playerDB.two_pm * +playerDB.gp -
-          +prevPlayerDB.two_pm +
+          (+prevPlayerDB?.two_pm || 0) +
           +player.two_pm || 0) / +playerDB.gp;
 
       playerDB.three_pa =
         (+playerDB.three_pa * +playerDB.gp -
-          +prevPlayerDB.three_pa +
+          (+prevPlayerDB?.three_pa || 0) +
           +player.three_pa || 0) / +playerDB.gp;
 
       playerDB.three_pm =
         (+playerDB.three_pm * +playerDB.gp -
-          +prevPlayerDB.three_pm +
+          (+prevPlayerDB?.three_pm || 0) +
           +player.three_pm || 0) / +playerDB.gp;
 
       playerDB.save();
 
       if (i === playersStats.length - 1) {
-        console.log("LETS GOOOO");
         game.playersStats = playersStats;
-
         const dateDB = await DateModel.findOne({ date });
-
         if (!dateDB)
           return res.status(400).json({ message: `${dateDB} Date not found` });
 
@@ -360,7 +368,6 @@ router.post("/game/edit-game", [], async (req, res) => {
           dateDB.ourScore = ourScore;
         }
         dateDB.save();
-
         await game.save();
         res.status(201).json({ message: `${game._id} has been updated!` });
       }

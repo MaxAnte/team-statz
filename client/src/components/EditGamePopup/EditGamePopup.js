@@ -57,13 +57,6 @@ function EditGamePopup({ closeHandler, base }) {
     getPlayers();
   }, []);
 
-  useEffect(() => {
-    gatherGameInfo(Object.values(playersStatsArr));
-  }, [playersStatsArr]);
-
-  const handleChangeInput = (e) =>
-    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-
   const handleChangePlayerStats = (playerID, playersStats) => {
     setPlayersStatsArr((prevState) => ({
       ...prevState,
@@ -71,11 +64,19 @@ function EditGamePopup({ closeHandler, base }) {
     }));
   };
 
-  const gatherGameInfo = (gameInfo) =>
+  const gatherGameInfo = (gameInfo) => {
     setForm((prevState) => ({
       ...prevState,
-      playersStats: gameInfo,
+      playersStats: [...gameInfo],
     }));
+  };
+
+  useEffect(() => {
+    gatherGameInfo(Object.values(playersStatsArr));
+  }, [playersStatsArr]);
+
+  const handleChangeInput = (e) =>
+    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
   const handleGetQuarters = (quarters) =>
     setForm((prevState) => ({
