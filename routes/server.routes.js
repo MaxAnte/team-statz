@@ -547,9 +547,8 @@ router.post("/team/teams", [], async (req, res) => {
   res.json({ ...teams });
 });
 
-module.exports = router;
-
-// WARNING: DO NOT UNCOMMENT THIS IF YOU DONT WANT TO BREAK EVERYTHNIG
+// ==================== WARNING ==================
+//DO NOT UNCOMMENT THIS IF YOU DONT WANT TO BREAK EVERYTHNIG
 // CLEAN ALL PLAYERS STATS
 
 // /api/game/edit-game
@@ -582,3 +581,5 @@ module.exports = router;
 //     res.status(500).json({ message: "Server error! Please, try again!" });
 //   }
 // });
+
+module.exports = router;
