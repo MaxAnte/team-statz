@@ -11,6 +11,36 @@
   margin: 0px -15px;
   width: 100%;
 }
+.noGames {
+  text-align: center;
+  margin: 0 auto;
+}
+.noGames a {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-text-main);
+  transition: all 0.15s ease;
+}
+.noGames a::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  height: 1px;
+  background-color: var(--color-text-main);
+  transition: all 0.15s ease;
+}
+.noGames a:hover {
+  color: var(--color-green-main);
+  transition: all 0.15s ease;
+}
+.noGames a:hover::before {
+  background-color: var(--color-green-main);
+  transition: all 0.15s ease;
+}
 .loading {
   justify-content: center;
 }

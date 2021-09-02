@@ -1,7 +1,8 @@
 {
   "Season standings": "Таблиця сезону",
   "Recent Games": "Нещодавнi iгри",
-  "No games has been added yet. Go to": "Ще не було додано жодної гри. Зайдiть в",
+  "No games has been added yet": "Ще не було додано жодної гри",
+  "Go to": "Зайдiть в",
   "and add Game!": "та додайте гру!",
   "Team": "Команда",
   "Schedule": "Розклад",
@@ -119,6 +120,8 @@
   "Players": "Гравцi",
   "Game stats": "Статистика за гру",
   "Games": "Матчi",
+  "So far no games have been played": "Поки що не було зiграно жодної гри",
+  "The season is about to be started!": "Сезон незабаром почнеться!",
   "W": "В",
   "L": "П",
   "GP": "М",

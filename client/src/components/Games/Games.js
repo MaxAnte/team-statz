@@ -12,7 +12,7 @@ import Select from "../Select/select";
 import styles from "./games.module.css";
 
 function Games() {
-  const [games, setGames] = useState(undefined);
+  const [games, setGames] = useState([]);
   const [sort, setSort] = useState("All");
   const { loading, request, error, clearError } = useHttp();
   const { pathname, hash } = useLocation();
@@ -47,7 +47,7 @@ function Games() {
     }
   }, [pathname, hash]);
 
-  const gamesList = games
+  const gamesList = games.length
     ? sort === "Pending"
       ? Object.values(games).filter((game) => game.pending)
       : sort === "Played"
@@ -83,7 +83,7 @@ function Games() {
           })
         ) : (
           <div className={styles.noGames}>
-            {t("No games has been added yet. Go to")}{" "}
+            {t("No games has been added yet")}. {t("Go to")}{" "}
             <Link to="/schedule">
               <strong>{t("Schedule")}</strong>
             </Link>{" "}

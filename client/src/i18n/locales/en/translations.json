@@ -1,7 +1,8 @@
 {
   "Season standings": "Season standings",
   "Recent Games": "Recent Games",
-  "No games has been added yet. Go to": "No games has been added yet. Go to",
+  "No games has been added yet. Go to": "No games has been added yet",
+  "Go to": "Go to",
   "and add Game!": "and add Game!",
   "Team": "Team",
   "Schedule": "Schedule",
@@ -119,6 +120,8 @@
   "Players": "Players",
   "Game stats": "Game stats",
   "Games": "Games",
+  "So far no games have been played": "So far no games have been played",
+  "The season is about to be started!": "The season is about to be started!",
   "W": "W",
   "L": "L",
   "GP": "GP",

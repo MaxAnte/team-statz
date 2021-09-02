@@ -21,11 +21,8 @@ function Team() {
   const getDB = useCallback(async () => {
     const playersData = await request("/api/player/players", "POST", {});
     const gamesData = await request("/api/game/games", "POST", {});
-
-    if (Object.keys(gamesData).length && Object.keys(playersData).length) {
-      setGames(Object.values(gamesData));
-      setPlayers(Object.values(playersData));
-    }
+    if (Object.keys(gamesData).length) setGames(Object.values(gamesData));
+    if (Object.keys(playersData).length) setPlayers(Object.values(playersData));
   }, [request]);
 
   useEffect(() => {

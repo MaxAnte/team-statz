@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -57,10 +58,10 @@ function Stats() {
     try {
       const gamesData = await request("/api/game/games", "POST", {});
       const playersData = await request("/api/player/players", "POST", {});
-      if (Object.keys(gamesData).length && Object.keys(playersData).length) {
+      if (Object.keys(gamesData).length)
         setGames(Object.values(gamesData).filter((game) => !game.pending));
+      if (Object.keys(playersData).length)
         setPlayers(Object.values(playersData).filter((game) => !game.pending));
-      }
     } catch (e) {}
   };
 
@@ -150,59 +151,60 @@ function Stats() {
     let tovs = 0;
     let plus_minus = 0;
     let gPlayed = 0;
-    games.forEach((game, i) => {
-      if (filterPlayer) {
-        if (
-          game.playersStats.filter((player) => player._id === filterPlayer)
-            .length
-        ) {
-          gPlayed++;
-          game.playersStats
-            .filter((player) => player._id === filterPlayer)
-            .forEach((stats) => {
-              pts += stats.pts;
-              reb += stats.oreb + stats.dreb;
-              ast += stats.ast;
-              stl += stats.stl;
-              blk += stats.blk;
-              tovs += stats.tov;
-              fouls += stats.fouls;
-              plus_minus += stats.plus_minus;
-              two_fga += stats.two_pa;
-              two_fgm += stats.two_pm;
-              three_fga += stats.three_pa;
-              three_fgm += stats.three_pm;
-              fta += stats.fta;
-              ftm += stats.ftm;
-            });
+    games.length &&
+      games.forEach((game, i) => {
+        if (filterPlayer) {
+          if (
+            game.playersStats.filter((player) => player._id === filterPlayer)
+              .length
+          ) {
+            gPlayed++;
+            game.playersStats
+              .filter((player) => player._id === filterPlayer)
+              .forEach((stats) => {
+                pts += stats.pts;
+                reb += stats.oreb + stats.dreb;
+                ast += stats.ast;
+                stl += stats.stl;
+                blk += stats.blk;
+                tovs += stats.tov;
+                fouls += stats.fouls;
+                plus_minus += stats.plus_minus;
+                two_fga += stats.two_pa;
+                two_fgm += stats.two_pm;
+                three_fga += stats.three_pa;
+                three_fgm += stats.three_pm;
+                fta += stats.fta;
+                ftm += stats.ftm;
+              });
+          }
+        } else {
+          game.playersStats.forEach((player) => {
+            pts += player.pts;
+            reb += player.oreb + player.dreb;
+            ast += player.ast;
+            stl += player.stl;
+            blk += player.blk;
+            tovs += player.tov;
+            fouls += player.fouls;
+            plus_minus += player.plus_minus;
+            two_fga += player.two_pa;
+            two_fgm += player.two_pm;
+            three_fga += player.three_pa;
+            three_fgm += player.three_pm;
+            fta += player.fta;
+            ftm += player.ftm;
+          });
         }
-      } else {
-        game.playersStats.forEach((player) => {
-          pts += player.pts;
-          reb += player.oreb + player.dreb;
-          ast += player.ast;
-          stl += player.stl;
-          blk += player.blk;
-          tovs += player.tov;
-          fouls += player.fouls;
-          plus_minus += player.plus_minus;
-          two_fga += player.two_pa;
-          two_fgm += player.two_pm;
-          three_fga += player.three_pa;
-          three_fgm += player.three_pm;
-          fta += player.fta;
-          ftm += player.ftm;
-        });
-      }
-      if (i === games.length - 1) {
-        two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
-        three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
-        ftp += fta ? (ftm * 100) / fta : 0;
-        fga = two_fga + three_fga;
-        fgm = two_fgm + three_fgm;
-        fgp = fga ? (fgm * 100) / fga : 0;
-      }
-    });
+        if (i === games.length - 1) {
+          two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+          three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+          ftp += fta ? (ftm * 100) / fta : 0;
+          fga = two_fga + three_fga;
+          fgm = two_fgm + three_fgm;
+          fgp = fga ? (fgm * 100) / fga : 0;
+        }
+      });
     return countStatsMarkup(
       pts,
       reb,
@@ -249,11 +251,34 @@ function Stats() {
     let fouls = 0;
     let tovs = 0;
     let plus_minus = 0;
-    games
-      .filter((game) => game.date === gameDate)[0]
-      .playersStats.forEach((player, i) => {
-        if (filterPlayer) {
-          if (filterPlayer === player._id) {
+    games.length &&
+      games
+        .filter((game) => game.date === gameDate)[0]
+        .playersStats.forEach((player, i) => {
+          if (filterPlayer) {
+            if (filterPlayer === player._id) {
+              pts += player.pts;
+              reb += player.oreb + player.dreb;
+              ast += player.ast;
+              stl += player.stl;
+              blk += player.blk;
+              tovs += player.tov;
+              fouls += player.fouls;
+              plus_minus += player.plus_minus;
+              two_fga += player.two_pa;
+              two_fgm += player.two_pm;
+              two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+              three_fga += player.three_pa;
+              three_fgm += player.three_pm;
+              three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+              fta += player.fta;
+              ftm += player.ftm;
+              ftp += fta ? (ftm * 100) / fta : 0;
+              fga += two_fga + three_fga;
+              fgm += two_fgm + three_fgm;
+              fgp += fga ? (fgm * 100) / fga : 0;
+            }
+          } else {
             pts += player.pts;
             reb += player.oreb + player.dreb;
             ast += player.ast;
@@ -264,47 +289,25 @@ function Stats() {
             plus_minus += player.plus_minus;
             two_fga += player.two_pa;
             two_fgm += player.two_pm;
-            two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
             three_fga += player.three_pa;
             three_fgm += player.three_pm;
-            three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
             fta += player.fta;
             ftm += player.ftm;
-            ftp += fta ? (ftm * 100) / fta : 0;
-            fga += two_fga + three_fga;
-            fgm += two_fgm + three_fgm;
-            fgp += fga ? (fgm * 100) / fga : 0;
+            if (
+              i ===
+              games.filter((game) => game.date === gameDate)[0].playersStats
+                .length -
+                1
+            ) {
+              two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+              three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+              ftp += fta ? (ftm * 100) / fta : 0;
+              fga += two_fga + three_fga;
+              fgm += two_fgm + three_fgm;
+              fgp += fga ? (fgm * 100) / fga : 0;
+            }
           }
-        } else {
-          pts += player.pts;
-          reb += player.oreb + player.dreb;
-          ast += player.ast;
-          stl += player.stl;
-          blk += player.blk;
-          tovs += player.tov;
-          fouls += player.fouls;
-          plus_minus += player.plus_minus;
-          two_fga += player.two_pa;
-          two_fgm += player.two_pm;
-          three_fga += player.three_pa;
-          three_fgm += player.three_pm;
-          fta += player.fta;
-          ftm += player.ftm;
-          if (
-            i ===
-            games.filter((game) => game.date === gameDate)[0].playersStats
-              .length -
-              1
-          ) {
-            two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
-            three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
-            ftp += fta ? (ftm * 100) / fta : 0;
-            fga += two_fga + three_fga;
-            fgm += two_fgm + three_fgm;
-            fgp += fga ? (fgm * 100) / fga : 0;
-          }
-        }
-      });
+        });
     return countStatsMarkup(
       pts,
       reb,
@@ -375,7 +378,9 @@ function Stats() {
           <span>
             {t("Pts")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((pts / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((pts / gPlayed).toFixed(1))
+                : 0
               : parseFloat(pts.toFixed(1))}
           </span>
         </div>
@@ -383,13 +388,17 @@ function Stats() {
           <span>
             {t("2PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((two_fga / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((two_fga / gPlayed).toFixed(1))
+                : 0
               : parseFloat(two_fga.toFixed(1))}
           </span>
           <span>
             {t("2PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((two_fgm / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((two_fgm / gPlayed).toFixed(1))
+                : 0
               : parseFloat(two_fgm.toFixed(1))}
           </span>
           <span>
@@ -400,13 +409,17 @@ function Stats() {
           <span>
             {t("3PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((three_fga / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((three_fga / gPlayed).toFixed(1))
+                : 0
               : parseFloat(three_fga.toFixed(1))}
           </span>
           <span>
             {t("3PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((three_fgm / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((three_fgm / gPlayed).toFixed(1))
+                : 0
               : parseFloat(three_fgm.toFixed(1))}
           </span>
           <span>
@@ -417,13 +430,17 @@ function Stats() {
           <span>
             {t("FTA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fta / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((fta / gPlayed).toFixed(1))
+                : 0
               : parseFloat(fta.toFixed(1))}
           </span>
           <span>
             {t("FTM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((ftm / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((ftm / gPlayed).toFixed(1))
+                : 0
               : parseFloat(ftm.toFixed(1))}
           </span>
           <span>FT%: {parseFloat(ftp.toFixed(1))}</span>
@@ -432,13 +449,17 @@ function Stats() {
           <span>
             {t("FGA")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fga / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((fga / gPlayed).toFixed(1))
+                : 0
               : parseFloat(fga.toFixed(1))}
           </span>
           <span>
             {t("FGM")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fgm / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((fgm / gPlayed).toFixed(1))
+                : 0
               : parseFloat(fgm.toFixed(1))}
           </span>
           <span>FG%: {parseFloat(fgp.toFixed(1))}</span>
@@ -447,43 +468,57 @@ function Stats() {
           <span>
             {t("Reb")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((reb / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((reb / gPlayed).toFixed(1))
+                : 0
               : parseFloat(reb.toFixed(1))}
           </span>
           <span>
             {t("Ast")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((ast / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((ast / gPlayed).toFixed(1))
+                : 0
               : parseFloat(ast.toFixed(1))}
           </span>
           <span>
             {t("Stl")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((stl / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((stl / gPlayed).toFixed(1))
+                : 0
               : parseFloat(stl.toFixed(1))}
           </span>
           <span>
             {t("Blk")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((blk / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((blk / gPlayed).toFixed(1))
+                : 0
               : parseFloat(blk.toFixed(1))}
           </span>
           <span>
             {t("Tov")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((tovs / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((tovs / gPlayed).toFixed(1))
+                : 0
               : parseFloat(tovs.toFixed(1))}
           </span>
           <span>
             {t("Fouls")}:{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((fouls / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((fouls / gPlayed).toFixed(1))
+                : 0
               : parseFloat(fouls.toFixed(1))}
           </span>
           <span>
             {"+/-"} :{" "}
             {statsTabAverage && !filterGame
-              ? parseFloat((plus_minus / gPlayed).toFixed(1))
+              ? gPlayed
+                ? parseFloat((plus_minus / gPlayed).toFixed(1))
+                : 0
               : parseFloat(plus_minus.toFixed(1))}
           </span>
         </div>
@@ -550,32 +585,44 @@ function Stats() {
         <h3 className="title">{t("Games")}</h3>
         {!loading ? (
           <div className={styles.gamesWrap}>
-            {games.map((game, i) => (
-              <div
-                className={`${styles.gameCard} ${
-                  filterGame === game.date ? styles.activeCard : ""
-                }`}
-                onClick={() =>
-                  setFilterGame(filterGame === game.date ? null : game.date)
-                }
-                key={i}
-              >
-                <h4 className={styles.calendarGameName}>
-                  {t("vs.")} {game.enemy}
-                </h4>
-                <div className={styles.calendarGameScore}>
-                  <span
-                    className={`our ${
-                      game.ourScore > game.enemyScore ? styles.win : styles.lose
-                    }`}
-                  >
-                    {game.ourScore}
-                  </span>
-                  :<span>{game.enemyScore}</span>
+            {games.length ? (
+              games.map((game, i) => (
+                <div
+                  className={`${styles.gameCard} ${
+                    filterGame === game.date ? styles.activeCard : ""
+                  }`}
+                  onClick={() =>
+                    setFilterGame(filterGame === game.date ? null : game.date)
+                  }
+                  key={i}
+                >
+                  <h4 className={styles.calendarGameName}>
+                    {t("vs.")} {game.enemy}
+                  </h4>
+                  <div className={styles.calendarGameScore}>
+                    <span
+                      className={`our ${
+                        game.ourScore > game.enemyScore
+                          ? styles.win
+                          : styles.lose
+                      }`}
+                    >
+                      {game.ourScore}
+                    </span>
+                    :<span>{game.enemyScore}</span>
+                  </div>
+                  <span>{game.date}</span>
                 </div>
-                <span>{game.date}</span>
+              ))
+            ) : (
+              <div className={styles.noGames}>
+                {t("So far no games have been played")}. {t("Go to")}{" "}
+                <Link to="/schedule">
+                  <strong>{t("Schedule")}</strong>
+                </Link>{" "}
+                {t("and add Game!")}
               </div>
-            ))}
+            )}
           </div>
         ) : (
           <BlockLoader />

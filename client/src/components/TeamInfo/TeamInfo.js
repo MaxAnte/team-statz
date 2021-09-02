@@ -19,12 +19,12 @@ function TeamInfo({ players, games }) {
     arrTotals[2] += el.blk;
     arrTotals[3] += el.stl;
   });
-  actualGames.forEach((el) => {
-    if (el.ourScore > el.enemyScore) winsCount++;
-    offensiveRating += el.ourScore / actualGames.length;
-    defensiveRating += el.enemyScore / actualGames.length;
-  });
-
+  actualGames.length &&
+    actualGames.forEach((el) => {
+      if (el.ourScore > el.enemyScore) winsCount++;
+      offensiveRating += el.ourScore / actualGames.length;
+      defensiveRating += el.enemyScore / actualGames.length;
+    });
   return (
     <div className={styles.teamInfo}>
       <div className={styles.teamInfoLeft}>
@@ -47,7 +47,7 @@ function TeamInfo({ players, games }) {
           return (
             <p key={i}>
               <span>{properties[i]}: </span>
-              {(el / actualGames.length).toFixed(1)}
+              {actualGames.length ? (el / actualGames.length).toFixed(1) : 0}
             </p>
           );
         })}
