@@ -8,16 +8,31 @@ import MiniLoader from "../Loader/MiniLoader";
 import styles from "./table.module.css";
 
 function Table() {
-  const [teams, setTeams] = useState(undefined);
   const { loading, request, error, clearError } = useHttp();
   const message = useMessage();
   const { t } = useTranslation();
+  const [teams, setTeams] = useState([]);
+  const [groups, setGroup] = useState([]);
 
   const getTeams = useCallback(async () => {
     try {
       const data = await request("/api/team/teams", "POST", {});
-      if (Object.keys(data).length) setTeams(data);
-    } catch (e) {}
+      if (Object.keys(data).length) {
+        Object.values(data).forEach((el) => {
+          el.points = el.wins * 2 + el.loses * 1;
+        });
+        const readyGroups = [];
+        Object.values(data)
+          .map((team) => team.group)
+          .map((group) => {
+            if (!readyGroups.includes(group)) readyGroups.push(group);
+          });
+        setGroup(readyGroups);
+        setTeams(Object.values(data).sort((a, b) => b.points - a.points));
+      }
+    } catch (e) {
+      message(e.message || "Failed to get Table info");
+    }
   }, [request]);
 
   useEffect(() => {
@@ -27,20 +42,6 @@ function Table() {
 
   useEffect(() => getTeams(), [getTeams]);
 
-  const teamList = teams ? Object.values(teams) : [];
-  const groups = [];
-  if (teamList) {
-    teamList.forEach((el) => {
-      el.winRate = (el.wins * 100) / (el.wins + el.loses);
-      el.points = el.wins * 2 + el.loses * 1;
-    });
-    teamList.sort((a, b) => b.points - a.points);
-    teamList
-      .map((team) => team.group)
-      .map((group) => {
-        if (!groups.includes(group)) groups.push(group);
-      });
-  }
   return (
     <div className={styles.tables}>
       {groups.map((group) => (
@@ -59,8 +60,7 @@ function Table() {
             {loading ? (
               <MiniLoader />
             ) : (
-              teamList &&
-              teamList
+              teams
                 .filter((el) => el.group === group)
                 .map((el, i) => {
                   return (
