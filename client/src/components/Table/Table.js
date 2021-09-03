@@ -26,6 +26,7 @@ function Table() {
           .map((team) => team.group)
           .map((group) => {
             if (!readyGroups.includes(group)) readyGroups.push(group);
+            return group;
           });
         setGroup(readyGroups);
         setTeams(Object.values(data).sort((a, b) => b.points - a.points));
@@ -33,7 +34,7 @@ function Table() {
     } catch (e) {
       message(e.message || "Failed to get Table info");
     }
-  }, [request]);
+  }, [request, message]);
 
   useEffect(() => {
     message(error);
