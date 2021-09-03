@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -31,12 +31,12 @@ function AddGamePopup({ closeHandler, base }) {
     setPlayers((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getPlayers = async () => {
+  const getPlayers = useCallback(async () => {
     try {
       const data = await request("/api/player/players", "POST", {});
       if (Object.keys(data).length) setPlayers(Object.values(data));
     } catch (e) {}
-  };
+  }, [request]);
 
   useEffect(() => {
     message(error);
@@ -45,10 +45,10 @@ function AddGamePopup({ closeHandler, base }) {
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
-    getPlayers();
-    if (players && typeof players === "array")
-      setPlayersStatsArr(players.filter((el) => !!el.check));
-  }, []);
+    players.length
+      ? setPlayersStatsArr(players.filter((el) => !!el.check))
+      : getPlayers();
+  }, [getPlayers, players, base]);
 
   useEffect(() => {
     gatherGameInfo(Object.values(playersStatsArr));
