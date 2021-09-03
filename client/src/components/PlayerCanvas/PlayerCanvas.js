@@ -30,7 +30,7 @@ function PlayerCanvas({ player, games }) {
         setCoords(filteredGames.reduce((prev, cur) => prev.concat(cur)));
       }
     }
-  }, [games]);
+  }, [games, player]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,7 +62,7 @@ function PlayerCanvas({ player, games }) {
     );
 
     drawZones(ctx, zonesAttempts, zonesPerc);
-  }, [coords]);
+  }, [coords, DPI_WIDTH, DPI_HEIGHT]);
 
   const drawZones = (ctx, zonesAttempts, zonesPerc) => {
     ctx.strokeStyle = "#000000";
