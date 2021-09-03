@@ -21,8 +21,9 @@ export const useAuth = () => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));
     if (data && data.jwtToken) login(data.jwtToken, data.id);
-
-    setReady(true);
+    setTimeout(() => {
+      setReady(true);
+    }, 2000);
   }, [login]);
 
   return { login, logout, token, userId, ready };

@@ -18,9 +18,7 @@ export const useHttp = () => {
         if (!response.ok)
           throw new Error(data.message || "Error occured while fetch");
 
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        setLoading(false);
 
         return data;
       } catch (e) {
