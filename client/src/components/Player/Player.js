@@ -20,7 +20,7 @@ import JerseyIcon from "../../assets/icons/JerseyIcon";
 function Player() {
   const [player, setPlayer] = useState({});
   const [games, setGames] = useState([]);
-  const [stats, setStats] = useState([]);
+  const [overallStats, setOverallStats] = useState([]);
   const { id } = useParams();
   const { loading, request, error, clearError } = useHttp();
   const message = useMessage();
@@ -40,31 +40,25 @@ function Player() {
           .filter((game) => Boolean(game));
 
         if (filteredGames.length) {
-          setStats(
-            filteredGames.reduce(
-              (acc, cur, index) => (
-                {
-                  pts: acc.pts + cur.pts,
-                  oreb: acc.oreb + cur.oreb,
-                  dreb: acc.dreb + cur.dreb,
-                  ast: acc.ast + cur.ast,
-                  stl: acc.stl + cur.stl,
-                  blk: acc.blk + cur.blk,
-                  fouls: acc.fouls + cur.fouls,
-                  tov: acc.tov + cur.tov,
-                  plus_minus: acc.plus_minus + cur.plus_minus,
-                  two_pa: acc.two_pa + cur.two_pa,
-                  two_pm: acc.two_pm + cur.two_pm,
-                  three_pa: acc.three_pa + cur.three_pa,
-                  three_pm: acc.three_pm + cur.three_pm,
-                  fta: acc.fta + cur.fta,
-                  ftm: acc.ftm + cur.ftm,
-                  minutes: acc.minutes + cur.minutes,
-                  gp: index + 1,
-                },
-                0
-              )
-            )
+          setOverallStats(
+            filteredGames.reduce((acc, cur) => ({
+              pts: acc.pts + cur.pts,
+              oreb: acc.oreb + cur.oreb,
+              dreb: acc.dreb + cur.dreb,
+              ast: acc.ast + cur.ast,
+              stl: acc.stl + cur.stl,
+              blk: acc.blk + cur.blk,
+              fouls: acc.fouls + cur.fouls,
+              tov: acc.tov + cur.tov,
+              plus_minus: acc.plus_minus + cur.plus_minus,
+              two_pa: acc.two_pa + cur.two_pa,
+              two_pm: acc.two_pm + cur.two_pm,
+              three_pa: acc.three_pa + cur.three_pa,
+              three_pm: acc.three_pm + cur.three_pm,
+              fta: acc.fta + cur.fta,
+              ftm: acc.ftm + cur.ftm,
+              minutes: acc.minutes + cur.minutes,
+            }))
           );
         }
       }
@@ -151,7 +145,7 @@ function Player() {
           </div>
           <div className={styles.main}>
             <h5 className="title text-center">{t("Stats through career")}</h5>
-            <TableSheet stats={stats} />
+            <TableSheet tableStats={player} />
             <div className={styles.graphics}>
               <div className={styles.graphicsOvr}>
                 <Line
@@ -160,21 +154,28 @@ function Player() {
                     datasets: [
                       {
                         label: `${t("Points")}`,
-                        data: [stats.pts, 115, 77, 50, 100, 105],
+                        data: [overallStats.pts, 115, 77, 50, 100, 105],
                         fill: false,
                         backgroundColor: "rgb(255, 99, 132)",
                         borderColor: "rgba(255, 99, 132, 0.2)",
                       },
                       {
                         label: `${t("Rebounds")}`,
-                        data: [stats.oreb + stats.dreb, 20, 5, 25, 13, 0],
+                        data: [
+                          overallStats.oreb + overallStats.dreb,
+                          20,
+                          5,
+                          25,
+                          13,
+                          0,
+                        ],
                         fill: false,
                         backgroundColor: "rgb(203, 99, 255)",
                         borderColor: "rgba(203, 99, 255, 0.2)",
                       },
                       {
                         label: `${t("Assists")}`,
-                        data: [stats.ast, 25, 30, 50, 15, 20],
+                        data: [overallStats.ast, 25, 30, 50, 15, 20],
                         fill: false,
                         backgroundColor: "rgb(99, 255, 198)",
                         borderColor: "rgba(99, 255, 198, 0.2)",
@@ -202,9 +203,9 @@ function Player() {
                       {
                         label: "",
                         data: [
-                          (stats.two_pm * 100) / stats.two_pa,
-                          (stats.three_pm * 100) / stats.three_pa,
-                          (stats.ftm * 100) / stats.fta,
+                          (overallStats.two_pm * 100) / overallStats.two_pa,
+                          (overallStats.three_pm * 100) / overallStats.three_pa,
+                          (overallStats.ftm * 100) / overallStats.fta,
                         ],
                         backgroundColor: [
                           "rgba(255, 99, 132, 0.2)",

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import styles from "./tableSheet.module.css";
 
-function TableSheet({ stats }) {
+function TableSheet({ tableStats }) {
   const { t } = useTranslation();
   return (
     <div className={styles.tableWrap}>
@@ -42,100 +42,66 @@ function TableSheet({ stats }) {
         <tbody>
           <tr>
             <td>2020</td>
-            {stats.gp ? (
+            {tableStats.gp ? (
               <>
-                <td>{stats.gp}</td>
+                <td>{tableStats.gp}</td>
+                <td>{tableStats.mp}</td>
+                <td>{tableStats.pts}</td>
+                <td>{tableStats.ast}</td>
+                <td>{tableStats.reb}</td>
+                <td>{tableStats.stl}</td>
+                <td>{tableStats.blk}</td>
+                <td>{tableStats.tov}</td>
+                <td>{tableStats.two_pm + tableStats.three_pm}</td>
+                <td>{tableStats.two_pa + tableStats.three_pa}</td>
                 <td>
-                  {stats.gp
-                    ? parseFloat((stats.minutes / stats.gp).toFixed(1))
-                    : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.pts / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp
-                    ? parseFloat(
-                        ((stats.oreb + stats.dreb) / stats.gp).toFixed(1)
-                      )
-                    : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.ast / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.stl / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.blk / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.tov / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp
-                    ? parseFloat(
-                        ((stats.two_pm + stats.three_pm) / stats.gp).toFixed(1)
-                      )
-                    : 0}
-                </td>
-                <td>
-                  {stats.gp
-                    ? parseFloat(
-                        ((stats.two_pa + stats.three_pa) / stats.gp).toFixed(1)
-                      )
-                    : 0}
-                </td>
-                <td>
-                  {stats.two_pa + stats.three_pa
+                  {tableStats.two_pa + tableStats.three_pa
                     ? parseFloat(
                         (
-                          ((stats.two_pm + stats.three_pm) * 100) /
-                          (stats.two_pa + stats.three_pa)
+                          ((tableStats.two_pm + tableStats.three_pm) * 100) /
+                          (tableStats.two_pa + tableStats.three_pa)
                         ).toFixed(1)
                       )
                     : 0}
                   %
                 </td>
+                <td>{tableStats.three_pm}</td>
+                <td>{tableStats.three_pa}</td>
                 <td>
-                  {stats.gp
-                    ? parseFloat((stats.three_pm / stats.gp).toFixed(1))
-                    : 0}
-                </td>
-                <td>
-                  {stats.gp
-                    ? parseFloat((stats.three_pa / stats.gp).toFixed(1))
-                    : 0}
-                </td>
-                <td>
-                  {stats.three_pa
+                  {tableStats.three_pa
                     ? parseFloat(
-                        ((stats.three_pm * 100) / stats.three_pa).toFixed(1)
+                        (
+                          (tableStats.three_pm * 100) /
+                          tableStats.three_pa
+                        ).toFixed(1)
                       )
                     : 0}
                   %
                 </td>
+                <td>{tableStats.ftm}</td>
+                <td>{tableStats.fta}</td>
                 <td>
-                  {stats.gp ? parseFloat((stats.ftm / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.gp ? parseFloat((stats.fta / stats.gp).toFixed(1)) : 0}
-                </td>
-                <td>
-                  {stats.fta
-                    ? parseFloat(((stats.ftm * 100) / stats.fta).toFixed(1))
+                  {tableStats.fta
+                    ? parseFloat(
+                        ((tableStats.ftm * 100) / tableStats.fta).toFixed(1)
+                      )
                     : 0}
                   %
                 </td>
-                <td>{stats.minutes}</td>
-                <td>{stats.pts}</td>
-                <td>{(stats.oreb + stats.dreb).toString()}</td>
-                <td>{stats.ast}</td>
-                <td>{stats.stl}</td>
-                <td>{stats.blk}</td>
-                <td>{stats.tov}</td>
-                <td>{stats.fouls}</td>
-                <td>{stats.plus_minus}</td>
+                <td>{tableStats.mp * tableStats.gp}</td>
+                <td>{tableStats.pts * tableStats.gp}</td>
+                <td>
+                  {(
+                    (tableStats.oreb + tableStats.dreb) *
+                    tableStats.gp
+                  ).toString()}
+                </td>
+                <td>{tableStats.ast * tableStats.gp}</td>
+                <td>{tableStats.stl * tableStats.gp}</td>
+                <td>{tableStats.blk * tableStats.gp}</td>
+                <td>{tableStats.tov * tableStats.gp}</td>
+                <td>{tableStats.fouls * tableStats.gp}</td>
+                <td>{tableStats.plus_minus}</td>
               </>
             ) : (
               <td colspan="25" className="text-center">
