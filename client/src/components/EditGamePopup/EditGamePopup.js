@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,7 @@ function EditGamePopup({ closeHandler, base }) {
     setPlayers((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getPlayers = async () => {
+  const getPlayers = useCallback(async () => {
     try {
       const data = await request("/api/player/players", "POST", {});
       if (Object.keys(data).length) {
@@ -45,7 +45,7 @@ function EditGamePopup({ closeHandler, base }) {
         setPlayers(Object.values(data));
       }
     } catch (e) {}
-  };
+  }, [request, base.playersStats]);
 
   useEffect(() => {
     message(error);
@@ -55,7 +55,7 @@ function EditGamePopup({ closeHandler, base }) {
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
     getPlayers();
-  }, []);
+  }, [getPlayers, base]);
 
   const handleChangePlayerStats = (playerID, playersStats) => {
     setPlayersStatsArr((prevState) => ({
