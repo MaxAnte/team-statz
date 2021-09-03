@@ -18,7 +18,7 @@ function AddGamePlayerStat({
     setPlayerStats((prevState) => ({
       ...prevState,
       _id: player._id,
-      [e.target.name]: e.target.value,
+      [e.target.name]: +e.target.value,
     }));
   };
   const handleGetCoords = (coords) => {
