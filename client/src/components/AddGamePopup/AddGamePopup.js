@@ -45,10 +45,9 @@ function AddGamePopup({ closeHandler, base }) {
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
-    players.length
-      ? setPlayersStatsArr(players.filter((el) => !!el.check))
-      : getPlayers();
-  }, [getPlayers, players, base]);
+    getPlayers();
+    if (players.length) setPlayersStatsArr(players.filter((el) => !!el.check));
+  }, [getPlayers]);
 
   useEffect(() => {
     gatherGameInfo(Object.values(playersStatsArr));

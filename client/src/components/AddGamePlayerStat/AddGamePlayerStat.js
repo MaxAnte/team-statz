@@ -30,7 +30,7 @@ function AddGamePlayerStat({
 
   useEffect(() => {
     handleChangePlayerStats(player._id, playerStats);
-  }, [playerStats]);
+  }, [playerStats, player._id]);
 
   return (
     <div className={styles.gamePlayerStat}>
