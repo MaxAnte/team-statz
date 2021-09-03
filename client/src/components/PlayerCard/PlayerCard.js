@@ -17,31 +17,31 @@ function PlayerCard({ player }) {
       <div className={styles.playerBadges}>
         {player.bestInPts ? (
           <div className={styles.playerBadge}>
-            <img src={basket} alt="Bucket mashine" />
+            <img src={basket} alt={t("Bucket mashine")} />
             <span>{t("Bucket mashine")}</span>
           </div>
         ) : null}
         {player.bestInReb ? (
           <div className={styles.playerBadge}>
-            <img src={glassCleaner} alt="Glass cleaner" />
+            <img src={glassCleaner} alt={t("Glass cleaner")} />
             <span>{t("Glass cleaner")}</span>
           </div>
         ) : null}
         {player.bestInAst ? (
           <div className={styles.playerBadge}>
-            <img src={assist} alt="Point GOD" />
+            <img src={assist} alt={t("Point GOD")} />
             <span>{t("Point GOD")}</span>
           </div>
         ) : null}
         {player.bestInBlk ? (
           <div className={styles.playerBadge}>
-            <img src={block} alt="Block mashine" />
+            <img src={block} alt={t("You shall NOT pass")} />
             <span>{t("You shall NOT pass")}</span>
           </div>
         ) : null}
         {player.bestInStl ? (
           <div className={styles.playerBadge}>
-            <img src={thief} alt="Thief" />
+            <img src={thief} alt={t("Thief")} />
             <span>{t("Thief")}</span>
           </div>
         ) : null}
