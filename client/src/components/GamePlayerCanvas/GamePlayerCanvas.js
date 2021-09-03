@@ -53,7 +53,7 @@ function GamePlayerCanvas({
       ctx.stroke();
     });
     handleGetCoords(newCoords);
-  }, [newCoords]);
+  }, [newCoords, DPI_WIDTH, DPI_HEIGHT]);
 
   const draw = (e) => {
     if (mode !== "view") {
