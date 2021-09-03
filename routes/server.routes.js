@@ -258,10 +258,14 @@ router.post("/game/edit-game", [], async (req, res) => {
     playersStats.forEach(async (player, i) => {
       const playerDB = await Player.findOne({ _id: player._id });
       const prevPlayerDB = game.playersStats.find(
-        (p) => p._id.toString() === player._id
+        (p) => p._id.toString() === player._id.toString()
       );
 
-      if (!game.playersStats.find((pl) => pl._id.toString() === player._id)) {
+      if (
+        !game.playersStats.find(
+          (pl) => pl._id.toString() === player._id.toString()
+        )
+      ) {
         console.log("Adding:", playerDB._id);
         playerDB.gp += 1;
       }
