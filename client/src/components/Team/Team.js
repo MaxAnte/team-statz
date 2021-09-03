@@ -22,7 +22,43 @@ function Team() {
     const playersData = await request("/api/player/players", "POST", {});
     const gamesData = await request("/api/game/games", "POST", {});
     if (Object.keys(gamesData).length) setGames(Object.values(gamesData));
-    if (Object.keys(playersData).length) setPlayers(Object.values(playersData));
+    if (Object.keys(playersData).length) {
+      const bestPts = { pts: 0, id: 0 };
+      const bestReb = { reb: 0, id: 0 };
+      const bestAst = { ast: 0, id: 0 };
+      const bestBlk = { blk: 0, id: 0 };
+      const bestStl = { stl: 0, id: 0 };
+      Object.values(playersData).forEach((el) => {
+        if (el.pts > bestPts.pts) {
+          bestPts.pts = el.pts;
+          bestPts.id = el._id;
+        }
+        if (el.reb > bestReb.reb) {
+          bestReb.reb = el.reb;
+          bestReb.id = el._id;
+        }
+        if (el.ast > bestAst.ast) {
+          bestAst.ast = el.ast;
+          bestAst.id = el._id;
+        }
+        if (el.blk > bestBlk.blk) {
+          bestBlk.blk = el.blk;
+          bestBlk.id = el._id;
+        }
+        if (el.stl > bestStl.stl) {
+          bestStl.stl = el.stl;
+          bestStl.id = el._id;
+        }
+      });
+      Object.values(playersData).forEach((el) => {
+        if (el._id === bestPts.id) el.bestInPts = true;
+        if (el._id === bestReb.id) el.bestInReb = true;
+        if (el._id === bestAst.id) el.bestInAst = true;
+        if (el._id === bestBlk.id) el.bestInBlk = true;
+        if (el._id === bestStl.id) el.bestInStl = true;
+      });
+      setPlayers(Object.values(playersData));
+    }
   }, [request]);
 
   useEffect(() => {
@@ -31,41 +67,6 @@ function Team() {
   }, [error, message, clearError]);
 
   useEffect(() => getDB(), [getDB]);
-
-  let bestPts = { pts: 0, id: 0 };
-  let bestReb = { reb: 0, id: 0 };
-  let bestAst = { ast: 0, id: 0 };
-  let bestBlk = { blk: 0, id: 0 };
-  let bestStl = { stl: 0, id: 0 };
-  players.forEach((el) => {
-    if (el.pts > bestPts.pts) {
-      bestPts.pts = el.pts;
-      bestPts.id = el._id;
-    }
-    if (el.reb > bestReb.reb) {
-      bestReb.reb = el.reb;
-      bestReb.id = el._id;
-    }
-    if (el.ast > bestAst.ast) {
-      bestAst.ast = el.ast;
-      bestAst.id = el._id;
-    }
-    if (el.blk > bestBlk.blk) {
-      bestBlk.blk = el.blk;
-      bestBlk.id = el._id;
-    }
-    if (el.stl > bestStl.stl) {
-      bestStl.stl = el.stl;
-      bestStl.id = el._id;
-    }
-  });
-  players.forEach((el) => {
-    if (el._id === bestPts.id) el.bestInPts = true;
-    if (el._id === bestReb.id) el.bestInReb = true;
-    if (el._id === bestAst.id) el.bestInAst = true;
-    if (el._id === bestBlk.id) el.bestInBlk = true;
-    if (el._id === bestStl.id) el.bestInStl = true;
-  });
 
   return (
     <div className="team page-wrapper">
