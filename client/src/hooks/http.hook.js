@@ -20,7 +20,7 @@ export const useHttp = () => {
 
         setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 2000);
 
         return data;
       } catch (e) {
