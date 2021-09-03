@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -54,7 +54,7 @@ function Stats() {
         return { _id: players[i]._id, color: COLORS[i] };
       });
 
-  const getDB = async () => {
+  const getDB = useCallback(async () => {
     try {
       const gamesData = await request("/api/game/games", "POST", {});
       const playersData = await request("/api/player/players", "POST", {});
@@ -63,7 +63,7 @@ function Stats() {
       if (Object.keys(playersData).length)
         setPlayers(Object.values(playersData).filter((game) => !game.pending));
     } catch (e) {}
-  };
+  }, [request]);
 
   const drawMiss = (ctx, element) => {
     ctx.moveTo(element.x * MULTIPLIER - 12, element.y * MULTIPLIER - 12);
@@ -79,7 +79,7 @@ function Stats() {
     clearError();
   }, [error, message, clearError]);
 
-  useEffect(() => getDB(), []);
+  useEffect(() => getDB(), [getDB]);
 
   useEffect(() => {
     const canv = canvasRef.current;
@@ -127,7 +127,15 @@ function Stats() {
         })
       )
     );
-  }, [players, games, filterGame, filterPlayer]);
+  }, [
+    players,
+    games,
+    filterGame,
+    filterPlayer,
+    DPI_WIDTH,
+    DPI_HEIGHT,
+    POINTER_COLORS,
+  ]);
 
   const countOverallStats = () => {
     let pts = 0;
