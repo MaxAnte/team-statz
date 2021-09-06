@@ -3,6 +3,9 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
+import Table from "../Table/Table";
+import BracketCanvas from "../BracketCanvas/BracketCanvas";
+
 import styles from "./playoffs.module.css";
 
 function Playoffs() {
@@ -13,7 +16,10 @@ function Playoffs() {
   return (
     <div className={`${styles.playoff} page-wrapper`}>
       <h1 className="title">{t("Playoffs")}</h1>
-      <div className={styles.bracket}></div>
+      <Table />
+      <div className={styles.bracket}>
+        <BracketCanvas />
+      </div>
     </div>
   );
 }
