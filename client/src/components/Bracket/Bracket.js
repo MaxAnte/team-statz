@@ -7,40 +7,46 @@ import styles from "./bracket.module.css";
 function Bracket() {
   const [matchups, setMatchups] = useState([
     {
+      id: 1,
       team1: "Termits",
       team2: "Aidar",
-      winner: "",
-      t1Text: { x: 190, y: 120 },
-      t2Text: { x: 200, y: 195 },
-      t1Score: { x: 345, y: 120 },
-      t2Score: { x: 345, y: 195 },
+      winner: "Termits",
     },
     {
+      id: 2,
       team1: "Basketball City",
       team2: "Veterans",
-      winner: "",
-      t1Text: { x: 155, y: 470 },
-      t2Text: { x: 185, y: 545 },
-      t1Score: { x: 345, y: 470 },
-      t2Score: { x: 345, y: 545 },
+      winner: "Basketball City",
     },
     {
+      id: 3,
       team1: "Warriors Bros.",
       team2: "Superslonics",
-      winner: "",
-      t1Text: { x: 1285, y: 120 },
-      t2Text: { x: 1295, y: 195 },
-      t1Score: { x: 1225, y: 120 },
-      t2Score: { x: 1225, y: 195 },
+      winner: "Warriors Bros.",
     },
     {
+      id: 4,
       team1: "Avangard",
       team2: "MSDUSHOR",
-      winner: "",
-      t1Text: { x: 1300, y: 470 },
-      t2Text: { x: 1280, y: 545 },
-      t1Score: { x: 1225, y: 470 },
-      t2Score: { x: 1225, y: 545 },
+      winner: "MSDUSHOR",
+    },
+    {
+      id: 5,
+      team1: "Termits",
+      team2: "Basketball City",
+      winner: "Basketball City",
+    },
+    {
+      id: 6,
+      team1: "Warriors Bros.",
+      team2: "MSDUSHOR",
+      winner: "Warriors Bros.",
+    },
+    {
+      id: 7,
+      team1: "Basketball City",
+      team2: "Warriors Bros.",
+      winner: "Basketball City",
     },
   ]);
 
@@ -53,12 +59,12 @@ function Bracket() {
         strokeWidth="1.5"
         strokeLinecap="round"
       >
-        <polyline points="385,150 400,150 400,240" />
-        <polyline points="385,500 400,500 400,390" />
-        <polyline points="535,325 570,325" />
-        <polyline points="1215,150 1200,150 1200,240" />
-        <polyline points="1215,500 1200,500 1200,390" />
-        <polyline points="1065,325 1030,325" />
+        <polyline points="385,150 400,150 400,255" />
+        <polyline points="385,500 400,500 400,395" />
+        <polyline points="530,325 570,325" />
+        <polyline points="1215,150 1200,150 1200,255" />
+        <polyline points="1215,500 1200,500 1200,395" />
+        <polyline points="1040,325 1078,325" />
       </g>
       <g
         id="group-names"
@@ -93,27 +99,43 @@ function Bracket() {
           <text transform="translate(790, 260)">FINAL</text>
         </g>
       </g>
+
       <g transform="translate(120,100)">
-        {matchups.slice(0, 2).map((matchup, index) => (
-          <g
-            key={index}
-            id={`aMatch${index}`}
-            transform={`translate(0,${350 * index})`}
-          >
-            <BracketMatchup info={matchup} />
-          </g>
-        ))}
+        <g id={`aMatch-1`}>
+          <BracketMatchup info={matchups[0] || null} scoreAlign="right" />
+        </g>
+        <g id={`aMatch-2`} transform={`translate(0,350)`}>
+          <BracketMatchup info={matchups[1] || null} scoreAlign="right" />
+        </g>
       </g>
-      <g transform="translate(-270,100)">
-        {matchups.slice(2).map((matchup, index) => (
-          <g
-            key={index}
-            id={`bMatch${index}`}
-            transform={`translate(1500,${350 * index})`}
-          >
-            <BracketMatchup info={matchup} />
-          </g>
-        ))}
+
+      <g transform="translate(1230,100)">
+        <g id={`bMatch-1`}>
+          <BracketMatchup info={matchups[2] || null} scoreAlign="left" />
+        </g>
+        <g id={`bMatch-2`} transform={`translate(0,350)`}>
+          <BracketMatchup info={matchups[3] || null} scoreAlign="left" />
+        </g>
+      </g>
+
+      <g transform="translate(270,275)">
+        <g id={`aSemis`}>
+          <BracketMatchup info={matchups[4] || null} scoreAlign="right" />
+        </g>
+      </g>
+      <g transform="translate(1090,275)">
+        <g id={`bSemis`}>
+          <BracketMatchup info={matchups[5] || null} scoreAlign="left" />
+        </g>
+      </g>
+      <g transform="translate(580,275)">
+        <g id={`finals`}>
+          <BracketMatchup
+            info={matchups[6] || null}
+            scoreAlign="center"
+            finals
+          />
+        </g>
       </g>
     </svg>
   );
