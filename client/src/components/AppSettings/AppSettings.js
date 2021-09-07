@@ -29,12 +29,16 @@ function AppSettings() {
             id="playoffsStart"
           />
         </div>
-        <button className={`btn__main ${styles.btn}`}>Save</button>
+        <button type="button" className={`btn__main ${styles.btn}`}>
+          Save
+        </button>
         <p className={styles.subText}>
           <span className={styles.dividers}>{t("or")}</span>
           {t("Build the Playoffs bracket by pressing this button")}
         </p>
-        <button className={`btn__main ${styles.btn}`}>{t("Build")}</button>
+        <button type="button" className={`btn__main ${styles.btn}`}>
+          {t("Build")}
+        </button>
       </div>
     </div>
   );
