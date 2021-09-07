@@ -87,12 +87,12 @@ const connects = new Path2D(
 );
 
 export const brackets = [
-  quarterFirst,
-  quarterSecond,
-  quarterThird,
-  quarterFourth,
-  semisFirst,
-  semisSecond,
-  finals,
-  connects,
+  { path: quarterFirst, lineWidth: 2 },
+  { path: quarterSecond, lineWidth: 2 },
+  { path: quarterThird, lineWidth: 2 },
+  { path: quarterFourth, lineWidth: 2 },
+  { path: semisFirst, lineWidth: 2 },
+  { path: semisSecond, lineWidth: 2 },
+  { path: finals, lineWidth: 2 },
+  { path: connects, lineWidth: 2 },
 ];
