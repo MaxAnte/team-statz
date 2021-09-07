@@ -96,7 +96,7 @@ function Bracket() {
           <text transform="translate(1185, 230)">SEMI FINALS</text>
         </g>
         <g textAnchor="middle">
-          <text transform="translate(790, 260)">FINAL</text>
+          <text transform="translate(805, 260)">FINAL</text>
         </g>
       </g>
 
