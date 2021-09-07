@@ -12,10 +12,11 @@ import Team from "./components/Team/Team";
 import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
-import Loader from "./components/Loader/Loader";
 import Playoffs from "./components/Playoff/Playoffs";
+import AppSettings from "./components/AppSettings/AppSettings";
 import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
+import Loader from "./components/Loader/Loader";
 
 import "./i18n/config";
 
@@ -54,6 +55,7 @@ function App() {
               <Route path="/schedule" component={Schedule} />
               <Route path="/stats" component={Stats} />
               <Route path="/playoffs" component={Playoffs} />
+              <Route path="/app/settings" component={AppSettings} />
               <Route path="*" component={ErrorPage} />
             </Switch>
           </main>

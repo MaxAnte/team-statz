@@ -1,0 +1,75 @@
+.appSettings {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.section {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+.section:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 100%;
+  background-color: var(--color-soft-gray);
+}
+.warning {
+  background-color: rgba(230, 92, 92, 0.329);
+  border: 2px solid var(--color-light-gray);
+  border-radius: 20px;
+}
+.sectionTitle {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+.inputGroup {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+}
+.inputGroup input {
+  background: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0px 10px;
+  outline: none;
+  min-height: 40px;
+}
+.btn {
+  margin: 5px 0px;
+}
+.subText {
+  font-size: 16px;
+  line-height: 22px;
+  padding: 10px 0px;
+}
+.dividers {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.dividers::before {
+  content: "";
+  display: inline-block;
+  width: calc(100% - 10px);
+  height: 1px;
+  margin-right: 10px;
+  background-color: var(--color-light-gray);
+}
+.dividers::after {
+  content: "";
+  display: inline-block;
+  width: calc(100% - 10px);
+  height: 1px;
+  margin-left: 10px;
+  background-color: var(--color-light-gray);
+}
