@@ -725,6 +725,7 @@ router.post("/settings/save", [], async (req, res) => {
 
 router.post("/bracket/build", [], async (req, res) => {
   // get all teams -> take 8 best of them -> build Playoffs matchups
+  await PlayoffsMatchup.remove({});
   const teams = await Team.find({});
   teams.sort((a, b) => b.points - a.points || b.winRate - a.winRate);
   const bestA = teams.filter((t) => t.group === "A").slice(0, 4);
@@ -751,6 +752,9 @@ router.post("/bracket/build", [], async (req, res) => {
     }
   });
 
+  const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
+  settings.playoffsBracketBuilt = true;
+  await settings.save();
   res.json({ message: "Bracket has been succesefully built!" });
 });
 

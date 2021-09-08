@@ -94,7 +94,7 @@ function AppSettings() {
               className={`btn__main warning ${styles.btn}`}
               onClick={() => setPopup(true)}
             >
-              {t("Build")}
+              {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
             </button>
           </div>
         </div>
