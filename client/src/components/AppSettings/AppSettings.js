@@ -37,6 +37,15 @@ function AppSettings() {
     }
   };
 
+  const handleBuildBracket = async () => {
+    try {
+      await request("/api/bracket/build", "POST", {});
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   return (
     <div className={`page-wrapper ${styles.appSettings}`}>
       <h1 className="title">{t("Settings")}</h1>
@@ -69,7 +78,11 @@ function AppSettings() {
               <span className={styles.dividers}>{t("or")}</span>
               {t("Build the Playoffs bracket by pressing this button")}
             </p>
-            <button type="button" className={`btn__main warning ${styles.btn}`}>
+            <button
+              type="button"
+              className={`btn__main warning ${styles.btn}`}
+              onClick={() => handleBuildBracket()}
+            >
               {t("Build")}
             </button>
           </div>

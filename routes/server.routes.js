@@ -10,6 +10,7 @@ const Game = require("../models/Game");
 const Team = require("../models/Team");
 const Player = require("../models/Player");
 const Settings = require("../models/Settings");
+const PlayoffsMatchup = require("../models/PlayoffsMatchup");
 
 // ===================== AUTH ===================
 
@@ -659,12 +660,40 @@ router.post("/settings/save", [], async (req, res) => {
   res.json({ ...settings });
 });
 
-router.post("/settings/bracket/build", [], async (req, res) => {
+router.post("/bracket/build", [], async (req, res) => {
   // get all teams -> take 8 best of them -> build Playoffs matchups
-  // const settings = await Settings.find({});
-  // if (!settings)
-  //   return res.status(400).json({ message: "Cant get to settings db table" });
-  // res.json({ ...settings });
+  const teams = await Team.find({});
+  teams.sort(
+    (a, b) =>
+      b.wins * 2 + b.loses * 1 - (a.wins * 2 + a.loses * 1) ||
+      (b.wins * 100) / (b.wins + b.loses) - (a.wins * 100) / (a.wins + a.loses)
+  );
+  const bestA = teams.filter((t) => t.group === "A").slice(0, 4);
+  const bestB = teams.filter((t) => t.group === "B").slice(0, 4);
+  const playoffsTeams = bestA.concat(bestB);
+
+  bestA.forEach(async (t, index) => {
+    if (index < bestA.length / 2) {
+      const match = new PlayoffsMatchup({
+        team1: t.name,
+        team2: bestA[bestA.length - (index + 1)].name,
+        winner: "",
+      });
+      await match.save();
+    }
+  });
+  bestB.forEach(async (t, index) => {
+    if (index < bestB.length / 2) {
+      const match = new PlayoffsMatchup({
+        team1: t.name,
+        team2: bestB[bestB.length - (index + 1)].name,
+        winner: "",
+      });
+      await match.save();
+    }
+  });
+
+  res.json({ message: "Bracket has been succesefully built!" });
 });
 
 // ==================== WARNING ==================
