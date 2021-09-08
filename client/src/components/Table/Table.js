@@ -36,15 +36,16 @@ function Table() {
   }, [request, message]);
 
   const sortTableStandings = (standings) => {
-    const sortedByPoints = standings.sort((a, b) => b.points - a.points);
     const splitedByGroups = {};
-    sortedByPoints.forEach((team) => {
-      if (splitedByGroups[team.group]) {
-        splitedByGroups[team.group].push(team);
-      } else {
-        splitedByGroups[team.group] = [team];
-      }
-    });
+    standings
+      .sort((a, b) => b.points - a.points || b.winRate - a.winRate)
+      .forEach((team) => {
+        if (splitedByGroups[team.group]) {
+          splitedByGroups[team.group].push(team);
+        } else {
+          splitedByGroups[team.group] = [team];
+        }
+      });
     return Object.entries(splitedByGroups);
   };
 
