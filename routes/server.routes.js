@@ -670,7 +670,6 @@ router.post("/bracket/build", [], async (req, res) => {
   );
   const bestA = teams.filter((t) => t.group === "A").slice(0, 4);
   const bestB = teams.filter((t) => t.group === "B").slice(0, 4);
-  const playoffsTeams = bestA.concat(bestB);
 
   bestA.forEach(async (t, index) => {
     if (index < bestA.length / 2) {
