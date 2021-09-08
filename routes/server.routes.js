@@ -650,6 +650,7 @@ router.post("/settings/get", [], async (req, res) => {
     return res.status(400).json({ message: "Cant get to settings db table" });
   res.json({ ...settings });
 });
+
 router.post("/settings/save", [], async (req, res) => {
   const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
   if (!settings)
@@ -659,6 +660,8 @@ router.post("/settings/save", [], async (req, res) => {
   await settings.save();
   res.json({ ...settings });
 });
+
+// ================= PLAYOFFS ==================
 
 router.post("/bracket/build", [], async (req, res) => {
   // get all teams -> take 8 best of them -> build Playoffs matchups
@@ -693,6 +696,13 @@ router.post("/bracket/build", [], async (req, res) => {
   });
 
   res.json({ message: "Bracket has been succesefully built!" });
+});
+
+router.post("/bracket/get", [], async (req, res) => {
+  const matches = await PlayoffsMatchup.find({});
+  if (!matches)
+    return res.status(400).json({ message: "No matches in playoffs table" });
+  res.json({ ...matches });
 });
 
 // ==================== WARNING ==================

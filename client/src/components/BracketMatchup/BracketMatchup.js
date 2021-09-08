@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./bracketMatchup.module.css";
 
 function BracketMatchup({ info, scoreAlign, finals = false }) {
-  const { team1, team2, winner } = info;
+  const { team1, team2, winner } = info || "";
   return (
     <svg
       viewBox={`0 0 ${finals ? "450" : "250"} 100"`}
@@ -32,7 +32,9 @@ function BracketMatchup({ info, scoreAlign, finals = false }) {
       <g fontFamily="var(--font-main)" fontSize="18px" textAnchor="middle">
         <text
           fill={`${
-            winner === team1 ? "var(--color-button)" : "var(--color-text-main)"
+            team1 && winner === team1
+              ? "var(--color-button)"
+              : "var(--color-text-main)"
           }`}
           transform={`translate(${
             scoreAlign === "right"
@@ -42,11 +44,13 @@ function BracketMatchup({ info, scoreAlign, finals = false }) {
               : "200"
           },${finals ? "50" : "30"})`}
         >
-          {winner === team1 ? "1" : "0"}
+          {team1 && winner === team1 ? "1" : "0"}
         </text>
         <text
           fill={`${
-            winner === team2 ? "var(--color-button)" : "var(--color-text-main)"
+            team2 && winner === team2
+              ? "var(--color-button)"
+              : "var(--color-text-main)"
           }`}
           transform={`translate(${
             scoreAlign === "right"
@@ -56,13 +60,15 @@ function BracketMatchup({ info, scoreAlign, finals = false }) {
               : "250"
           },${finals ? "50" : "80"})`}
         >
-          {winner === team2 ? "1" : "0"}
+          {team2 && winner === team2 ? "1" : "0"}
         </text>
       </g>
       <g fontFamily="var(--font-main)" fontSize="18px" textAnchor="middle">
         <text
           fill={`${
-            winner === team1 ? "var(--color-button)" : "var(--color-text-main)"
+            team1 && winner === team1
+              ? "var(--color-button)"
+              : "var(--color-text-main)"
           }`}
           transform={`translate(${
             scoreAlign === "right"
@@ -76,7 +82,9 @@ function BracketMatchup({ info, scoreAlign, finals = false }) {
         </text>
         <text
           fill={`${
-            winner === team2 ? "var(--color-button)" : "var(--color-text-main)"
+            team2 && winner === team2
+              ? "var(--color-button)"
+              : "var(--color-text-main)"
           }`}
           transform={`translate(${
             scoreAlign === "right"

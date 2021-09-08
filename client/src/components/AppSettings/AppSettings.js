@@ -16,7 +16,10 @@ function AppSettings() {
       try {
         const data = await request("/api/settings/get", "POST", {});
         if (Object.keys(data).length) setForm(Object.values(data)[0]);
-      } catch (e) {}
+      } catch (e) {
+        message(e.message);
+        clearError();
+      }
     })();
   }, []);
 

@@ -1,54 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 
 import BracketMatchup from "../BracketMatchup/BracketMatchup";
 
 import styles from "./bracket.module.css";
 
 function Bracket() {
-  const [matchups, setMatchups] = useState([
-    {
-      id: 1,
-      team1: "Termits",
-      team2: "Aidar",
-      winner: "Termits",
-    },
-    {
-      id: 2,
-      team1: "Basketball City",
-      team2: "Veterans",
-      winner: "Basketball City",
-    },
-    {
-      id: 3,
-      team1: "Warriors Bros.",
-      team2: "Superslonics",
-      winner: "Warriors Bros.",
-    },
-    {
-      id: 4,
-      team1: "Avangard",
-      team2: "MSDUSHOR",
-      winner: "MSDUSHOR",
-    },
-    {
-      id: 5,
-      team1: "Termits",
-      team2: "Basketball City",
-      winner: "Basketball City",
-    },
-    {
-      id: 6,
-      team1: "Warriors Bros.",
-      team2: "MSDUSHOR",
-      winner: "Warriors Bros.",
-    },
-    {
-      id: 7,
-      team1: "Basketball City",
-      team2: "Warriors Bros.",
-      winner: "Basketball City",
-    },
-  ]);
+  const message = useMessage();
+  const { request, clearError } = useHttp();
+  const [matchups, setMatchups] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await request("/api/bracket/get", "POST", {});
+        if (Object.keys(data).length) setMatchups(Object.values(data));
+      } catch (e) {
+        message(e.message);
+        clearError();
+      }
+    })();
+  }, []);
 
   return (
     <svg viewBox="0 0 1580 660" className={styles.bracket}>
@@ -102,39 +75,35 @@ function Bracket() {
 
       <g transform="translate(120,100)">
         <g id={`aMatch-1`}>
-          <BracketMatchup info={matchups[0] || null} scoreAlign="right" />
+          <BracketMatchup info={matchups[0]} scoreAlign="right" />
         </g>
         <g id={`aMatch-2`} transform={`translate(0,350)`}>
-          <BracketMatchup info={matchups[1] || null} scoreAlign="right" />
+          <BracketMatchup info={matchups[1]} scoreAlign="right" />
         </g>
       </g>
 
       <g transform="translate(1230,100)">
         <g id={`bMatch-1`}>
-          <BracketMatchup info={matchups[2] || null} scoreAlign="left" />
+          <BracketMatchup info={matchups[2]} scoreAlign="left" />
         </g>
         <g id={`bMatch-2`} transform={`translate(0,350)`}>
-          <BracketMatchup info={matchups[3] || null} scoreAlign="left" />
+          <BracketMatchup info={matchups[3]} scoreAlign="left" />
         </g>
       </g>
 
       <g transform="translate(270,275)">
         <g id={`aSemis`}>
-          <BracketMatchup info={matchups[4] || null} scoreAlign="right" />
+          <BracketMatchup info={matchups[4]} scoreAlign="right" />
         </g>
       </g>
       <g transform="translate(1090,275)">
         <g id={`bSemis`}>
-          <BracketMatchup info={matchups[5] || null} scoreAlign="left" />
+          <BracketMatchup info={matchups[5]} scoreAlign="left" />
         </g>
       </g>
       <g transform="translate(580,275)">
         <g id={`finals`}>
-          <BracketMatchup
-            info={matchups[6] || null}
-            scoreAlign="center"
-            finals
-          />
+          <BracketMatchup info={matchups[6]} scoreAlign="center" finals />
         </g>
       </g>
     </svg>
