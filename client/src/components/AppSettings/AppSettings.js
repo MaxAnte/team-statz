@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,15 @@ function AppSettings() {
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
   const [form, setForm] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await request("/api/settings/get", "POST", {});
+        if (Object.keys(data).length) setForm(Object.values(data)[0]);
+      } catch (e) {}
+    })();
+  }, []);
 
   const handleInputChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -52,6 +61,7 @@ function AppSettings() {
               placeholder={t("When do the playoffs start?")}
               id="playoffsStart"
               onChange={handleInputChange}
+              value={form.playoffsStart}
             />
           </div>
           <div className={styles.warning}>

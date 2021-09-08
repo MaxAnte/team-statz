@@ -643,6 +643,12 @@ router.post("/team/teams", [], async (req, res) => {
 
 // ================= SETTINGS ==================
 
+router.post("/settings/get", [], async (req, res) => {
+  const settings = await Settings.find({});
+  if (!settings)
+    return res.status(400).json({ message: "Cant get to settings db table" });
+  res.json({ ...settings });
+});
 router.post("/settings/save", [], async (req, res) => {
   const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
   if (!settings)
