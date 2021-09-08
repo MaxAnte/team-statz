@@ -724,8 +724,9 @@ router.post("/settings/save", [], async (req, res) => {
 // ================= PLAYOFFS ==================
 
 router.post("/bracket/build", [], async (req, res) => {
-  // get all teams -> take 8 best of them -> build Playoffs matchups
-  await PlayoffsMatchup.remove({});
+  // clean before start -> get all teams -> take 8 best of them -> build Playoffs matchups
+  await PlayoffsMatchup.deleteMany();
+
   const teams = await Team.find({});
   teams.sort((a, b) => b.points - a.points || b.winRate - a.winRate);
   const bestA = teams.filter((t) => t.group === "A").slice(0, 4);
