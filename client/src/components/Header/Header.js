@@ -61,9 +61,11 @@ function Header() {
       <span className={styles.auth} onClick={() => toggleModal()}>
         <span>{t("Moder")}</span>
       </span>
-      {modal ? <AuthModal closeOnLogin={closeOnLogin} /> : null}
       {modal ? (
-        <div className={styles.modalBg} onClick={() => toggleModal()}></div>
+        <>
+          <AuthModal closeOnLogin={closeOnLogin} />
+          <div className={styles.modalBg} onClick={() => toggleModal()}></div>
+        </>
       ) : null}
     </header>
   );

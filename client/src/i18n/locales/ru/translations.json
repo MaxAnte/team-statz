@@ -162,5 +162,10 @@
   "General": "Основные",
   "or": "или",
   "Build the Playoffs bracket by pressing this button": "Постройте сетку Плей-офф, нажав на эту кнопку",
-  "Build": "Построить"
+  "Build": "Построить",
+  "Yes": "Да",
+  "No": "Нет",
+  "Wait a second": "Подождите немного...",
+  "Building": "Строим",
+  "Are you shure?": "Вы уверены?"
 }

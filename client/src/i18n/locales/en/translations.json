@@ -162,5 +162,10 @@
   "General": "General",
   "or": "or",
   "Build the Playoffs bracket by pressing this button": "Build the Playoffs bracket by pressing this button",
-  "Build": "Build"
+  "Build": "Build",
+  "Yes": "Yes",
+  "No": "No",
+  "Wait a second": "Wait a second...",
+  "Building": "Building",
+  "Are you shure?": "Are you shure?"
 }

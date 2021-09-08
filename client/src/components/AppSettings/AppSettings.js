@@ -3,6 +3,8 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
+import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
+
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
@@ -10,6 +12,7 @@ function AppSettings() {
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
   const [form, setForm] = useState({ playoffsStart: "" });
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -49,6 +52,11 @@ function AppSettings() {
     }
   };
 
+  const handleGetAnswer = (answer) => {
+    setPopup(false);
+    if (answer) handleBuildBracket();
+  };
+
   return (
     <div className={`page-wrapper ${styles.appSettings}`}>
       <h1 className="title">{t("Settings")}</h1>
@@ -84,7 +92,7 @@ function AppSettings() {
             <button
               type="button"
               className={`btn__main warning ${styles.btn}`}
-              onClick={() => handleBuildBracket()}
+              onClick={() => setPopup(true)}
             >
               {t("Build")}
             </button>
@@ -95,6 +103,16 @@ function AppSettings() {
           {t("Save")}
         </button>
       </form>
+      {popup ? (
+        <>
+          <ConfirmPopup
+            title={t("Are you shure?")}
+            handleGetAnswer={handleGetAnswer}
+            loadingTitle={`${t("Building")}...`}
+          />
+          <div className="dark-overlay" onClick={() => setPopup(false)}></div>
+        </>
+      ) : null}
     </div>
   );
 }
