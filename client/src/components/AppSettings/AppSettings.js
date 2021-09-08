@@ -9,7 +9,7 @@ function AppSettings() {
   const message = useMessage();
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({ playoffsStart: "" });
 
   useEffect(() => {
     (async () => {
