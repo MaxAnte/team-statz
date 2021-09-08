@@ -76,6 +76,9 @@ input[type="number"] {
 .btn__main:disabled {
   background-color: var(--color-light-gray);
 }
+.btn__main.warning {
+  background-color: var(--color-warning);
+}
 
 .errorWrap {
   position: fixed;

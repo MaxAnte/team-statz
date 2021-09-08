@@ -9,6 +9,7 @@ const DateModel = require("../models/Date");
 const Game = require("../models/Game");
 const Team = require("../models/Team");
 const Player = require("../models/Player");
+const Settings = require("../models/Settings");
 
 // ===================== AUTH ===================
 
@@ -638,6 +639,26 @@ router.post("/team/teams", [], async (req, res) => {
   const teams = await Team.find({});
   if (!teams) return res.status(400).json({ message: "Teams not found" });
   res.json({ ...teams });
+});
+
+// ================= SETTINGS ==================
+
+router.post("/settings/save", [], async (req, res) => {
+  const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
+  if (!settings)
+    return res.status(400).json({ message: "Cant get to settings db table" });
+
+  settings.playoffsStart = req.body.playoffsStart;
+  await settings.save();
+  res.json({ ...settings });
+});
+
+router.post("/settings/bracket/build", [], async (req, res) => {
+  // get all teams -> take 8 best of them -> build Playoffs matchups
+  // const settings = await Settings.find({});
+  // if (!settings)
+  //   return res.status(400).json({ message: "Cant get to settings db table" });
+  // res.json({ ...settings });
 });
 
 // ==================== WARNING ==================
