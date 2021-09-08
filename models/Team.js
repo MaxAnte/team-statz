@@ -5,6 +5,8 @@ const schema = new Schema({
   wins: { type: Number, required: true, default: 0 },
   loses: { type: Number, required: true, default: 0 },
   group: { type: String, default: "A" },
+  points: { type: Number, required: true, default: 0 },
+  winRate: { type: Number, required: true, default: 0 },
 });
 
 module.exports = model("Team", schema);

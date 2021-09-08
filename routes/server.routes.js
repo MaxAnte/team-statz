@@ -159,10 +159,24 @@ router.post("/game/complete-game", [], async (req, res) => {
     const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
     if (enemyWin) {
       enemyTeam.wins = +enemyTeam.wins + 1;
+      enemyTeam.points = +enemyTeam.points + 2;
+      enemyTeam.winRate =
+        (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
       ourTeam.loses = +ourTeam.loses + 1;
+      ourTeam.points = +ourTeam.points + 1;
+      ourTeam.winRate =
+        (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
     } else {
       enemyTeam.loses = +enemyTeam.loses + 1;
+      enemyTeam.points = +enemyTeam.points + 1;
+      enemyTeam.winRate =
+        (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
       ourTeam.wins = +ourTeam.wins + 1;
+      ourTeam.points = +ourTeam.points + 2;
+      ourTeam.winRate =
+        (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
     }
     if (!enemyTeam)
       return res.status(400).json({ message: `${enemyName} team not found` });
@@ -238,13 +252,27 @@ router.post("/game/edit-game", [], async (req, res) => {
       if (prevEnemyWin) {
         enemyTeam.wins = enemyTeam.wins - 1;
         enemyTeam.loses = enemyTeam.loses + 1;
+        enemyTeam.points = +enemyTeam.points - 1;
+        enemyTeam.winRate =
+          (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
         ourTeam.loses = ourTeam.loses - 1;
         ourTeam.wins = ourTeam.wins + 1;
+        ourTeam.points = +ourTeam.points + 1;
+        ourTeam.winRate =
+          (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
       } else {
         enemyTeam.wins = enemyTeam.wins + 1;
         enemyTeam.loses = enemyTeam.loses - 1;
+        enemyTeam.points = +enemyTeam.points + 1;
+        enemyTeam.winRate =
+          (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
         ourTeam.loses = ourTeam.loses + 1;
         ourTeam.wins = ourTeam.wins - 1;
+        ourTeam.points = +ourTeam.points - 1;
+        ourTeam.winRate =
+          (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
       }
     }
     if (!enemyTeam)
@@ -257,211 +285,229 @@ router.post("/game/edit-game", [], async (req, res) => {
     game.enemyScore = enemyScore;
     game.quarters = quarters;
 
-    playersStats.forEach(async (player, i) => {
-      const playerDB = await Player.findOne({ _id: player._id });
-      const prevPlayerDB = game.playersStats.find(
-        (p) => p._id.toString() === player._id.toString()
-      );
+    if (playersStats.length > 0) {
+      playersStats.forEach(async (player, i) => {
+        const playerDB = await Player.findOne({ _id: player._id });
+        const prevPlayerDB = game.playersStats.find(
+          (p) => p._id.toString() === player._id.toString()
+        );
 
-      if (
-        !game.playersStats.find(
-          (pl) => pl._id.toString() === player._id.toString()
-        )
-      ) {
-        console.log("Adding:", playerDB._id);
-        playerDB.gp += 1;
-      }
-
-      if (i === 0) {
-        game.playersStats.forEach(async (p) => {
-          if (
-            !playersStats.find((pl) => pl._id.toString() === p._id.toString())
-          ) {
-            console.log("Removing:", p._id);
-            const removedPlayerDB = await Player.findOne({ _id: p._id });
-            removedPlayerDB.gp -= 1;
-            removedPlayerDB.mp = +removedPlayerDB.gp
-              ? (+removedPlayerDB.mp * (+removedPlayerDB.gp + 1) -
-                  +player.minutes || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.pts = +removedPlayerDB.gp
-              ? (+removedPlayerDB.pts * (+removedPlayerDB.gp + 1) -
-                  +player.pts || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.oreb = +removedPlayerDB.gp
-              ? +removedPlayerDB.oreb - +player.oreb || 0
-              : 0;
-            removedPlayerDB.dreb = +removedPlayerDB.gp
-              ? +removedPlayerDB.dreb - +player.dreb || 0
-              : 0;
-            removedPlayerDB.reb = +removedPlayerDB.gp
-              ? (+removedPlayerDB.dreb + +removedPlayerDB.oreb) /
-                (+removedPlayerDB.gp + 1)
-              : 0;
-
-            removedPlayerDB.ast = +removedPlayerDB.gp
-              ? (+removedPlayerDB.ast * (+removedPlayerDB.gp + 1) -
-                  +player.ast || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.stl = +removedPlayerDB.gp
-              ? (+removedPlayerDB.stl * (+removedPlayerDB.gp + 1) -
-                  +player.stl || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.blk = +removedPlayerDB.gp
-              ? (+removedPlayerDB.blk * (+removedPlayerDB.gp + 1) -
-                  +player.blk || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.tov = +removedPlayerDB.gp
-              ? (+removedPlayerDB.tov * (+removedPlayerDB.gp + 1) -
-                  +player.tov || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.fouls = +removedPlayerDB.gp
-              ? (+removedPlayerDB.fouls * (+removedPlayerDB.gp + 1) -
-                  +player.fouls || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.plus_minus = +removedPlayerDB.gp
-              ? (+removedPlayerDB.plus_minus * (+removedPlayerDB.gp + 1) -
-                  +player.plus_minus || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.fta = +removedPlayerDB.gp
-              ? (+removedPlayerDB.fta * (+removedPlayerDB.gp + 1) -
-                  +player.fta || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.ftm = +removedPlayerDB.gp
-              ? (+removedPlayerDB.ftm * (+removedPlayerDB.gp + 1) -
-                  +player.ftm || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.two_pa = +removedPlayerDB.gp
-              ? (+removedPlayerDB.two_pa * (+removedPlayerDB.gp + 1) -
-                  +player.two_pa || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.two_pm = +removedPlayerDB.gp
-              ? (+removedPlayerDB.two_pm * (+removedPlayerDB.gp + 1) -
-                  +player.two_pm || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.three_pa = +removedPlayerDB.gp
-              ? (+removedPlayerDB.three_pa * (+removedPlayerDB.gp + 1) -
-                  +player.three_pa || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.three_pm = +removedPlayerDB.gp
-              ? (+removedPlayerDB.three_pm * (+removedPlayerDB.gp + 1) -
-                  +player.three_pm || 0) / +removedPlayerDB.gp
-              : 0;
-
-            removedPlayerDB.save();
-          }
-        });
-      }
-
-      if (!playerDB)
-        return res.status(400).json({ message: `${playerDB.name} not found` });
-
-      playerDB.mp =
-        (+playerDB.mp * +playerDB.gp -
-          (+prevPlayerDB?.minutes || 0) +
-          +player.minutes || 0) / +playerDB.gp;
-
-      playerDB.pts =
-        (+playerDB.pts * +playerDB.gp -
-          (+prevPlayerDB?.pts || 0) +
-          +player.pts || 0) / +playerDB.gp;
-
-      playerDB.oreb =
-        +playerDB.oreb - (+prevPlayerDB?.oreb || 0) + +player.oreb || 0;
-      playerDB.dreb =
-        +playerDB.dreb - (+prevPlayerDB?.dreb || 0) + +player.dreb || 0;
-      playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
-
-      playerDB.ast =
-        (+playerDB.ast * +playerDB.gp -
-          (+prevPlayerDB?.ast || 0) +
-          +player.ast || 0) / +playerDB.gp;
-
-      playerDB.stl =
-        (+playerDB.stl * +playerDB.gp -
-          (+prevPlayerDB?.stl || 0) +
-          +player.stl || 0) / +playerDB.gp;
-
-      playerDB.blk =
-        (+playerDB.blk * +playerDB.gp -
-          (+prevPlayerDB?.blk || 0) +
-          +player.blk || 0) / +playerDB.gp;
-
-      playerDB.tov =
-        (+playerDB.tov * +playerDB.gp -
-          (+prevPlayerDB?.tov || 0) +
-          +player.tov || 0) / +playerDB.gp;
-
-      playerDB.fouls =
-        (+playerDB.fouls * +playerDB.gp -
-          (+prevPlayerDB?.fouls || 0) +
-          +player.fouls || 0) / +playerDB.gp;
-
-      playerDB.plus_minus =
-        (+playerDB.plus_minus * +playerDB.gp -
-          (+prevPlayerDB?.plus_minus || 0) +
-          +player.plus_minus || 0) / +playerDB.gp;
-
-      playerDB.fta =
-        (+playerDB.fta * +playerDB.gp -
-          (+prevPlayerDB?.fta || 0) +
-          +player.fta || 0) / +playerDB.gp;
-
-      playerDB.ftm =
-        (+playerDB.ftm * +playerDB.gp -
-          (+prevPlayerDB?.ftm || 0) +
-          +player.ftm || 0) / +playerDB.gp;
-
-      playerDB.two_pa =
-        (+playerDB.two_pa * +playerDB.two_pa -
-          (+prevPlayerDB?.two_pa || 0) +
-          +player.two_pa || 0) / +playerDB.gp;
-
-      playerDB.two_pm =
-        (+playerDB.two_pm * +playerDB.gp -
-          (+prevPlayerDB?.two_pm || 0) +
-          +player.two_pm || 0) / +playerDB.gp;
-
-      playerDB.three_pa =
-        (+playerDB.three_pa * +playerDB.gp -
-          (+prevPlayerDB?.three_pa || 0) +
-          +player.three_pa || 0) / +playerDB.gp;
-
-      playerDB.three_pm =
-        (+playerDB.three_pm * +playerDB.gp -
-          (+prevPlayerDB?.three_pm || 0) +
-          +player.three_pm || 0) / +playerDB.gp;
-
-      playerDB.save();
-
-      if (i === playersStats.length - 1) {
-        game.playersStats = playersStats;
-        const dateDB = await DateModel.findOne({ date });
-        if (!dateDB)
-          return res.status(400).json({ message: `${dateDB} Date not found` });
-
-        if (dateDB.enemy === enemy && dateDB.time === time) {
-          dateDB.enemyScore = enemyScore;
-          dateDB.ourScore = ourScore;
+        if (
+          !game.playersStats.find(
+            (pl) => pl._id.toString() === player._id.toString()
+          )
+        ) {
+          console.log("Adding:", playerDB._id);
+          playerDB.gp += 1;
         }
-        dateDB.save();
-        await game.save();
-        res.status(201).json({ message: `${game._id} has been updated!` });
+
+        if (i === 0) {
+          game.playersStats.forEach(async (p) => {
+            if (
+              !playersStats.find((pl) => pl._id.toString() === p._id.toString())
+            ) {
+              console.log("Removing:", p._id);
+              const removedPlayerDB = await Player.findOne({ _id: p._id });
+              removedPlayerDB.gp -= 1;
+              removedPlayerDB.mp = +removedPlayerDB.gp
+                ? (+removedPlayerDB.mp * (+removedPlayerDB.gp + 1) -
+                    +player.minutes || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.pts = +removedPlayerDB.gp
+                ? (+removedPlayerDB.pts * (+removedPlayerDB.gp + 1) -
+                    +player.pts || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.oreb = +removedPlayerDB.gp
+                ? +removedPlayerDB.oreb - +player.oreb || 0
+                : 0;
+              removedPlayerDB.dreb = +removedPlayerDB.gp
+                ? +removedPlayerDB.dreb - +player.dreb || 0
+                : 0;
+              removedPlayerDB.reb = +removedPlayerDB.gp
+                ? (+removedPlayerDB.dreb + +removedPlayerDB.oreb) /
+                  (+removedPlayerDB.gp + 1)
+                : 0;
+
+              removedPlayerDB.ast = +removedPlayerDB.gp
+                ? (+removedPlayerDB.ast * (+removedPlayerDB.gp + 1) -
+                    +player.ast || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.stl = +removedPlayerDB.gp
+                ? (+removedPlayerDB.stl * (+removedPlayerDB.gp + 1) -
+                    +player.stl || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.blk = +removedPlayerDB.gp
+                ? (+removedPlayerDB.blk * (+removedPlayerDB.gp + 1) -
+                    +player.blk || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.tov = +removedPlayerDB.gp
+                ? (+removedPlayerDB.tov * (+removedPlayerDB.gp + 1) -
+                    +player.tov || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.fouls = +removedPlayerDB.gp
+                ? (+removedPlayerDB.fouls * (+removedPlayerDB.gp + 1) -
+                    +player.fouls || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.plus_minus = +removedPlayerDB.gp
+                ? (+removedPlayerDB.plus_minus * (+removedPlayerDB.gp + 1) -
+                    +player.plus_minus || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.fta = +removedPlayerDB.gp
+                ? (+removedPlayerDB.fta * (+removedPlayerDB.gp + 1) -
+                    +player.fta || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.ftm = +removedPlayerDB.gp
+                ? (+removedPlayerDB.ftm * (+removedPlayerDB.gp + 1) -
+                    +player.ftm || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.two_pa = +removedPlayerDB.gp
+                ? (+removedPlayerDB.two_pa * (+removedPlayerDB.gp + 1) -
+                    +player.two_pa || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.two_pm = +removedPlayerDB.gp
+                ? (+removedPlayerDB.two_pm * (+removedPlayerDB.gp + 1) -
+                    +player.two_pm || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.three_pa = +removedPlayerDB.gp
+                ? (+removedPlayerDB.three_pa * (+removedPlayerDB.gp + 1) -
+                    +player.three_pa || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.three_pm = +removedPlayerDB.gp
+                ? (+removedPlayerDB.three_pm * (+removedPlayerDB.gp + 1) -
+                    +player.three_pm || 0) / +removedPlayerDB.gp
+                : 0;
+
+              removedPlayerDB.save();
+            }
+          });
+        }
+
+        if (!playerDB)
+          return res
+            .status(400)
+            .json({ message: `${playerDB.name} not found` });
+
+        playerDB.mp =
+          (+playerDB.mp * +playerDB.gp -
+            (+prevPlayerDB?.minutes || 0) +
+            +player.minutes || 0) / +playerDB.gp;
+
+        playerDB.pts =
+          (+playerDB.pts * +playerDB.gp -
+            (+prevPlayerDB?.pts || 0) +
+            +player.pts || 0) / +playerDB.gp;
+
+        playerDB.oreb =
+          +playerDB.oreb - (+prevPlayerDB?.oreb || 0) + +player.oreb || 0;
+        playerDB.dreb =
+          +playerDB.dreb - (+prevPlayerDB?.dreb || 0) + +player.dreb || 0;
+        playerDB.reb = (+playerDB.dreb + +playerDB.oreb) / +playerDB.gp;
+
+        playerDB.ast =
+          (+playerDB.ast * +playerDB.gp -
+            (+prevPlayerDB?.ast || 0) +
+            +player.ast || 0) / +playerDB.gp;
+
+        playerDB.stl =
+          (+playerDB.stl * +playerDB.gp -
+            (+prevPlayerDB?.stl || 0) +
+            +player.stl || 0) / +playerDB.gp;
+
+        playerDB.blk =
+          (+playerDB.blk * +playerDB.gp -
+            (+prevPlayerDB?.blk || 0) +
+            +player.blk || 0) / +playerDB.gp;
+
+        playerDB.tov =
+          (+playerDB.tov * +playerDB.gp -
+            (+prevPlayerDB?.tov || 0) +
+            +player.tov || 0) / +playerDB.gp;
+
+        playerDB.fouls =
+          (+playerDB.fouls * +playerDB.gp -
+            (+prevPlayerDB?.fouls || 0) +
+            +player.fouls || 0) / +playerDB.gp;
+
+        playerDB.plus_minus =
+          (+playerDB.plus_minus * +playerDB.gp -
+            (+prevPlayerDB?.plus_minus || 0) +
+            +player.plus_minus || 0) / +playerDB.gp;
+
+        playerDB.fta =
+          (+playerDB.fta * +playerDB.gp -
+            (+prevPlayerDB?.fta || 0) +
+            +player.fta || 0) / +playerDB.gp;
+
+        playerDB.ftm =
+          (+playerDB.ftm * +playerDB.gp -
+            (+prevPlayerDB?.ftm || 0) +
+            +player.ftm || 0) / +playerDB.gp;
+
+        playerDB.two_pa =
+          (+playerDB.two_pa * +playerDB.two_pa -
+            (+prevPlayerDB?.two_pa || 0) +
+            +player.two_pa || 0) / +playerDB.gp;
+
+        playerDB.two_pm =
+          (+playerDB.two_pm * +playerDB.gp -
+            (+prevPlayerDB?.two_pm || 0) +
+            +player.two_pm || 0) / +playerDB.gp;
+
+        playerDB.three_pa =
+          (+playerDB.three_pa * +playerDB.gp -
+            (+prevPlayerDB?.three_pa || 0) +
+            +player.three_pa || 0) / +playerDB.gp;
+
+        playerDB.three_pm =
+          (+playerDB.three_pm * +playerDB.gp -
+            (+prevPlayerDB?.three_pm || 0) +
+            +player.three_pm || 0) / +playerDB.gp;
+
+        playerDB.save();
+
+        if (i === playersStats.length - 1) {
+          game.playersStats = playersStats;
+          const dateDB = await DateModel.findOne({ date });
+          if (!dateDB)
+            return res
+              .status(400)
+              .json({ message: `${dateDB} Date not found` });
+
+          if (dateDB.enemy === enemy && dateDB.time === time) {
+            dateDB.enemyScore = enemyScore;
+            dateDB.ourScore = ourScore;
+          }
+          dateDB.save();
+          await game.save();
+          res.status(201).json({ message: `${game._id} has been updated!` });
+        }
+      });
+    } else {
+      const dateDB = await DateModel.findOne({ date });
+      if (!dateDB)
+        return res.status(400).json({ message: `${dateDB} Date not found` });
+
+      if (dateDB.enemy === enemy && dateDB.time === time) {
+        dateDB.enemyScore = enemyScore;
+        dateDB.ourScore = ourScore;
       }
-    });
+      dateDB.save();
+      await game.save();
+      res.status(201).json({ message: `${game._id} has been updated!` });
+    }
   } catch (e) {
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
@@ -481,10 +527,24 @@ router.post("/game/delete-game", [], async (req, res) => {
     if (game.ourScore !== 0 && game.enemyScore !== 0) {
       if (enemyWin) {
         enemyTeam.wins = enemyTeam.wins - 1;
+        enemyTeam.points = +enemyTeam.points - 2;
+        enemyTeam.winRate =
+          (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
         ourTeam.loses = ourTeam.loses - 1;
+        ourTeam.points = +ourTeam.points - 1;
+        ourTeam.winRate =
+          (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
       } else {
         enemyTeam.loses = enemyTeam.loses - 1;
+        enemyTeam.points = +enemyTeam.points - 1;
+        enemyTeam.winRate =
+          (+enemyTeam.wins * 100) / (+enemyTeam.wins + +enemyTeam.loses);
+
         ourTeam.wins = ourTeam.wins - 1;
+        ourTeam.points = +ourTeam.points - 2;
+        ourTeam.winRate =
+          (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
       }
       if (!enemyTeam)
         return res.status(400).json({ message: `${enemyName} team not found` });
@@ -666,11 +726,7 @@ router.post("/settings/save", [], async (req, res) => {
 router.post("/bracket/build", [], async (req, res) => {
   // get all teams -> take 8 best of them -> build Playoffs matchups
   const teams = await Team.find({});
-  teams.sort(
-    (a, b) =>
-      b.wins * 2 + b.loses * 1 - (a.wins * 2 + a.loses * 1) ||
-      (b.wins * 100) / (b.wins + b.loses) - (a.wins * 100) / (a.wins + a.loses)
-  );
+  teams.sort((a, b) => b.points - a.points || b.winRate - a.winRate);
   const bestA = teams.filter((t) => t.group === "A").slice(0, 4);
   const bestB = teams.filter((t) => t.group === "B").slice(0, 4);
 

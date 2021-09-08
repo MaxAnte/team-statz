@@ -22,13 +22,8 @@ function Table() {
     (async () => {
       try {
         const data = await request("/api/team/teams", "POST", {});
-        if (Object.keys(data).length) {
-          Object.values(data).forEach((el) => {
-            el.winRate = (el.wins * 100) / (el.wins + el.loses);
-            el.points = el.wins * 2 + el.loses * 1;
-          });
+        if (Object.keys(data).length)
           setTable(sortTableStandings(Object.values(data)));
-        }
       } catch (e) {
         message(e.message || "Failed to get Table info");
       }
