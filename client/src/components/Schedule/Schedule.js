@@ -160,8 +160,14 @@ function Schedule() {
   const handleChangeDates = (newDate) =>
     setDates((prevDates) => [...prevDates, newDate]);
 
-  const handleMouseScroll = () => {
-    console.log(enableCalendarScrollMode);
+  const handleMouseScroll = (e) => {
+    if (enableCalendarScrollMode) {
+      if (e.deltaY > 0) {
+        updateCalendar({ target: { id: "next" } });
+      } else {
+        updateCalendar({ target: { id: "prev" } });
+      }
+    }
   };
 
   return (
