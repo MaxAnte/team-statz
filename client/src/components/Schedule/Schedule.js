@@ -4,7 +4,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import { AuthContext } from "../../context/AuthContext";
+import { SessionContext } from "../../context/session.provider";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
@@ -14,9 +14,9 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import styles from "./schedule.module.css";
 
 function Schedule() {
+  const { isAuthenticated } = useContext(SessionContext);
   const [dates, setDates] = useState([]);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
-  const { isAuthenticated } = useContext(AuthContext);
   const { request, error, clearError } = useHttp();
   const message = useMessage();
   const { t } = useTranslation();
@@ -161,7 +161,10 @@ function Schedule() {
   return (
     <div className={`${styles.schedule} page-wrapper`}>
       <h1 className="title">{t("Schedule")}</h1>
-      <div className={styles.calendarMonth}>
+      <div
+        className={styles.calendarMonth}
+        onWheel={(deltaMode) => console.log(deltaMode)}
+      >
         <section className={styles.calendarMonthHeader}>
           <div
             id="selected-month"

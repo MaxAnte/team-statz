@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { SessionContext } from "../../context/session.provider";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./authModal.module.css";
 
 function AuthModal({ closeOnLogin }) {
-  const auth = useContext(AuthContext);
+  const { login } = useContext(SessionContext);
   const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({ login: "", password: "" });
@@ -25,7 +25,7 @@ function AuthModal({ closeOnLogin }) {
   const loginHandler = async () => {
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
-      auth.login(data.token, data.userId);
+      login(data.token, data.userId);
       closeOnLogin();
     } catch (e) {}
   };

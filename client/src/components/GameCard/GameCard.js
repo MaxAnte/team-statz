@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
-import { AuthContext } from "../../context/AuthContext";
+import { SessionContext } from "../../context/session.provider";
 import { useTranslation } from "react-i18next";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -16,10 +16,10 @@ import RemoveIcon from "../../assets/icons/RemoveIcon";
 import styles from "./gameCard.module.css";
 
 function GameCard({ game, handleChangeGames }) {
+  const { isAuthenticated } = useContext(SessionContext);
   const [editMode, setEditMode] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
-  const { isAuthenticated } = useContext(AuthContext);
   const { t } = useTranslation();
   const message = useMessage();
   const { request, clearError } = useHttp();
