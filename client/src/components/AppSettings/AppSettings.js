@@ -33,7 +33,7 @@ function AppSettings() {
     e.preventDefault();
     try {
       if (
-        form.playoffsStart !== settings.playoffsStart ||
+        form.playoffsStart === settings.playoffsStart ||
         /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)
       ) {
         await request("/api/settings/save", "POST", { ...form });
