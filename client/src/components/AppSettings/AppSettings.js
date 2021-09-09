@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/app.provider";
 
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
 
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
+  const { playoffsStart, playoffsBracketBuilt } = useContext(AppContext);
+  const [form, setForm] = useState({ playoffsStart: "" });
+  const [popup, setPopup] = useState(false);
   const message = useMessage();
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
-  const [form, setForm] = useState({ playoffsStart: "" });
-  const [popup, setPopup] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/settings/get", "POST", {});
-        if (Object.keys(data).length) setForm(Object.values(data)[0]);
-      } catch (e) {
-        message(e.message);
-        clearError();
-      }
-    })();
-  }, []);
 
   const handleInputChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -78,7 +69,7 @@ function AppSettings() {
             <label htmlFor="playoffsStart">{t("Playoffs start")}:</label>
             <input
               type="text"
-              placeholder={t("When do the playoffs start?")}
+              placeholder={playoffsStart || t("When do the playoffs start?")}
               id="playoffsStart"
               onChange={handleInputChange}
               value={form.playoffsStart}
@@ -94,7 +85,7 @@ function AppSettings() {
               className={`btn__main warning ${styles.btn}`}
               onClick={() => setPopup(true)}
             >
-              {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
+              {playoffsBracketBuilt ? t("Rebuild") : t("Build")}
             </button>
           </div>
         </div>
