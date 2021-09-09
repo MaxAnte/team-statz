@@ -162,11 +162,9 @@ function Schedule() {
 
   const handleMouseScroll = (e) => {
     if (enableCalendarScrollMode) {
-      if (e.deltaY > 0) {
-        updateCalendar({ target: { id: "next" } });
-      } else {
-        updateCalendar({ target: { id: "prev" } });
-      }
+      e.deltaY > 0
+        ? updateCalendar({ target: { id: "next" } })
+        : updateCalendar({ target: { id: "prev" } });
     }
   };
 
