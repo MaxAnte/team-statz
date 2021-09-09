@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 export const useMessage = () => {
-  return useCallback((text) => {
+  return useCallback((text, type = "") => {
     if (text) {
       const wrapper = document.createElement("div");
       wrapper.className = "errorWrap";
@@ -10,6 +10,7 @@ export const useMessage = () => {
       const element = document.getElementById("root");
       element.appendChild(wrapper);
       const errorEl = document.querySelector(".errorWrap");
+      if (type === "success") errorEl.classList.add("successType");
       setTimeout(() => {
         errorEl.classList.add("fadeIn");
       }, 100);

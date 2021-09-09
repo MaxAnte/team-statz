@@ -37,6 +37,7 @@ function AppSettings() {
         /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)
       ) {
         await request("/api/settings/save", "POST", { ...form });
+        message("Settings saved!", "success");
       } else {
         throw new Error("Wrong date format");
       }
