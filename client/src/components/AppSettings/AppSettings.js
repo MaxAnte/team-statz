@@ -33,8 +33,10 @@ function AppSettings() {
     e.preventDefault();
     try {
       if (
-        form.playoffsStart === settings.playoffsStart ||
-        /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)
+        /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart) &&
+        form.playoffsStart.split("-")[0].length <= 4 &&
+        +form.playoffsStart.split("-")[1] <= 12 &&
+        +form.playoffsStart.split("-")[2] <= 31
       ) {
         await request("/api/settings/save", "POST", { ...form });
         message("Settings saved!", "success");
@@ -102,6 +104,7 @@ function AppSettings() {
               id="playoffsStart"
               onChange={handleTextInputChange}
               value={form.playoffsStart}
+              maxLength={10}
             />
           </div>
           <div className={styles.warning}>
