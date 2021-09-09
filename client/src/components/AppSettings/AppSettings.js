@@ -3,13 +3,16 @@ import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
 
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
   const { playoffsStart, playoffsBracketBuilt } = useContext(AppContext);
+  const { isAuthenticated } = useContext(SessionContext);
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
   const message = useMessage();
@@ -48,6 +51,7 @@ function AppSettings() {
     if (answer) handleBuildBracket();
   };
 
+  if (!isAuthenticated) return <ErrorPage />;
   return (
     <div className={`page-wrapper ${styles.appSettings}`}>
       <h1 className="title">{t("Settings")}</h1>
