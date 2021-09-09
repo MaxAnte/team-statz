@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,8 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
-  const { playoffsStart, playoffsBracketBuilt } = useContext(AppContext);
+  const { playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode } =
+    useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
@@ -19,14 +20,23 @@ function AppSettings() {
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
 
-  const handleInputChange = (e) => {
+  useEffect(() => {
+    setForm({ playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode });
+  }, [playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode]);
+
+  const handleTextInputChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-  };
+
+  const handleCheckboxInputChange = (e) =>
+    setForm((prev) => ({ ...prev, [e.target.id]: !!e.target.checked }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (/[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)) {
+      if (
+        form.playoffsStart !== playoffsStart ||
+        /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)
+      ) {
         await request("/api/settings/save", "POST", { ...form });
       } else {
         throw new Error("Wrong date format");
@@ -59,12 +69,26 @@ function AppSettings() {
         <div className={styles.section}>
           <h5 className={styles.sectionTitle}>{t("General")}</h5>
           <div className={styles.inputGroup}>
-            <label htmlFor="dummy1">Dummy:</label>
-            <input type="text" placeholder="dummy" id="dummy1" />
+            <label htmlFor="enableCalendarScrollMode">
+              Calendar change month on mouse scroll:
+            </label>
+            <input
+              type="checkbox"
+              className={styles.inputCheckbox}
+              id="enableCalendarScrollMode"
+              name="enableCalendarScrollMode"
+              onChange={handleCheckboxInputChange}
+              checked={form.enableCalendarScrollMode}
+            />
           </div>
           <div className={styles.inputGroup}>
             <label htmlFor="dummy2">Dummy:</label>
-            <input type="text" placeholder="dummy" id="dummy2" />
+            <input
+              type="text"
+              className={styles.inputText}
+              placeholder="dummy"
+              id="dummy2"
+            />
           </div>
         </div>
         <div className={styles.section}>
@@ -73,9 +97,10 @@ function AppSettings() {
             <label htmlFor="playoffsStart">{t("Playoffs start")}:</label>
             <input
               type="text"
-              placeholder={playoffsStart || t("When do the playoffs start?")}
+              className={styles.inputText}
+              placeholder={t("When do the playoffs start?")}
               id="playoffsStart"
-              onChange={handleInputChange}
+              onChange={handleTextInputChange}
               value={form.playoffsStart}
             />
           </div>
@@ -89,7 +114,7 @@ function AppSettings() {
               className={`btn__main warning ${styles.btn}`}
               onClick={() => setPopup(true)}
             >
-              {playoffsBracketBuilt ? t("Rebuild") : t("Build")}
+              {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
             </button>
           </div>
         </div>

@@ -30,7 +30,8 @@ body {
 .text-center {
   text-align: center;
 }
-input {
+input[type="text"],
+input[type="number"] {
   -webkit-appearance: none;
 }
 main {

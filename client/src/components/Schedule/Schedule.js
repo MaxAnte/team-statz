@@ -5,6 +5,7 @@ import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../context/app.provider";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
@@ -15,6 +16,7 @@ import styles from "./schedule.module.css";
 
 function Schedule() {
   const { isAuthenticated } = useContext(SessionContext);
+  const { enableCalendarScrollMode } = useContext(AppContext);
   const [dates, setDates] = useState([]);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { request, error, clearError } = useHttp();
@@ -158,13 +160,14 @@ function Schedule() {
   const handleChangeDates = (newDate) =>
     setDates((prevDates) => [...prevDates, newDate]);
 
+  const handleMouseScroll = () => {
+    console.log(enableCalendarScrollMode);
+  };
+
   return (
     <div className={`${styles.schedule} page-wrapper`}>
       <h1 className="title">{t("Schedule")}</h1>
-      <div
-        className={styles.calendarMonth}
-        onWheel={(deltaMode) => console.log(deltaMode)}
-      >
+      <div className={styles.calendarMonth} onWheel={handleMouseScroll}>
         <section className={styles.calendarMonthHeader}>
           <div
             id="selected-month"

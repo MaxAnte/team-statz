@@ -717,6 +717,7 @@ router.post("/settings/save", [], async (req, res) => {
     return res.status(400).json({ message: "Cant get to settings db table" });
 
   settings.playoffsStart = req.body.playoffsStart;
+  settings.enableCalendarScrollMode = req.body.enableCalendarScrollMode;
   await settings.save();
   res.json({ ...settings });
 });
