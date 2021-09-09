@@ -16,7 +16,9 @@ import styles from "./schedule.module.css";
 
 function Schedule() {
   const { isAuthenticated } = useContext(SessionContext);
-  const { enableCalendarScrollMode } = useContext(AppContext);
+  const {
+    settings: { enableCalendarScrollMode },
+  } = useContext(AppContext);
   const [dates, setDates] = useState([]);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
   const { request, error, clearError } = useHttp();

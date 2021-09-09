@@ -11,8 +11,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
-  const { playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode } =
-    useContext(AppContext);
+  const { settings } = useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
@@ -21,8 +20,8 @@ function AppSettings() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setForm({ playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode });
-  }, [playoffsStart, playoffsBracketBuilt, enableCalendarScrollMode]);
+    setForm({ ...settings });
+  }, [settings]);
 
   const handleTextInputChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -34,7 +33,7 @@ function AppSettings() {
     e.preventDefault();
     try {
       if (
-        form.playoffsStart !== playoffsStart ||
+        form.playoffsStart !== settings.playoffsStart ||
         /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart)
       ) {
         await request("/api/settings/save", "POST", { ...form });

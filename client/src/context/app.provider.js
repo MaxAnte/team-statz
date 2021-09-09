@@ -7,13 +7,20 @@ export const AppContext = createContext(undefined);
 export const AppProvider = ({ children }) => {
   const message = useMessage();
   const { request, clearError } = useHttp();
-  const [settings, setSettings] = useState({});
+  const [appState, setAppState] = useState({
+    settings: {},
+    teams: [],
+    players: [],
+    games: [],
+    dates: [],
+    playoffsmatchups: [],
+  });
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await request("/api/settings/get", "POST", {});
-        if (Object.keys(data).length) setSettings(Object.values(data)[0]);
+        const response = await request("/api/settings/get", "POST", {});
+        setAppState({ ...appState, settings: Object.values(response)[0] });
       } catch (e) {
         message(e.message);
         clearError();
@@ -21,5 +28,5 @@ export const AppProvider = ({ children }) => {
     })();
   }, [request, message, clearError]);
 
-  return <AppContext.Provider value={settings}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
 };
