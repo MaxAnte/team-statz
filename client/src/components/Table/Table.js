@@ -55,9 +55,11 @@ function Table() {
                 return (
                   <div
                     className={`${styles.tableRow} ${
-                      playoffsBracketBuilt && i <= 3
-                        ? styles.clinched
-                        : styles.eliminated
+                      playoffsBracketBuilt
+                        ? i <= 3
+                          ? styles.clinched
+                          : styles.eliminated
+                        : ""
                     }`}
                     key={`tableRow${i}`}
                   >
