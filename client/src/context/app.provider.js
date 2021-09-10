@@ -158,6 +158,15 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const buildPlayoffsBracket = async () => {
+    try {
+      await request("/api/bracket/build", "POST", {});
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const clearPlayoffsBracket = async () => {
     try {
       await request("/api/bracket/clear", "POST", {});
@@ -185,6 +194,7 @@ export const AppProvider = ({ children }) => {
     getGames: getGames,
     getDates: getDates,
     getPlayoffsMatchups: getPlayoffsMatchups,
+    buildPlayoffsBracket: buildPlayoffsBracket,
     clearPlayoffsBracket: clearPlayoffsBracket,
     loading: false,
   });

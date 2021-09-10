@@ -6,13 +6,19 @@ import { AppContext } from "../../context/app.provider";
 import { SessionContext } from "../../context/session.provider";
 
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
+import BlockLoader from "../Loader/BlockLoader";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
-  const { settings, getSettings, clearPlayoffsBracket } =
-    useContext(AppContext);
+  const {
+    settings,
+    getSettings,
+    buildPlayoffsBracket,
+    clearPlayoffsBracket,
+    loading,
+  } = useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
@@ -49,19 +55,10 @@ function AppSettings() {
     }
   };
 
-  const handleBuildBracket = async () => {
-    try {
-      await request("/api/bracket/build", "POST", {});
-    } catch (e) {
-      message(e.message);
-      clearError();
-    }
-  };
-
   const handleGetAnswer = (answer) => {
     setPopup(false);
     if (answer) {
-      handleBuildBracket();
+      buildPlayoffsBracket();
       setForm((prev) => ({ ...prev, playoffsBracketBuilt: true }));
     }
   };
@@ -70,78 +67,82 @@ function AppSettings() {
   return (
     <div className={`page-wrapper ${styles.appSettings}`}>
       <h1 className="title">{t("Settings")}</h1>
-      <form className={styles.settingsForm} onSubmit={handleSubmit}>
-        <div className={styles.section}>
-          <h5 className={styles.sectionTitle}>{t("General")}</h5>
-          <div className={styles.inputGroup}>
-            <label htmlFor="enableCalendarScrollMode">
-              Calendar change month on mouse scroll:
-            </label>
-            <input
-              type="checkbox"
-              className={styles.inputCheckbox}
-              id="enableCalendarScrollMode"
-              name="enableCalendarScrollMode"
-              onChange={handleCheckboxInputChange}
-              checked={form.enableCalendarScrollMode}
-            />
+      {loading ? (
+        <BlockLoader />
+      ) : (
+        <form className={styles.settingsForm} onSubmit={handleSubmit}>
+          <div className={styles.section}>
+            <h5 className={styles.sectionTitle}>{t("General")}</h5>
+            <div className={styles.inputGroup}>
+              <label htmlFor="enableCalendarScrollMode">
+                Calendar change month on mouse scroll:
+              </label>
+              <input
+                type="checkbox"
+                className={styles.inputCheckbox}
+                id="enableCalendarScrollMode"
+                name="enableCalendarScrollMode"
+                onChange={handleCheckboxInputChange}
+                checked={form.enableCalendarScrollMode}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <label htmlFor="dummy2">Dummy:</label>
+              <input
+                type="text"
+                className={styles.inputText}
+                placeholder="dummy"
+                id="dummy2"
+              />
+            </div>
           </div>
-          <div className={styles.inputGroup}>
-            <label htmlFor="dummy2">Dummy:</label>
-            <input
-              type="text"
-              className={styles.inputText}
-              placeholder="dummy"
-              id="dummy2"
-            />
+          <div className={styles.section}>
+            <h5 className={styles.sectionTitle}>{t("Playoffs")}</h5>
+            <div className={styles.inputGroup}>
+              <label htmlFor="playoffsStart">{t("Playoffs start")}:</label>
+              <input
+                type="text"
+                className={styles.inputText}
+                placeholder={t("When do the playoffs start?")}
+                id="playoffsStart"
+                onChange={handleTextInputChange}
+                value={form.playoffsStart}
+                maxLength={10}
+              />
+            </div>
+            <div className={styles.warning}>
+              <p className={styles.subText}>
+                <span className={styles.dividers}>{t("or")}</span>
+                {t("Build the Playoffs bracket by pressing this button")}.{" "}
+                {t(
+                  "Be careful, because it will make changes in the standings table too"
+                )}
+              </p>
+              <button
+                type="button"
+                className={`btn__main warning ${styles.btn}`}
+                onClick={() => setPopup(true)}
+              >
+                {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
+              </button>
+              <p
+                className={styles.littleText}
+                onClick={() => {
+                  clearPlayoffsBracket();
+                  setForm((prev) => ({ ...prev, playoffsBracketBuilt: false }));
+                  message("Playoff bracket cleared!", "success");
+                }}
+              >
+                {t("Clear playoffs")}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className={styles.section}>
-          <h5 className={styles.sectionTitle}>{t("Playoffs")}</h5>
-          <div className={styles.inputGroup}>
-            <label htmlFor="playoffsStart">{t("Playoffs start")}:</label>
-            <input
-              type="text"
-              className={styles.inputText}
-              placeholder={t("When do the playoffs start?")}
-              id="playoffsStart"
-              onChange={handleTextInputChange}
-              value={form.playoffsStart}
-              maxLength={10}
-            />
-          </div>
-          <div className={styles.warning}>
-            <p className={styles.subText}>
-              <span className={styles.dividers}>{t("or")}</span>
-              {t("Build the Playoffs bracket by pressing this button")}.{" "}
-              {t(
-                "Be careful, because it will make changes in the standings table too"
-              )}
-            </p>
-            <button
-              type="button"
-              className={`btn__main warning ${styles.btn}`}
-              onClick={() => setPopup(true)}
-            >
-              {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
-            </button>
-            <p
-              className={styles.littleText}
-              onClick={() => {
-                clearPlayoffsBracket();
-                setForm((prev) => ({ ...prev, playoffsBracketBuilt: false }));
-                message("Playoff bracket cleared!", "success");
-              }}
-            >
-              {t("Clear playoffs")}
-            </p>
-          </div>
-        </div>
 
-        <button type="submit" className={`btn__main ${styles.btn}`}>
-          {t("Save")}
-        </button>
-      </form>
+          <button type="submit" className={`btn__main ${styles.btn}`}>
+            {t("Save")}
+          </button>
+        </form>
+      )}
       {popup ? (
         <>
           <ConfirmPopup
