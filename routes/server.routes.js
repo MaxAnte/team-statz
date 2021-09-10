@@ -767,6 +767,14 @@ router.post("/bracket/get", [], async (req, res) => {
   res.json({ ...matches });
 });
 
+router.post("/bracket/clear", [], async (req, res) => {
+  const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
+  settings.playoffsBracketBuilt = false;
+  await PlayoffsMatchup.deleteMany();
+  settings.save();
+  res.json("Playoffs bracket has been cleared!");
+});
+
 // ==================== WARNING ==================
 //DO NOT UNCOMMENT THIS IF YOU DONT WANT TO BREAK EVERYTHNIG
 // CLEAN ALL PLAYERS STATS

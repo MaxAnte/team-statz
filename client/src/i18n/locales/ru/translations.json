@@ -162,6 +162,8 @@
   "General": "Основные",
   "or": "или",
   "Build the Playoffs bracket by pressing this button": "Постройте сетку Плей-офф, нажав на эту кнопку",
+  "Be careful, because it will make changes in the standings table too": "Будьте осторожны, это приведёт к некоторым изменениям на турнирной таблице",
+  "Clear playoffs": "Очистить плей-офф",
   "Build": "Построить",
   "Rebuild": "Перестроить",
   "Yes": "Да",

@@ -92,3 +92,11 @@
   margin-right: 15px;
   background-color: var(--color-light-gray);
 }
+.littleText {
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.littleText:hover {
+  text-decoration: none;
+}

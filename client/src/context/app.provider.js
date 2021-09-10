@@ -158,6 +158,19 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const clearPlayoffsBracket = async () => {
+    try {
+      await request("/api/bracket/clear", "POST", {});
+      setAppState((prevAppState) => ({
+        ...prevAppState,
+        playoffsmatchups: [],
+      }));
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const [appState, setAppState] = useState({
     settings: {},
     teams: [],
@@ -172,6 +185,7 @@ export const AppProvider = ({ children }) => {
     getGames: getGames,
     getDates: getDates,
     getPlayoffsMatchups: getPlayoffsMatchups,
+    clearPlayoffsBracket: clearPlayoffsBracket,
     loading: false,
   });
 

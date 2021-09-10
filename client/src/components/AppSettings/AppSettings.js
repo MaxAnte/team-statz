@@ -11,7 +11,8 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import styles from "./appSettings.module.css";
 
 function AppSettings() {
-  const { settings } = useContext(AppContext);
+  const { settings, getSettings, clearPlayoffsBracket } =
+    useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
@@ -19,9 +20,8 @@ function AppSettings() {
   const { request, clearError } = useHttp();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    setForm({ ...settings });
-  }, [settings]);
+  useEffect(() => getSettings(), []);
+  useEffect(() => setForm({ ...settings }), [settings]);
 
   const handleTextInputChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -60,7 +60,10 @@ function AppSettings() {
 
   const handleGetAnswer = (answer) => {
     setPopup(false);
-    if (answer) handleBuildBracket();
+    if (answer) {
+      handleBuildBracket();
+      setForm((prev) => ({ ...prev, playoffsBracketBuilt: true }));
+    }
   };
 
   if (!isAuthenticated) return <ErrorPage />;
@@ -110,7 +113,10 @@ function AppSettings() {
           <div className={styles.warning}>
             <p className={styles.subText}>
               <span className={styles.dividers}>{t("or")}</span>
-              {t("Build the Playoffs bracket by pressing this button")}
+              {t("Build the Playoffs bracket by pressing this button")}.{" "}
+              {t(
+                "Be careful, because it will make changes in the standings table too"
+              )}
             </p>
             <button
               type="button"
@@ -119,6 +125,16 @@ function AppSettings() {
             >
               {form.playoffsBracketBuilt ? t("Rebuild") : t("Build")}
             </button>
+            <p
+              className={styles.littleText}
+              onClick={() => {
+                clearPlayoffsBracket();
+                setForm((prev) => ({ ...prev, playoffsBracketBuilt: false }));
+                message("Playoff bracket cleared!", "success");
+              }}
+            >
+              {t("Clear playoffs")}
+            </p>
           </div>
         </div>
 

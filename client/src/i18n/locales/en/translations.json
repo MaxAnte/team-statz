@@ -162,6 +162,8 @@
   "General": "General",
   "or": "or",
   "Build the Playoffs bracket by pressing this button": "Build the Playoffs bracket by pressing this button",
+  "Be careful, because it will make changes in the standings table too": "Be careful, because it will make changes in the standings table too",
+  "Clear playoffs": "Clear playoffs",
   "Build": "Build",
   "Rebuild": "Rebuild",
   "Yes": "Yes",
