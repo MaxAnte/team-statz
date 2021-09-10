@@ -104,7 +104,7 @@ router.post("/date/add-date", [], async (req, res) => {
   }
 });
 
-// /api/date/games
+// /api/date/dates
 router.post("/date/dates", async (req, res) => {
   try {
     const errors = validationResult(req);
