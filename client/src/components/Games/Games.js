@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/app.provider";
 
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";
@@ -12,27 +11,13 @@ import Select from "../Select/select";
 import styles from "./games.module.css";
 
 function Games() {
-  const [games, setGames] = useState([]);
+  const { getGames, games, loading } = useContext(AppContext);
   const [sortedGames, setSortedGames] = useState(games);
   const [sort, setSort] = useState("All");
-  const { loading, request, error, clearError } = useHttp();
   const { pathname, hash } = useLocation();
-  const message = useMessage();
   const { t } = useTranslation();
 
-  const getGames = useCallback(async () => {
-    try {
-      const data = await request("/api/game/games", "POST", {});
-      if (Object.keys(data).length) setGames(data);
-    } catch (e) {}
-  }, [request]);
-
-  useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
-
-  useEffect(() => getGames(), [getGames]);
+  useEffect(() => getGames(), []);
 
   useEffect(() => {
     if (hash === "") {
@@ -59,8 +44,6 @@ function Games() {
   }, [sort, games]);
 
   const handleGetActive = useCallback((option) => setSort(option), []);
-  const handleChangeGames = (gameID) =>
-    setGames(games.filter((game) => game._id !== gameID));
 
   return (
     <div className="games page-wrapper">
@@ -84,7 +67,7 @@ function Games() {
             .map((game, id) => {
               return (
                 <div className={styles.gamesItem} key={id} id={game.date}>
-                  <GameCard game={game} handleChangeGames={handleChangeGames} />
+                  <GameCard game={game} />
                 </div>
               );
             })
