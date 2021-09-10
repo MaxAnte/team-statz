@@ -269,17 +269,19 @@
   }
   .auth {
     padding: 0px 5px;
-    margin-left: 3px;
   }
   .userPanel {
     top: -5px;
     padding: 50px 15px 10px;
   }
   .navList ul li {
-    padding: 0px 8px;
+    padding: 0px 5px;
+  }
+  .navList ul li a > svg {
+    width: 30px;
   }
   .languageSwitcher {
-    padding: 5px;
+    padding: 3px;
   }
   .auth::before,
   .navList ul li a::before {
