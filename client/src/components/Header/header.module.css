@@ -268,8 +268,12 @@
     height: 18px;
   }
   .auth {
-    padding: 0px;
-    margin-left: 8px;
+    padding: 0px 5px;
+    margin-left: 3px;
+  }
+  .userPanel {
+    top: -5px;
+    padding: 50px 15px 10px;
   }
   .navList ul li {
     padding: 0px 8px;
