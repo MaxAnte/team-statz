@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
 
@@ -7,6 +7,8 @@ export const AppContext = createContext(undefined);
 export const AppProvider = ({ children }) => {
   const message = useMessage();
   const { request, clearError } = useHttp();
+
+  useEffect(() => getSettings(), []);
 
   const getSettings = async () => {
     setAppState((prevAppState) => ({
@@ -21,6 +23,20 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return response;
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
+  const saveSettings = async (body) => {
+    try {
+      await request("/api/settings/save", "POST", { ...body });
+      setAppState((prevAppState) => ({
+        ...prevAppState,
+        settings: body,
+      }));
+      message("Settings saved!", "success");
     } catch (e) {
       message(e.message);
       clearError();
@@ -188,7 +204,8 @@ export const AppProvider = ({ children }) => {
     dates: [],
     playoffsmatchups: [],
 
-    getSettings: getSettings,
+    // getSettings: getSettings,
+    saveSettings: saveSettings,
     getTeams: getTeams,
     getPlayers: getPlayers,
     getGames: getGames,

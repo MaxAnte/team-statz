@@ -14,7 +14,7 @@ import styles from "./appSettings.module.css";
 function AppSettings() {
   const {
     settings,
-    getSettings,
+    saveSettings,
     buildPlayoffsBracket,
     clearPlayoffsBracket,
     loading,
@@ -23,10 +23,8 @@ function AppSettings() {
   const [form, setForm] = useState({ playoffsStart: "" });
   const [popup, setPopup] = useState(false);
   const message = useMessage();
-  const { request, clearError } = useHttp();
   const { t } = useTranslation();
 
-  useEffect(() => getSettings(), []);
   useEffect(() => setForm({ ...settings }), [settings]);
 
   const handleTextInputChange = (e) =>
@@ -37,21 +35,15 @@ function AppSettings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (
-        /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart) &&
-        form.playoffsStart.split("-")[0].length <= 4 &&
-        +form.playoffsStart.split("-")[1] <= 12 &&
-        +form.playoffsStart.split("-")[2] <= 31
-      ) {
-        await request("/api/settings/save", "POST", { ...form });
-        message("Settings saved!", "success");
-      } else {
-        throw new Error("Wrong date format");
-      }
-    } catch (e) {
-      message(e.message);
-      clearError();
+    if (
+      /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart) &&
+      form.playoffsStart.split("-")[0].length <= 4 &&
+      +form.playoffsStart.split("-")[1] <= 12 &&
+      +form.playoffsStart.split("-")[2] <= 31
+    ) {
+      saveSettings(form);
+    } else {
+      message("Wrong date format");
     }
   };
 
