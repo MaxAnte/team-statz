@@ -30,7 +30,7 @@ function Header() {
   const closeUserPanel = useOutsideClickHandler(userPanelRef);
 
   useEffect(() => {
-    if (closeUserPanel && modal) setModal(false);
+    if (!isAuthenticated && closeUserPanel && modal) setModal(false);
   }, [closeUserPanel]);
 
   useEffect(() => {
