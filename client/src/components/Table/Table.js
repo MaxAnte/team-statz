@@ -7,7 +7,12 @@ import MiniLoader from "../Loader/MiniLoader";
 import styles from "./table.module.css";
 
 function Table() {
-  const { getTeams, teams, loading } = useContext(AppContext);
+  const {
+    settings: { playoffsBracketBuilt },
+    getTeams,
+    teams,
+    loading,
+  } = useContext(AppContext);
   const { t } = useTranslation();
   const [table, setTable] = useState([]);
 
@@ -48,7 +53,14 @@ function Table() {
             ) : (
               group[1].map((el, i) => {
                 return (
-                  <div className={styles.tableRow} key={`tableRow${i}`}>
+                  <div
+                    className={`${styles.tableRow} ${
+                      playoffsBracketBuilt && i <= 3
+                        ? styles.clinched
+                        : styles.eliminated
+                    }`}
+                    key={`tableRow${i}`}
+                  >
                     <span className={styles.tableRowPos}>{++i}</span>
                     <p className={styles.tableRowName}>{el.name}</p>
                     <span className={styles.tableRowWins}>{el.wins}</span>

@@ -39,6 +39,18 @@
   background-color: rgb(233, 233, 233);
   transition: all 0.2s ease;
 }
+.clinched {
+  background-color: rgba(49, 173, 49, 0.15);
+}
+.clinched:hover {
+  background-color: rgba(49, 173, 49, 0.35);
+}
+.eliminated {
+  background-color: rgba(175, 0, 0, 0.15);
+}
+.eliminated:hover {
+  background-color: rgba(175, 0, 0, 0.35);
+}
 .groupName {
   padding-bottom: 15px;
   font-size: 20px;

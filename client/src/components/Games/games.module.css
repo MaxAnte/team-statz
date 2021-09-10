@@ -58,6 +58,25 @@
   top: -75px;
   width: 130px;
 }
+.playoffsLink {
+  margin: 15px 0px 30px;
+}
+.playoffsLink > a {
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  color: var(--color-button);
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.playoffsLink > a:hover {
+  text-decoration: none;
+  color: var(--color-button-hover);
+  transition: all 0.15s ease;
+}
 
 @media (max-width: 1279px) {
   .gamesItem {

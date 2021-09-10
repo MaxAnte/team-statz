@@ -11,7 +11,12 @@ import Select from "../Select/select";
 import styles from "./games.module.css";
 
 function Games() {
-  const { getGames, games, loading } = useContext(AppContext);
+  const {
+    settings: { playoffsBracketBuilt },
+    getGames,
+    games,
+    loading,
+  } = useContext(AppContext);
   const [sortedGames, setSortedGames] = useState(games);
   const [sort, setSort] = useState("All");
   const { pathname, hash } = useLocation();
@@ -49,6 +54,13 @@ function Games() {
     <div className="games page-wrapper">
       <h2 className="title">{t("Season standings")}</h2>
       <Table />
+      {playoffsBracketBuilt ? (
+        <p className={styles.playoffsLink}>
+          {t("It's Playoffs time")}!{" "}
+          <Link to={"/playoffs"}>{t("Playoffs bracket")}</Link>{" "}
+          {t("is available now")}!
+        </p>
+      ) : null}
       <h2 className="title">{t("Recent Games")}</h2>
       <div className={styles.gamesWrapper}>
         {games.length ? (
