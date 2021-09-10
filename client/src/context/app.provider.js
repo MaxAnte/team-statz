@@ -199,6 +199,7 @@ export const AppProvider = ({ children }) => {
   const buildPlayoffsBracket = async () => {
     try {
       await request("/api/bracket/build", "POST", {});
+      getSettings();
     } catch (e) {
       message(e.message);
       clearError();
@@ -208,10 +209,7 @@ export const AppProvider = ({ children }) => {
   const clearPlayoffsBracket = async () => {
     try {
       await request("/api/bracket/clear", "POST", {});
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        playoffsmatchups: [],
-      }));
+      getSettings();
     } catch (e) {
       message(e.message);
       clearError();
