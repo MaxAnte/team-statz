@@ -28,9 +28,8 @@ function Header() {
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
   const closeUserPanel = useOutsideClickHandler(userPanelRef);
-
   useEffect(() => {
-    if (!isAuthenticated && closeUserPanel && modal) setModal(false);
+    if (isAuthenticated && closeUserPanel && modal) setModal(false);
   }, [closeUserPanel]);
 
   useEffect(() => {
