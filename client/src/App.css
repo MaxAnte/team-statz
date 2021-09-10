@@ -82,6 +82,10 @@ input[type="number"] {
 .btn__main.warning {
   background-color: var(--color-warning);
 }
+.btn__main.warning:hover {
+  background-color: var(--color-warning-hover);
+  transition: all 0.3s ease;
+}
 
 .errorWrap {
   position: fixed;
