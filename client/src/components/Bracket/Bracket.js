@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../context/app.provider";
 
 import BracketMatchup from "../BracketMatchup/BracketMatchup";
 
 import styles from "./bracket.module.css";
 
 function Bracket() {
-  const message = useMessage();
-  const { request, clearError } = useHttp();
-  const [matchups, setMatchups] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/bracket/get", "POST", {});
-        if (Object.keys(data).length) setMatchups(Object.values(data));
-      } catch (e) {
-        message(e.message);
-        clearError();
-      }
-    })();
-  }, []);
-
+  const { getPlayoffsMatchups, playoffsmatchups } = useContext(AppContext);
+  useEffect(() => getPlayoffsMatchups(), []);
   return (
     <svg viewBox="0 0 1580 660" className={styles.bracket}>
       <g
@@ -75,35 +60,39 @@ function Bracket() {
 
       <g transform="translate(120,100)">
         <g id={`aMatch-1`}>
-          <BracketMatchup info={matchups[0]} scoreAlign="right" />
+          <BracketMatchup info={playoffsmatchups[0]} scoreAlign="right" />
         </g>
         <g id={`aMatch-2`} transform={`translate(0,350)`}>
-          <BracketMatchup info={matchups[1]} scoreAlign="right" />
+          <BracketMatchup info={playoffsmatchups[1]} scoreAlign="right" />
         </g>
       </g>
 
       <g transform="translate(1230,100)">
         <g id={`bMatch-1`}>
-          <BracketMatchup info={matchups[2]} scoreAlign="left" />
+          <BracketMatchup info={playoffsmatchups[2]} scoreAlign="left" />
         </g>
         <g id={`bMatch-2`} transform={`translate(0,350)`}>
-          <BracketMatchup info={matchups[3]} scoreAlign="left" />
+          <BracketMatchup info={playoffsmatchups[3]} scoreAlign="left" />
         </g>
       </g>
 
       <g transform="translate(270,275)">
         <g id={`aSemis`}>
-          <BracketMatchup info={matchups[4]} scoreAlign="right" />
+          <BracketMatchup info={playoffsmatchups[4]} scoreAlign="right" />
         </g>
       </g>
       <g transform="translate(1090,275)">
         <g id={`bSemis`}>
-          <BracketMatchup info={matchups[5]} scoreAlign="left" />
+          <BracketMatchup info={playoffsmatchups[5]} scoreAlign="left" />
         </g>
       </g>
       <g transform="translate(580,275)">
         <g id={`finals`}>
-          <BracketMatchup info={matchups[6]} scoreAlign="center" finals />
+          <BracketMatchup
+            info={playoffsmatchups[6]}
+            scoreAlign="center"
+            finals
+          />
         </g>
       </g>
     </svg>

@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
+import React, { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/app.provider";
 
 import MiniLoader from "../Loader/MiniLoader";
 
 import styles from "./table.module.css";
 
 function Table() {
-  const { loading, request, error, clearError } = useHttp();
-  const message = useMessage();
+  const { getTeams, teams, loading } = useContext(AppContext);
   const { t } = useTranslation();
   const [table, setTable] = useState([]);
 
+  useEffect(() => getTeams(), []);
   useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await request("/api/team/teams", "POST", {});
-        if (Object.keys(data).length)
-          setTable(sortTableStandings(Object.values(data)));
-      } catch (e) {
-        message(e.message || "Failed to get Table info");
-      }
-    })();
-  }, [request, message]);
+    setTable(sortTableStandings(Object.values(teams)));
+  }, [teams]);
 
   const sortTableStandings = (standings) => {
     const splitedByGroups = {};

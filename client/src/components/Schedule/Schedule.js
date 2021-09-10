@@ -1,7 +1,5 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { SessionContext } from "../../context/session.provider";
@@ -18,26 +16,15 @@ function Schedule() {
   const { isAuthenticated } = useContext(SessionContext);
   const {
     settings: { enableCalendarScrollMode },
+    getDates,
+    dates,
   } = useContext(AppContext);
-  const [dates, setDates] = useState([]);
+  const [calendarDates, setCalendarDates] = useState([]);
   const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
-  const { request, error, clearError } = useHttp();
-  const message = useMessage();
   const { t } = useTranslation();
 
-  const getDates = useCallback(async () => {
-    try {
-      const data = await request("/api/date/dates", "POST", {});
-      if (Object.keys(data).length) setDates(Object.values(data));
-    } catch (e) {}
-  }, [request]);
-
-  useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
-
-  useEffect(() => getDates(), [getDates]);
+  useEffect(() => getDates(), []);
+  useEffect(() => setCalendarDates(dates), [dates]);
 
   const closeHandler = () => setAddDateForm({ form: false, date: "" });
 
@@ -160,7 +147,7 @@ function Schedule() {
   let days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
   const handleChangeDates = (newDate) =>
-    setDates((prevDates) => [...prevDates, newDate]);
+    setCalendarDates((prevDates) => [...prevDates, newDate]);
 
   const handleMouseScroll = (e) => {
     if (enableCalendarScrollMode) {
@@ -202,15 +189,16 @@ function Schedule() {
               }
               ${day.date === TODAY ? styles.calendarDayToday : ""}`}
               onClick={() =>
-                dates && dates.find((el) => el.date === day.date)
+                calendarDates &&
+                calendarDates.find((el) => el.date === day.date)
                   ? null
                   : setAddDateForm({ form: true, date: day.date })
               }
             >
               <span>{day.dayOfMonth}</span>
-              {dates &&
-              dates.filter((game) => game.date === day.date).length ? (
-                dates
+              {calendarDates &&
+              calendarDates.filter((game) => game.date === day.date).length ? (
+                calendarDates
                   .filter((game) => game.date === day.date)
                   .map((game) => (
                     <div key={game._id} className={styles.dayCell}>
