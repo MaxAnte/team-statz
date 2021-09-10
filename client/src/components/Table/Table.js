@@ -12,9 +12,7 @@ function Table() {
   const [table, setTable] = useState([]);
 
   useEffect(() => getTeams(), []);
-  useEffect(() => {
-    setTable(sortTableStandings(Object.values(teams)));
-  }, [teams]);
+  useEffect(() => setTable(sortTableStandings(Object.values(teams))), [teams]);
 
   const sortTableStandings = (standings) => {
     const splitedByGroups = {};
