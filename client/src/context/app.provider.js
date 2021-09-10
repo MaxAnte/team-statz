@@ -136,6 +136,18 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const deleteGame = async (gameID) => {
+    try {
+      await request("/api/game/delete-game", "POST", {
+        _id: gameID,
+      });
+      getGames();
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const getDates = async () => {
     setAppState((prevAppState) => ({
       ...prevAppState,
@@ -209,6 +221,7 @@ export const AppProvider = ({ children }) => {
     getTeams: getTeams,
     getPlayers: getPlayers,
     getGames: getGames,
+    deleteGame: deleteGame,
     getDates: getDates,
     getPlayoffsMatchups: getPlayoffsMatchups,
     buildPlayoffsBracket: buildPlayoffsBracket,

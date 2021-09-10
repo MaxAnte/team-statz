@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../context/app.provider";
 import { useTranslation } from "react-i18next";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import EditGamePopup from "../EditGamePopup/EditGamePopup";
@@ -15,14 +14,13 @@ import RemoveIcon from "../../assets/icons/RemoveIcon";
 
 import styles from "./gameCard.module.css";
 
-function GameCard({ game, handleChangeGames }) {
+function GameCard({ game }) {
   const { isAuthenticated } = useContext(SessionContext);
+  const { deleteGame } = useContext(AppContext);
   const [editMode, setEditMode] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [editPopup, setEditPopup] = useState(false);
   const { t } = useTranslation();
-  const message = useMessage();
-  const { request, clearError } = useHttp();
 
   useEffect(() => {
     const today = new Date();
@@ -33,18 +31,6 @@ function GameCard({ game, handleChangeGames }) {
   const closeHandler = () => {
     setAddPopup(false);
     setEditPopup(false);
-  };
-
-  const handleDeleteGame = async () => {
-    try {
-      handleChangeGames(game._id);
-      await request("/api/game/delete-game", "POST", {
-        _id: game._id,
-      });
-    } catch (e) {
-      message(e.message);
-      clearError();
-    }
   };
 
   return (
@@ -128,7 +114,7 @@ function GameCard({ game, handleChangeGames }) {
           ) : null}
           <button
             type="button"
-            onClick={() => handleDeleteGame()}
+            onClick={() => deleteGame(game._id)}
             className={styles.removeBtn}
           >
             <RemoveIcon width="24px" height="24px" color="red" />
