@@ -167,6 +167,16 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const addDate = async (body) => {
+    try {
+      await request("/api/date/add-date", "POST", { ...body });
+      getDates();
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const getPlayoffsMatchups = async () => {
     setAppState((prevAppState) => ({
       ...prevAppState,
@@ -223,6 +233,7 @@ export const AppProvider = ({ children }) => {
     getGames: getGames,
     deleteGame: deleteGame,
     getDates: getDates,
+    addDate: addDate,
     getPlayoffsMatchups: getPlayoffsMatchups,
     buildPlayoffsBracket: buildPlayoffsBracket,
     clearPlayoffsBracket: clearPlayoffsBracket,

@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/app.provider";
 
 import Select from "../Select/select";
 
@@ -9,27 +8,16 @@ import CloseIcon from "../../assets/icons/CloseIcon";
 
 import styles from "./addDatePopup.module.css";
 
-function AddGamePopup({ closeHandler, date, handleChangeDates }) {
-  const [teams, setTeams] = useState(undefined);
+function AddGamePopup({ closeHandler, date }) {
+  const { getTeams, teams, addDate } = useContext(AppContext);
   const [form, setForm] = useState([]);
   const [formClose, setFormClose] = useState(false);
-  const message = useMessage();
-  const { request, clearError } = useHttp();
   const { t } = useTranslation();
-
-  const getTeams = useCallback(async () => {
-    try {
-      const data = await request("/api/team/teams", "POST", {});
-      if (Object.keys(data).length) setTeams(Object.values(data));
-    } catch (e) {}
-  }, [request]);
-
-  const teamList = teams ? teams.map((team) => team.name) : [];
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
     getTeams();
-  }, [date, getTeams]);
+  }, [date]);
 
   const handleGetActive = useCallback(
     (enemy) => setForm((prevState) => ({ ...prevState, enemy })),
@@ -40,14 +28,8 @@ function AddGamePopup({ closeHandler, date, handleChangeDates }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await request("/api/date/add-date", "POST", { ...form });
-      handleChangeDates(form);
-      setFormClose(true);
-    } catch (e) {
-      message(e.message);
-      clearError();
-    }
+    addDate(form);
+    setFormClose(true);
   };
   return (
     <div
@@ -68,7 +50,7 @@ function AddGamePopup({ closeHandler, date, handleChangeDates }) {
             />
           </div>
           <Select
-            options={teamList ? teamList : []}
+            options={teams ? teams.map((team) => team.name) : []}
             className={styles.selectWrap}
             getActive={handleGetActive}
             defaultValue="Enemy Team"
