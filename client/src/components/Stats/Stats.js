@@ -127,15 +127,7 @@ function Stats() {
         })
       )
     );
-  }, [
-    players,
-    games,
-    filterGame,
-    filterPlayer,
-    DPI_WIDTH,
-    DPI_HEIGHT,
-    POINTER_COLORS,
-  ]);
+  }, [players, games, filterGame, filterPlayer]);
 
   const countOverallStats = () => {
     let pts = 0;
