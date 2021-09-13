@@ -1,23 +1,37 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
+import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
 import MiniLoader from "../Loader/MiniLoader";
 
 import styles from "./table.module.css";
 
 function Table() {
+  const { isAuthenticated } = useContext(SessionContext);
   const {
     settings: { playoffsBracketBuilt },
     getTeams,
+    editTeamInfo,
     teams,
     loading,
   } = useContext(AppContext);
   const { t } = useTranslation();
   const [table, setTable] = useState([]);
+  const [editableTeam, setEditableTeam] = useState(undefined);
+  const editableCellRef = useRef(null);
+  const closeEditableCell = useOutsideClickHandler(editableCellRef);
 
   useEffect(() => getTeams(), []);
   useEffect(() => setTable(sortTableStandings(Object.values(teams))), [teams]);
+
+  useEffect(() => {
+    if (isAuthenticated && closeEditableCell) {
+      editTeamInfo(editableTeam);
+      setEditableTeam(undefined);
+    }
+  }, [closeEditableCell]);
 
   const sortTableStandings = (standings) => {
     const splitedByGroups = {};
@@ -31,6 +45,10 @@ function Table() {
         }
       });
     return Object.entries(splitedByGroups);
+  };
+
+  const handleEditRow = (e) => {
+    setEditableTeam((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -52,7 +70,54 @@ function Table() {
               <MiniLoader />
             ) : (
               group[1].map((el, i) => {
-                return (
+                return isAuthenticated && editableTeam?._id === el._id ? (
+                  <div
+                    ref={editableCellRef}
+                    className={`${styles.tableRow} ${
+                      playoffsBracketBuilt
+                        ? i <= 3
+                          ? styles.clinched
+                          : styles.eliminated
+                        : ""
+                    }`}
+                    key={`tableRow${i}`}
+                    onClick={() => setEditableTeam(el)}
+                  >
+                    <span className={styles.tableRowPos}>{++i}</span>
+                    <p className={styles.tableRowName}>{el.name}</p>
+                    <span className={styles.tableRowWins}>
+                      {editableTeam?._id === el._id ? (
+                        <input
+                          type="number"
+                          min="0"
+                          className={styles.editableCell}
+                          placeholder={el.wins}
+                          name="wins"
+                          value={editableTeam.wins}
+                          onChange={handleEditRow}
+                        />
+                      ) : (
+                        el.wins
+                      )}
+                    </span>
+                    <span className={styles.tableRowLoses}>
+                      {editableTeam?._id === el._id ? (
+                        <input
+                          type="number"
+                          min="0"
+                          className={styles.editableCell}
+                          placeholder={el.loses}
+                          name="loses"
+                          value={editableTeam.loses}
+                          onChange={handleEditRow}
+                        />
+                      ) : (
+                        el.loses
+                      )}
+                    </span>
+                    <span className={styles.tableRowPoints}>{el.points}</span>
+                  </div>
+                ) : (
                   <div
                     className={`${styles.tableRow} ${
                       playoffsBracketBuilt
@@ -62,6 +127,7 @@ function Table() {
                         : ""
                     }`}
                     key={`tableRow${i}`}
+                    onClick={() => setEditableTeam(el)}
                   >
                     <span className={styles.tableRowPos}>{++i}</span>
                     <p className={styles.tableRowName}>{el.name}</p>

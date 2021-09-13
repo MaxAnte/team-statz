@@ -702,6 +702,18 @@ router.post("/team/teams", [], async (req, res) => {
   res.json({ ...teams });
 });
 
+router.post("/team/edit-table-info", [], async (req, res) => {
+  const team = await Team.findOne({ _id: req.body._id });
+  if (!team) return res.status(400).json({ message: "Team not found" });
+
+  team.wins = req.body.wins;
+  team.loses = req.body.loses;
+  team.points = req.body.wins * 2 + req.body.loses * 1;
+  team.winRate = (+team.wins * 100) / (+team.wins + +team.loses);
+  await team.save();
+  res.json({ ...team });
+});
+
 // ================= SETTINGS ==================
 
 router.post("/settings/get", [], async (req, res) => {

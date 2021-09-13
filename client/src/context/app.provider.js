@@ -62,6 +62,19 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const editTeamInfo = async (team) => {
+    try {
+      const response = await request("/api/team/edit-table-info", "POST", {
+        ...team,
+      });
+      getTeams();
+      return response;
+    } catch (e) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const getPlayers = async () => {
     setAppState((prevAppState) => ({
       ...prevAppState,
@@ -227,6 +240,7 @@ export const AppProvider = ({ children }) => {
     // getSettings: getSettings,
     saveSettings: saveSettings,
     getTeams: getTeams,
+    editTeamInfo: editTeamInfo,
     getPlayers: getPlayers,
     getGames: getGames,
     deleteGame: deleteGame,
