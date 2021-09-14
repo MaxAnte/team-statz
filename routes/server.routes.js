@@ -716,7 +716,7 @@ router.post("/team/edit-table-info", [], async (req, res) => {
 
 // ================= SETTINGS ==================
 
-router.post("/settings/get", [], async (req, res) => {
+router.post("/settings", [], async (req, res) => {
   const settings = await Settings.find({});
   if (!settings)
     return res.status(400).json({ message: "Cant get to settings db table" });

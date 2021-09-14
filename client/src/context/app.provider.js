@@ -16,7 +16,7 @@ export const AppProvider = ({ children }) => {
       loading: true,
     }));
     try {
-      const response = await request("/api/settings/get", "POST", {});
+      const response = await request("/api/settings", "POST", {});
       setAppState((prevAppState) => ({
         ...prevAppState,
         settings: Object.values(response)[0],
