@@ -22,7 +22,8 @@ function AuthModal({ closeOnLogin }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const loginHandler = async () => {
+  const loginHandler = async (e) => {
+    e.preventDefault();
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
       login(data.token, data.userId);
@@ -40,7 +41,7 @@ function AuthModal({ closeOnLogin }) {
   return (
     <div className={styles.authModal}>
       <h3 className="title">{t("Authentication")}</h3>
-      <div className={styles.authCont}>
+      <form className={styles.authCont} onSubmit={loginHandler}>
         <div className={styles.authInput}>
           <input
             type="text"
@@ -62,11 +63,7 @@ function AuthModal({ closeOnLogin }) {
           <label htmlFor="password">{t("Password")}</label>
         </div>
         <div className={styles.authAction}>
-          <button
-            className="btn-submit"
-            onClick={loginHandler}
-            disabled={loading}
-          >
+          <button type="submit" className="btn-submit" disabled={loading}>
             {t("Login")}
           </button>
           {/* <button
@@ -77,7 +74,7 @@ function AuthModal({ closeOnLogin }) {
             {t("Register")}
           </button> */}
         </div>
-      </div>
+      </form>
     </div>
   );
 }
