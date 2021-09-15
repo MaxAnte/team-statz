@@ -25,6 +25,7 @@
   top: 60%;
   transform: translateY(-50%);
   font-size: 15px;
+  line-height: 16px;
   color: var(--color-white);
   background: var(--color-button);
   border-radius: 50%;
