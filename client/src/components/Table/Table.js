@@ -48,7 +48,7 @@ function Table() {
   };
 
   const handleEditRow = (e) => {
-    setEditableTeam((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setEditableTeam((prev) => ({ ...prev, [e.target.name]: +e.target.value }));
   };
 
   return (

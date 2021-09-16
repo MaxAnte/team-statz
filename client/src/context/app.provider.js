@@ -1,6 +1,16 @@
 import React, { useState, useEffect, createContext } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
+import {
+  SettingsSchema,
+  TeamsSchema,
+  TeamSchema,
+  PlayersSchema,
+  GamesSchema,
+  DatesSchema,
+  DateSchema,
+  PlayoffsMatchupsSchema,
+} from "./app.schema.ts";
 
 export const AppContext = createContext(undefined);
 
@@ -17,25 +27,26 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/settings", "POST", {});
+
+      const settings = SettingsSchema.parse(response);
+
       setAppState((prevAppState) => ({
         ...prevAppState,
-        settings: Object.values(response)[0],
+        settings,
         loading: false,
       }));
-      return response;
+      return settings;
     } catch (e) {
       message(e.message);
       clearError();
     }
   };
 
-  const saveSettings = async (body) => {
+  const saveSettings = async (settings) => {
     try {
-      await request("/api/settings/save", "POST", { ...body });
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        settings: body,
-      }));
+      SettingsSchema.parse(settings);
+      await request("/api/settings/save", "POST", { ...settings });
+      getSettings();
       message("Settings saved!", "success");
     } catch (e) {
       message(e.message);
@@ -50,12 +61,15 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/team/teams", "POST", {});
+
+      const teams = TeamsSchema.parse(response);
+
       setAppState((prevAppState) => ({
         ...prevAppState,
-        teams: Object.values(response),
+        teams,
         loading: false,
       }));
-      return response;
+      return teams;
     } catch (e) {
       message(e.message);
       clearError();
@@ -64,11 +78,11 @@ export const AppProvider = ({ children }) => {
 
   const editTeamInfo = async (team) => {
     try {
-      const response = await request("/api/team/edit-table-info", "POST", {
+      TeamSchema.parse(team);
+      await request("/api/team/edit-table-info", "POST", {
         ...team,
       });
       getTeams();
-      return response;
     } catch (e) {
       message(e.message);
       clearError();
@@ -82,13 +96,16 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/player/players", "POST", {});
-      if (Object.keys(response).length) {
+
+      const players = PlayersSchema.parse(response);
+
+      if (players.length) {
         const bestPts = { pts: 0, id: 0 };
         const bestReb = { reb: 0, id: 0 };
         const bestAst = { ast: 0, id: 0 };
         const bestBlk = { blk: 0, id: 0 };
         const bestStl = { stl: 0, id: 0 };
-        Object.values(response).forEach((el) => {
+        players.forEach((el) => {
           if (el.pts > bestPts.pts) {
             bestPts.pts = el.pts;
             bestPts.id = el._id;
@@ -110,7 +127,7 @@ export const AppProvider = ({ children }) => {
             bestStl.id = el._id;
           }
         });
-        Object.values(response).forEach((el) => {
+        players.forEach((el) => {
           if (el._id === bestPts.id) el.bestInPts = true;
           if (el._id === bestReb.id) el.bestInReb = true;
           if (el._id === bestAst.id) el.bestInAst = true;
@@ -120,10 +137,10 @@ export const AppProvider = ({ children }) => {
       }
       setAppState((prevAppState) => ({
         ...prevAppState,
-        players: Object.values(response),
+        players,
         loading: false,
       }));
-      return response;
+      return players;
     } catch (e) {
       message(e.message);
       clearError();
@@ -137,12 +154,15 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/game/games", "POST", {});
+
+      const games = GamesSchema.parse(response);
+
       setAppState((prevAppState) => ({
         ...prevAppState,
-        games: response,
+        games,
         loading: false,
       }));
-      return response;
+      return games;
     } catch (e) {
       message(e.message);
       clearError();
@@ -168,21 +188,25 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/date/dates", "POST", {});
+
+      const dates = DatesSchema.parse(response);
+
       setAppState((prevAppState) => ({
         ...prevAppState,
-        dates: response,
+        dates,
         loading: false,
       }));
-      return response;
+      return dates;
     } catch (e) {
       message(e.message);
       clearError();
     }
   };
 
-  const addDate = async (body) => {
+  const addDate = async (date) => {
     try {
-      await request("/api/date/add-date", "POST", { ...body });
+      DateSchema.parse(date);
+      await request("/api/date/add-date", "POST", { ...date });
       getDates();
     } catch (e) {
       message(e.message);
@@ -197,12 +221,15 @@ export const AppProvider = ({ children }) => {
     }));
     try {
       const response = await request("/api/bracket/get", "POST", {});
+
+      const playoffsmatchups = PlayoffsMatchupsSchema.parse(response);
+
       setAppState((prevAppState) => ({
         ...prevAppState,
-        playoffsmatchups: response,
+        playoffsmatchups,
         loading: false,
       }));
-      return response;
+      return playoffsmatchups;
     } catch (e) {
       message(e.message);
       clearError();

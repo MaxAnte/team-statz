@@ -661,7 +661,7 @@ router.post("/player/players", async (req, res) => {
   if (!players)
     return res.status(400).json({ message: "There are no active players" });
 
-  res.json({ ...players });
+  res.json(players);
 });
 
 // /api/player/birthDay
@@ -699,7 +699,7 @@ router.post("/player/id", async (req, res) => {
 router.post("/team/teams", [], async (req, res) => {
   const teams = await Team.find({});
   if (!teams) return res.status(400).json({ message: "Teams not found" });
-  res.json({ ...teams });
+  res.json(teams);
 });
 
 router.post("/team/edit-table-info", [], async (req, res) => {
@@ -717,10 +717,10 @@ router.post("/team/edit-table-info", [], async (req, res) => {
 // ================= SETTINGS ==================
 
 router.post("/settings", [], async (req, res) => {
-  const settings = await Settings.find({});
+  const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
   if (!settings)
     return res.status(400).json({ message: "Cant get to settings db table" });
-  res.json({ ...settings });
+  res.json(settings);
 });
 
 router.post("/settings/save", [], async (req, res) => {
@@ -776,7 +776,7 @@ router.post("/bracket/get", [], async (req, res) => {
   const matches = await PlayoffsMatchup.find({});
   if (!matches)
     return res.status(400).json({ message: "No matches in playoffs table" });
-  res.json({ ...matches });
+  res.json(matches);
 });
 
 router.post("/bracket/clear", [], async (req, res) => {
