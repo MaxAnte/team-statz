@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
 import { SessionContext } from "../../context/session.provider.tsx";
-import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
+import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
 import MiniLoader from "../Loader/MiniLoader";
 

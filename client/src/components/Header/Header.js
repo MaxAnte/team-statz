@@ -9,7 +9,7 @@ import Cookie from "js-cookie";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { SessionContext } from "../../context/session.provider.tsx";
-import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
+import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
 import AuthModal from "../AuthModal/AuthModal";
 import Select from "../Select/select";
