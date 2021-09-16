@@ -1,8 +1,15 @@
 import React from "react";
 
+import type { Props } from "./icon.types";
+
 import styles from "./icon.module.css";
 
-function EnemyTeamIcon({ width, heigth, color = "black", className = "" }) {
+export default function EnemyTeamIcon({
+  width,
+  height,
+  color = "black",
+  className = "",
+}: Props) {
   return (
     <svg
       version="1.1"
@@ -10,7 +17,7 @@ function EnemyTeamIcon({ width, heigth, color = "black", className = "" }) {
       x="0px"
       y="0px"
       width={width}
-      height={heigth}
+      height={height}
       viewBox="0 0 300 300"
       className={`${styles[color]} ${className}`}
       enableBackground="new 0 0 300 300"
@@ -29,5 +36,3 @@ function EnemyTeamIcon({ width, heigth, color = "black", className = "" }) {
     </svg>
   );
 }
-
-export default EnemyTeamIcon;

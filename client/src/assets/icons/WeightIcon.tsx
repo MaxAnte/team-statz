@@ -1,8 +1,15 @@
 import React from "react";
 
+import type { Props } from "./icon.types";
+
 import styles from "./icon.module.css";
 
-function WeightIcon({ width, heigth, color = "black", className = "" }) {
+export default function WeightIcon({
+  width,
+  height,
+  color = "black",
+  className = "",
+}: Props) {
   return (
     <svg
       version="1.1"
@@ -10,7 +17,7 @@ function WeightIcon({ width, heigth, color = "black", className = "" }) {
       x="0px"
       y="0px"
       width={width}
-      height={heigth}
+      height={height}
       viewBox="-36 0 512 512"
       className={`${styles[color]} ${className}`}
     >
@@ -21,5 +28,3 @@ function WeightIcon({ width, heigth, color = "black", className = "" }) {
     </svg>
   );
 }
-
-export default WeightIcon;

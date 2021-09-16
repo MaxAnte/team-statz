@@ -11,11 +11,11 @@ import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
 import BlockLoader from "../Loader/BlockLoader";
 
-import HeightIcon from "../../assets/icons/HeightIcon";
+import HeightIcon from "../../assets/icons/HeightIcon.tsx";
+import WeightIcon from "../../assets/icons/WeightIcon.tsx";
+import JerseyIcon from "../../assets/icons/JerseyIcon.tsx";
 
 import styles from "./player.module.css";
-import WeightIcon from "../../assets/icons/WeightIcon";
-import JerseyIcon from "../../assets/icons/JerseyIcon";
 
 function Player() {
   const [player, setPlayer] = useState({});
@@ -96,10 +96,10 @@ function Player() {
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>
               <p className={styles.generalInfo}>
-                <HeightIcon width="18px" heigth="18px" />
-                6'6", <WeightIcon width="22px" heigth="22px" />
+                <HeightIcon width="18px" height="18px" />
+                6'6", <WeightIcon width="22px" height="22px" />
                 216 {t("lbs")} | {player.position},{" "}
-                <JerseyIcon width="22px" heigth="22px" />#{player.number}
+                <JerseyIcon width="22px" height="22px" />#{player.number}
               </p>
               {player.birthDate && (
                 <p className={styles.general}>

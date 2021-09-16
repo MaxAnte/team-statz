@@ -4,7 +4,7 @@ import { AppContext } from "../../context/app.provider";
 
 import Select from "../Select/select";
 
-import CloseIcon from "../../assets/icons/CloseIcon";
+import CloseIcon from "../../assets/icons/CloseIcon.tsx";
 
 import styles from "./addDatePopup.module.css";
 
@@ -63,7 +63,7 @@ function AddGamePopup({ closeHandler, date }) {
         </div>
       )}
       <div className={styles.closeBtn} onClick={() => closeHandler()}>
-        <CloseIcon width="20px" heigth="20px" color="black" />
+        <CloseIcon width="20px" height="20px" color="black" />
       </div>
     </div>
   );

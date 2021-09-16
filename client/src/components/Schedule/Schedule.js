@@ -8,7 +8,7 @@ import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 import AddDatePopup from "../AddDatePopup/AddDatePopup";
-import PlusIcon from "../../assets/icons/PlusIcon";
+import PlusIcon from "../../assets/icons/PlusIcon.tsx";
 
 import styles from "./schedule.module.css";
 
@@ -208,7 +208,7 @@ function Schedule() {
                   ))
               ) : isAuthenticated && day.isCurrentMonth ? (
                 <div className={styles.addGameDate}>
-                  <PlusIcon width="20px" heigth="20px" color="white" />
+                  <PlusIcon width="20px" height="20px" color="white" />
                 </div>
               ) : null}
             </li>

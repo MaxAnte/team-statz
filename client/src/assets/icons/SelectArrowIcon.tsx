@@ -1,8 +1,15 @@
 import React from "react";
 
+import type { Props } from "./icon.types";
+
 import styles from "./icon.module.css";
 
-function SelectArrowIcon({ width, heigth, color = "black", className = "" }) {
+export default function SelectArrowIcon({
+  width,
+  height,
+  color = "black",
+  className = "",
+}: Props) {
   return (
     <svg
       version="1.1"
@@ -11,7 +18,7 @@ function SelectArrowIcon({ width, heigth, color = "black", className = "" }) {
       y="0px"
       viewBox="0 0 491.996 491.996"
       width={width}
-      height={heigth}
+      height={height}
       className={`${styles[color]} ${className}`}
     >
       <g>
@@ -28,5 +35,3 @@ function SelectArrowIcon({ width, heigth, color = "black", className = "" }) {
     </svg>
   );
 }
-
-export default SelectArrowIcon;

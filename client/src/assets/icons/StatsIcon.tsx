@@ -1,19 +1,21 @@
 import React from "react";
 
+import type { Props } from "./icon.types";
+
 import styles from "./icon.module.css";
 
 export default function StatsIcon({
   width,
-  heigth,
+  height,
   color = "black",
   className = "",
-}) {
+}: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 464 464"
       width={width}
-      height={heigth}
+      height={height}
       className={`${styles[color]} ${className}`}
     >
       <g>

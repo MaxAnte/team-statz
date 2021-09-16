@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
-import SelectArrowIcon from "../../assets/icons/SelectArrowIcon";
+import SelectArrowIcon from "../../assets/icons/SelectArrowIcon.tsx";
 
 import styles from "./select.module.css";
 
@@ -35,7 +35,7 @@ function Select({
         {arrow ? (
           <SelectArrowIcon
             width="12px"
-            heigth="12px"
+            height="12px"
             className={`${styles.selectArrow} ${
               toggle ? styles.selectArrowFlipped : ""
             }`}

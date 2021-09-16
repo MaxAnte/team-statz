@@ -8,8 +8,8 @@ import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
-import CloseIcon from "../../assets/icons/CloseIcon";
-import CheckIcon from "../../assets/icons/CheckIcon";
+import CloseIcon from "../../assets/icons/CloseIcon.tsx";
+import CheckIcon from "../../assets/icons/CheckIcon.tsx";
 
 import styles from "./addGamePopup.module.css";
 
@@ -162,7 +162,7 @@ function AddGamePopup({ closeHandler, base }) {
                             player.check ? styles.playerCheckActive : ""
                           }`}
                         >
-                          <CheckIcon width="14px" heigth="14px" color="green" />
+                          <CheckIcon width="14px" height="14px" color="green" />
                         </div>
                         {!player.check ? (
                           <div className={styles.disabler}></div>
@@ -215,7 +215,7 @@ function AddGamePopup({ closeHandler, base }) {
           </span>
         )}
         <div className={styles.closeBtn} onClick={() => closeHandler()}>
-          <CloseIcon width="20px" heigth="20px" color="black" />
+          <CloseIcon width="20px" height="20px" color="black" />
         </div>
       </div>
     </div>

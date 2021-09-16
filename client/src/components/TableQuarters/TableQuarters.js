@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import OurTeamLogo from "../../assets/images/logo-bc.png";
-import EnemyTeamIcon from "../../assets/icons/EnemyTeam";
-import PlusIcon from "../../assets/icons/PlusIcon";
+import EnemyTeamIcon from "../../assets/icons/EnemyTeamIcon.tsx";
+import PlusIcon from "../../assets/icons/PlusIcon.tsx";
 
 import styles from "./tableQuarters.module.css";
 
@@ -79,7 +79,7 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
           </tr>
           <tr>
             <td className={styles.logoCell}>
-              <EnemyTeamIcon width="40px" heigth="40px" />
+              <EnemyTeamIcon width="40px" height="40px" />
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
@@ -106,7 +106,7 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }) {
             setEditableQuaters(editableQuaters.concat({ our: 0, enemy: 0 }))
           }
         >
-          <PlusIcon width="10px" heigth="10px" color="white" />
+          <PlusIcon width="10px" height="10px" color="white" />
         </button>
       )}
     </div>

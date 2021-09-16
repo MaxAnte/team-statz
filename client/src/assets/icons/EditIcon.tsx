@@ -1,13 +1,20 @@
 import React from "react";
 
+import type { Props } from "./icon.types";
+
 import styles from "./icon.module.css";
 
-function EditIcon({ width, heigth, color = "black", className = "" }) {
+export default function EditIcon({
+  width,
+  height,
+  color = "black",
+  className = "",
+}: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={width}
-      height={heigth}
+      height={height}
       viewBox="0 0 512.018 512.018"
       className={`${styles[color]} ${className}`}
       enableBackground="new 0 0 512.018 512.018"
@@ -16,5 +23,3 @@ function EditIcon({ width, heigth, color = "black", className = "" }) {
     </svg>
   );
 }
-
-export default EditIcon;

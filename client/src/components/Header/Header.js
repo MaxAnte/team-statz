@@ -13,12 +13,12 @@ import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
 import AuthModal from "../AuthModal/AuthModal";
 import Select from "../Select/select";
-import TeamIcon from "../../assets/icons/TeamIcon";
-import ScheduleIcon from "../../assets/icons/ScheduleIcon";
-import StatsIcon from "../../assets/icons/StatsIcon";
-import UserIcon from "../../assets/icons/UserIcon";
-import SettingsIcon from "../../assets/icons/SettingsIcon";
-import LogoutIcon from "../../assets/icons/LogoutIcon";
+import TeamIcon from "../../assets/icons/TeamIcon.tsx";
+import ScheduleIcon from "../../assets/icons/ScheduleIcon.tsx";
+import StatsIcon from "../../assets/icons/StatsIcon.tsx";
+import UserIcon from "../../assets/icons/UserIcon.tsx";
+import SettingsIcon from "../../assets/icons/SettingsIcon.tsx";
+import LogoutIcon from "../../assets/icons/LogoutIcon.tsx";
 
 import styles from "./header.module.css";
 
@@ -55,19 +55,19 @@ function Header() {
         <ul>
           <li>
             <NavLink to="/team" activeClassName={styles.isActive}>
-              <TeamIcon width="36px" heigth="36px" />
+              <TeamIcon width="36px" height="36px" />
               <span>{t("Team")}</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/schedule" activeClassName={styles.isActive}>
-              <ScheduleIcon width="36px" heigth="36px" />
+              <ScheduleIcon width="36px" height="36px" />
               <span>{t("Schedule")}</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/stats" activeClassName={styles.isActive}>
-              <StatsIcon width="36px" heigth="36px" />
+              <StatsIcon width="36px" height="36px" />
               <span>{t("Stats")}</span>
             </NavLink>
           </li>
