@@ -19,7 +19,7 @@ export const useHttp = () => {
     async (
       url: string,
       method: string = "GET",
-      body: string | null = null,
+      body: any = null,
       headers: Headers = {}
     ) => {
       setLoading(true);
