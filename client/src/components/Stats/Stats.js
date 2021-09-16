@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook";
+import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
 
 import BlockLoader from "../Loader/BlockLoader";

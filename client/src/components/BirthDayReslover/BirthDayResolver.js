@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook";
+import { useMessage } from "../../hooks/message.hook.tsx";
 
 import BirthDayPopup from "../BirthDayPopup/BirthDayPopup";
 

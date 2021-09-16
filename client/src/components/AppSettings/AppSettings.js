@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useMessage } from "../../hooks/message.hook";
+import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
 import { SessionContext } from "../../context/session.provider.tsx";

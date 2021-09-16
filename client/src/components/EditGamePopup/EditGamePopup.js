@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook";
+import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
