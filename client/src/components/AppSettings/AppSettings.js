@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
-import { SessionContext } from "../../context/session.provider";
+import { SessionContext } from "../../context/session.provider.tsx";
 
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
 import BlockLoader from "../Loader/BlockLoader";

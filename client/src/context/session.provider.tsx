@@ -1,16 +1,14 @@
 import React, { createContext } from "react";
 import { useAuth } from "../hooks/auth.hook";
+import { Session } from "./session.types";
 
-function noop() {}
-export const SessionContext = createContext({
-  token: null,
-  userId: null,
-  login: noop,
-  logout: noop,
-  isAuthenticated: false,
-});
+type Props = {
+  children: React.ReactChild;
+};
 
-export const SessionProvider = ({ children }) => {
+export const SessionContext = createContext<Session>(undefined!);
+
+export const SessionProvider = ({ children }: Props) => {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;
   return (
