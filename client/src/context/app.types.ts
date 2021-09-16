@@ -6,28 +6,28 @@ export type Context = {
   dates: DateType[] | null;
   playoffsmatchups: PlayoffsMatchup[] | null;
 
-  getSettings: () => void;
-  saveSettings: () => Promise<
-    | {
-        __v?: number | undefined;
-        _id: string;
-        enableCalendarScrollMode: boolean;
-        playoffsBracketBuilt: boolean;
-        playoffsStart: string;
-      }
-    | undefined
-  >;
-  getTeams: getTeams;
-  editTeamInfo: editTeamInfo;
-  getPlayers: getPlayers;
-  getGames: getGames;
-  deleteGame: deleteGame;
-  getDates: getDates;
-  addDate: addDate;
-  getPlayoffsMatchups: getPlayoffsMatchups;
-  buildPlayoffsBracket: buildPlayoffsBracket;
-  clearPlayoffsBracket: clearPlayoffsBracket;
-  loading: false;
+  // getSettings: () => void;
+  // saveSettings: () => Promise<
+  //   | {
+  //       __v?: number | undefined;
+  //       _id: string;
+  //       enableCalendarScrollMode: boolean;
+  //       playoffsBracketBuilt: boolean;
+  //       playoffsStart: string;
+  //     }
+  //   | undefined
+  // >;
+  // getTeams: getTeams;
+  // editTeamInfo: editTeamInfo;
+  // getPlayers: getPlayers;
+  // getGames: getGames;
+  // deleteGame: deleteGame;
+  // getDates: getDates;
+  // addDate: addDate;
+  // getPlayoffsMatchups: getPlayoffsMatchups;
+  // buildPlayoffsBracket: buildPlayoffsBracket;
+  // clearPlayoffsBracket: clearPlayoffsBracket;
+  loading: boolean | false;
 };
 
 export type Settings = {
