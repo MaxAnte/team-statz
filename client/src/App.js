@@ -4,7 +4,7 @@ import { SessionProvider } from "./context/session.provider.tsx";
 import { AppProvider } from "./context/app.provider";
 import { useAuth } from "./hooks/auth.hook.tsx";
 import { useHttp } from "./hooks/http.hook.tsx";
-import { checkDate } from "./helpers/time.helpers";
+import { checkDate } from "./helpers/time.helpers.ts";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";

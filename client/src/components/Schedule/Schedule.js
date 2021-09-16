@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { SessionContext } from "../../context/session.provider.tsx";
 import { AppContext } from "../../context/app.provider";
-import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
+import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 import AddDatePopup from "../AddDatePopup/AddDatePopup";

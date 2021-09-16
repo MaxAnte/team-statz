@@ -5,7 +5,7 @@ import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
 import { Line, Doughnut } from "react-chartjs-2";
 import YouTube from "react-youtube";
-import { MONTHS } from "../../helpers/time.helpers";
+import { MONTHS } from "../../helpers/time.helpers.ts";
 
 import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
