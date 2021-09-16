@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks/http.hook.tsx";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { Line, Doughnut } from "react-chartjs-2";

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SessionProvider } from "./context/session.provider.tsx";
 import { AppProvider } from "./context/app.provider";
 import { useAuth } from "./hooks/auth.hook.tsx";
-import { useHttp } from "./hooks/http.hook";
+import { useHttp } from "./hooks/http.hook.tsx";
 import { checkDate } from "./helpers/time.helpers";
 
 import Header from "./components/Header/Header";

@@ -1,11 +1,27 @@
 import { useState, useCallback } from "react";
 
+type Headers = {
+  "Content-Type"?: string;
+  Accept?: string;
+};
+
+type HttpResponse = {
+  status?: string;
+  ok: boolean;
+  message: string;
+};
+
 export const useHttp = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const request = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (
+      url: string,
+      method: string = "GET",
+      body: string | null = null,
+      headers: Headers = {}
+    ) => {
       setLoading(true);
       try {
         if (body) {
@@ -15,12 +31,13 @@ export const useHttp = () => {
         }
         const response = await fetch(url, { method, body, headers });
         const data = await response.json();
+
         if (!response.ok) throw data.message || "Error occured while fetch";
 
         setLoading(false);
 
         return data;
-      } catch (e) {
+      } catch (e: any) {
         setLoading(false);
         setError(e.message);
         throw e;

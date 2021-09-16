@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks/http.hook.tsx";
 import { useMessage } from "../../hooks/message.hook";
 
 import BirthDayPopup from "../BirthDayPopup/BirthDayPopup";

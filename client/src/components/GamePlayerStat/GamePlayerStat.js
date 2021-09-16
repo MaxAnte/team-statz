@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../../hooks/http.hook.tsx";
 import { useTranslation } from "react-i18next";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
