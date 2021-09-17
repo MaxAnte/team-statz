@@ -8,39 +8,40 @@ import React, {
 import Cookie from "js-cookie";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { SessionContext } from "../../context/session.provider.tsx";
-import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
+import { SessionContext } from "../../context/session.provider";
+import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
-import AuthModal from "../AuthModal/authModal.tsx";
-import Select from "../Select/select.tsx";
-import TeamIcon from "../../assets/icons/teamIcon.tsx";
-import ScheduleIcon from "../../assets/icons/scheduleIcon.tsx";
-import StatsIcon from "../../assets/icons/statsIcon.tsx";
-import UserIcon from "../../assets/icons/userIcon.tsx";
-import SettingsIcon from "../../assets/icons/settingsIcon.tsx";
-import LogoutIcon from "../../assets/icons/logoutIcon.tsx";
+import AuthModal from "../AuthModal/authModal";
+import Select from "../Select/select";
+import TeamIcon from "../../assets/icons/teamIcon";
+import ScheduleIcon from "../../assets/icons/scheduleIcon";
+import StatsIcon from "../../assets/icons/statsIcon";
+import UserIcon from "../../assets/icons/userIcon";
+import SettingsIcon from "../../assets/icons/settingsIcon";
+import LogoutIcon from "../../assets/icons/logoutIcon";
 
 import styles from "./header.module.css";
 
 function Header() {
   const { isAuthenticated, logout } = useContext(SessionContext);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
-  const closeUserPanel = useOutsideClickHandler(userPanelRef);
+  const closeUserPanel: boolean = useOutsideClickHandler(userPanelRef);
+
   useEffect(() => {
     if (isAuthenticated && closeUserPanel && modal) setModal(false);
   }, [closeUserPanel]);
 
   useEffect(() => {
     const lang = Cookie.get("language");
-    i18n.changeLanguage(lang);
+    i18n.changeLanguage(lang || "en");
   }, [i18n]);
 
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
   const handleGetActive = useCallback(
-    (option) => i18n.changeLanguage(option),
+    (option: string) => i18n.changeLanguage(option),
     [i18n]
   );
 
