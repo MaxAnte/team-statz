@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Table from "../Table/Table";
-import Bracket from "../Bracket/Bracket";
+import Bracket from "../Bracket/bracket.tsx";
 
 import styles from "./playoffs.module.css";
 

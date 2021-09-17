@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../context/app.provider.tsx";
+import React, { useEffect, useContext } from "react";
+import { AppContext } from "../../context/app.provider";
 
-import BracketMatchup from "../BracketMatchup/bracketMatchup.tsx";
+import BracketMatchup from "../BracketMatchup/bracketMatchup";
 
 import styles from "./bracket.module.css";
 
 function Bracket() {
   const { getPlayoffsMatchups, playoffsmatchups } = useContext(AppContext);
-  useEffect(() => getPlayoffsMatchups(), []);
+
+  useEffect(() => {
+    getPlayoffsMatchups();
+  }, []);
+
   return (
     <svg viewBox="0 0 1580 660" className={styles.bracket}>
       <g
