@@ -6,7 +6,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";
 import MiniLoader from "../Loader/MiniLoader";
-import Select from "../Select/select";
+import Select from "../Select/select.tsx";
 
 import styles from "./games.module.css";
 

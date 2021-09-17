@@ -12,7 +12,7 @@ import { SessionContext } from "../../context/session.provider.tsx";
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
 import AuthModal from "../AuthModal/AuthModal";
-import Select from "../Select/select";
+import Select from "../Select/select.tsx";
 import TeamIcon from "../../assets/icons/teamIcon.tsx";
 import ScheduleIcon from "../../assets/icons/scheduleIcon.tsx";
 import StatsIcon from "../../assets/icons/statsIcon.tsx";

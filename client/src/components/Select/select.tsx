@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import Cookie from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
-import SelectArrowIcon from "../../assets/icons/selectArrowIcon.tsx";
+import SelectArrowIcon from "../../assets/icons/selectArrowIcon";
 
 import styles from "./select.module.css";
+
+type Props = {
+  options: string[];
+  className: string;
+  getActive: (active: string) => void;
+  defaultValue: string;
+  type?: string;
+  arrow?: boolean;
+};
 
 function Select({
   options,
@@ -14,16 +23,32 @@ function Select({
   defaultValue,
   type = "",
   arrow = true,
-}) {
+}: Props) {
   const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
   const { t } = useTranslation();
+  const [optionsRefs, setOptionsRefs] = useState<
+    React.MutableRefObject<HTMLInputElement>[]
+  >([]);
 
-  const clickHandle = (e) => {
-    setActive(e.target.dataset.option);
-    type === "language" &&
-      Cookie.set("language", e.target.dataset.option, { expires: 1 });
-    setToggle(false);
+  useEffect(() => {
+    setOptionsRefs((optionsRefs) =>
+      Array(4)
+        .fill({})
+        .map((_, i) => optionsRefs[i] || createRef())
+    );
+  }, []);
+
+  const clickHandle = (optionId: number) => {
+    const option = optionsRefs[optionId].current.dataset.option;
+    if (option) {
+      setActive(option);
+      type === "language" &&
+        Cookie.set("language", option, {
+          expires: 1,
+        });
+      setToggle(false);
+    }
   };
 
   useEffect(() => getActive(active), [active, getActive]);
@@ -49,11 +74,12 @@ function Select({
       >
         {options
           .filter((option) => option !== active && option !== TEAMNAME)
-          .map((option) => (
+          .map((option, optionId) => (
             <div
               key={`option_${option}`}
-              onClick={(e) => clickHandle(e)}
+              onClick={() => clickHandle(optionId)}
               data-option={option}
+              ref={optionsRefs[optionId]}
             >
               {t(option)}
             </div>
