@@ -33,11 +33,8 @@ function AddGamePopup({ closeHandler, date }: Props) {
     (enemy: string) => setForm((prevState) => ({ ...prevState, enemy })),
     []
   );
-  const handleChangeTime = (e: React.ChangeEvent) =>
-    setForm((prevState) => ({
-      ...prevState,
-      time: (e.target as HTMLInputElement).value,
-    }));
+  const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((prevState) => ({ ...prevState, time: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
