@@ -11,7 +11,7 @@ import Footer from "./components/Footer/footer";
 import Games from "./components/Games/Games";
 import Team from "./components/Team/team.tsx";
 import Player from "./components/Player/Player";
-import Schedule from "./components/Schedule/Schedule";
+import Schedule from "./components/Schedule/schedule.tsx";
 import Stats from "./components/Stats/Stats";
 import Playoffs from "./components/Playoff/playoffs.tsx";
 import AppSettings from "./components/AppSettings/appSettings.tsx";

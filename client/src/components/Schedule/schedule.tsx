@@ -2,15 +2,32 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import { SessionContext } from "../../context/session.provider.tsx";
-import { AppContext } from "../../context/app.provider.tsx";
-import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
+import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../context/app.provider";
+import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
+import { DateType } from "../../context/app.types";
 
-import GameCardCalendar from "../GameCardCalendar/gameCardCalendar.tsx";
-import AddDatePopup from "../AddDatePopup/addDatePopup.tsx";
-import PlusIcon from "../../assets/icons/plusIcon.tsx";
+import GameCardCalendar from "../GameCardCalendar/gameCardCalendar";
+import AddDatePopup from "../AddDatePopup/addDatePopup";
+import PlusIcon from "../../assets/icons/plusIcon";
 
 import styles from "./schedule.module.css";
+
+type AddDateForm = {
+  form: boolean;
+  date: string;
+};
+
+type YearMonth = {
+  year: string;
+  month: string;
+};
+
+type DaysForMonth = {
+  date: string;
+  dayOfMonth: number;
+  isCurrentMonth: boolean;
+};
 
 function Schedule() {
   const { isAuthenticated } = useContext(SessionContext);
@@ -19,12 +36,15 @@ function Schedule() {
     getDates,
     dates,
   } = useContext(AppContext);
-  const [calendarDates, setCalendarDates] = useState([]);
-  const [addDateForm, setAddDateForm] = useState({ form: false, date: "" });
+  const [addDateForm, setAddDateForm] = useState<AddDateForm>({
+    form: false,
+    date: "",
+  });
   const { t } = useTranslation();
 
-  useEffect(() => getDates(), []);
-  useEffect(() => setCalendarDates(dates), [dates]);
+  useEffect(() => {
+    getDates();
+  }, []);
 
   const closeHandler = () => setAddDateForm({ form: false, date: "" });
 
@@ -33,26 +53,24 @@ function Schedule() {
   dayjs.extend(weekday);
   dayjs.extend(weekOfYear);
 
-  const TODAY = dayjs().format("YYYY-MM-DD");
+  const TODAY: string = dayjs().format("YYYY-MM-DD");
 
-  const INITIAL_YEAR = dayjs().format("YYYY");
-  const INITIAL_MONTH = dayjs().format("M");
+  const INITIAL_YEAR: string = dayjs().format("YYYY");
+  const INITIAL_MONTH: string = dayjs().format("M");
 
-  const [calendar, setCalendar] = useState({
+  const [calendar, setCalendar] = useState<YearMonth>({
     year: INITIAL_YEAR,
     month: INITIAL_MONTH,
   });
 
-  const CURRENT_YEAR = calendar.year;
-  const CURRENT_MONTH = MONTHS[calendar.month - 1];
+  const CURRENT_YEAR: string = calendar.year;
+  const CURRENT_MONTH: string = MONTHS[Number(calendar.month) - 1];
 
-  const updateCalendar = (e) => {
-    let curMonth;
-    let curYear;
-    curYear = calendar.year;
-    curMonth = +calendar.month;
+  const updateCalendar = (e: React.MouseEvent) => {
+    let curYear: number = Number(calendar.year);
+    let curMonth: number = Number(calendar.month);
 
-    switch (e.target.id) {
+    switch ((e.target as HTMLElement).id) {
       case "next":
         if (curMonth < 12) {
           curMonth++;
@@ -72,14 +90,17 @@ function Schedule() {
       default:
         break;
     }
-    setCalendar({ year: curYear.toString(), month: curMonth.toString() });
+    setCalendar({ year: `${curYear}`, month: `${curMonth}` });
   };
 
-  const getNumberOfDaysInMonth = (year, month) => {
+  const getNumberOfDaysInMonth = (year: string, month: string): number => {
     return dayjs(`${year}-${month}-01`).daysInMonth();
   };
 
-  const createDaysForCurrentMonth = (year, month) => {
+  const createDaysForCurrentMonth = (
+    year: string,
+    month: string
+  ): DaysForMonth[] => {
     return [...Array(getNumberOfDaysInMonth(year, month))].map((_, index) => ({
       date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
       dayOfMonth: index + 1,
@@ -87,7 +108,10 @@ function Schedule() {
     }));
   };
 
-  const createDaysForPreviousMonth = (year, month) => {
+  const createDaysForPreviousMonth = (
+    year: string,
+    month: string
+  ): DaysForMonth[] => {
     const firstDayOfTheMonthWeekday = getWeekday(currentMonthDays[0].date);
 
     const previousMonth = dayjs(`${year}-${month}-01`).subtract(1, "month");
@@ -110,8 +134,11 @@ function Schedule() {
     }));
   };
 
-  const createDaysForNextMonth = (year, month) => {
-    const lastDayOfTheMonthWeekday = getWeekday(
+  const createDaysForNextMonth = (
+    year: string,
+    month: string
+  ): DaysForMonth[] => {
+    const lastDayOfTheMonthWeekday: number = getWeekday(
       `${year}-${month}-${currentMonthDays.length}`
     );
 
@@ -130,7 +157,8 @@ function Schedule() {
     }));
   };
 
-  const getWeekday = (date) => {
+  const getWeekday = (date: string): number => {
+    //@ts-ignore
     return dayjs(date).weekday();
   };
 
@@ -146,14 +174,14 @@ function Schedule() {
 
   let days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
-  const handleChangeDates = (newDate) =>
-    setCalendarDates((prevDates) => [...prevDates, newDate]);
-
+  //@ts-ignore
   const handleMouseScroll = (e) => {
     if (enableCalendarScrollMode) {
       e.deltaY > 0
-        ? updateCalendar({ target: { id: "next" } })
-        : updateCalendar({ target: { id: "prev" } });
+        ? //@ts-ignore
+          updateCalendar({ target: { id: "next" } })
+        : //@ts-ignore
+          updateCalendar({ target: { id: "prev" } });
     }
   };
 
@@ -189,16 +217,15 @@ function Schedule() {
               }
               ${day.date === TODAY ? styles.calendarDayToday : ""}`}
               onClick={() =>
-                calendarDates &&
-                calendarDates.find((el) => el.date === day.date)
+                dates && dates.find((el) => el.date === day.date)
                   ? null
                   : setAddDateForm({ form: true, date: day.date })
               }
             >
               <span>{day.dayOfMonth}</span>
-              {calendarDates &&
-              calendarDates.filter((game) => game.date === day.date).length ? (
-                calendarDates
+              {dates &&
+              dates.filter((game) => game.date === day.date).length ? (
+                dates
                   .filter((game) => game.date === day.date)
                   .map((game) => (
                     <div key={game._id} className={styles.dayCell}>
@@ -216,11 +243,7 @@ function Schedule() {
         </ol>
       </div>
       {isAuthenticated && addDateForm.form ? (
-        <AddDatePopup
-          closeHandler={closeHandler}
-          date={addDateForm.date}
-          handleChangeDates={handleChangeDates}
-        />
+        <AddDatePopup closeHandler={closeHandler} date={addDateForm.date} />
       ) : null}
     </div>
   );
