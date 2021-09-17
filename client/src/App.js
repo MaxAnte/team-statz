@@ -9,7 +9,7 @@ import { checkDate } from "./helpers/time.helpers.ts";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/footer";
 import Games from "./components/Games/Games";
-import Team from "./components/Team/Team";
+import Team from "./components/Team/team.tsx";
 import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";

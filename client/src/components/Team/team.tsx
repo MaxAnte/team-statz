@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
-import { AppContext } from "../../context/app.provider.tsx";
+import { AppContext } from "../../context/app.provider";
 
-import TeamInfo from "../TeamInfo/teamInfo.tsx";
-import PlayerCard from "../PlayerCard/playerCard.tsx";
-import BlockLoader from "../Loader/blockLoader.tsx";
+import TeamInfo from "../TeamInfo/teamInfo";
+import PlayerCard from "../PlayerCard/playerCard";
+import BlockLoader from "../Loader/blockLoader";
 
 import styles from "./team.module.css";
 
