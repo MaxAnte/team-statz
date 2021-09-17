@@ -13,7 +13,7 @@ import Team from "./components/Team/team.tsx";
 import Player from "./components/Player/Player";
 import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
-import Playoffs from "./components/Playoff/Playoffs";
+import Playoffs from "./components/Playoff/playoffs.tsx";
 import AppSettings from "./components/AppSettings/appSettings.tsx";
 import BirthDayResolver from "./components/BirthDayReslover/birthDayResolver.tsx";
 import ErrorPage from "./components/ErrorPage/errorPage.tsx";
