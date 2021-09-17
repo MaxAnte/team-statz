@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import { SessionContext } from "../../context/session.provider.tsx";
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../context/app.provider.tsx";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";

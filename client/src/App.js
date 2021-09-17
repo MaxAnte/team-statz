@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SessionProvider } from "./context/session.provider.tsx";
-import { AppProvider } from "./context/app.provider";
+import { AppProvider } from "./context/app.provider.tsx";
 import { useAuth } from "./hooks/auth.hook.tsx";
 import { useHttp } from "./hooks/http.hook.tsx";
 import { checkDate } from "./helpers/time.helpers.ts";

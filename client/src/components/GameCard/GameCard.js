@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 import { SessionContext } from "../../context/session.provider.tsx";
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../context/app.provider.tsx";
 import { useTranslation } from "react-i18next";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";

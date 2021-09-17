@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../context/app.provider.tsx";
 
 import GameCard from "../GameCard/GameCard";
 import Table from "../Table/Table";

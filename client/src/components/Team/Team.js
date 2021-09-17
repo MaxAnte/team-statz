@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../context/app.provider.tsx";
 
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";

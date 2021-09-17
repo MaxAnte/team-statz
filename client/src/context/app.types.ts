@@ -1,33 +1,24 @@
 export type Context = {
-  settings: Settings | null;
-  teams: Team[] | null;
-  players: Player[] | null;
-  games: Game[] | null;
-  dates: DateType[] | null;
-  playoffsmatchups: PlayoffsMatchup[] | null;
+  settings: Settings | {};
+  teams: Team[] | [];
+  players: Player[] | [];
+  games: Game[] | [];
+  dates: DateType[] | [];
+  playoffsmatchups: PlayoffsMatchup[] | [];
 
-  // getSettings: () => void;
-  // saveSettings: () => Promise<
-  //   | {
-  //       __v?: number | undefined;
-  //       _id: string;
-  //       enableCalendarScrollMode: boolean;
-  //       playoffsBracketBuilt: boolean;
-  //       playoffsStart: string;
-  //     }
-  //   | undefined
-  // >;
-  // getTeams: getTeams;
-  // editTeamInfo: editTeamInfo;
-  // getPlayers: getPlayers;
-  // getGames: getGames;
-  // deleteGame: deleteGame;
-  // getDates: getDates;
-  // addDate: addDate;
-  // getPlayoffsMatchups: getPlayoffsMatchups;
-  // buildPlayoffsBracket: buildPlayoffsBracket;
-  // clearPlayoffsBracket: clearPlayoffsBracket;
-  loading: boolean | false;
+  getSettings: () => Promise<Settings | undefined>;
+  saveSettings: (settings: Settings) => Promise<void>;
+  getTeams: () => Promise<Team[] | undefined>;
+  editTeamInfo: (team: Team) => Promise<void>;
+  getPlayers: () => Promise<Player[] | undefined>;
+  getGames: () => Promise<Game[] | undefined>;
+  deleteGame: (gameID: string) => Promise<void>;
+  getDates: () => Promise<DateType[] | undefined>;
+  addDate: (date: DateType) => Promise<void>;
+  getPlayoffsMatchups: () => Promise<PlayoffsMatchup[] | undefined>;
+  buildPlayoffsBracket: () => Promise<void>;
+  clearPlayoffsBracket: () => Promise<void>;
+  loading: boolean;
 };
 
 export type Settings = {

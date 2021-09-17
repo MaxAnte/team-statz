@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
-import { useHttp } from "../hooks/http.hook.tsx";
-import { useMessage } from "../hooks/message.hook.tsx";
+import { useHttp } from "../hooks/http.hook";
+import { useMessage } from "../hooks/message.hook";
+import { Context, DateType, Settings, Team } from "./app.types";
 import {
   SettingsSchema,
   TeamsSchema,
@@ -10,15 +11,17 @@ import {
   DatesSchema,
   DateSchema,
   PlayoffsMatchupsSchema,
-} from "./app.schema.ts";
+} from "./app.schema";
 
-export const AppContext = createContext(undefined);
+type Props = {
+  children: React.ReactChild;
+};
 
-export const AppProvider = ({ children }) => {
+export const AppContext = createContext<Context>(undefined!);
+
+export const AppProvider = ({ children }: Props) => {
   const message = useMessage();
   const { request, clearError } = useHttp();
-
-  useEffect(() => getSettings(), []);
 
   const getSettings = async () => {
     setAppState((prevAppState) => ({
@@ -36,19 +39,19 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return settings;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
   };
 
-  const saveSettings = async (settings) => {
+  const saveSettings = async (settings: Settings) => {
     try {
       SettingsSchema.parse(settings);
       await request("/api/settings/save", "POST", { ...settings });
       getSettings();
       message("Settings saved!", "success");
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -70,20 +73,20 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return teams;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
   };
 
-  const editTeamInfo = async (team) => {
+  const editTeamInfo = async (team: Team) => {
     try {
       TeamSchema.parse(team);
       await request("/api/team/edit-table-info", "POST", {
         ...team,
       });
       getTeams();
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -100,11 +103,11 @@ export const AppProvider = ({ children }) => {
       const players = PlayersSchema.parse(response);
 
       if (players.length) {
-        const bestPts = { pts: 0, id: 0 };
-        const bestReb = { reb: 0, id: 0 };
-        const bestAst = { ast: 0, id: 0 };
-        const bestBlk = { blk: 0, id: 0 };
-        const bestStl = { stl: 0, id: 0 };
+        const bestPts = { pts: 0, id: "" };
+        const bestReb = { reb: 0, id: "" };
+        const bestAst = { ast: 0, id: "" };
+        const bestBlk = { blk: 0, id: "" };
+        const bestStl = { stl: 0, id: "" };
         players.forEach((el) => {
           if (el.pts > bestPts.pts) {
             bestPts.pts = el.pts;
@@ -141,7 +144,7 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return players;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -163,19 +166,19 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return games;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
   };
 
-  const deleteGame = async (gameID) => {
+  const deleteGame = async (gameID: string) => {
     try {
       await request("/api/game/delete-game", "POST", {
         _id: gameID,
       });
       getGames();
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -197,18 +200,18 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return dates;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
   };
 
-  const addDate = async (date) => {
+  const addDate = async (date: DateType) => {
     try {
       DateSchema.parse(date);
       await request("/api/date/add-date", "POST", { ...date });
       getDates();
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -230,7 +233,7 @@ export const AppProvider = ({ children }) => {
         loading: false,
       }));
       return playoffsmatchups;
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -240,7 +243,7 @@ export const AppProvider = ({ children }) => {
     try {
       await request("/api/bracket/build", "POST", {});
       getSettings();
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
@@ -250,13 +253,13 @@ export const AppProvider = ({ children }) => {
     try {
       await request("/api/bracket/clear", "POST", {});
       getSettings();
-    } catch (e) {
+    } catch (e: any) {
       message(e.message);
       clearError();
     }
   };
 
-  const [appState, setAppState] = useState({
+  const [appState, setAppState] = useState<Context>({
     settings: {},
     teams: [],
     players: [],
@@ -264,20 +267,24 @@ export const AppProvider = ({ children }) => {
     dates: [],
     playoffsmatchups: [],
 
-    // getSettings: getSettings,
-    saveSettings: saveSettings,
-    getTeams: getTeams,
-    editTeamInfo: editTeamInfo,
-    getPlayers: getPlayers,
-    getGames: getGames,
-    deleteGame: deleteGame,
-    getDates: getDates,
-    addDate: addDate,
-    getPlayoffsMatchups: getPlayoffsMatchups,
-    buildPlayoffsBracket: buildPlayoffsBracket,
-    clearPlayoffsBracket: clearPlayoffsBracket,
+    getSettings,
+    saveSettings,
+    getTeams,
+    editTeamInfo,
+    getPlayers,
+    getGames,
+    deleteGame,
+    getDates,
+    addDate,
+    getPlayoffsMatchups,
+    buildPlayoffsBracket,
+    clearPlayoffsBracket,
     loading: false,
   });
+
+  useEffect(() => {
+    getSettings();
+  }, []);
 
   return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
 };
