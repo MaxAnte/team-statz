@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import Cookies from "js-cookie";
-import { useHttp } from "../../hooks/http.hook";
-import { useMessage } from "../../hooks/message.hook";
-import { Player } from "../../context/app.types";
 
 import BirthDayPopup from "../BirthDayPopup/birthDayPopup";
 import { AppContext } from "../../context/app.provider";
