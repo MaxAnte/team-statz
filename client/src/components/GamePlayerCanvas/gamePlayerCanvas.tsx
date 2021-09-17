@@ -33,10 +33,10 @@ function GamePlayerCanvas({
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const WIDTH = 290;
-  const HEIGHT = 310;
-  const DPI_WIDTH = WIDTH * 2;
-  const DPI_HEIGHT = HEIGHT * 2;
+  const WIDTH: number = 290;
+  const HEIGHT: number = 310;
+  const DPI_WIDTH: number = WIDTH * 2;
+  const DPI_HEIGHT: number = HEIGHT * 2;
 
   const drawMiss = (ctx: CanvasRenderingContext2D, element: Coord) => {
     ctx.moveTo(element.x - 10, element.y - 10);
