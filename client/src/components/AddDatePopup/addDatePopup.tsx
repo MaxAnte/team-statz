@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  FormEvent,
-} from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider";
 import { AddDateForm } from "./addDatePopup.types";
@@ -45,7 +39,7 @@ function AddGamePopup({ closeHandler, date }: Props) {
       time: (e.target as HTMLInputElement).value,
     }));
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addDate(form);
     setFormClose(true);
