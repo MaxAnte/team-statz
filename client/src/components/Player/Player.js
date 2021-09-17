@@ -7,7 +7,7 @@ import { Line, Doughnut } from "react-chartjs-2";
 import YouTube from "react-youtube";
 import { MONTHS } from "../../helpers/time.helpers.ts";
 
-import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
+import PlayerCanvas from "../PlayerCanvas/playerCanvas.tsx";
 import TableSheet from "../TableSheet/tableSheet.tsx";
 import BlockLoader from "../Loader/blockLoader.tsx";
 
