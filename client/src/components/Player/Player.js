@@ -8,7 +8,7 @@ import YouTube from "react-youtube";
 import { MONTHS } from "../../helpers/time.helpers.ts";
 
 import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
-import TableSheet from "../TableSheet/TableSheet";
+import TableSheet from "../TableSheet/tableSheet.tsx";
 import BlockLoader from "../Loader/blockLoader.tsx";
 
 import HeightIcon from "../../assets/icons/heightIcon.tsx";

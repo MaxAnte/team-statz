@@ -1,9 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Player } from "../../context/app.types";
 
 import styles from "./tableSheet.module.css";
 
-function TableSheet({ tableStats }) {
+type Props = {
+  tableStats: Player;
+};
+
+function TableSheet({ tableStats }: Props) {
   const { t } = useTranslation();
   return (
     <div className={styles.tableWrap}>
@@ -104,7 +109,7 @@ function TableSheet({ tableStats }) {
                 <td>{tableStats.plus_minus}</td>
               </>
             ) : (
-              <td colspan="25" className="text-center">
+              <td colSpan={25} className="text-center">
                 {t("The season is about to be started!")}
               </td>
             )}
