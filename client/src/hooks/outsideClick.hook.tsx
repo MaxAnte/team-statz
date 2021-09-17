@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export const useOutsideClickHandler = (
-  ref: React.MutableRefObject<HTMLElement>
+  ref: React.MutableRefObject<HTMLElement | null>
 ) => {
   const [response, setResponse] = useState(false);
   useEffect(() => {
