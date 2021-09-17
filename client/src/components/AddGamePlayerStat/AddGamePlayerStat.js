@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
+import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas.tsx";
 
 import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";

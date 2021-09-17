@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHttp } from "../../hooks/http.hook.tsx";
 import { useTranslation } from "react-i18next";
 
-import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
+import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas.tsx";
 import BlockLoader from "../Loader/blockLoader.tsx";
 
 import styles from "./gamePlayerStat.module.css";

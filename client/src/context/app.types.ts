@@ -78,7 +78,7 @@ export type Player = {
 };
 
 export type Coord = {
-  _id: string;
+  _id?: string;
   x: number;
   y: number;
   miss: boolean;

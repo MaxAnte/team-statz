@@ -1,62 +1,85 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Coord } from "../../context/app.types";
 
 import styles from "./gamePlayerCanvas.module.css";
+
+type Props = {
+  coordinates?: Coord[];
+  mode?: string;
+  canvID: string;
+  handleGetCoords?: (coods: Coord[]) => void;
+};
+
+type CoordBase = {
+  x: number;
+  y: number;
+};
 
 function GamePlayerCanvas({
   coordinates = [],
   mode = "edit",
   canvID,
   handleGetCoords = () => {},
-}) {
-  const [newCoords, setNewCoords] = useState(coordinates);
-  const [canv, setCanv] = useState(undefined);
-  const [canvBound, setCanvBound] = useState(undefined);
-  const [context, setContext] = useState(undefined);
-  const [drawType, setDrawType] = useState(true);
+}: Props) {
+  const [newCoords, setNewCoords] = useState<Coord[]>(coordinates);
+  const [canv, setCanv] = useState<HTMLCanvasElement | undefined>(undefined);
+  const [canvBound, setCanvBound] = useState<DOMRect | undefined>(undefined);
+  const [context, setContext] = useState<CanvasRenderingContext2D | undefined>(
+    undefined
+  );
+  const [drawType, setDrawType] = useState<boolean>(true);
   const { t } = useTranslation();
 
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const WIDTH = 290;
   const HEIGHT = 310;
   const DPI_WIDTH = WIDTH * 2;
   const DPI_HEIGHT = HEIGHT * 2;
 
-  const drawMiss = (ctx, element) => {
+  const drawMiss = (ctx: CanvasRenderingContext2D, element: Coord) => {
     ctx.moveTo(element.x - 10, element.y - 10);
     ctx.lineTo(element.x + 10, element.y + 10);
     ctx.moveTo(element.x + 10, element.y - 10);
     ctx.lineTo(element.x - 10, element.y + 10);
   };
-  const drawMade = (ctx, element) =>
+  const drawMade = (ctx: CanvasRenderingContext2D, element: Coord) =>
     ctx.arc(element.x, element.y, 10, 0, 2 * Math.PI);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.style.width = WIDTH + "px";
-    canvas.style.height = HEIGHT + "px";
-    canvas.width = DPI_WIDTH;
-    canvas.height = DPI_HEIGHT;
-    var ctx = canvas.getContext("2d");
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (canvas) {
+      canvas.style.width = WIDTH + "px";
+      canvas.style.height = HEIGHT + "px";
+      canvas.width = DPI_WIDTH;
+      canvas.height = DPI_HEIGHT;
+      var ctx = canvas.getContext("2d");
 
-    setCanv(canvas);
-    setCanvBound(canvas.getBoundingClientRect());
-    setContext(ctx);
+      if (ctx) {
+        setCanv(canvas);
+        setCanvBound(canvas.getBoundingClientRect());
+        setContext(ctx);
 
-    newCoords.forEach((el) => {
-      ctx.beginPath();
-      el.miss ? drawMiss(ctx, el) : drawMade(ctx, el);
-      ctx.lineWidth = 5;
-      ctx.closePath();
-      el.miss ? (ctx.strokeStyle = "#ff0000") : (ctx.strokeStyle = "#00d000");
-      ctx.stroke();
-    });
-    handleGetCoords(newCoords);
+        newCoords.forEach((el) => {
+          if (ctx) {
+            ctx.beginPath();
+            el.miss ? drawMiss(ctx, el) : drawMade(ctx, el);
+            ctx.lineWidth = 5;
+            ctx.closePath();
+            el.miss
+              ? (ctx.strokeStyle = "#ff0000")
+              : (ctx.strokeStyle = "#00d000");
+            ctx.stroke();
+          }
+        });
+        handleGetCoords(newCoords);
+      }
+    }
   }, [newCoords, DPI_WIDTH, DPI_HEIGHT]);
 
-  const draw = (e) => {
-    if (mode !== "view") {
+  const draw = (e: React.MouseEvent) => {
+    if (mode !== "view" && context) {
       const { x, y } = getMousePos(e);
       drawType === true
         ? (context.fillStyle = "#008000")
@@ -68,15 +91,19 @@ function GamePlayerCanvas({
     }
   };
 
-  const getMousePos = (evt) => {
-    return {
-      x:
-        ((evt.clientX - canvBound.left) / (canvBound.right - canvBound.left)) *
-        canv.width,
-      y:
-        ((evt.clientY - canvBound.top) / (canvBound.bottom - canvBound.top)) *
-        canv.height,
-    };
+  const getMousePos = (evt: React.MouseEvent): CoordBase => {
+    if (canvBound && canv) {
+      return {
+        x:
+          ((evt.clientX - canvBound.left) /
+            (canvBound.right - canvBound.left)) *
+          canv.width,
+        y:
+          ((evt.clientY - canvBound.top) / (canvBound.bottom - canvBound.top)) *
+          canv.height,
+      };
+    }
+    return { x: 0, y: 0 };
   };
 
   const handleUndo = () =>
