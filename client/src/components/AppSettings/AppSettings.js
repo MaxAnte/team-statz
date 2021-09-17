@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider.tsx";
 import { SessionContext } from "../../context/session.provider.tsx";
 
-import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
+import ConfirmPopup from "../ConfirmPopup/confirmPopup.tsx";
 import BlockLoader from "../Loader/blockLoader.tsx";
 import ErrorPage from "../ErrorPage/errorPage.tsx";
 
