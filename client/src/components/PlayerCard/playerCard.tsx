@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Player } from "../../context/app.types";
 
 import styles from "./playerCard.module.css";
 
@@ -10,7 +11,11 @@ import assist from "../../assets/images/badges/assist.png";
 import thief from "../../assets/images/badges/thief.svg";
 import block from "../../assets/images/badges/block.svg";
 
-function PlayerCard({ player }) {
+type Props = {
+  player: Player;
+};
+
+function PlayerCard({ player }: Props) {
   const { t } = useTranslation();
   return (
     <div className={styles.playerCard}>

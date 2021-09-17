@@ -5,7 +5,7 @@ import { TEAMNAME } from "../../project.const";
 import { AppContext } from "../../context/app.provider.tsx";
 
 import TeamInfo from "../TeamInfo/teamInfo.tsx";
-import PlayerCard from "../PlayerCard/PlayerCard";
+import PlayerCard from "../PlayerCard/playerCard.tsx";
 import BlockLoader from "../Loader/blockLoader.tsx";
 
 import styles from "./team.module.css";
