@@ -1,12 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useMessage } from "../../hooks/message.hook.tsx";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider.tsx";
-import { SessionContext } from "../../context/session.provider.tsx";
+import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
+import { Settings } from "../../context/app.types";
 
-import ConfirmPopup from "../ConfirmPopup/confirmPopup.tsx";
-import BlockLoader from "../Loader/blockLoader.tsx";
-import ErrorPage from "../ErrorPage/errorPage.tsx";
+import ConfirmPopup from "../ConfirmPopup/confirmPopup";
+import BlockLoader from "../Loader/blockLoader";
+import ErrorPage from "../ErrorPage/errorPage";
 
 import styles from "./appSettings.module.css";
 
@@ -19,20 +20,26 @@ function AppSettings() {
     loading,
   } = useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
-  const [form, setForm] = useState({ playoffsStart: "" });
-  const [popup, setPopup] = useState(false);
+  const [form, setForm] = useState<Settings>(settings);
+  const [popup, setPopup] = useState<boolean>(false);
   const message = useMessage();
   const { t } = useTranslation();
 
-  useEffect(() => setForm({ ...settings }), [settings]);
+  useEffect(() => setForm(settings), [settings]);
 
-  const handleTextInputChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  const handleTextInputChange = (e: React.ChangeEvent) =>
+    setForm((prev) => ({
+      ...prev,
+      [e.target.id]: (e.target as HTMLInputElement).value,
+    }));
 
-  const handleCheckboxInputChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.id]: !!e.target.checked }));
+  const handleCheckboxInputChange = (e: React.ChangeEvent) =>
+    setForm((prev) => ({
+      ...prev,
+      [e.target.id]: !!(e.target as HTMLInputElement).checked,
+    }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart) &&
@@ -46,7 +53,7 @@ function AppSettings() {
     }
   };
 
-  const handleGetAnswer = (answer) => {
+  const handleGetAnswer = (answer: boolean) => {
     setPopup(false);
     if (answer) {
       buildPlayoffsBracket();

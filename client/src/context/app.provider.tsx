@@ -260,7 +260,11 @@ export const AppProvider = ({ children }: Props) => {
   };
 
   const [appState, setAppState] = useState<Context>({
-    settings: {},
+    settings: {
+      enableCalendarScrollMode: false,
+      playoffsBracketBuilt: false,
+      playoffsStart: "",
+    },
     teams: [],
     players: [],
     games: [],

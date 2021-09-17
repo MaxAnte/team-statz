@@ -1,5 +1,5 @@
 export type Context = {
-  settings: Settings | {};
+  settings: Settings;
   teams: Team[] | [];
   players: Player[] | [];
   games: Game[] | [];
@@ -22,7 +22,7 @@ export type Context = {
 };
 
 export type Settings = {
-  _id: string;
+  _id?: string;
   enableCalendarScrollMode: boolean;
   playoffsBracketBuilt: boolean;
   playoffsStart: string;
