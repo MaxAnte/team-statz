@@ -27,17 +27,11 @@ function AppSettings() {
 
   useEffect(() => setForm(settings), [settings]);
 
-  const handleTextInputChange = (e: React.ChangeEvent) =>
-    setForm((prev) => ({
-      ...prev,
-      [e.target.id]: (e.target as HTMLInputElement).value,
-    }));
+  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
 
-  const handleCheckboxInputChange = (e: React.ChangeEvent) =>
-    setForm((prev) => ({
-      ...prev,
-      [e.target.id]: !!(e.target as HTMLInputElement).checked,
-    }));
+  const handleCheckboxInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((prev) => ({ ...prev, [e.target.id]: !!e.target.checked }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
