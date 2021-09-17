@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { SessionContext } from "../../context/session.provider.tsx";
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
-import AuthModal from "../AuthModal/AuthModal";
+import AuthModal from "../AuthModal/authModal.tsx";
 import Select from "../Select/select.tsx";
 import TeamIcon from "../../assets/icons/teamIcon.tsx";
 import ScheduleIcon from "../../assets/icons/scheduleIcon.tsx";

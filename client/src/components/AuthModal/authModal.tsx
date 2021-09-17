@@ -1,28 +1,38 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SessionContext } from "../../context/session.provider.tsx";
-import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook.tsx";
+import { SessionContext } from "../../context/session.provider";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import styles from "./authModal.module.css";
 
-function AuthModal({ closeOnLogin }) {
+type Props = {
+  closeOnLogin: () => void;
+};
+type UserLoginData = {
+  login: string;
+  password: string;
+};
+
+function AuthModal({ closeOnLogin }: Props) {
   const { login } = useContext(SessionContext);
-  const message = useMessage();
   const { loading, error, request, clearError } = useHttp();
-  const [form, setForm] = useState({ login: "", password: "" });
+  const message = useMessage();
   const { t } = useTranslation();
+  const [form, setForm] = useState<UserLoginData>({ login: "", password: "" });
 
   useEffect(() => {
-    message(error);
-    clearError();
+    if (error) {
+      message(error);
+      clearError();
+    }
   }, [error, message, clearError]);
 
-  const changeHandler = (e) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const loginHandler = async (e) => {
+  const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
@@ -31,7 +41,8 @@ function AuthModal({ closeOnLogin }) {
     } catch (e) {}
   };
 
-  // const registerHandler = async () => {
+  // const registerHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
   //   try {
   //     const data = await request("/api/auth/register", "POST", { ...form });
   //     console.log("Data:", data);
