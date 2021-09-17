@@ -9,7 +9,7 @@ import { MONTHS } from "../../helpers/time.helpers.ts";
 
 import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
-import BlockLoader from "../Loader/BlockLoader";
+import BlockLoader from "../Loader/blockLoader.tsx";
 
 import HeightIcon from "../../assets/icons/heightIcon.tsx";
 import WeightIcon from "../../assets/icons/weightIcon.tsx";

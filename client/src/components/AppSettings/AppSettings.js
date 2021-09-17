@@ -5,7 +5,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 import { SessionContext } from "../../context/session.provider.tsx";
 
 import ConfirmPopup from "../ConfirmPopup/ConfirmPopup";
-import BlockLoader from "../Loader/BlockLoader";
+import BlockLoader from "../Loader/blockLoader.tsx";
 import ErrorPage from "../ErrorPage/ErrorPage";
 
 import styles from "./appSettings.module.css";

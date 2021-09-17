@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
-import MiniLoader from "../Loader/MiniLoader";
+import MiniLoader from "../Loader/miniLoader.tsx";
 import TableQuarters from "../TableQuarters/TableQuarters";
 
 import CloseIcon from "../../assets/icons/closeIcon.tsx";

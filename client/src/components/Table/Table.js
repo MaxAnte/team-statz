@@ -4,7 +4,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 import { SessionContext } from "../../context/session.provider.tsx";
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
-import MiniLoader from "../Loader/MiniLoader";
+import MiniLoader from "../Loader/miniLoader.tsx";
 
 import styles from "./table.module.css";
 

@@ -4,7 +4,7 @@ import { useHttp } from "../../hooks/http.hook.tsx";
 import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
 
-import BlockLoader from "../Loader/BlockLoader";
+import BlockLoader from "../Loader/blockLoader.tsx";
 
 import styles from "./stats.module.css";
 

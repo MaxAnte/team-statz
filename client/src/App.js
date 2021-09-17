@@ -17,7 +17,7 @@ import Playoffs from "./components/Playoff/Playoffs";
 import AppSettings from "./components/AppSettings/AppSettings";
 import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
-import Loader from "./components/Loader/Loader";
+import Loader from "./components/Loader/loader.tsx";
 
 import "./i18n/config";
 

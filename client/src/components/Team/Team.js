@@ -6,7 +6,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 
 import TeamInfo from "../TeamInfo/TeamInfo";
 import PlayerCard from "../PlayerCard/PlayerCard";
-import BlockLoader from "../Loader/BlockLoader";
+import BlockLoader from "../Loader/blockLoader.tsx";
 
 import styles from "./team.module.css";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import MiniLoader from "../Loader/MiniLoader";
+import MiniLoader from "../Loader/miniLoader.tsx";
 
 import styles from "./gameCardCalendar.module.css";
 

@@ -3,7 +3,7 @@ import { useHttp } from "../../hooks/http.hook.tsx";
 import { useTranslation } from "react-i18next";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/GamePlayerCanvas";
-import BlockLoader from "../Loader/BlockLoader";
+import BlockLoader from "../Loader/blockLoader.tsx";
 
 import styles from "./gamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
