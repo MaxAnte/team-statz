@@ -150,6 +150,23 @@ export const AppProvider = ({ children }: Props) => {
     }
   };
 
+  const getBirthdayPlayers = async () => {
+    try {
+      const response = await request("/api/player/birthDay", "POST", {});
+
+      const birthDayPlayers = PlayersSchema.parse(response);
+
+      setAppState((prevAppState) => ({
+        ...prevAppState,
+        birthDayPlayers,
+      }));
+      return birthDayPlayers;
+    } catch (e: any) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const getGames = async () => {
     setAppState((prevAppState) => ({
       ...prevAppState,
@@ -270,12 +287,14 @@ export const AppProvider = ({ children }: Props) => {
     games: [],
     dates: [],
     playoffsmatchups: [],
+    birthDayPlayers: [],
 
     getSettings,
     saveSettings,
     getTeams,
     editTeamInfo,
     getPlayers,
+    getBirthdayPlayers,
     getGames,
     deleteGame,
     getDates,

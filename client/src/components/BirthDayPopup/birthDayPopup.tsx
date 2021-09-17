@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
 import { useTranslation } from "react-i18next";
+import { Player } from "../../context/app.types";
 
-import CloseIcon from "../../assets/icons/closeIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon";
 
 import styles from "./birthDayPopup.module.css";
 
-function BirthDayPopup({ players, closeHandler }) {
-  const [isBounced, setIsBounced] = useState(false);
+type Props = {
+  players: Player[];
+  closeHandler: () => void;
+};
+
+function BirthDayPopup({ players, closeHandler }: Props) {
+  const [isBounced, setIsBounced] = useState<boolean>(false);
   const { t } = useTranslation();
 
-  const width = window.innerWidth;
-  const height = Math.max(
+  const width: number = window.innerWidth;
+  const height: number = Math.max(
     document.body.scrollHeight,
     document.documentElement.scrollHeight,
     document.body.offsetHeight,
@@ -20,7 +26,9 @@ function BirthDayPopup({ players, closeHandler }) {
     document.documentElement.clientHeight
   );
 
-  useEffect(() => setTimeout(() => setIsBounced(true), 2000), []);
+  useEffect(() => {
+    setTimeout(() => setIsBounced(true), 2000);
+  }, []);
 
   return (
     <>

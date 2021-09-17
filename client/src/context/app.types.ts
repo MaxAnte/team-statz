@@ -5,12 +5,14 @@ export type Context = {
   games: Game[] | [];
   dates: DateType[] | [];
   playoffsmatchups: PlayoffsMatchup[] | [];
+  birthDayPlayers: Player[] | [];
 
   getSettings: () => Promise<Settings | undefined>;
   saveSettings: (settings: Settings) => Promise<void>;
   getTeams: () => Promise<Team[] | undefined>;
   editTeamInfo: (team: Team) => Promise<void>;
   getPlayers: () => Promise<Player[] | undefined>;
+  getBirthdayPlayers: () => Promise<Player[] | undefined>;
   getGames: () => Promise<Game[] | undefined>;
   deleteGame: (gameID: string) => Promise<void>;
   getDates: () => Promise<DateType[] | undefined>;

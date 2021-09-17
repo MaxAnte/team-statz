@@ -680,7 +680,7 @@ router.post("/player/birthDay", async (req, res) => {
     (player) => player.birthDate.slice(5) === todayToLocalUsedStr.slice(5)
   );
 
-  res.json({ ...birthDays });
+  res.json(birthDays);
 });
 
 // /api/player/id

@@ -15,7 +15,7 @@ import Schedule from "./components/Schedule/Schedule";
 import Stats from "./components/Stats/Stats";
 import Playoffs from "./components/Playoff/Playoffs";
 import AppSettings from "./components/AppSettings/appSettings.tsx";
-import BirthDayResolver from "./components/BirthDayReslover/BirthDayResolver";
+import BirthDayResolver from "./components/BirthDayReslover/birthDayResolver.tsx";
 import ErrorPage from "./components/ErrorPage/errorPage.tsx";
 import Loader from "./components/Loader/loader.tsx";
 
