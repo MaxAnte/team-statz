@@ -1,39 +1,46 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useHttp } from "../../hooks/http.hook.tsx";
+import React, { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { AppContext } from "../../context/app.provider";
+import { PlayerStats } from "../../context/app.types";
 
-import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas.tsx";
-import BlockLoader from "../Loader/blockLoader.tsx";
+import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
+import BlockLoader from "../Loader/blockLoader";
 
 import styles from "./gamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function GamePlayerStat({ player, gameID }) {
-  const { loading, request } = useHttp();
+type Props = {
+  player: PlayerStats;
+  gameID: string;
+};
+
+function GamePlayerStat({ player, gameID }: Props) {
+  const { getPlayerById, loading } = useContext(AppContext);
+  const { t } = useTranslation();
   const [playerInfo, setPlayerInfo] = useState({
     name: "",
     position: "",
     image_thumb: "",
   });
-  const { t } = useTranslation();
-
-  const getPlayerById = useCallback(async () => {
-    try {
-      const data = await request("/api/player/id", "POST", { _id: player._id });
-      if (Object.keys(data).length) setPlayerInfo(data);
-    } catch (e) {}
-  }, [request, player._id]);
 
   useEffect(() => {
-    getPlayerById();
-  }, [getPlayerById]);
+    if (playerInfo.name === "") {
+      (async () => {
+        const res = await getPlayerById(player._id);
+        if (res) {
+          const { name, position, image_thumb } = res;
+          setPlayerInfo({ name, position, image_thumb });
+        }
+      })();
+    }
+  }, []);
 
-  const getPercentage = (atempts, made) => {
-    let perc = (made * 100) / atempts;
-    return atempts ? `${parseFloat(perc.toFixed(1))}%` : !made ? "100%" : "0%";
+  const getPercentage = (attempts: number, made: number): string => {
+    let perc = (made * 100) / attempts;
+    return attempts ? `${parseFloat(perc.toFixed(1))}%` : !made ? "100%" : "0%";
   };
 
-  const getEfficiencyRate = (player) => {
+  const getEfficiencyRate = (player: PlayerStats): string => {
     const {
       pts,
       oreb,
@@ -56,17 +63,25 @@ function GamePlayerStat({ player, gameID }) {
     return `${parseFloat(perc.toFixed(1))}%`;
   };
 
-  const getBadges = (player) => {
+  const getBadges = (player: PlayerStats) => {
     let count = 0;
     let dreb = 0;
-    const countableStats = ["pts", "dreb", "oreb", "ast", "blk", "stl"];
-    const statsBadges = [
+    const countableStats: string[] = [
+      "pts",
+      "dreb",
+      "oreb",
+      "ast",
+      "blk",
+      "stl",
+    ];
+    const statsBadges: string[] = [
       "Double-Double",
       "Triple-Double",
       "Quadriple-Double",
       "Quntiple-Double",
     ];
     countableStats.forEach((key) => {
+      //@ts-ignore
       if (key !== "dreb" && key !== "oreb" && player[key] >= 10) count++;
       if (key === "dreb") dreb = player[key];
       if (key === "oreb") dreb += player[key];
@@ -86,9 +101,7 @@ function GamePlayerStat({ player, gameID }) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        {loading ? (
-          <BlockLoader />
-        ) : (
+        {playerInfo.image_thumb ? (
           <>
             <img
               src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
@@ -98,6 +111,8 @@ function GamePlayerStat({ player, gameID }) {
               {playerInfo.name}, {playerInfo.position}
             </h5>
           </>
+        ) : (
+          <BlockLoader />
         )}
       </div>
       <div className={styles.gpsRight}>
@@ -235,7 +250,7 @@ function GamePlayerStat({ player, gameID }) {
           <GamePlayerCanvas
             coordinates={player.coordinates}
             mode="view"
-            canvID={`canv_game-${gameID}_player-${player.id}`}
+            canvID={`canv_game-${gameID}_player-${player._id}`}
           />
         </div>
       </div>

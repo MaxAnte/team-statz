@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import GamePlayerStat from "../GamePlayerStat/GamePlayerStat";
 import { SessionContext } from "../../context/session.provider.tsx";
 import { AppContext } from "../../context/app.provider.tsx";
 import { useTranslation } from "react-i18next";
 
+import GamePlayerStat from "../GamePlayerStat/gamePlayerStat.tsx";
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import EditGamePopup from "../EditGamePopup/EditGamePopup";
 import TableQuarters from "../TableQuarters/tableQuarters.tsx";

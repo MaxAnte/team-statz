@@ -12,6 +12,7 @@ export type Context = {
   getTeams: () => Promise<Team[] | undefined>;
   editTeamInfo: (team: Team) => Promise<void>;
   getPlayers: () => Promise<Player[] | undefined>;
+  getPlayerById: (pId: string) => Promise<Player | undefined>;
   getBirthdayPlayers: () => Promise<Player[] | undefined>;
   getGames: () => Promise<Game[] | undefined>;
   deleteGame: (gameID: string) => Promise<void>;

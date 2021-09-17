@@ -11,6 +11,7 @@ import {
   DatesSchema,
   DateSchema,
   PlayoffsMatchupsSchema,
+  PlayerSchema,
 } from "./app.schema";
 
 type Props = {
@@ -144,6 +145,19 @@ export const AppProvider = ({ children }: Props) => {
         loading: false,
       }));
       return players;
+    } catch (e: any) {
+      message(e.message);
+      clearError();
+    }
+  };
+
+  const getPlayerById = async (pId: string) => {
+    try {
+      const response = await request("/api/player/id", "POST", { _id: pId });
+
+      const player = PlayerSchema.parse(response);
+
+      return player;
     } catch (e: any) {
       message(e.message);
       clearError();
@@ -294,6 +308,7 @@ export const AppProvider = ({ children }: Props) => {
     getTeams,
     editTeamInfo,
     getPlayers,
+    getPlayerById,
     getBirthdayPlayers,
     getGames,
     deleteGame,
