@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../context/app.provider.tsx";
 
-import BracketMatchup from "../BracketMatchup/BracketMatchup";
+import BracketMatchup from "../BracketMatchup/bracketMatchup.tsx";
 
 import styles from "./bracket.module.css";
 

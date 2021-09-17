@@ -1,8 +1,15 @@
 import React from "react";
+import { PlayoffsMatchup } from "../../context/app.types";
 
 import styles from "./bracketMatchup.module.css";
 
-function BracketMatchup({ info, scoreAlign, finals = false }) {
+type Props = {
+  info: PlayoffsMatchup;
+  scoreAlign: string;
+  finals?: boolean;
+};
+
+function BracketMatchup({ info, scoreAlign, finals = false }: Props) {
   const { team1, team2, winner = "" } = info || { team1: "TBD", team2: "TBD" };
   return (
     <svg
