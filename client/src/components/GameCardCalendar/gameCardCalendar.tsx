@@ -1,13 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Game } from "../../context/app.types";
+import { DateType } from "../../context/app.types";
 
 import MiniLoader from "../Loader/miniLoader";
 
 import styles from "./gameCardCalendar.module.css";
 
 type Props = {
-  game: Game;
+  game: DateType;
 };
 
 function GameCardCalendar({ game }: Props) {
@@ -18,7 +18,7 @@ function GameCardCalendar({ game }: Props) {
         {t("vs.")} {game.enemy}
       </h4>
       {new Date() > new Date(game.date) ? (
-        game.ourScore ? (
+        game.ourScore && game.enemyScore ? (
           <p className={styles.calendarGameScore}>
             <span
               className={`our ${
