@@ -1,11 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Game } from "../../context/app.types";
 
-import MiniLoader from "../Loader/miniLoader.tsx";
+import MiniLoader from "../Loader/miniLoader";
 
 import styles from "./gameCardCalendar.module.css";
 
-function GameCardCalendar({ game }) {
+type Props = {
+  game: Game;
+};
+
+function GameCardCalendar({ game }: Props) {
   const { t } = useTranslation();
   return (
     <div className={styles.calendarGameCard}>

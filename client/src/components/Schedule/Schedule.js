@@ -6,7 +6,7 @@ import { SessionContext } from "../../context/session.provider.tsx";
 import { AppContext } from "../../context/app.provider.tsx";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
 
-import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
+import GameCardCalendar from "../GameCardCalendar/gameCardCalendar.tsx";
 import AddDatePopup from "../AddDatePopup/addDatePopup.tsx";
 import PlusIcon from "../../assets/icons/plusIcon.tsx";
 
