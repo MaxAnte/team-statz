@@ -1,18 +1,24 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Game, Player } from "../../context/app.types";
 
 import logo from "../../assets/images/logo-bc.png";
 
 import styles from "./teamInfo.module.css";
 
-function TeamInfo({ players, games }) {
+type Props = {
+  players: Player[];
+  games: Game[];
+};
+
+function TeamInfo({ players, games }: Props) {
   const { t } = useTranslation();
-  const actualGames = games.filter((game) => !game.pending);
-  const arrTotals = Array(4).fill(0);
-  const properties = ["REB", "AST", "BLK", "STL"];
-  let offensiveRating = 0;
-  let defensiveRating = 0;
-  let winsCount = 0;
+  const actualGames: Game[] = games.filter((game) => !game.pending);
+  const arrTotals: number[] = Array(4).fill(0);
+  const properties: string[] = ["REB", "AST", "BLK", "STL"];
+  let offensiveRating: number = 0;
+  let defensiveRating: number = 0;
+  let winsCount: number = 0;
   players.forEach((el) => {
     arrTotals[0] += el.reb;
     arrTotals[1] += el.ast;

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 import { AppContext } from "../../context/app.provider.tsx";
 
-import TeamInfo from "../TeamInfo/TeamInfo";
+import TeamInfo from "../TeamInfo/teamInfo.tsx";
 import PlayerCard from "../PlayerCard/PlayerCard";
 import BlockLoader from "../Loader/blockLoader.tsx";
 
