@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import OurTeamLogo from "../../assets/images/logo-bc.png";
-import EnemyTeamIcon from "../../assets/icons/EnemyTeamIcon.tsx";
-import PlusIcon from "../../assets/icons/PlusIcon.tsx";
+import EnemyTeamIcon from "../../assets/icons/enemyTeamIcon.tsx";
+import PlusIcon from "../../assets/icons/plusIcon.tsx";
 
 import styles from "./tableQuarters.module.css";
 

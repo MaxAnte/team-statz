@@ -4,7 +4,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 
 import Select from "../Select/select";
 
-import CloseIcon from "../../assets/icons/CloseIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon.tsx";
 
 import styles from "./addDatePopup.module.css";
 

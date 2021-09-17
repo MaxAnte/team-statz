@@ -8,8 +8,8 @@ import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
-import CloseIcon from "../../assets/icons/CloseIcon.tsx";
-import CheckIcon from "../../assets/icons/CheckIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon.tsx";
+import CheckIcon from "../../assets/icons/checkIcon.tsx";
 
 import styles from "./addGamePopup.module.css";
 

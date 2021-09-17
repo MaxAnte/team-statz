@@ -9,8 +9,8 @@ import EditGamePopup from "../EditGamePopup/EditGamePopup";
 import TableQuarters from "../TableQuarters/TableQuarters";
 import MiniLoader from "../Loader/MiniLoader";
 
-import EditIcon from "../../assets/icons/EditIcon.tsx";
-import RemoveIcon from "../../assets/icons/RemoveIcon.tsx";
+import EditIcon from "../../assets/icons/editIcon.tsx";
+import RemoveIcon from "../../assets/icons/removeIcon.tsx";
 
 import styles from "./gameCard.module.css";
 

@@ -11,9 +11,9 @@ import PlayerCanvas from "../PlayerCanvas/PlayerCanvas";
 import TableSheet from "../TableSheet/TableSheet";
 import BlockLoader from "../Loader/BlockLoader";
 
-import HeightIcon from "../../assets/icons/HeightIcon.tsx";
-import WeightIcon from "../../assets/icons/WeightIcon.tsx";
-import JerseyIcon from "../../assets/icons/JerseyIcon.tsx";
+import HeightIcon from "../../assets/icons/heightIcon.tsx";
+import WeightIcon from "../../assets/icons/weightIcon.tsx";
+import JerseyIcon from "../../assets/icons/jerseyIcon.tsx";
 
 import styles from "./player.module.css";
 

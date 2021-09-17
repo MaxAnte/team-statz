@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
 
-import SelectArrowIcon from "../../assets/icons/SelectArrowIcon.tsx";
+import SelectArrowIcon from "../../assets/icons/selectArrowIcon.tsx";
 
 import styles from "./select.module.css";
 

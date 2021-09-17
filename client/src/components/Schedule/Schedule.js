@@ -8,7 +8,7 @@ import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
 import AddDatePopup from "../AddDatePopup/AddDatePopup";
-import PlusIcon from "../../assets/icons/PlusIcon.tsx";
+import PlusIcon from "../../assets/icons/plusIcon.tsx";
 
 import styles from "./schedule.module.css";
 

@@ -13,12 +13,12 @@ import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
 
 import AuthModal from "../AuthModal/AuthModal";
 import Select from "../Select/select";
-import TeamIcon from "../../assets/icons/TeamIcon.tsx";
-import ScheduleIcon from "../../assets/icons/ScheduleIcon.tsx";
-import StatsIcon from "../../assets/icons/StatsIcon.tsx";
-import UserIcon from "../../assets/icons/UserIcon.tsx";
-import SettingsIcon from "../../assets/icons/SettingsIcon.tsx";
-import LogoutIcon from "../../assets/icons/LogoutIcon.tsx";
+import TeamIcon from "../../assets/icons/teamIcon.tsx";
+import ScheduleIcon from "../../assets/icons/scheduleIcon.tsx";
+import StatsIcon from "../../assets/icons/statsIcon.tsx";
+import UserIcon from "../../assets/icons/userIcon.tsx";
+import SettingsIcon from "../../assets/icons/settingsIcon.tsx";
+import LogoutIcon from "../../assets/icons/logoutIcon.tsx";
 
 import styles from "./header.module.css";
 

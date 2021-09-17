@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
 import { useTranslation } from "react-i18next";
 
-import CloseIcon from "../../assets/icons/CloseIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon.tsx";
 
 import styles from "./birthDayPopup.module.css";
 
