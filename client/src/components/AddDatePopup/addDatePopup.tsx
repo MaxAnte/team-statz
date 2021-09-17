@@ -1,17 +1,33 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  FormEvent,
+} from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider.tsx";
+import { AppContext } from "../../context/app.provider";
+import { AddDateForm } from "./addDatePopup.types";
 
-import Select from "../Select/select.tsx";
+import Select from "../Select/select";
 
-import CloseIcon from "../../assets/icons/closeIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon";
 
 import styles from "./addDatePopup.module.css";
 
-function AddGamePopup({ closeHandler, date }) {
+type Props = {
+  closeHandler: () => void;
+  date: string;
+};
+
+function AddGamePopup({ closeHandler, date }: Props) {
   const { getTeams, teams, addDate } = useContext(AppContext);
-  const [form, setForm] = useState([]);
-  const [formClose, setFormClose] = useState(false);
+  const [form, setForm] = useState<AddDateForm>({
+    date: "",
+    enemy: "",
+    time: "",
+  });
+  const [formClose, setFormClose] = useState<boolean>(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -20,13 +36,16 @@ function AddGamePopup({ closeHandler, date }) {
   }, [date]);
 
   const handleGetActive = useCallback(
-    (enemy) => setForm((prevState) => ({ ...prevState, enemy })),
+    (enemy: string) => setForm((prevState) => ({ ...prevState, enemy })),
     []
   );
-  const handleChangeTime = (e) =>
-    setForm((prevState) => ({ ...prevState, time: e.target.value }));
+  const handleChangeTime = (e: React.ChangeEvent) =>
+    setForm((prevState) => ({
+      ...prevState,
+      time: (e.target as HTMLInputElement).value,
+    }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addDate(form);
     setFormClose(true);

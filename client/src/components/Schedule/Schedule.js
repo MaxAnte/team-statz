@@ -7,7 +7,7 @@ import { AppContext } from "../../context/app.provider.tsx";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers.ts";
 
 import GameCardCalendar from "../GameCardCalendar/GameCardCalendar";
-import AddDatePopup from "../AddDatePopup/AddDatePopup";
+import AddDatePopup from "../AddDatePopup/addDatePopup.tsx";
 import PlusIcon from "../../assets/icons/plusIcon.tsx";
 
 import styles from "./schedule.module.css";
