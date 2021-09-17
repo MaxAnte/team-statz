@@ -108,7 +108,7 @@ export type PlayerStats = {
 };
 
 export type Quarter = {
-  _id: string;
+  _id?: string;
   enemy: number;
   our: number;
 };

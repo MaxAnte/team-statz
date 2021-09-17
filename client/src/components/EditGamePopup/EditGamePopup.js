@@ -6,7 +6,7 @@ import { TEAMNAME } from "../../project.const";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/AddGamePlayerStat";
 import MiniLoader from "../Loader/miniLoader.tsx";
-import TableQuarters from "../TableQuarters/TableQuarters";
+import TableQuarters from "../TableQuarters/tableQuarters.tsx";
 
 import CloseIcon from "../../assets/icons/closeIcon.tsx";
 import CheckIcon from "../../assets/icons/checkIcon.tsx";

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import AddGamePopup from "../AddGamePopup/AddGamePopup";
 import EditGamePopup from "../EditGamePopup/EditGamePopup";
-import TableQuarters from "../TableQuarters/TableQuarters";
+import TableQuarters from "../TableQuarters/tableQuarters.tsx";
 import MiniLoader from "../Loader/miniLoader.tsx";
 
 import EditIcon from "../../assets/icons/editIcon.tsx";
