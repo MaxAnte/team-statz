@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useCallback, useEffect, createContext } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
 import { Context, DateType, Game, Settings, Team } from "./app.types";
@@ -25,7 +25,7 @@ export const AppProvider = ({ children }: Props) => {
   const message = useMessage();
   const { request, clearError } = useHttp();
 
-  const getSettings = async () => {
+  const getSettings = useCallback(async () => {
     setAppState((prevAppState) => ({
       ...prevAppState,
       loading: true,
@@ -45,7 +45,7 @@ export const AppProvider = ({ children }: Props) => {
       message(e.message);
       clearError();
     }
-  };
+  }, [clearError, message, request]);
 
   const saveSettings = async (settings: Settings) => {
     try {
@@ -351,7 +351,7 @@ export const AppProvider = ({ children }: Props) => {
 
   useEffect(() => {
     getSettings();
-  }, []);
+  }, [getSettings]);
 
   return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
 };
