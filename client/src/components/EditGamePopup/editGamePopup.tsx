@@ -1,40 +1,49 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook.tsx";
+import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
+import { Game, Player, PlayerStats, Quarter } from "../../context/app.types";
+import { AppContext } from "../../context/app.provider";
 
-import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat.tsx";
-import MiniLoader from "../Loader/miniLoader.tsx";
-import TableQuarters from "../TableQuarters/tableQuarters.tsx";
+import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat";
+import MiniLoader from "../Loader/miniLoader";
+import TableQuarters from "../TableQuarters/tableQuarters";
 
-import CloseIcon from "../../assets/icons/closeIcon.tsx";
-import CheckIcon from "../../assets/icons/checkIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon";
+import CheckIcon from "../../assets/icons/checkIcon";
 
 import styles from "./EditGamePopup.module.css";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function EditGamePopup({ closeHandler, base }) {
-  const [players, setPlayers] = useState([]);
-  const [form, setForm] = useState({ playersStats: [] });
-  const [formClose, setFormClose] = useState(false);
-  const [playersStatsArr, setPlayersStatsArr] = useState([]);
+type Props = {
+  closeHandler: () => void;
+  base: Game;
+};
+
+function EditGamePopup({ closeHandler, base }: Props) {
+  const { getPlayers, players, editGame } = useContext(AppContext);
+  const [playersList, setPlayersList] = useState<Player[]>(players);
+  const [form, setForm] = useState<Partial<Game>>({ playersStats: [] });
+  const [formClose, setFormClose] = useState<boolean>(false);
+  const [playersStatsArr, setPlayersStatsArr] = useState<
+    PlayerStats[] | Player[]
+  >([]);
   const message = useMessage();
   const { t } = useTranslation();
-  const { request, error, clearError } = useHttp();
 
-  const handleCheck = (index) => {
+  const handleCheck = (index: number) => {
     const checkSet = players;
     checkSet[index].check = !checkSet[index].check;
-    setPlayers((prevState) => ({ ...prevState, ...checkSet }));
+    setPlayersList((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getPlayers = useCallback(async () => {
+  const getPlayersList = useCallback(async () => {
     try {
-      const data = await request("/api/player/players", "POST", {});
-      if (Object.keys(data).length) {
-        Object.values(data).map((player) => {
+      const response = await getPlayers();
+      if (response?.length) {
+        response.map((player) => {
           base.playersStats.forEach((p) => {
             if (player._id === p._id) {
               player.check = true;
@@ -42,32 +51,30 @@ function EditGamePopup({ closeHandler, base }) {
           });
           return player;
         });
-        setPlayers(Object.values(data));
+        setPlayersList(response);
       }
     } catch (e) {}
-  }, [request, base.playersStats]);
-
-  useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
+  }, [base.playersStats]);
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
-    getPlayers();
+    getPlayersList();
   }, [getPlayers, base]);
 
-  const handleChangePlayerStats = (playerID, playersStats) => {
+  const handleChangePlayerStats = (
+    playerID: string,
+    playersStats: PlayerStats
+  ) => {
     setPlayersStatsArr((prevState) => ({
       ...prevState,
       [playerID]: playersStats,
     }));
   };
 
-  const gatherGameInfo = (gameInfo) => {
+  const gatherGameInfo = (gameInfo: PlayerStats[]) => {
     setForm((prevState) => ({
       ...prevState,
-      playersStats: [...gameInfo],
+      playersStats: gameInfo,
     }));
   };
 
@@ -75,29 +82,26 @@ function EditGamePopup({ closeHandler, base }) {
     gatherGameInfo(Object.values(playersStatsArr));
   }, [playersStatsArr]);
 
-  const handleChangeInput = (e) =>
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
-  const handleGetQuarters = (quarters) =>
+  const handleGetQuarters = (quarters: Quarter[]) =>
     setForm((prevState) => ({
       ...prevState,
       quarters,
     }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const onlyCheckedPlayers = form;
-      onlyCheckedPlayers.playersStats = form.playersStats.filter(
-        (p) => Object.values(players).find((pid) => pid._id === p._id).check
+      onlyCheckedPlayers.playersStats = form?.playersStats?.filter(
+        (p) => playersList.filter((pid) => pid._id === p._id)[0].check
       );
-      await request("/api/game/edit-game", "POST", {
-        ...onlyCheckedPlayers,
-      });
+      await editGame(onlyCheckedPlayers);
       setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
-      clearError();
     }
   };
 
@@ -120,22 +124,22 @@ function EditGamePopup({ closeHandler, base }) {
                   <span className={styles.genGameInfoNames}>{TEAMNAME}</span>
                   <input
                     type="text"
-                    maxLength="3"
+                    maxLength={3}
                     name="ourScore"
                     id="ourScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
-                    placeholder={base.ourScore || ""}
+                    placeholder={`${base.ourScore}` || ""}
                   />
                   <span>:</span>
                   <input
                     type="text"
-                    maxLength="3"
+                    maxLength={3}
                     name="enemyScore"
                     id="enemyScore"
                     className={styles.genGameInfoScore}
                     onChange={handleChangeInput}
-                    placeholder={base.enemyScore || ""}
+                    placeholder={`${base.enemyScore}` || ""}
                   />
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>

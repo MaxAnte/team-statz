@@ -217,6 +217,19 @@ export const AppProvider = ({ children }: Props) => {
     }
   };
 
+  const editGame = async (game: Partial<Game>) => {
+    try {
+      GameSchema.parse(game);
+      await request("/api/game/edit-game", "POST", {
+        ...game,
+      });
+      getGames();
+    } catch (e: any) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const deleteGame = async (gameID: string) => {
     try {
       await request("/api/game/delete-game", "POST", {
@@ -326,6 +339,7 @@ export const AppProvider = ({ children }: Props) => {
     getBirthdayPlayers,
     getGames,
     completeGame,
+    editGame,
     deleteGame,
     getDates,
     addDate,

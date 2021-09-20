@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import GamePlayerStat from "../GamePlayerStat/gamePlayerStat.tsx";
 import AddGamePopup from "../AddGamePopup/addGamePopup.tsx";
-import EditGamePopup from "../EditGamePopup/EditGamePopup";
+import EditGamePopup from "../EditGamePopup/editGamePopup.tsx";
 import TableQuarters from "../TableQuarters/tableQuarters.tsx";
 import MiniLoader from "../Loader/miniLoader.tsx";
 

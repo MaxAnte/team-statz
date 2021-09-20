@@ -16,6 +16,7 @@ export type Context = {
   getBirthdayPlayers: () => Promise<Player[] | undefined>;
   getGames: () => Promise<Game[] | undefined>;
   completeGame: (game: Partial<Game>) => Promise<void>;
+  editGame: (game: Partial<Game>) => Promise<void>;
   deleteGame: (gameID: string) => Promise<void>;
   getDates: () => Promise<DateType[] | undefined>;
   addDate: (date: DateType) => Promise<void>;
