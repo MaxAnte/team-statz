@@ -19,7 +19,7 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 type Props = {
   closeHandler: () => void;
-  base: Game;
+  base: Partial<Game>;
 };
 
 function AddGamePopup({ closeHandler, base }: Props) {

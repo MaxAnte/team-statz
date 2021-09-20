@@ -11,10 +11,9 @@ import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 type Props = {
   player: PlayerStats;
-  gameID: string;
 };
 
-function GamePlayerStat({ player, gameID }: Props) {
+function GamePlayerStat({ player }: Props) {
   const { getPlayerById, loading } = useContext(AppContext);
   const { t } = useTranslation();
   const [playerInfo, setPlayerInfo] = useState({
@@ -247,11 +246,7 @@ function GamePlayerStat({ player, gameID }: Props) {
           </div>
         </div>
         <div className={styles.gpsCanvas}>
-          <GamePlayerCanvas
-            coordinates={player.coordinates}
-            mode="view"
-            canvID={`canv_game-${gameID}_player-${player._id}`}
-          />
+          <GamePlayerCanvas coordinates={player.coordinates} mode="view" />
         </div>
       </div>
     </div>

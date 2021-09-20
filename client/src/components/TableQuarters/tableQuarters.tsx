@@ -10,13 +10,13 @@ import styles from "./tableQuarters.module.css";
 type Props = {
   quarters?: Quarter[];
   mode?: "edit";
-  handleGetQuarters: (quarters: Quarter[]) => void;
+  handleGetQuarters?: (quarters: Quarter[]) => void;
 };
 
 function TableQuarters({
   quarters = Array(4).fill({ our: 0, enemy: 0 }),
   mode,
-  handleGetQuarters,
+  handleGetQuarters = () => {},
 }: Props) {
   const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(quarters);
   const [ourQuartersRefs, setOurQuartersRefs] = useState<

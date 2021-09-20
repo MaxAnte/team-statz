@@ -100,7 +100,7 @@ export const quartersSchema = z.array(
 );
 
 export const GameSchema = z.object({
-  _id: z.string().optional(),
+  _id: z.string(),
   date: z.string(),
   enemy: z.string(),
   enemyScore: z.number(),

@@ -143,7 +143,7 @@ export type Quarter = {
 };
 
 export type Game = {
-  _id?: string;
+  _id: string;
   date: string;
   enemy: string;
   enemyScore: number;

@@ -1,25 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SessionContext } from "../../context/session.provider.tsx";
-import { AppContext } from "../../context/app.provider.tsx";
+import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../context/app.provider";
 import { useTranslation } from "react-i18next";
+import { Game } from "../../context/app.types";
 
-import GamePlayerStat from "../GamePlayerStat/gamePlayerStat.tsx";
-import AddGamePopup from "../AddGamePopup/addGamePopup.tsx";
-import EditGamePopup from "../EditGamePopup/editGamePopup.tsx";
-import TableQuarters from "../TableQuarters/tableQuarters.tsx";
-import MiniLoader from "../Loader/miniLoader.tsx";
+import GamePlayerStat from "../GamePlayerStat/gamePlayerStat";
+import AddGamePopup from "../AddGamePopup/addGamePopup";
+import EditGamePopup from "../EditGamePopup/editGamePopup";
+import TableQuarters from "../TableQuarters/tableQuarters";
+import MiniLoader from "../Loader/miniLoader";
 
-import EditIcon from "../../assets/icons/editIcon.tsx";
-import RemoveIcon from "../../assets/icons/removeIcon.tsx";
+import EditIcon from "../../assets/icons/editIcon";
+import RemoveIcon from "../../assets/icons/removeIcon";
 
 import styles from "./gameCard.module.css";
 
-function GameCard({ game }) {
+type Props = {
+  game: Game;
+};
+
+function GameCard({ game }: Props) {
   const { isAuthenticated } = useContext(SessionContext);
   const { deleteGame } = useContext(AppContext);
-  const [editMode, setEditMode] = useState(false);
-  const [addPopup, setAddPopup] = useState(false);
-  const [editPopup, setEditPopup] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [addPopup, setAddPopup] = useState<boolean>(false);
+  const [editPopup, setEditPopup] = useState<boolean>(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -95,13 +100,7 @@ function GameCard({ game }) {
           </div>
           <TableQuarters quarters={game.quarters} />
           {game.playersStats.map((player) => {
-            return (
-              <GamePlayerStat
-                player={player}
-                gameID={game._id}
-                key={player._id}
-              />
-            );
+            return <GamePlayerStat player={player} key={player._id} />;
           })}
         </>
       )}

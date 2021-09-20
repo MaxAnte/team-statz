@@ -7,14 +7,12 @@ import styles from "./gamePlayerCanvas.module.css";
 type Props = {
   coordinates?: Coord[];
   mode?: string;
-  canvID?: string;
   handleGetCoords?: (coods: Coord[]) => void;
 };
 
 function GamePlayerCanvas({
   coordinates = [],
   mode = "edit",
-  canvID,
   handleGetCoords = () => {},
 }: Props) {
   const [newCoords, setNewCoords] = useState<Coord[]>(coordinates);
@@ -109,7 +107,6 @@ function GamePlayerCanvas({
       <canvas
         ref={canvasRef}
         className={styles.gamePlayerCanvas}
-        id={canvID}
         onClick={(e) => draw(e)}
       ></canvas>
       {mode === "edit" ? (

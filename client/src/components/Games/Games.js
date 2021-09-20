@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider.tsx";
 
-import GameCard from "../GameCard/GameCard";
+import GameCard from "../GameCard/gameCard.tsx";
 import Table from "../Table/table.tsx";
 import MiniLoader from "../Loader/miniLoader.tsx";
 import Select from "../Select/select.tsx";
