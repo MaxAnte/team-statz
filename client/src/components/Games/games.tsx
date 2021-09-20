@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider.tsx";
+import { AppContext } from "../../context/app.provider";
 
-import GameCard from "../GameCard/gameCard.tsx";
-import Table from "../Table/table.tsx";
-import MiniLoader from "../Loader/miniLoader.tsx";
-import Select from "../Select/select.tsx";
+import GameCard from "../GameCard/gameCard";
+import Table from "../Table/table";
+import MiniLoader from "../Loader/miniLoader";
+import Select from "../Select/select";
 
 import styles from "./games.module.css";
 
@@ -22,7 +22,9 @@ function Games() {
   const { pathname, hash } = useLocation();
   const { t } = useTranslation();
 
-  useEffect(() => getGames(), []);
+  useEffect(() => {
+    getGames();
+  }, []);
 
   useEffect(() => {
     if (hash === "") {

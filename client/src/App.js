@@ -7,8 +7,8 @@ import { useHttp } from "./hooks/http.hook.tsx";
 import { checkDate } from "./helpers/time.helpers.ts";
 
 import Header from "./components/Header/header.tsx";
-import Footer from "./components/Footer/footer";
-import Games from "./components/Games/Games";
+import Footer from "./components/Footer/footer.tsx";
+import Games from "./components/Games/games.tsx";
 import Team from "./components/Team/team.tsx";
 import Player from "./components/Player/player.tsx";
 import Schedule from "./components/Schedule/schedule.tsx";
