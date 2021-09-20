@@ -61,7 +61,11 @@ function GameCard({ game }: Props) {
                 <div className={styles.gameDateAdmin}>{game.date}</div>
                 {addPopup ? (
                   <AddGamePopup
-                    base={{ date: game.date, enemy: game.enemy }}
+                    base={{
+                      date: game.date,
+                      time: game.time,
+                      enemy: game.enemy,
+                    }}
                     closeHandler={closeHandler}
                   />
                 ) : null}

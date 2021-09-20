@@ -112,6 +112,17 @@ export const GameSchema = z.object({
   __v: z.number().optional(),
 });
 
+export const NewGameSchema = z.object({
+  date: z.string(),
+  enemy: z.string(),
+  enemyScore: z.number(),
+  ourScore: z.number(),
+  playersStats: z.array(PlayerStatsSchema),
+  quarters: quartersSchema,
+  time: z.string(),
+  __v: z.number().optional(),
+});
+
 export const GamesSchema = z.array(GameSchema);
 
 export const DateSchema = z.object({

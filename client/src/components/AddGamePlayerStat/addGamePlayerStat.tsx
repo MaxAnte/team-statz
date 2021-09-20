@@ -24,15 +24,14 @@ function AddGamePlayerStat({
   const { t } = useTranslation();
 
   const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayerStats((prevState) => {
-      if (prevState)
-        return {
-          ...prevState,
-          _id: player._id,
-          [e.target.name]: +e.target.value,
-        };
-    });
+    //@ts-ignore
+    setPlayerStats((prevState) => ({
+      ...prevState,
+      _id: player._id,
+      [e.target.name]: +e.target.value,
+    }));
   };
+  console.log(playerStats);
 
   const handleGetCoords = (coords: Coord[]) => {
     setPlayerStats((prevState) => {

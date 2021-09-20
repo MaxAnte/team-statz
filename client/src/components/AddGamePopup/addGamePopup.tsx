@@ -49,7 +49,10 @@ function AddGamePopup({ closeHandler, base }: Props) {
   }, [playersStatsArr]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    setForm((prevState) => ({
+      ...prevState,
+      [e.target.name]: Number(e.target.value),
+    }));
 
   const handleChangePlayerStats = (
     playerID: string,
@@ -77,7 +80,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
     e.preventDefault();
     try {
       await completeGame(form);
-      setFormClose(true);
+      // setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
     }

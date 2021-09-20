@@ -13,6 +13,7 @@ import {
   PlayoffsMatchupsSchema,
   PlayerSchema,
   GameSchema,
+  NewGameSchema,
 } from "./app.schema";
 
 type Props = {
@@ -206,12 +207,15 @@ export const AppProvider = ({ children }: Props) => {
 
   const completeGame = async (game: Partial<Game>) => {
     try {
-      GameSchema.parse(game);
+      NewGameSchema.parse(game);
       await request("/api/game/complete-game", "POST", {
         ...game,
       });
+      console.log("passed");
       getGames();
     } catch (e: any) {
+      console.log(e.message);
+
       message(e.message);
       clearError();
     }
