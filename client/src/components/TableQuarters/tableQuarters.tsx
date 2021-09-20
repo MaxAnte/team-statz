@@ -8,13 +8,15 @@ import PlusIcon from "../../assets/icons/plusIcon";
 import styles from "./tableQuarters.module.css";
 
 type Props = {
-  quarters: Quarter[];
-  mode?: string;
+  quarters?: Quarter[];
+  mode?: "edit";
   handleGetQuarters: (quarters: Quarter[]) => void;
 };
 
-function TableQuarters({ quarters, mode = "", handleGetQuarters }: Props) {
-  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(quarters);
+function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
+  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(
+    quarters || Array(4).fill({ our: 0, enemy: 0 })
+  );
   const [ourQuartersRefs, setOurQuartersRefs] = useState<
     React.MutableRefObject<HTMLInputElement>[]
   >([]);
@@ -61,7 +63,7 @@ function TableQuarters({ quarters, mode = "", handleGetQuarters }: Props) {
     handleGetQuarters(newQuarters);
   };
 
-  if (quarters && quarters.length < 4) return null;
+  if (!quarters || quarters.length < 4) return null;
   return (
     <div className={styles.quartersTable}>
       <table>
