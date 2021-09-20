@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { SessionContext } from "../../context/session.provider";
 import { AppContext } from "../../context/app.provider";
 import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
-import { DateType } from "../../context/app.types";
 
 import GameCardCalendar from "../GameCardCalendar/gameCardCalendar";
 import AddDatePopup from "../AddDatePopup/addDatePopup";
