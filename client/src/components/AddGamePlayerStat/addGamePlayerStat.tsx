@@ -1,35 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas.tsx";
+import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
 
 import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+import { Coord, Player, PlayerStats } from "../../context/app.types";
+
+type Props = {
+  player: Player;
+  basePlayer?: PlayerStats;
+  handleChangePlayerStats: (id: string, playerStats: PlayerStats) => void;
+};
 
 function AddGamePlayerStat({
   player,
-  basePlayer = {},
+  basePlayer,
   handleChangePlayerStats,
-}) {
-  const [playerStats, setPlayerStats] = useState(basePlayer);
+}: Props) {
+  const [playerStats, setPlayerStats] = useState<PlayerStats | undefined>(
+    basePlayer
+  );
   const { t } = useTranslation();
 
-  const handleChangeStats = (e) => {
-    setPlayerStats((prevState) => ({
-      ...prevState,
-      _id: player._id,
-      [e.target.name]: +e.target.value,
-    }));
+  const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlayerStats((prevState) => {
+      if (prevState)
+        return {
+          ...prevState,
+          _id: player._id,
+          [e.target.name]: +e.target.value,
+        };
+    });
   };
-  const handleGetCoords = (coords) => {
-    setPlayerStats((prevState) => ({
-      ...prevState,
-      coordinates: coords.filter((el) => el.x > 0 && el.y > 0),
-    }));
+
+  const handleGetCoords = (coords: Coord[]) => {
+    setPlayerStats((prevState) => {
+      if (prevState)
+        return {
+          ...prevState,
+          coordinates: coords.filter((el) => el.x > 0 && el.y > 0),
+        };
+    });
   };
 
   useEffect(() => {
-    handleChangePlayerStats(player._id, playerStats);
+    if (playerStats) handleChangePlayerStats(player._id, playerStats);
   }, [playerStats, player._id]);
 
   return (
@@ -55,7 +71,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="playerPts"
                     name="pts"
-                    placeholder={basePlayer.pts || "0"}
+                    placeholder={`${basePlayer?.pts}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -68,7 +84,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="ast"
                     name="ast"
-                    placeholder={basePlayer.ast || "0"}
+                    placeholder={`${basePlayer?.ast}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -81,7 +97,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="dreb"
                     name="dreb"
-                    placeholder={basePlayer.dreb || "0"}
+                    placeholder={`${basePlayer?.dreb}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -94,7 +110,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="oreb"
                     name="oreb"
-                    placeholder={basePlayer.oreb || "0"}
+                    placeholder={`${basePlayer?.oreb}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -107,7 +123,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="stl"
                     name="stl"
-                    placeholder={basePlayer.stl || "0"}
+                    placeholder={`${basePlayer?.stl}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -120,7 +136,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="blk"
                     name="blk"
-                    placeholder={basePlayer.blk || "0"}
+                    placeholder={`${basePlayer?.blk}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -137,7 +153,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="two_pa"
                     name="two_pa"
-                    placeholder={basePlayer.two_pa || "0"}
+                    placeholder={`${basePlayer?.two_pa}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -150,7 +166,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="two_pm"
                     name="two_pm"
-                    placeholder={basePlayer.two_pm || "0"}
+                    placeholder={`${basePlayer?.two_pm}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -163,7 +179,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="three_pa"
                     name="three_pa"
-                    placeholder={basePlayer.three_pa || "0"}
+                    placeholder={`${basePlayer?.three_pa}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -176,7 +192,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="three_pm"
                     name="three_pm"
-                    placeholder={basePlayer.three_pm || "0"}
+                    placeholder={`${basePlayer?.three_pm}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -189,7 +205,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="fta"
                     name="fta"
-                    placeholder={basePlayer.fta || "0"}
+                    placeholder={`${basePlayer?.fta}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -202,7 +218,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="ftm"
                     name="ftm"
-                    placeholder={basePlayer.ftm || "0"}
+                    placeholder={`${basePlayer?.ftm}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -220,7 +236,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="tov"
                     name="tov"
-                    placeholder={basePlayer.tov || "0"}
+                    placeholder={`${basePlayer?.tov}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -233,7 +249,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="fouls"
                     name="fouls"
-                    placeholder={basePlayer.fouls || "0"}
+                    placeholder={`${basePlayer?.fouls}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -246,7 +262,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="minutes"
                     name="minutes"
-                    placeholder={basePlayer.minutes || "0"}
+                    placeholder={`${basePlayer?.minutes}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -258,7 +274,7 @@ function AddGamePlayerStat({
                     type="number"
                     id="plus_minus"
                     name="plus_minus"
-                    placeholder={basePlayer.plus_minus || "0"}
+                    placeholder={`${basePlayer?.plus_minus}` || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -268,7 +284,7 @@ function AddGamePlayerStat({
         </div>
         <div className={styles.gpsCanvas}>
           <GamePlayerCanvas
-            coordinates={basePlayer.coordinates}
+            coordinates={basePlayer?.coordinates}
             handleGetCoords={handleGetCoords}
           />
         </div>

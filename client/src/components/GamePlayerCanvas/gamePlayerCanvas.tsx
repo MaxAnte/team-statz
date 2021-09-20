@@ -7,7 +7,7 @@ import styles from "./gamePlayerCanvas.module.css";
 type Props = {
   coordinates?: Coord[];
   mode?: string;
-  canvID: string;
+  canvID?: string;
   handleGetCoords?: (coods: Coord[]) => void;
 };
 
