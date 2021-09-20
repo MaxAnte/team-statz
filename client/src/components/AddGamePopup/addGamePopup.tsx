@@ -133,11 +133,11 @@ function AddGamePopup({ closeHandler, base }: Props) {
                 {t("Check players that have played that game")}
               </h4>
               <div className={styles.popupSection}>
-                {!playersList.length ? (
+                {!Object.values(playersList).length ? (
                   <MiniLoader />
                 ) : (
                   <div className={styles.playersSelect}>
-                    {playersList.map((player, i) => (
+                    {Object.values(playersList).map((player, i) => (
                       <div
                         key={`${player.name}_${i}`}
                         className={styles.playerCard}
@@ -166,7 +166,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
                     ))}
                   </div>
                 )}
-                {playersList.length && !checkListAccept ? (
+                {Object.values(playersList).length && !checkListAccept ? (
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
@@ -176,7 +176,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
                 ) : null}
               </div>
 
-              {playersList.length && !checkListAccept ? (
+              {Object.values(playersList).length && !checkListAccept ? (
                 <span>{t("Check players above")}</span>
               ) : null}
               {checkListAccept ? (
