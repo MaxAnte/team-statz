@@ -13,12 +13,15 @@ type Props = {
   handleGetQuarters?: (quarters: Quarter[]) => void;
 };
 
-function TableQuarters({
-  quarters = Array(4).fill({ our: 0, enemy: 0 }),
-  mode,
-  handleGetQuarters = () => {},
-}: Props) {
-  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(quarters);
+function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
+  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(
+    quarters || [
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+      { our: 0, enemy: 0 },
+    ]
+  );
   const [ourQuartersRefs, setOurQuartersRefs] = useState<
     React.MutableRefObject<HTMLInputElement>[]
   >([]);
@@ -42,27 +45,19 @@ function TableQuarters({
   const handleOurQuarterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const quarterId = Number(e.target.id.split("_")[1]);
     const newQuarters: Quarter[] = editableQuaters.map((quarter, i) => {
-      if (i === quarterId) {
-        ourQuartersRefs[quarterId].current.dataset.side === "our"
-          ? (quarter.our = Number(e.target.value))
-          : (quarter.enemy = Number(e.target.value));
-      }
+      if (i === quarterId) quarter.our = Number(e.target.value);
       return quarter;
     });
-    handleGetQuarters(newQuarters);
+    if (mode && handleGetQuarters) handleGetQuarters(newQuarters);
   };
 
   const handleEnemyQuarterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const quarterId = Number(e.target.id.split("_")[1]);
     const newQuarters: Quarter[] = editableQuaters.map((quarter, i) => {
-      if (i === quarterId) {
-        enemyQuartersRefs[quarterId].current.dataset.side === "our"
-          ? (quarter.our = Number(e.target.value))
-          : (quarter.enemy = Number(e.target.value));
-      }
+      if (i === quarterId) quarter.enemy = Number(e.target.value);
       return quarter;
     });
-    handleGetQuarters(newQuarters);
+    if (mode && handleGetQuarters) handleGetQuarters(newQuarters);
   };
 
   if (!mode && !quarters?.length) return null;
@@ -76,7 +71,7 @@ function TableQuarters({
               ? editableQuaters.map((_, i) => (
                   <th key={i}>{i > 3 ? `OT${i - 3}` : i + 1}</th>
                 ))
-              : quarters.map((_, i) => (
+              : quarters?.map((_, i) => (
                   <th key={i}>{i > 3 ? `OT${i - 3}` : i + 1}</th>
                 ))}
           </tr>
@@ -99,7 +94,7 @@ function TableQuarters({
                     />
                   </td>
                 ))
-              : quarters.map((quarter, i) => (
+              : quarters?.map((quarter, i) => (
                   <td
                     key={i}
                     className={`${
@@ -131,7 +126,7 @@ function TableQuarters({
                     />
                   </td>
                 ))
-              : quarters.map((quarter, i) => <td key={i}>{quarter.enemy}</td>)}
+              : quarters?.map((quarter, i) => <td key={i}>{quarter.enemy}</td>)}
           </tr>
         </tbody>
       </table>
