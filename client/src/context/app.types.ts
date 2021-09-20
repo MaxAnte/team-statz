@@ -78,6 +78,11 @@ export type Player = {
   __v?: number;
 };
 
+export type CoordBase = {
+  x: number;
+  y: number;
+};
+
 export type Coord = {
   _id?: string;
   x: number;

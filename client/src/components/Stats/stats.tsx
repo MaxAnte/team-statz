@@ -1,35 +1,41 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook.tsx";
 import { useTranslation } from "react-i18next";
+import { CoordBase } from "../../context/app.types";
+import { AppContext } from "../../context/app.provider";
 
-import BlockLoader from "../Loader/blockLoader.tsx";
+import BlockLoader from "../Loader/blockLoader";
 
 import styles from "./stats.module.css";
 
+type PointerColor = {
+  _id: string;
+  color: string;
+};
+
 function Stats() {
-  const [games, setGames] = useState([]);
-  const [players, setPlayers] = useState([]);
-  const [statsTabAverage, setStatsTabAverage] = useState(true);
-  const [canvasBound, setCanvasBound] = useState(undefined);
-  const [context, setContext] = useState(undefined);
-  const [canvas, setCanvas] = useState(null);
-  const [filterGame, setFilterGame] = useState(null);
-  const [filterPlayer, setFilterPlayer] = useState(null);
+  const { getGames, getPlayers, games, players, loading } =
+    useContext(AppContext);
+  const [statsTabAverage, setStatsTabAverage] = useState<boolean>(true);
+  const [canv, setCanv] = useState<HTMLCanvasElement | undefined>(undefined);
+  const [canvBound, setCanvBound] = useState<DOMRect | undefined>(undefined);
+  const [context, setContext] = useState<CanvasRenderingContext2D | undefined>(
+    undefined
+  );
+  const [filterGame, setFilterGame] = useState<string | undefined>(undefined);
+  const [filterPlayer, setFilterPlayer] = useState<string | undefined>(
+    undefined
+  );
   const { t } = useTranslation();
 
-  const { loading, request, error, clearError } = useHttp();
-  const message = useMessage();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const canvasRef = useRef(null);
-
-  const WIDTH = 700;
-  const HEIGHT = 750;
-  const DPI_WIDTH = WIDTH * 2;
-  const DPI_HEIGHT = HEIGHT * 2;
-  const MULTIPLIER = 2.41379310345;
-  const COLORS = [
+  const WIDTH: number = 700;
+  const HEIGHT: number = 750;
+  const DPI_WIDTH: number = WIDTH * 2;
+  const DPI_HEIGHT: number = HEIGHT * 2;
+  const MULTIPLIER: number = 2.41379310345;
+  const COLORS: string[] = [
     "#FF0032",
     "#F700FF",
     "#8000FF",
@@ -46,7 +52,7 @@ function Stats() {
     "#aaffc3",
     "#ffffff",
   ];
-  const POINTER_COLORS =
+  const POINTER_COLORS: PointerColor[] =
     players &&
     Array(players.length)
       .fill(0)
@@ -54,79 +60,74 @@ function Stats() {
         return { _id: players[i]._id, color: COLORS[i] };
       });
 
-  const getDB = useCallback(async () => {
-    try {
-      const gamesData = await request("/api/game/games", "POST", {});
-      const playersData = await request("/api/player/players", "POST", {});
-      if (Object.keys(gamesData).length)
-        setGames(Object.values(gamesData).filter((game) => !game.pending));
-      if (Object.keys(playersData).length)
-        setPlayers(Object.values(playersData).filter((game) => !game.pending));
-    } catch (e) {}
-  }, [request]);
-
-  const drawMiss = (ctx, element) => {
+  const drawMiss = (ctx: CanvasRenderingContext2D, element: CoordBase) => {
     ctx.moveTo(element.x * MULTIPLIER - 12, element.y * MULTIPLIER - 12);
     ctx.lineTo(element.x * MULTIPLIER + 12, element.y * MULTIPLIER + 12);
     ctx.moveTo(element.x * MULTIPLIER + 12, element.y * MULTIPLIER - 12);
     ctx.lineTo(element.x * MULTIPLIER - 12, element.y * MULTIPLIER + 12);
   };
-  const drawMade = (ctx, element) =>
+  const drawMade = (ctx: CanvasRenderingContext2D, element: CoordBase) =>
     ctx.arc(element.x * MULTIPLIER, element.y * MULTIPLIER, 12, 0, 2 * Math.PI);
 
   useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
-
-  useEffect(() => getDB(), [getDB]);
+    getPlayers();
+    getGames();
+  }, []);
 
   useEffect(() => {
-    const canv = canvasRef.current;
-    canv.style.width = WIDTH + "px";
-    canv.style.height = HEIGHT + "px";
-    canv.width = DPI_WIDTH;
-    canv.height = DPI_HEIGHT;
-    var ctx = canv.getContext("2d");
-    setCanvas(canv);
-    setCanvasBound(canv.getBoundingClientRect());
-    setContext(ctx);
-    let filteredGames = filterGame
-      ? games.filter((game) => game.date === filterGame)
-      : games;
+    const canvas: HTMLCanvasElement | null = canvasRef.current;
+    if (canvas) {
+      canvas.style.width = WIDTH + "px";
+      canvas.style.height = HEIGHT + "px";
+      canvas.width = DPI_WIDTH;
+      canvas.height = DPI_HEIGHT;
+      var ctx = canvas.getContext("2d");
+      if (ctx) {
+        setCanv(canvas);
+        setCanvBound(canvas.getBoundingClientRect());
+        setContext(ctx);
+        let filteredGames = filterGame
+          ? games.filter((game) => game.date === filterGame)
+          : games;
 
-    filteredGames.forEach((game) =>
-      game.playersStats.forEach((player) =>
-        player.coordinates.forEach((coord) => {
-          ctx.beginPath();
-          if (coord.miss) {
-            drawMiss(ctx, coord);
-          } else {
-            drawMade(ctx, coord);
-          }
-          filterPlayer === player._id
-            ? (ctx.lineWidth = 9)
-            : (ctx.lineWidth = 7);
-          ctx.closePath();
-          if (players.length) {
-            filterPlayer
-              ? player._id === filterPlayer
-                ? (ctx.strokeStyle = POINTER_COLORS.find(
-                    (el) => el._id === player._id
-                  ).color)
-                : (ctx.strokeStyle = `${
-                    POINTER_COLORS.find((el) => el._id === player._id).color
-                  }33`)
-              : (ctx.strokeStyle = POINTER_COLORS.find(
-                  (el) => el._id === player._id
-                ).color);
-          } else {
-            ctx.strokeStyle = "#c1c1c1";
-          }
-          ctx.stroke();
-        })
-      )
-    );
+        filteredGames.forEach((game) =>
+          game.playersStats.forEach((player) =>
+            player.coordinates.forEach((coord) => {
+              if (ctx) {
+                ctx.beginPath();
+                if (coord.miss) {
+                  drawMiss(ctx, coord);
+                } else {
+                  drawMade(ctx, coord);
+                }
+                filterPlayer === player._id
+                  ? (ctx.lineWidth = 9)
+                  : (ctx.lineWidth = 7);
+                ctx.closePath();
+                if (players.length) {
+                  filterPlayer
+                    ? player._id === filterPlayer
+                      ? (ctx.strokeStyle = POINTER_COLORS.filter(
+                          (el) => el._id === player._id
+                        )[0].color)
+                      : (ctx.strokeStyle = `${
+                          POINTER_COLORS.filter(
+                            (el) => el._id === player._id
+                          )[0].color
+                        }33`)
+                    : (ctx.strokeStyle = POINTER_COLORS.filter(
+                        (el) => el._id === player._id
+                      )[0].color);
+                } else {
+                  ctx.strokeStyle = "#c1c1c1";
+                }
+                ctx.stroke();
+              }
+            })
+          )
+        );
+      }
+    }
   }, [players, games, filterGame, filterPlayer]);
 
   const countOverallStats = () => {
@@ -152,59 +153,61 @@ function Stats() {
     let plus_minus = 0;
     let gPlayed = 0;
     games.length &&
-      games.forEach((game, i) => {
-        if (filterPlayer) {
-          if (
-            game.playersStats.filter((player) => player._id === filterPlayer)
-              .length
-          ) {
-            gPlayed++;
-            game.playersStats
-              .filter((player) => player._id === filterPlayer)
-              .forEach((stats) => {
-                pts += stats.pts;
-                reb += stats.oreb + stats.dreb;
-                ast += stats.ast;
-                stl += stats.stl;
-                blk += stats.blk;
-                tovs += stats.tov;
-                fouls += stats.fouls;
-                plus_minus += stats.plus_minus;
-                two_fga += stats.two_pa;
-                two_fgm += stats.two_pm;
-                three_fga += stats.three_pa;
-                three_fgm += stats.three_pm;
-                fta += stats.fta;
-                ftm += stats.ftm;
-              });
+      games
+        .filter((g) => !g.pending)
+        .forEach((game, i) => {
+          if (filterPlayer) {
+            if (
+              game.playersStats.filter((player) => player._id === filterPlayer)
+                .length
+            ) {
+              gPlayed++;
+              game.playersStats
+                .filter((player) => player._id === filterPlayer)
+                .forEach((stats) => {
+                  pts += stats.pts;
+                  reb += stats.oreb + stats.dreb;
+                  ast += stats.ast;
+                  stl += stats.stl;
+                  blk += stats.blk;
+                  tovs += stats.tov;
+                  fouls += stats.fouls;
+                  plus_minus += stats.plus_minus;
+                  two_fga += stats.two_pa;
+                  two_fgm += stats.two_pm;
+                  three_fga += stats.three_pa;
+                  three_fgm += stats.three_pm;
+                  fta += stats.fta;
+                  ftm += stats.ftm;
+                });
+            }
+          } else {
+            game.playersStats.forEach((player) => {
+              pts += player.pts;
+              reb += player.oreb + player.dreb;
+              ast += player.ast;
+              stl += player.stl;
+              blk += player.blk;
+              tovs += player.tov;
+              fouls += player.fouls;
+              plus_minus += player.plus_minus;
+              two_fga += player.two_pa;
+              two_fgm += player.two_pm;
+              three_fga += player.three_pa;
+              three_fgm += player.three_pm;
+              fta += player.fta;
+              ftm += player.ftm;
+            });
           }
-        } else {
-          game.playersStats.forEach((player) => {
-            pts += player.pts;
-            reb += player.oreb + player.dreb;
-            ast += player.ast;
-            stl += player.stl;
-            blk += player.blk;
-            tovs += player.tov;
-            fouls += player.fouls;
-            plus_minus += player.plus_minus;
-            two_fga += player.two_pa;
-            two_fgm += player.two_pm;
-            three_fga += player.three_pa;
-            three_fgm += player.three_pm;
-            fta += player.fta;
-            ftm += player.ftm;
-          });
-        }
-        if (i === games.length - 1) {
-          two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
-          three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
-          ftp += fta ? (ftm * 100) / fta : 0;
-          fga = two_fga + three_fga;
-          fgm = two_fgm + three_fgm;
-          fgp = fga ? (fgm * 100) / fga : 0;
-        }
-      });
+          if (i === games.length - 1) {
+            two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
+            three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
+            ftp += fta ? (ftm * 100) / fta : 0;
+            fga = two_fga + three_fga;
+            fgm = two_fgm + three_fgm;
+            fgp = fga ? (fgm * 100) / fga : 0;
+          }
+        });
     return countStatsMarkup(
       pts,
       reb,
@@ -230,7 +233,7 @@ function Stats() {
     );
   };
 
-  const countGameStats = (gameDate) => {
+  const countGameStats = (gameDate: string) => {
     let pts = 0;
     let reb = 0;
     let ast = 0;
@@ -253,6 +256,7 @@ function Stats() {
     let plus_minus = 0;
     games.length &&
       games
+        .filter((g) => !g.pending)
         .filter((game) => game.date === gameDate)[0]
         .playersStats.forEach((player, i) => {
           if (filterPlayer) {
@@ -295,7 +299,9 @@ function Stats() {
             ftm += player.ftm;
             if (
               i ===
-              games.filter((game) => game.date === gameDate)[0].playersStats
+              games
+                .filter((g) => !g.pending)
+                .filter((game) => game.date === gameDate)[0].playersStats
                 .length -
                 1
             ) {
@@ -333,29 +339,29 @@ function Stats() {
   };
 
   const countStatsMarkup = (
-    pts,
-    reb,
-    ast,
-    stl,
-    blk,
-    tovs,
-    fouls,
-    plus_minus,
-    two_fga,
-    two_fgm,
-    two_fgp,
-    three_fga,
-    three_fgm,
-    three_fgp,
-    fta,
-    ftm,
-    ftp,
-    fga,
-    fgm,
-    fgp,
-    gPlayed = 0
+    pts: number,
+    reb: number,
+    ast: number,
+    stl: number,
+    blk: number,
+    tovs: number,
+    fouls: number,
+    plus_minus: number,
+    two_fga: number,
+    two_fgm: number,
+    two_fgp: number,
+    three_fga: number,
+    three_fgm: number,
+    three_fgp: number,
+    fta: number,
+    ftm: number,
+    ftp: number,
+    fga: number,
+    fgm: number,
+    fgp: number,
+    gPlayed: number = 0
   ) => {
-    if (!gPlayed) gPlayed = games.length;
+    if (!gPlayed) gPlayed = games.filter((g) => !g.pending).length;
     return (
       <div className={styles.statsColumnRowsInfo}>
         {!filterGame ? (
@@ -550,7 +556,7 @@ function Stats() {
                     }
                     onClick={() =>
                       setFilterPlayer(
-                        filterPlayer === player._id ? null : player._id
+                        filterPlayer === player._id ? undefined : player._id
                       )
                     }
                   >
@@ -586,34 +592,38 @@ function Stats() {
         {!loading ? (
           <div className={styles.gamesWrap}>
             {games.length ? (
-              games.map((game, i) => (
-                <div
-                  className={`${styles.gameCard} ${
-                    filterGame === game.date ? styles.activeCard : ""
-                  }`}
-                  onClick={() =>
-                    setFilterGame(filterGame === game.date ? null : game.date)
-                  }
-                  key={i}
-                >
-                  <h4 className={styles.calendarGameName}>
-                    {t("vs.")} {game.enemy}
-                  </h4>
-                  <div className={styles.calendarGameScore}>
-                    <span
-                      className={`our ${
-                        game.ourScore > game.enemyScore
-                          ? styles.win
-                          : styles.lose
-                      }`}
-                    >
-                      {game.ourScore}
-                    </span>
-                    :<span>{game.enemyScore}</span>
+              games
+                .filter((g) => !g.pending)
+                .map((game, i) => (
+                  <div
+                    className={`${styles.gameCard} ${
+                      filterGame === game.date ? styles.activeCard : ""
+                    }`}
+                    onClick={() =>
+                      setFilterGame(
+                        filterGame === game.date ? undefined : game.date
+                      )
+                    }
+                    key={i}
+                  >
+                    <h4 className={styles.calendarGameName}>
+                      {t("vs.")} {game.enemy}
+                    </h4>
+                    <div className={styles.calendarGameScore}>
+                      <span
+                        className={`our ${
+                          game.ourScore > game.enemyScore
+                            ? styles.win
+                            : styles.lose
+                        }`}
+                      >
+                        {game.ourScore}
+                      </span>
+                      :<span>{game.enemyScore}</span>
+                    </div>
+                    <span>{game.date}</span>
                   </div>
-                  <span>{game.date}</span>
-                </div>
-              ))
+                ))
             ) : (
               <div className={styles.noGames}>
                 {t("So far no games have been played")}. {t("Go to")}{" "}

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Coord } from "../../context/app.types";
+import { Coord, CoordBase } from "../../context/app.types";
 
 import styles from "./gamePlayerCanvas.module.css";
 
@@ -9,11 +9,6 @@ type Props = {
   mode?: string;
   canvID: string;
   handleGetCoords?: (coods: Coord[]) => void;
-};
-
-type CoordBase = {
-  x: number;
-  y: number;
 };
 
 function GamePlayerCanvas({
