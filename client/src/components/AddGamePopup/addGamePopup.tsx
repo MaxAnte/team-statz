@@ -33,7 +33,6 @@ function AddGamePopup({ closeHandler, base }: Props) {
   >([]);
   const message = useMessage();
   const { t } = useTranslation();
-  const { request, error, clearError } = useHttp();
 
   const handleCheck = (index: number) => {
     const checkSet = playersList;
@@ -86,7 +85,6 @@ function AddGamePopup({ closeHandler, base }: Props) {
       setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
-      clearError();
     }
   };
 
