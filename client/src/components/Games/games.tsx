@@ -15,6 +15,7 @@ function Games() {
     settings: { playoffsBracketBuilt },
     getGames,
     games,
+    getPlayers,
     loading,
   } = useContext(AppContext);
   const [sortedGames, setSortedGames] = useState(games);
@@ -24,6 +25,7 @@ function Games() {
 
   useEffect(() => {
     getGames();
+    getPlayers();
   }, []);
 
   useEffect(() => {

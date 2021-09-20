@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
-import { useHttp } from "../../hooks/http.hook";
+import React, { useState, useEffect, useContext } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
@@ -23,7 +22,7 @@ type Props = {
 };
 
 function AddGamePopup({ closeHandler, base }: Props) {
-  const { getPlayers, players, completeGame } = useContext(AppContext);
+  const { players, completeGame } = useContext(AppContext);
   const [playersList, setPlayersList] = useState<Player[]>(players);
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [form, setForm] = useState<Partial<Game>>({ playersStats: [] });
@@ -39,10 +38,6 @@ function AddGamePopup({ closeHandler, base }: Props) {
     checkSet[index].check = !checkSet[index].check;
     setPlayersList((prevState) => ({ ...prevState, ...checkSet }));
   };
-
-  useEffect(() => {
-    getPlayers();
-  }, []);
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
