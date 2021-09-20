@@ -5,12 +5,6 @@ type Headers = {
   Accept?: string;
 };
 
-type HttpResponse = {
-  status?: string;
-  ok: boolean;
-  message: string;
-};
-
 export const useHttp = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
