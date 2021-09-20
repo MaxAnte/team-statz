@@ -10,7 +10,7 @@ import Header from "./components/Header/header.tsx";
 import Footer from "./components/Footer/footer";
 import Games from "./components/Games/Games";
 import Team from "./components/Team/team.tsx";
-import Player from "./components/Player/Player";
+import Player from "./components/Player/player.tsx";
 import Schedule from "./components/Schedule/schedule.tsx";
 import Stats from "./components/Stats/Stats";
 import Playoffs from "./components/Playoff/playoffs.tsx";

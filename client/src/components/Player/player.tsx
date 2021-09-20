@@ -1,47 +1,58 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook.tsx";
+import { AppContext } from "../../context/app.provider";
 import { useTranslation } from "react-i18next";
 import { Line, Doughnut } from "react-chartjs-2";
 import YouTube from "react-youtube";
-import { MONTHS } from "../../helpers/time.helpers.ts";
+import { MONTHS } from "../../helpers/time.helpers";
+import {
+  Game,
+  Player as PlayerType,
+  PlayerOverallStats,
+} from "../../context/app.types";
 
-import PlayerCanvas from "../PlayerCanvas/playerCanvas.tsx";
-import TableSheet from "../TableSheet/tableSheet.tsx";
-import BlockLoader from "../Loader/blockLoader.tsx";
+import PlayerCanvas from "../PlayerCanvas/playerCanvas";
+import TableSheet from "../TableSheet/tableSheet";
+import BlockLoader from "../Loader/blockLoader";
 
-import HeightIcon from "../../assets/icons/heightIcon.tsx";
-import WeightIcon from "../../assets/icons/weightIcon.tsx";
-import JerseyIcon from "../../assets/icons/jerseyIcon.tsx";
+import HeightIcon from "../../assets/icons/heightIcon";
+import WeightIcon from "../../assets/icons/weightIcon";
+import JerseyIcon from "../../assets/icons/jerseyIcon";
 
 import styles from "./player.module.css";
+interface ParamTypes {
+  id: string;
+}
 
 function Player() {
-  const [player, setPlayer] = useState({});
-  const [games, setGames] = useState([]);
-  const [overallStats, setOverallStats] = useState([]);
-  const { id } = useParams();
-  const { loading, request, error, clearError } = useHttp();
-  const message = useMessage();
+  const { getPlayerById, getGames } = useContext(AppContext);
+  const [player, setPlayer] = useState<PlayerType | undefined>(undefined);
+  const [gamesInfo, setGamesInfo] = useState<Game[]>([]);
+  const [overallStats, setOverallStats] = useState<
+    PlayerOverallStats | undefined
+  >(undefined);
+  const { id } = useParams<ParamTypes>();
   const { t } = useTranslation();
 
   const getDB = useCallback(async () => {
-    const playerData = await request("/api/player/id", "POST", { _id: id });
-    const gamesData = await request("/api/game/games", "POST", {});
+    if (!player) {
+      const res = await getPlayerById(id);
+      if (res) setPlayer(res);
+    }
 
-    if (Object.keys(playerData).length) setPlayer(playerData);
-    if (Object.keys(gamesData).length) {
-      setGames(gamesData);
-      if (gamesData.length) {
+    if (!gamesInfo?.length) {
+      const gamesData = await getGames();
+      if (gamesData?.length) {
+        setGamesInfo(gamesData);
         const filteredGames = gamesData
           .filter((game) => !game.pending)
           .map((game) => game.playersStats.find((pl) => pl._id === id))
           .filter((game) => Boolean(game));
 
         if (filteredGames.length) {
+          const ovrStats = filteredGames as unknown as PlayerOverallStats[];
           setOverallStats(
-            filteredGames.reduce((acc, cur) => ({
+            ovrStats.reduce((acc, cur) => ({
               pts: acc.pts + cur.pts,
               oreb: acc.oreb + cur.oreb,
               dreb: acc.dreb + cur.dreb,
@@ -63,28 +74,26 @@ function Player() {
         }
       }
     }
-  }, [request, id]);
+  }, []);
 
   useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
+    getDB();
+  }, [getDB]);
 
-  useEffect(() => getDB(), [getDB]);
-
+  //@ts-ignore
   const _onReady = (event) => {
     // access to player in all event handlers via event.target
     event.target.pauseVideo();
   };
 
-  const buildBirthDateString = (date) => {
+  const buildBirthDateString = (date: string): string => {
     const [year, month, day] = date.split("-");
     return `${MONTHS[+month - 1]} ${day}, ${year}`;
   };
 
   return (
     <div className="player page-wrapper">
-      {loading ? (
+      {!player ? (
         <BlockLoader />
       ) : (
         <>
@@ -135,7 +144,7 @@ function Player() {
               </ul>
             </div>
             <div className={styles.zones}>
-              <PlayerCanvas player={player._id} games={games} />
+              <PlayerCanvas player={player._id} games={gamesInfo} />
               {/* <div className={styles.seasons}>
               <span>2019</span>
               <span className={styles.activeSeason}>2020</span>
@@ -146,84 +155,87 @@ function Player() {
           <div className={styles.main}>
             <h5 className="title text-center">{t("Stats through career")}</h5>
             <TableSheet tableStats={player} />
-            <div className={styles.graphics}>
-              <div className={styles.graphicsOvr}>
-                <Line
-                  data={{
-                    labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
-                    datasets: [
-                      {
-                        label: `${t("Points")}`,
-                        data: [overallStats.pts, 115, 77, 50, 100, 105],
-                        fill: false,
-                        backgroundColor: "rgb(255, 99, 132)",
-                        borderColor: "rgba(255, 99, 132, 0.2)",
-                      },
-                      {
-                        label: `${t("Rebounds")}`,
-                        data: [
-                          overallStats.oreb + overallStats.dreb,
-                          20,
-                          5,
-                          25,
-                          13,
-                          0,
-                        ],
-                        fill: false,
-                        backgroundColor: "rgb(203, 99, 255)",
-                        borderColor: "rgba(203, 99, 255, 0.2)",
-                      },
-                      {
-                        label: `${t("Assists")}`,
-                        data: [overallStats.ast, 25, 30, 50, 15, 20],
-                        fill: false,
-                        backgroundColor: "rgb(99, 255, 198)",
-                        borderColor: "rgba(99, 255, 198, 0.2)",
-                      },
-                    ],
-                  }}
-                  options={{
-                    scales: {
-                      yAxes: [
+            {overallStats ? (
+              <div className={styles.graphics}>
+                <div className={styles.graphicsOvr}>
+                  <Line
+                    data={{
+                      labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
+                      datasets: [
                         {
-                          ticks: {
-                            beginAtZero: true,
-                          },
+                          label: `${t("Points")}`,
+                          data: [overallStats.pts, 115, 77, 50, 100, 105],
+                          fill: false,
+                          backgroundColor: "rgb(255, 99, 132)",
+                          borderColor: "rgba(255, 99, 132, 0.2)",
+                        },
+                        {
+                          label: `${t("Rebounds")}`,
+                          data: [
+                            overallStats.oreb + overallStats.dreb,
+                            20,
+                            5,
+                            25,
+                            13,
+                            0,
+                          ],
+                          fill: false,
+                          backgroundColor: "rgb(203, 99, 255)",
+                          borderColor: "rgba(203, 99, 255, 0.2)",
+                        },
+                        {
+                          label: `${t("Assists")}`,
+                          data: [overallStats.ast, 25, 30, 50, 15, 20],
+                          fill: false,
+                          backgroundColor: "rgb(99, 255, 198)",
+                          borderColor: "rgba(99, 255, 198, 0.2)",
                         },
                       ],
-                    },
-                  }}
-                />
-              </div>
-              <div className={styles.graphicsPerc}>
-                <Doughnut
-                  data={{
-                    labels: [`${t("2PT")}%`, `${t("3PT")}%`, `${t("FT")}%`],
-                    datasets: [
-                      {
-                        label: "",
-                        data: [
-                          (overallStats.two_pm * 100) / overallStats.two_pa,
-                          (overallStats.three_pm * 100) / overallStats.three_pa,
-                          (overallStats.ftm * 100) / overallStats.fta,
+                    }}
+                    options={{
+                      scales: {
+                        yAxes: [
+                          {
+                            ticks: {
+                              beginAtZero: true,
+                            },
+                          },
                         ],
-                        backgroundColor: [
-                          "rgba(255, 99, 132, 0.2)",
-                          "rgba(54, 162, 235, 0.2)",
-                          "rgba(255, 206, 86, 0.2)",
-                        ],
-                        borderColor: [
-                          "rgba(255, 99, 132, 1)",
-                          "rgba(54, 162, 235, 1)",
-                          "rgba(255, 206, 86, 1)",
-                        ],
-                        borderWidth: 1,
                       },
-                    ],
-                  }}
-                />
+                    }}
+                  />
+                </div>
+                <div className={styles.graphicsPerc}>
+                  <Doughnut
+                    data={{
+                      labels: [`${t("2PT")}%`, `${t("3PT")}%`, `${t("FT")}%`],
+                      datasets: [
+                        {
+                          label: "",
+                          data: [
+                            (overallStats.two_pm * 100) / overallStats.two_pa,
+                            (overallStats.three_pm * 100) /
+                              overallStats.three_pa,
+                            (overallStats.ftm * 100) / overallStats.fta,
+                          ],
+                          backgroundColor: [
+                            "rgba(255, 99, 132, 0.2)",
+                            "rgba(54, 162, 235, 0.2)",
+                            "rgba(255, 206, 86, 0.2)",
+                          ],
+                          borderColor: [
+                            "rgba(255, 99, 132, 1)",
+                            "rgba(54, 162, 235, 1)",
+                            "rgba(255, 206, 86, 1)",
+                          ],
+                          borderWidth: 1,
+                        },
+                      ],
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
             <div className={styles.highlights}>
               <h5 className="title text-center">{t("Hightlights")}</h5>
               <div className={styles.highlightsVideos}>
