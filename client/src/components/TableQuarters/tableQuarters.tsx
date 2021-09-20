@@ -13,10 +13,12 @@ type Props = {
   handleGetQuarters: (quarters: Quarter[]) => void;
 };
 
-function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
-  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(
-    quarters || Array(4).fill({ our: 0, enemy: 0 })
-  );
+function TableQuarters({
+  quarters = Array(4).fill({ our: 0, enemy: 0 }),
+  mode,
+  handleGetQuarters,
+}: Props) {
+  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(quarters);
   const [ourQuartersRefs, setOurQuartersRefs] = useState<
     React.MutableRefObject<HTMLInputElement>[]
   >([]);
@@ -63,7 +65,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
     handleGetQuarters(newQuarters);
   };
 
-  if (!quarters || quarters.length < 4) return null;
+  if (!mode && !quarters?.length) return null;
   return (
     <div className={styles.quartersTable}>
       <table>
