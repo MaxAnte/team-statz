@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SettingsSchema = z.object({
-  _id: z.string(),
+  _id: z.string().optional(),
   enableCalendarScrollMode: z.boolean(),
   playoffsBracketBuilt: z.boolean(),
   playoffsStart: z.string(),
@@ -9,7 +9,7 @@ export const SettingsSchema = z.object({
 });
 
 export const TeamSchema = z.object({
-  _id: z.string(),
+  _id: z.string().optional(),
   group: z.string(),
   loses: z.number(),
   name: z.string(),
@@ -60,7 +60,7 @@ export const PlayersSchema = z.array(PlayerSchema);
 
 export const CoordinatesSchema = z.array(
   z.object({
-    _id: z.string(),
+    _id: z.string().optional(),
     x: z.number(),
     y: z.number(),
     miss: z.boolean(),
@@ -92,7 +92,7 @@ export const PlayerStatsSchema = z.object({
 
 export const quartersSchema = z.array(
   z.object({
-    _id: z.string(),
+    _id: z.string().optional(),
     enemy: z.number(),
     our: z.number(),
   })

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider.tsx";
-import { SessionContext } from "../../context/session.provider.tsx";
-import { useOutsideClickHandler } from "../../hooks/outsideClick.hook.tsx";
+import { AppContext } from "../../context/app.provider";
+import { Team } from "../../context/app.types";
+import { SessionContext } from "../../context/session.provider";
+import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
-import MiniLoader from "../Loader/miniLoader.tsx";
+import MiniLoader from "../Loader/miniLoader";
 
 import styles from "./table.module.css";
 
@@ -18,23 +19,27 @@ function Table() {
     loading,
   } = useContext(AppContext);
   const { t } = useTranslation();
-  const [table, setTable] = useState([]);
-  const [editableTeam, setEditableTeam] = useState(undefined);
+  const [table, setTable]: any[] = useState([]);
+  const [editableTeam, setEditableTeam] = useState<Team | undefined>(undefined);
   const editableCellRef = useRef(null);
   const closeEditableCell = useOutsideClickHandler(editableCellRef);
 
-  useEffect(() => getTeams(), []);
-  useEffect(() => setTable(sortTableStandings(Object.values(teams))), [teams]);
+  useEffect(() => {
+    getTeams();
+  }, []);
+  useEffect(() => {
+    setTable(sortTableStandings(teams));
+  }, [teams]);
 
   useEffect(() => {
-    if (isAuthenticated && closeEditableCell) {
+    if (isAuthenticated && closeEditableCell && editableTeam) {
       editTeamInfo(editableTeam);
       setEditableTeam(undefined);
     }
   }, [closeEditableCell]);
 
-  const sortTableStandings = (standings) => {
-    const splitedByGroups = {};
+  const sortTableStandings = (standings: Team[]) => {
+    const splitedByGroups: any = {};
     standings
       .sort((a, b) => b.points - a.points || b.winRate - a.winRate)
       .forEach((team) => {
@@ -47,14 +52,18 @@ function Table() {
     return Object.entries(splitedByGroups);
   };
 
-  const handleEditRow = (e) => {
-    setEditableTeam((prev) => ({ ...prev, [e.target.name]: +e.target.value }));
+  const handleEditRow = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditableTeam((prev) => {
+      if (prev) {
+        return { ...prev, [e.target.name]: +e.target.value };
+      }
+    });
   };
 
   return (
     <div className={styles.tables}>
-      {table.map((group) => (
-        <div className={styles.tableCont} key={group}>
+      {table.map((group: any[]) => (
+        <div className={styles.tableCont} key={group[0]}>
           {table.length > 1 ? (
             <span className={styles.groupName}>{t(`Group ${group[0]}`)}</span>
           ) : null}
@@ -69,7 +78,7 @@ function Table() {
             {loading ? (
               <MiniLoader />
             ) : (
-              group[1].map((el, i) => {
+              group[1].map((el: Team, i: number) => {
                 return isAuthenticated && editableTeam?._id === el._id ? (
                   <div
                     ref={editableCellRef}
@@ -91,9 +100,9 @@ function Table() {
                           type="number"
                           min="0"
                           className={styles.editableCell}
-                          placeholder={el.wins}
+                          placeholder={`${el.wins}`}
                           name="wins"
-                          value={editableTeam.wins}
+                          value={editableTeam?.wins}
                           onChange={handleEditRow}
                         />
                       ) : (
@@ -106,9 +115,9 @@ function Table() {
                           type="number"
                           min="0"
                           className={styles.editableCell}
-                          placeholder={el.loses}
+                          placeholder={`${el.loses}`}
                           name="loses"
-                          value={editableTeam.loses}
+                          value={editableTeam?.loses}
                           onChange={handleEditRow}
                         />
                       ) : (

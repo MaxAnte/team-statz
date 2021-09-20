@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { AppContext } from "../../context/app.provider.tsx";
 
 import GameCard from "../GameCard/GameCard";
-import Table from "../Table/Table";
+import Table from "../Table/table.tsx";
 import MiniLoader from "../Loader/miniLoader.tsx";
 import Select from "../Select/select.tsx";
 

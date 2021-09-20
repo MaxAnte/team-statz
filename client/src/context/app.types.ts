@@ -33,7 +33,7 @@ export type Settings = {
 };
 
 export type Team = {
-  _id: string;
+  _id?: string;
   group: string;
   loses: number;
   name: string;
