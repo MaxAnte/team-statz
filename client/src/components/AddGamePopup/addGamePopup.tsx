@@ -47,9 +47,8 @@ function AddGamePopup({ closeHandler, base }: Props) {
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
-    getPlayers();
     if (players.length) setPlayersStatsArr(players.filter((el) => !!el.check));
-  }, [getPlayers]);
+  }, []);
 
   useEffect(() => {
     gatherGameInfo(Object.values(playersStatsArr));
@@ -141,11 +140,11 @@ function AddGamePopup({ closeHandler, base }: Props) {
                 {t("Check players that have played that game")}
               </h4>
               <div className={styles.popupSection}>
-                {!Object.values(players).length ? (
+                {!playersList.length ? (
                   <MiniLoader />
                 ) : (
                   <div className={styles.playersSelect}>
-                    {Object.values(players).map((player, i) => (
+                    {playersList.map((player, i) => (
                       <div
                         key={`${player.name}_${i}`}
                         className={styles.playerCard}
@@ -174,7 +173,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
                     ))}
                   </div>
                 )}
-                {Object.values(players).length && !checkListAccept ? (
+                {playersList.length && !checkListAccept ? (
                   <button
                     className={`btn__main ${styles.playersSelectAccept}`}
                     onClick={() => setCheckListAccept(true)}
@@ -184,7 +183,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
                 ) : null}
               </div>
 
-              {Object.values(players).length && !checkListAccept ? (
+              {playersList.length && !checkListAccept ? (
                 <span>{t("Check players above")}</span>
               ) : null}
               {checkListAccept ? (
