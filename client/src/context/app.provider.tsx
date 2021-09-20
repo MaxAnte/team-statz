@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import { useHttp } from "../hooks/http.hook";
 import { useMessage } from "../hooks/message.hook";
-import { Context, DateType, Settings, Team } from "./app.types";
+import { Context, DateType, Game, Settings, Team } from "./app.types";
 import {
   SettingsSchema,
   TeamsSchema,
@@ -12,6 +12,7 @@ import {
   DateSchema,
   PlayoffsMatchupsSchema,
   PlayerSchema,
+  GameSchema,
 } from "./app.schema";
 
 type Props = {
@@ -203,6 +204,19 @@ export const AppProvider = ({ children }: Props) => {
     }
   };
 
+  const completeGame = async (game: Partial<Game>) => {
+    try {
+      GameSchema.parse(game);
+      await request("/api/game/complete-game", "POST", {
+        ...game,
+      });
+      getGames();
+    } catch (e: any) {
+      message(e.message);
+      clearError();
+    }
+  };
+
   const deleteGame = async (gameID: string) => {
     try {
       await request("/api/game/delete-game", "POST", {
@@ -311,6 +325,7 @@ export const AppProvider = ({ children }: Props) => {
     getPlayerById,
     getBirthdayPlayers,
     getGames,
+    completeGame,
     deleteGame,
     getDates,
     addDate,

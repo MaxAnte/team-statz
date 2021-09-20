@@ -53,6 +53,7 @@ export const PlayerSchema = z.object({
   tov: z.number(),
   two_pa: z.number(),
   two_pm: z.number(),
+  check: z.boolean().optional(),
   __v: z.number().optional(),
 });
 
@@ -99,7 +100,7 @@ export const quartersSchema = z.array(
 );
 
 export const GameSchema = z.object({
-  _id: z.string(),
+  _id: z.string().optional(),
   date: z.string(),
   enemy: z.string(),
   enemyScore: z.number(),

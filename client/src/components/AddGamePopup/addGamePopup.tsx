@@ -1,47 +1,49 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { useHttp } from "../../hooks/http.hook.tsx";
-import { useMessage } from "../../hooks/message.hook.tsx";
+import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useHttp } from "../../hooks/http.hook";
+import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
+import { Game, Player, PlayerStats, Quarter } from "../../context/app.types";
+import { AppContext } from "../../context/app.provider";
 
-import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat.tsx";
-import TableQuarters from "../TableQuarters/tableQuarters.tsx";
-import MiniLoader from "../Loader/miniLoader.tsx";
+import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat";
+import TableQuarters from "../TableQuarters/tableQuarters";
+import MiniLoader from "../Loader/miniLoader";
 
-import CloseIcon from "../../assets/icons/closeIcon.tsx";
-import CheckIcon from "../../assets/icons/checkIcon.tsx";
+import CloseIcon from "../../assets/icons/closeIcon";
+import CheckIcon from "../../assets/icons/checkIcon";
 
 import styles from "./addGamePopup.module.css";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
-function AddGamePopup({ closeHandler, base }) {
-  const [players, setPlayers] = useState([]);
+type Props = {
+  closeHandler: () => void;
+  base: Game;
+};
+
+function AddGamePopup({ closeHandler, base }: Props) {
+  const { getPlayers, players, completeGame } = useContext(AppContext);
+  const [playersList, setPlayersList] = useState<Player[]>(players);
   const [checkListAccept, setCheckListAccept] = useState(false);
-  const [form, setForm] = useState({ playersStats: [] });
-  const [formClose, setFormClose] = useState(false);
-  const [playersStatsArr, setPlayersStatsArr] = useState([]);
+  const [form, setForm] = useState<Partial<Game>>({ playersStats: [] });
+  const [formClose, setFormClose] = useState<boolean>(false);
+  const [playersStatsArr, setPlayersStatsArr] = useState<
+    PlayerStats[] | Player[]
+  >([]);
   const message = useMessage();
   const { t } = useTranslation();
   const { request, error, clearError } = useHttp();
 
-  const handleCheck = (index) => {
-    const checkSet = players;
+  const handleCheck = (index: number) => {
+    const checkSet = playersList;
     checkSet[index].check = !checkSet[index].check;
-    setPlayers((prevState) => ({ ...prevState, ...checkSet }));
+    setPlayersList((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getPlayers = useCallback(async () => {
-    try {
-      const data = await request("/api/player/players", "POST", {});
-      if (Object.keys(data).length) setPlayers(Object.values(data));
-    } catch (e) {}
-  }, [request]);
-
   useEffect(() => {
-    message(error);
-    clearError();
-  }, [error, message, clearError]);
+    getPlayers();
+  }, []);
 
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
@@ -53,34 +55,35 @@ function AddGamePopup({ closeHandler, base }) {
     gatherGameInfo(Object.values(playersStatsArr));
   }, [playersStatsArr]);
 
-  const handleChangeInput = (e) =>
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 
-  const handleChangePlayerStats = (playerID, playersStats) => {
+  const handleChangePlayerStats = (
+    playerID: string,
+    playersStats: PlayerStats
+  ) => {
     setPlayersStatsArr((prevState) => ({
       ...prevState,
       [playerID]: playersStats,
     }));
   };
 
-  const gatherGameInfo = (gameInfo) =>
+  const gatherGameInfo = (gameInfo: PlayerStats[]) =>
     setForm((prevState) => ({
       ...prevState,
       playersStats: gameInfo,
     }));
 
-  const handleGetQuarters = (quarters) =>
+  const handleGetQuarters = (quarters: Quarter[]) =>
     setForm((prevState) => ({
       ...prevState,
       quarters,
     }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await request("/api/game/complete-game", "POST", {
-        ...form,
-      });
+      await completeGame(form);
       setFormClose(true);
     } catch (e) {
       message(t("Something is missing..."));
@@ -107,7 +110,7 @@ function AddGamePopup({ closeHandler, base }) {
                   <span className={styles.genGameInfoNames}>{TEAMNAME}</span>
                   <input
                     type="text"
-                    maxLength="3"
+                    maxLength={3}
                     name="ourScore"
                     id="ourScore"
                     placeholder="0"
@@ -118,7 +121,7 @@ function AddGamePopup({ closeHandler, base }) {
                   <span>:</span>
                   <input
                     type="text"
-                    maxLength="3"
+                    maxLength={3}
                     name="enemyScore"
                     id="enemyScore"
                     placeholder="0"

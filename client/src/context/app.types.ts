@@ -15,6 +15,7 @@ export type Context = {
   getPlayerById: (pId: string) => Promise<Player | undefined>;
   getBirthdayPlayers: () => Promise<Player[] | undefined>;
   getGames: () => Promise<Game[] | undefined>;
+  completeGame: (game: Partial<Game>) => Promise<void>;
   deleteGame: (gameID: string) => Promise<void>;
   getDates: () => Promise<DateType[] | undefined>;
   addDate: (date: DateType) => Promise<void>;
@@ -75,6 +76,7 @@ export type Player = {
   tov: number;
   two_pa: number;
   two_pm: number;
+  check?: boolean;
   __v?: number;
 };
 
@@ -140,7 +142,7 @@ export type Quarter = {
 };
 
 export type Game = {
-  _id: string;
+  _id?: string;
   date: string;
   enemy: string;
   enemyScore: number;
