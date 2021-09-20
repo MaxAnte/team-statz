@@ -17,13 +17,11 @@ function BirthDayResolver() {
     setIsClosed(true);
   };
 
-  return (
-    birthDayPlayers?.length &&
+  return birthDayPlayers?.length &&
     !Cookies.get("BirthDayEventWatched") &&
-    !isClosed && (
-      <BirthDayPopup players={birthDayPlayers} closeHandler={closeHandler} />
-    )
-  );
+    !isClosed ? (
+    <BirthDayPopup players={birthDayPlayers} closeHandler={closeHandler} />
+  ) : null;
 }
 
 export default BirthDayResolver;

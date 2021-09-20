@@ -1,23 +1,23 @@
 import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { SessionProvider } from "./context/session.provider.tsx";
-import { AppProvider } from "./context/app.provider.tsx";
-import { useAuth } from "./hooks/auth.hook.tsx";
-import { useHttp } from "./hooks/http.hook.tsx";
-import { checkDate } from "./helpers/time.helpers.ts";
+import { SessionProvider } from "./context/session.provider";
+import { AppProvider } from "./context/app.provider";
+import { useAuth } from "./hooks/auth.hook";
+import { useHttp } from "./hooks/http.hook";
+import { checkDate } from "./helpers/time.helpers";
 
-import Header from "./components/Header/header.tsx";
-import Footer from "./components/Footer/footer.tsx";
-import Games from "./components/Games/games.tsx";
-import Team from "./components/Team/team.tsx";
-import Player from "./components/Player/player.tsx";
-import Schedule from "./components/Schedule/schedule.tsx";
-import Stats from "./components/Stats/stats.tsx";
-import Playoffs from "./components/Playoff/playoffs.tsx";
-import AppSettings from "./components/AppSettings/appSettings.tsx";
-import BirthDayResolver from "./components/BirthDayReslover/birthDayResolver.tsx";
-import ErrorPage from "./components/ErrorPage/errorPage.tsx";
-import Loader from "./components/Loader/loader.tsx";
+import Header from "./components/Header/header";
+import Footer from "./components/Footer/footer";
+import Games from "./components/Games/games";
+import Team from "./components/Team/team";
+import Player from "./components/Player/player";
+import Schedule from "./components/Schedule/schedule";
+import Stats from "./components/Stats/stats";
+import Playoffs from "./components/Playoff/playoffs";
+import AppSettings from "./components/AppSettings/appSettings";
+import BirthDayResolver from "./components/BirthDayReslover/birthDayResolver";
+import ErrorPage from "./components/ErrorPage/errorPage";
+import Loader from "./components/Loader/loader";
 
 import "./i18n/config";
 
