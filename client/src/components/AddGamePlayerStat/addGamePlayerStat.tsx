@@ -71,7 +71,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="playerPts"
                     name="pts"
-                    placeholder={`${basePlayer?.pts}` || "0"}
+                    placeholder={basePlayer?.pts.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -84,7 +84,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="ast"
                     name="ast"
-                    placeholder={`${basePlayer?.ast}` || "0"}
+                    placeholder={basePlayer?.ast.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -97,7 +97,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="dreb"
                     name="dreb"
-                    placeholder={`${basePlayer?.dreb}` || "0"}
+                    placeholder={basePlayer?.dreb.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -110,7 +110,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="oreb"
                     name="oreb"
-                    placeholder={`${basePlayer?.oreb}` || "0"}
+                    placeholder={basePlayer?.oreb.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -123,7 +123,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="stl"
                     name="stl"
-                    placeholder={`${basePlayer?.stl}` || "0"}
+                    placeholder={basePlayer?.stl.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -136,7 +136,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="blk"
                     name="blk"
-                    placeholder={`${basePlayer?.blk}` || "0"}
+                    placeholder={basePlayer?.blk.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -153,7 +153,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="two_pa"
                     name="two_pa"
-                    placeholder={`${basePlayer?.two_pa}` || "0"}
+                    placeholder={basePlayer?.two_pa.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -166,7 +166,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="two_pm"
                     name="two_pm"
-                    placeholder={`${basePlayer?.two_pm}` || "0"}
+                    placeholder={basePlayer?.two_pm.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -179,7 +179,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="three_pa"
                     name="three_pa"
-                    placeholder={`${basePlayer?.three_pa}` || "0"}
+                    placeholder={basePlayer?.three_pa.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -192,7 +192,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="three_pm"
                     name="three_pm"
-                    placeholder={`${basePlayer?.three_pm}` || "0"}
+                    placeholder={basePlayer?.three_pm.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -205,7 +205,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="fta"
                     name="fta"
-                    placeholder={`${basePlayer?.fta}` || "0"}
+                    placeholder={basePlayer?.fta.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -218,7 +218,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="ftm"
                     name="ftm"
-                    placeholder={`${basePlayer?.ftm}` || "0"}
+                    placeholder={basePlayer?.ftm.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -236,7 +236,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="tov"
                     name="tov"
-                    placeholder={`${basePlayer?.tov}` || "0"}
+                    placeholder={basePlayer?.tov.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -249,7 +249,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="fouls"
                     name="fouls"
-                    placeholder={`${basePlayer?.fouls}` || "0"}
+                    placeholder={basePlayer?.fouls.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -262,7 +262,7 @@ function AddGamePlayerStat({
                     min="0"
                     id="minutes"
                     name="minutes"
-                    placeholder={`${basePlayer?.minutes}` || "0"}
+                    placeholder={basePlayer?.minutes.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
@@ -274,7 +274,7 @@ function AddGamePlayerStat({
                     type="number"
                     id="plus_minus"
                     name="plus_minus"
-                    placeholder={`${basePlayer?.plus_minus}` || "0"}
+                    placeholder={basePlayer?.plus_minus.toString() || "0"}
                     onChange={handleChangeStats}
                   />
                 </div>
