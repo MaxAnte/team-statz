@@ -199,7 +199,7 @@ function Stats() {
               ftm += player.ftm;
             });
           }
-          if (i === games.length - 1) {
+          if (i === games.filter((g) => !g.pending).length - 1) {
             two_fgp += two_fga ? (two_fgm * 100) / two_fga : 0;
             three_fgp += three_fga ? (three_fgm * 100) / three_fga : 0;
             ftp += fta ? (ftm * 100) / fta : 0;
