@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
-import { useHttp } from "../../hooks/http.hook";
+import React, { useState, useEffect, useContext } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
@@ -23,7 +22,7 @@ type Props = {
 };
 
 function EditGamePopup({ closeHandler, base }: Props) {
-  const { getPlayers, players, editGame } = useContext(AppContext);
+  const { players, editGame } = useContext(AppContext);
   const [playersList, setPlayersList] = useState<Player[]>(players);
   const [form, setForm] = useState<Partial<Game>>({ playersStats: [] });
   const [formClose, setFormClose] = useState<boolean>(false);
@@ -39,27 +38,19 @@ function EditGamePopup({ closeHandler, base }: Props) {
     setPlayersList((prevState) => ({ ...prevState, ...checkSet }));
   };
 
-  const getPlayersList = useCallback(async () => {
-    try {
-      const response = await getPlayers();
-      if (response?.length) {
-        response.map((player) => {
-          base.playersStats.forEach((p) => {
-            if (player._id === p._id) {
-              player.check = true;
-            }
-          });
-          return player;
-        });
-        setPlayersList(response);
-      }
-    } catch (e) {}
-  }, [base.playersStats]);
-
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
-    getPlayersList();
-  }, [getPlayers, base]);
+    const mPlayers = players;
+    mPlayers.map((player) => {
+      base.playersStats.forEach((p) => {
+        if (player._id === p._id) {
+          player.check = true;
+        }
+      });
+      return player;
+    });
+    setPlayersList(mPlayers);
+  }, [base, players]);
 
   const handleChangePlayerStats = (
     playerID: string,
@@ -83,7 +74,10 @@ function EditGamePopup({ closeHandler, base }: Props) {
   }, [playersStatsArr]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    setForm((prevState) => ({
+      ...prevState,
+      [e.target.name]: Number(e.target.value),
+    }));
 
   const handleGetQuarters = (quarters: Quarter[]) =>
     setForm((prevState) => ({
