@@ -214,11 +214,8 @@ export const AppProvider = ({ children }: Props) => {
       await request("/api/game/complete-game", "POST", {
         ...game,
       });
-      console.log("passed");
       getGames();
     } catch (e: any) {
-      console.log(e.message);
-
       message(e.message);
       clearError();
     }

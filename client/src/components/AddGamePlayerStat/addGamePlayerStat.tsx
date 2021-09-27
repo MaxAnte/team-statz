@@ -31,7 +31,6 @@ function AddGamePlayerStat({
       [e.target.name]: +e.target.value,
     }));
   };
-  console.log(playerStats);
 
   const handleGetCoords = (coords: Coord[]) => {
     setPlayerStats((prevState) => {
