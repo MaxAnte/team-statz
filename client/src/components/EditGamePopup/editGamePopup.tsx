@@ -138,7 +138,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
                 <TableQuarters
-                  quarters={base.quarters || []}
+                  quarters={base.quarters}
                   mode="edit"
                   handleGetQuarters={handleGetQuarters}
                 />
