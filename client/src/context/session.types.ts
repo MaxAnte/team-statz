@@ -5,3 +5,4 @@ export type Session = {
   logout: () => void;
   isAuthenticated: boolean | false;
 };
+export type User = { login: string; password: string };
