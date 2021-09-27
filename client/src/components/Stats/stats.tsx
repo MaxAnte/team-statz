@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { CoordBase } from "../../context/app.types";
 import { AppContext } from "../../context/app.provider";
 
-import BlockLoader from "../Loader/blockLoader";
+import BasketBallIcon from "../../assets/icons/basketBall";
 
 import styles from "./stats.module.css";
 
@@ -565,7 +565,7 @@ function Stats() {
                 </div>
               ))
             ) : (
-              <BlockLoader />
+              <BasketBallIcon width="120px" height="120px" />
             )}
           </div>
         </div>
@@ -583,7 +583,7 @@ function Stats() {
               countOverallStats()
             )
           ) : (
-            <BlockLoader />
+            <BasketBallIcon width="120px" height="120px" />
           )}
         </div>
       </div>
@@ -635,7 +635,7 @@ function Stats() {
             )}
           </div>
         ) : (
-          <BlockLoader />
+          <BasketBallIcon width="120px" height="120px" />
         )}
       </div>
     </div>

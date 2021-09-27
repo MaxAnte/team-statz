@@ -6,7 +6,8 @@ import { AppContext } from "../../context/app.provider";
 
 import TeamInfo from "../TeamInfo/teamInfo";
 import PlayerCard from "../PlayerCard/playerCard";
-import BlockLoader from "../Loader/blockLoader";
+
+import BasketBallIcon from "../../assets/icons/basketBall";
 
 import styles from "./team.module.css";
 
@@ -24,7 +25,7 @@ function Team() {
     <div className="team page-wrapper">
       <h2 className="title">{t("TeamName", { teamName: TEAMNAME })}</h2>
       {loading ? (
-        <BlockLoader />
+        <BasketBallIcon width="120px" height="120px" />
       ) : (
         <>
           <TeamInfo players={players} games={games} />

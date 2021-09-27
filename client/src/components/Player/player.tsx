@@ -13,11 +13,11 @@ import {
 
 import PlayerCanvas from "../PlayerCanvas/playerCanvas";
 import TableSheet from "../TableSheet/tableSheet";
-import BlockLoader from "../Loader/blockLoader";
 
 import HeightIcon from "../../assets/icons/heightIcon";
 import WeightIcon from "../../assets/icons/weightIcon";
 import JerseyIcon from "../../assets/icons/jerseyIcon";
+import BasketBallIcon from "../../assets/icons/basketBall";
 
 import styles from "./player.module.css";
 interface ParamTypes {
@@ -94,7 +94,7 @@ function Player() {
   return (
     <div className="player page-wrapper">
       {!player ? (
-        <BlockLoader />
+        <BasketBallIcon width="120px" height="120px" />
       ) : (
         <>
           <div className={styles.top}>

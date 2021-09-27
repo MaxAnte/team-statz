@@ -36,11 +36,14 @@ export const AppProvider = ({ children }: Props) => {
 
       const settings = SettingsSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        settings,
-        loading: false,
-      }));
+      setTimeout(() => {
+        setAppState((prevAppState) => ({
+          ...prevAppState,
+          settings,
+          loading: false,
+        }));
+      }, 800);
+
       return settings;
     } catch (e: any) {
       message(e.message);

@@ -6,10 +6,10 @@ import { SessionContext } from "../../context/session.provider";
 import { Settings } from "../../context/app.types";
 
 import ConfirmPopup from "../ConfirmPopup/confirmPopup";
-import BlockLoader from "../Loader/blockLoader";
 import ErrorPage from "../ErrorPage/errorPage";
 
 import styles from "./appSettings.module.css";
+import BasketBallIcon from "../../assets/icons/basketBall";
 
 function AppSettings() {
   const {
@@ -60,7 +60,7 @@ function AppSettings() {
     <div className={`page-wrapper ${styles.appSettings}`}>
       <h1 className="title">{t("Settings")}</h1>
       {loading ? (
-        <BlockLoader />
+        <BasketBallIcon width="120px" height="120px" />
       ) : (
         <form className={styles.settingsForm} onSubmit={handleSubmit}>
           <div className={styles.section}>

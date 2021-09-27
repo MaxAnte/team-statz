@@ -4,7 +4,8 @@ import { AppContext } from "../../context/app.provider";
 import { PlayerStats } from "../../context/app.types";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
-import BlockLoader from "../Loader/blockLoader";
+
+import BasketBallIcon from "../../assets/icons/basketBall";
 
 import styles from "./gamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
@@ -111,7 +112,7 @@ function GamePlayerStat({ player }: Props) {
             </h5>
           </>
         ) : (
-          <BlockLoader />
+          <BasketBallIcon width="120px" height="120px" />
         )}
       </div>
       <div className={styles.gpsRight}>
