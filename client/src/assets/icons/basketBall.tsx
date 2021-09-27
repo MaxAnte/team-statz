@@ -26,20 +26,20 @@ export default function BasketBallIcon({
         r="40.25"
         fill="#ffffff"
         stroke="#31ad31"
-        stroke-width="4.5"
+        strokeWidth="4.5"
       ></circle>
-      <path d="M50 10L50 90" stroke="#31ad31" stroke-width="4"></path>
+      <path d="M50 10L50 90" stroke="#31ad31" strokeWidth="4"></path>
       <path
         d="M21.715728752538098 21.7157287525381 A40 40 0 0 1 21.715728752538098 78.2842712474619"
         fill="none"
         stroke="#31ad31"
-        stroke-width="4"
+        strokeWidth="4"
       ></path>
       <path
         d="M78.2842712474619 21.7157287525381 A40 40 0 0 0 78.2842712474619 78.2842712474619"
         fill="none"
         stroke="#31ad31"
-        stroke-width="4"
+        strokeWidth="4"
       ></path>
       <g transform="translate(0 50)">
         <g>
@@ -47,7 +47,7 @@ export default function BasketBallIcon({
             d="M10 0A40 40 0 0 1 90 0"
             fill="none"
             stroke="#31ad31"
-            stroke-width="4"
+            strokeWidth="4"
           >
             <animate
               attributeName="d"
@@ -64,7 +64,7 @@ export default function BasketBallIcon({
             d="M10 0A40 40 0 0 1 90 0"
             fill="none"
             stroke="#31ad31"
-            stroke-width="4"
+            strokeWidth="4"
           >
             <animate
               attributeName="d"
