@@ -14,8 +14,6 @@ type Props = {
 };
 
 function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
-  console.log(mode, quarters);
-
   const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(
     quarters?.length
       ? quarters
