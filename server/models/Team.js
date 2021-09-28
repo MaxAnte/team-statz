@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const schema = new Schema({
   name: { type: String, required: true, unique: true },
@@ -9,4 +10,4 @@ const schema = new Schema({
   winRate: { type: Number, required: true, default: 0 },
 });
 
-module.exports = model("Team", schema);
+export default model("Team", schema);

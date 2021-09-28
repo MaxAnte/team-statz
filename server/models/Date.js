@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const schema = new Schema({
   enemy: { type: String, required: true },
@@ -8,4 +9,4 @@ const schema = new Schema({
   time: { type: String, required: true },
 });
 
-module.exports = model("Date", schema);
+export default model("Date", schema);

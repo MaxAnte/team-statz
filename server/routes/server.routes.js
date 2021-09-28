@@ -1,16 +1,16 @@
-const { Router } = require("express");
-const config = require("config");
-const { check, validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken");
-const router = Router();
+import { Router } from "express";
+import config from "config";
+import { check, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
 
-const User = require("../models/User");
-const DateModel = require("../models/Date");
-const Game = require("../models/Game");
-const Team = require("../models/Team");
-const Player = require("../models/Player");
-const Settings = require("../models/Settings");
-const PlayoffsMatchup = require("../models/PlayoffsMatchup");
+const router = Router();
+import User from "../models/User.js";
+import DateModel from "../models/Date.js";
+import Game from "../models/Game.js";
+import Team from "../models/Team.js";
+import Player from "../models/Player.js";
+import Settings from "../models/Settings.js";
+import PlayoffsMatchup from "../models/PlayoffsMatchup.js";
 
 // ===================== AUTH ===================
 
@@ -820,6 +820,5 @@ router.post("/bracket/clear", [], async (req, res) => {
 //   } catch (e) {
 //     res.status(500).json({ message: "Server error! Please, try again!" });
 //   }
-// });
 
-module.exports = router;
+export default router;

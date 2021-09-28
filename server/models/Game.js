@@ -1,4 +1,5 @@
-const { Schema, model, Types } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model, Types } = mongoose;
 
 const schema = new Schema({
   enemy: { type: String, required: true },
@@ -32,4 +33,4 @@ const schema = new Schema({
   ],
 });
 
-module.exports = model("Game", schema);
+export default model("Game", schema);

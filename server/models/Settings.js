@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const schema = new Schema({
   playoffsStart: { type: String },
@@ -6,4 +7,4 @@ const schema = new Schema({
   enableCalendarScrollMode: { type: Boolean, default: false },
 });
 
-module.exports = model("Settings", schema);
+export default model("Settings", schema);
