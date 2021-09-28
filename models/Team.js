@@ -1,17 +1,6 @@
-import { Schema, model, Document } from "mongoose";
+const { Schema, model } = require("mongoose");
 
-interface Team extends Document {
-  _id?: string;
-  group: string;
-  loses: number;
-  name: string;
-  points: number;
-  winRate: number;
-  wins: number;
-  __v?: number;
-}
-
-const schema = new Schema<Team>({
+const schema = new Schema({
   name: { type: String, required: true, unique: true },
   wins: { type: Number, required: true, default: 0 },
   loses: { type: Number, required: true, default: 0 },
@@ -20,4 +9,4 @@ const schema = new Schema<Team>({
   winRate: { type: Number, required: true, default: 0 },
 });
 
-export default model<Team>("Team", schema);
+module.exports = model("Team", schema);

@@ -1,20 +1,6 @@
-import { Schema, model, Types, Document } from "mongoose";
-import { PlayerStats, Quarter } from "../client/src/context/app.types";
+const { Schema, model, Types } = require("mongoose");
 
-interface Game extends Document {
-  _id: string;
-  date: string;
-  enemy: string;
-  enemyScore: number;
-  ourScore: number;
-  pending: boolean;
-  playersStats: PlayerStats[];
-  quarters: Quarter[];
-  time: string;
-  __v?: number;
-}
-
-const schema = new Schema<Game>({
+const schema = new Schema({
   enemy: { type: String, required: true },
   ourScore: { type: Number, default: 0, required: true },
   enemyScore: { type: Number, default: 0, required: true },
@@ -46,4 +32,4 @@ const schema = new Schema<Game>({
   ],
 });
 
-export default model<Game>("Game", schema);
+module.exports = model("Game", schema);

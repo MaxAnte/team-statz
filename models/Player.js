@@ -1,33 +1,6 @@
-import { Schema, model, Document } from "mongoose";
-import { Coord } from "../client/src/context/app.types";
+const { Schema, model } = require("mongoose");
 
-interface Player extends Document {
-  _id: string;
-  ast: number;
-  blk: number;
-  coordinates: Coord[];
-  dreb: number;
-  fouls: number;
-  fta: number;
-  ftm: number;
-  minutes: number;
-  mp: number;
-  gp: number;
-  oreb: number;
-  reb: number;
-  plus_minus: number;
-  pts: number;
-  stl: number;
-  three_pa: number;
-  three_pm: number;
-  tov: number;
-  two_pa: number;
-  two_pm: number;
-  birthDate: string;
-  __v?: number;
-}
-
-const schema = new Schema<Player>({
+const schema = new Schema({
   name: { type: String, required: true },
   position: { type: String },
   image_thumb: { type: String },
@@ -60,4 +33,4 @@ const schema = new Schema<Player>({
   bestInStl: { type: Boolean, default: false },
 });
 
-export default model<Player>("Player", schema);
+module.exports = model("Player", schema);
