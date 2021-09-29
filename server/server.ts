@@ -6,7 +6,7 @@ import router from "./routes/server.routes.js";
 
 const app = express();
 
-app.use(express.json({ extended: true }));
+// app.use(express.json({ extended: true }));
 
 app.use("/api", router);
 
@@ -31,13 +31,16 @@ const MONGO_URI =
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-    app.listen(PORT, () => console.log(`App is running on port:${PORT}!`));
-  } catch (e) {
+    if (typeof MONGO_URI === "string") {
+      await mongoose.connect(MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+      });
+      app.listen(PORT, () => console.log(`App is running on port:${PORT}!`));
+    }
+    throw new Error("NO URI");
+  } catch (e: any) {
     console.log("Server error", e.message);
     process.exit(1);
   }

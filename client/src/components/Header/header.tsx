@@ -23,7 +23,7 @@ import LogoutIcon from "../../assets/icons/logoutIcon";
 import styles from "./header.module.css";
 
 function Header() {
-  const { isAuthenticated, logout } = useContext(SessionContext);
+  const { isAuthenticated, logOutUser } = useContext(SessionContext);
   const [modal, setModal] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
@@ -100,7 +100,7 @@ function Header() {
             </NavLink>
             <button
               type="button"
-              onClick={() => logout()}
+              onClick={() => logOutUser()}
               className={styles.hoverLogout}
             >
               <LogoutIcon width="30px" height="30px" />
