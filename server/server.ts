@@ -2,7 +2,7 @@ import express from "express";
 import config from "config";
 import mongoose from "mongoose";
 import path from "path";
-import router from "./routes/server.routes.js";
+import router from "./routes/server.routes";
 
 const app = express();
 
