@@ -2,11 +2,12 @@ import express from "express";
 import config from "config";
 import mongoose from "mongoose";
 import path from "path";
-import router from "./routes/server.routes";
+import router from "./routes/server.routes.js";
 
 const app = express();
 
-// app.use(express.json({ extended: true }));
+//@ts-ignore
+app.use(express.json({ extended: true }));
 
 app.use("/api", router);
 
@@ -38,8 +39,9 @@ async function start() {
         useCreateIndex: true,
       });
       app.listen(PORT, () => console.log(`App is running on port:${PORT}!`));
+    } else {
+      throw new Error("NO URI");
     }
-    throw new Error("NO URI");
   } catch (e: any) {
     console.log("Server error", e.message);
     process.exit(1);

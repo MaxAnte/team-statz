@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/MaxAnte/team-statz#readme",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf 'dist/**' && tsc",
     "start": "node ./dist/server/server.js",
     "server": "nodemon ./dist/server/server.js",
     "client": "npm run start --prefix client",
