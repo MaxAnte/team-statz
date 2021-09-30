@@ -15,7 +15,7 @@ type Props = {
 };
 
 function GamePlayerStat({ player }: Props) {
-  const { getPlayerById, loading } = useContext(AppContext);
+  const { players } = useContext(AppContext);
   const { t } = useTranslation();
   const [playerInfo, setPlayerInfo] = useState({
     name: "",
@@ -25,13 +25,11 @@ function GamePlayerStat({ player }: Props) {
 
   useEffect(() => {
     if (playerInfo.name === "") {
-      (async () => {
-        const res = await getPlayerById(player._id);
-        if (res) {
-          const { name, position, image_thumb } = res;
-          setPlayerInfo({ name, position, image_thumb });
-        }
-      })();
+      const pInfo = players.find((p) => p._id === player._id);
+      if (pInfo) {
+        const { name, position, image_thumb } = pInfo;
+        setPlayerInfo({ name, position, image_thumb });
+      }
     }
   }, []);
 
