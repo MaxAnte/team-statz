@@ -88,14 +88,10 @@ function EditGamePopup({ closeHandler, base }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const onlyCheckedPlayers = form;
-      onlyCheckedPlayers.playersStats = form?.playersStats?.filter(
-        (p) => playersList.filter((pid) => pid._id === p._id)[0].check
-      );
-      await editGame(onlyCheckedPlayers);
+      await editGame(form);
       setFormClose(true);
-    } catch (e) {
-      message(t("Something is missing..."));
+    } catch (error: any) {
+      message(error.message || t("Something is missing..."));
     }
   };
 
