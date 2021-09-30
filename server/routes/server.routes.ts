@@ -169,6 +169,11 @@ router.post(
   async (req: CustomRequest<Partial<GameType>>, res: Response) => {
     try {
       let game = await Game.findOne({ date: req.body.date });
+      if (!game)
+        return res
+          .status(400)
+          .json({ message: `Cant find game at this date (${req.body.date})` });
+
       const { enemy, time } = game;
       const { ourScore, enemyScore, playersStats, date, quarters } = req.body;
       if (!enemyScore || !ourScore)
@@ -177,12 +182,20 @@ router.post(
       game.pending = false;
       game.ourScore = ourScore;
       game.enemyScore = enemyScore;
-      game.playersStats = playersStats;
-      game.quarters = quarters;
+      if (playersStats) game.playersStats = playersStats;
+      if (quarters) game.quarters = quarters;
 
       const enemyWin = +enemyScore > +ourScore;
       const enemyTeam = await Team.findOne({ name: enemy });
+      if (!enemyTeam)
+        return res.status(400).json({ message: `${enemy}: Team not found` });
+
       const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+      if (!ourTeam)
+        return res
+          .status(400)
+          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
+
       if (enemyWin) {
         enemyTeam.wins = +enemyTeam.wins + 1;
         enemyTeam.points = +enemyTeam.points + 2;
@@ -274,7 +287,12 @@ router.post(
   [],
   async (req: CustomRequest<Partial<GameType>>, res: Response) => {
     try {
-      let game = await Game.findOne({ date: req.body.date });
+      const game = await Game.findOne({ date: req.body.date });
+      if (!game)
+        return res
+          .status(400)
+          .json({ message: `Cant find game at this date(${req.body.date})` });
+
       const { enemy, time } = game;
       const { ourScore, enemyScore, playersStats, date, quarters } = req.body;
       if (!enemyScore || !ourScore)
@@ -283,7 +301,14 @@ router.post(
       const prevEnemyWin = game.enemyScore > game.ourScore;
       const enemyWin = +enemyScore > +ourScore;
       const enemyTeam = await Team.findOne({ name: enemy });
+      if (!enemyTeam)
+        return res.status(400).json({ message: `${enemy}: Team not found` });
+
       const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+      if (!ourTeam)
+        return res
+          .status(400)
+          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
 
       if (prevEnemyWin !== enemyWin) {
         if (prevEnemyWin) {
@@ -312,22 +337,31 @@ router.post(
             (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
         }
       }
-      if (!enemyTeam)
-        return res.status(400).json({ message: `${enemy} team not found` });
 
       enemyTeam.save();
       ourTeam.save();
 
       game.ourScore = ourScore;
       game.enemyScore = enemyScore;
-      game.quarters = quarters;
+      game.quarters = quarters ? quarters : game.quarters;
+
+      console.log("hoppa", playersStats);
 
       if (playersStats) {
         playersStats.forEach(async (player: PlayerStats, i: number) => {
           const playerDB = await Player.findOne({ _id: player._id });
+          if (!playerDB)
+            return res
+              .status(400)
+              .json({ message: `${player._id}: Player not found` });
+
           const prevPlayerDB = game.playersStats.find(
             (p: PlayerStats) => p._id.toString() === player._id.toString()
           );
+          if (!prevPlayerDB)
+            return res
+              .status(400)
+              .json({ message: `Previous player for edit not found` });
 
           if (
             !game.playersStats.find(
@@ -347,6 +381,11 @@ router.post(
               ) {
                 console.log("Removing:", p._id);
                 const removedPlayerDB = await Player.findOne({ _id: p._id });
+                if (!removedPlayerDB)
+                  return res
+                    .status(400)
+                    .json({ message: `${p._id}: player not found` });
+
                 removedPlayerDB.gp -= 1;
                 removedPlayerDB.mp = +removedPlayerDB.gp
                   ? (+removedPlayerDB.mp * (+removedPlayerDB.gp + 1) -
@@ -434,11 +473,6 @@ router.post(
             });
           }
 
-          if (!playerDB)
-            return res
-              .status(400)
-              .json({ message: `${playerDB.name} not found` });
-
           playerDB.mp =
             (+playerDB.mp * +playerDB.gp -
               (+prevPlayerDB?.minutes || 0) +
@@ -517,7 +551,9 @@ router.post(
 
           playerDB.save();
 
-          if (i === playersStats.length - 1) {
+          console.log(i, playersStats.length);
+
+          if (i === playersStats.length - 1 && game) {
             game.playersStats = playersStats;
             const dateDB = await DateModel.findOne({ date });
             if (!dateDB)
@@ -560,12 +596,22 @@ router.post(
   async (req: CustomRequest<{ _id: string }>, res: Response) => {
     try {
       let game = await Game.findOne({ _id: req.body._id });
+      if (!game)
+        return res
+          .status(400)
+          .json({ message: `Cant find game by id: ${req.body._id}` });
 
       const { date, enemy } = game;
 
       const enemyWin = +game.enemyScore > +game.ourScore;
       const enemyTeam = await Team.findOne({ name: enemy });
+      if (!enemyTeam)
+        return res.status(400).json({ message: `${enemy}: Team not found` });
       const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+      if (!ourTeam)
+        return res
+          .status(400)
+          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
 
       if (game.ourScore !== 0 && game.enemyScore !== 0) {
         if (enemyWin) {
@@ -602,7 +648,7 @@ router.post(
         if (!playerDB)
           return res
             .status(400)
-            .json({ message: `${playerDB.name} Teams not found` });
+            .json({ message: `${player._id}: Player not found` });
 
         playerDB.gp -= 1;
         playerDB.mp = +playerDB.gp
@@ -687,7 +733,7 @@ router.post(
       await DateModel.deleteOne({ date });
       await Game.deleteOne({ _id: req.body._id });
 
-      res.status(201).json({ message: `${game._id} has been removed!` });
+      res.status(201).json({ message: `${req.body._id} has been removed!` });
     } catch (error: any) {
       res.status(500).json({ message: "Server error! Please, try again!" });
     }
@@ -836,6 +882,7 @@ router.post("/bracket/build", [], async (req: Request, res: Response) => {
   });
 
   const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
+  if (!settings) return res.status(400).json({ message: "Where is settings?" });
   settings.playoffsBracketBuilt = true;
   await settings.save();
   res.json({ message: "Bracket has been succesefully built!" });
@@ -850,6 +897,8 @@ router.post("/bracket/get", [], async (req: Request, res: Response) => {
 
 router.post("/bracket/clear", [], async (req: Request, res: Response) => {
   const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
+  if (!settings) return res.status(400).json({ message: "Where is settings?" });
+
   settings.playoffsBracketBuilt = false;
   await PlayoffsMatchup.deleteMany();
   settings.save();
@@ -864,6 +913,7 @@ router.post("/bracket/clear", [], async (req: Request, res: Response) => {
 // router.post("/players/clean", [], async (req: CustomRequest<UserLoginData>, res: Response) => {
 //   try {
 //     const players = await Player.find({});
+//     if (!players) return res.status(400).json({ message: "Cant get all players" });
 //     players.forEach((player) => {
 //       player.mp = 0;
 //       player.pts = 0;
