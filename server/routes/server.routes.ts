@@ -345,8 +345,6 @@ router.post(
       game.enemyScore = enemyScore;
       game.quarters = quarters ? quarters : game.quarters;
 
-      console.log("hoppa", playersStats);
-
       if (playersStats) {
         playersStats.forEach(async (player: PlayerStats, i: number) => {
           const playerDB = await Player.findOne({ _id: player._id });
@@ -550,8 +548,6 @@ router.post(
               +player.three_pm || 0) / +playerDB.gp;
 
           playerDB.save();
-
-          console.log(i, playersStats.length);
 
           if (i === playersStats.length - 1 && game) {
             game.playersStats = playersStats;
