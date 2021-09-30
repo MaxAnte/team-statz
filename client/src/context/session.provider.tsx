@@ -59,6 +59,21 @@ export class SessionProvider extends React.Component<Props, State> {
     localStorage.removeItem("userData");
   };
 
+  componentDidMount() {
+    const user = localStorage.getItem("userData");
+    if (user) {
+      const { token, userId } = JSON.parse(user);
+      this.setState({
+        context: {
+          ...this.state.context,
+          token,
+          userId,
+          isAuthenticated: true,
+        },
+      });
+    }
+  }
+
   render() {
     return (
       <SessionContext.Provider value={this.state.context}>
