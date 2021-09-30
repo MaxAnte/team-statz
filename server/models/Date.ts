@@ -1,7 +1,16 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const schema = new Schema({
+interface IDate {
+  _id: string;
+  enemy: string;
+  ourScore?: number;
+  enemyScore?: number;
+  date: string;
+  time: string;
+}
+
+const schema = new Schema<IDate>({
   enemy: { type: String, required: true },
   ourScore: { type: Number },
   enemyScore: { type: Number },
@@ -9,4 +18,4 @@ const schema = new Schema({
   time: { type: String, required: true },
 });
 
-export default model("Date", schema);
+export default model<IDate>("Date", schema);

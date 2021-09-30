@@ -1,7 +1,20 @@
+import { PlayerStats, Quarter } from "client/src/context/app.types";
 import mongoose from "mongoose";
 const { Schema, model, Types } = mongoose;
 
-const schema = new Schema({
+interface IGame {
+  _id: string;
+  enemy: string;
+  ourScore: number;
+  enemyScore: number;
+  quarters: Quarter[];
+  date: string;
+  time: string;
+  pending: boolean;
+  playersStats: PlayerStats[];
+}
+
+const schema = new Schema<IGame>({
   enemy: { type: String, required: true },
   ourScore: { type: Number, default: 0, required: true },
   enemyScore: { type: Number, default: 0, required: true },
@@ -33,4 +46,4 @@ const schema = new Schema({
   ],
 });
 
-export default model("Game", schema);
+export default model<IGame>("Game", schema);
