@@ -79,12 +79,14 @@ function AppSettings() {
               />
             </div>
             <div className={styles.inputGroup}>
-              <label htmlFor="dummy2">Dummy:</label>
+              <label htmlFor="teamName">Team name:</label>
               <input
                 type="text"
                 className={styles.inputText}
-                placeholder="dummy"
-                id="dummy2"
+                placeholder={t("Team Name")}
+                id="teamName"
+                onChange={handleTextInputChange}
+                value={form.teamName}
               />
             </div>
           </div>

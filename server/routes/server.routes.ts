@@ -863,6 +863,7 @@ router.post(
 
     settings.playoffsStart = req.body.playoffsStart;
     settings.enableCalendarScrollMode = req.body.enableCalendarScrollMode;
+    settings.teamName = req.body.teamName;
     await settings.save();
     res.json({ ...settings });
   }
