@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { SessionContext } from "../../context/session.provider";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";

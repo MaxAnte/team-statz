@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
@@ -42,7 +42,7 @@ function AddGamePopup({ closeHandler, base }: Props) {
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
     if (players.length) setPlayersStatsArr(players.filter((el) => !!el.check));
-  }, []);
+  }, [base, players]);
 
   useEffect(() => {
     gatherGameInfo(Object.values(playersStatsArr));
@@ -54,15 +54,15 @@ function AddGamePopup({ closeHandler, base }: Props) {
       [e.target.name]: Number(e.target.value),
     }));
 
-  const handleChangePlayerStats = (
-    playerID: string,
-    playersStats: PlayerStats
-  ) => {
-    setPlayersStatsArr((prevState) => ({
-      ...prevState,
-      [playerID]: playersStats,
-    }));
-  };
+  const handleChangePlayerStats = useCallback(
+    (playerID: string, playersStats: PlayerStats) => {
+      setPlayersStatsArr((prevState) => ({
+        ...prevState,
+        [playerID]: playersStats,
+      }));
+    },
+    []
+  );
 
   const gatherGameInfo = (gameInfo: PlayerStats[]) =>
     setForm((prevState) => ({
@@ -80,8 +80,9 @@ function AddGamePopup({ closeHandler, base }: Props) {
     e.preventDefault();
     try {
       await completeGame(form);
-      // setFormClose(true);
-    } catch (e) {
+      setFormClose(true);
+    } catch (e: any) {
+      console.log(e.message);
       message(t("Something is missing..."));
     }
   };

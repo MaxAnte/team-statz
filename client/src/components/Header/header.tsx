@@ -31,7 +31,7 @@ function Header() {
 
   useEffect(() => {
     if (isAuthenticated && closeUserPanel && modal) setModal(false);
-  }, [closeUserPanel]);
+  }, [closeUserPanel, isAuthenticated, modal]);
 
   useEffect(() => {
     const lang = Cookie.get("language");

@@ -31,7 +31,7 @@ function GamePlayerStat({ player }: Props) {
         setPlayerInfo({ name, position, image_thumb });
       }
     }
-  }, []);
+  }, [player._id, playerInfo.name, players]);
 
   const getPercentage = (attempts: number, made: number): string => {
     let perc = (made * 100) / attempts;

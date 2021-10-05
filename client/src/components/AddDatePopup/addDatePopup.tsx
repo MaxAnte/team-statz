@@ -27,7 +27,7 @@ function AddGamePopup({ closeHandler, date }: Props) {
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
     getTeams();
-  }, [date]);
+  }, [date, getTeams]);
 
   const handleGetActive = useCallback(
     (enemy: string) => setForm((prevState) => ({ ...prevState, enemy })),

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 
 import BirthDayPopup from "../BirthDayPopup/birthDayPopup";
@@ -10,7 +10,7 @@ function BirthDayResolver() {
 
   useEffect(() => {
     getBirthdayPlayers();
-  }, []);
+  }, [getBirthdayPlayers]);
 
   const closeHandler = () => {
     Cookies.set("BirthDayEventWatched", "true", { expires: 1 });

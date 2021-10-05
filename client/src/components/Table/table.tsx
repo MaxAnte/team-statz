@@ -26,7 +26,8 @@ function Table() {
 
   useEffect(() => {
     getTeams();
-  }, []);
+  }, [getTeams]);
+
   useEffect(() => {
     setTable(sortTableStandings(teams));
   }, [teams]);
@@ -36,7 +37,7 @@ function Table() {
       editTeamInfo(editableTeam);
       setEditableTeam(undefined);
     }
-  }, [closeEditableCell]);
+  }, [closeEditableCell, editTeamInfo, editableTeam, isAuthenticated]);
 
   const sortTableStandings = (standings: Team[]) => {
     const splitedByGroups: any = {};

@@ -43,7 +43,7 @@ function Schedule() {
 
   useEffect(() => {
     getDates();
-  }, []);
+  }, [getDates]);
 
   const closeHandler = () => setAddDateForm({ form: false, date: "" });
 

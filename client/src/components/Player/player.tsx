@@ -74,7 +74,7 @@ function Player() {
         }
       }
     }
-  }, []);
+  }, [gamesInfo?.length, getGames, getPlayerById, id, player]);
 
   useEffect(() => {
     getDB();
@@ -194,6 +194,7 @@ function Player() {
                     }}
                     options={{
                       scales: {
+                        // @ts-ignore:
                         yAxes: [
                           {
                             ticks: {

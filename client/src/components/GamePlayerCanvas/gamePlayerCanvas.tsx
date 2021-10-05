@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Coord, CoordBase } from "../../context/app.types";

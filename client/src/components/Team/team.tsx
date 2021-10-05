@@ -19,7 +19,7 @@ function Team() {
   useEffect(() => {
     getPlayers();
     getGames();
-  }, []);
+  }, [getPlayers, getGames]);
 
   return (
     <div className="team page-wrapper">

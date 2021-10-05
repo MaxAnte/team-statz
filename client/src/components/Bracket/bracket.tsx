@@ -10,7 +10,7 @@ function Bracket() {
 
   useEffect(() => {
     getPlayoffsMatchups();
-  }, []);
+  }, [getPlayoffsMatchups]);
 
   return (
     <svg viewBox="0 0 1580 660" className={styles.bracket}>

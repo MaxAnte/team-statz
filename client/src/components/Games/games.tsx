@@ -26,7 +26,7 @@ function Games() {
   useEffect(() => {
     getGames();
     getPlayers();
-  }, []);
+  }, [getGames, getPlayers]);
 
   useEffect(() => {
     if (hash === "") {

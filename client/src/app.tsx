@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SessionProvider } from "./context/session.provider";
