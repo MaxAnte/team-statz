@@ -34,6 +34,7 @@ export type Context = {
 
 export type Settings = {
   _id?: string;
+  teamName: string;
   enableCalendarScrollMode: boolean;
   playoffsBracketBuilt: boolean;
   playoffsStart: string;

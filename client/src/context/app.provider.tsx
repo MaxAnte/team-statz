@@ -32,6 +32,7 @@ export class AppProvider extends React.Component<Props, State> {
     this.state = {
       context: {
         settings: {
+          teamName: "Team Name",
           enableCalendarScrollMode: false,
           playoffsBracketBuilt: false,
           playoffsStart: "",

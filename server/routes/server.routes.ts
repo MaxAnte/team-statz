@@ -190,11 +190,19 @@ router.post(
       if (!enemyTeam)
         return res.status(400).json({ message: `${enemy}: Team not found` });
 
-      const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+      const settings = await Settings.findOne(
+        {},
+        {},
+        { sort: { created_at: -1 } }
+      );
+      if (!settings)
+        return res.status(400).json({ message: "Cant get settings" });
+
+      const ourTeam = await Team.findOne({ name: settings.teamName });
       if (!ourTeam)
         return res
           .status(400)
-          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
+          .json({ message: `${settings.teamName}: Team not found` });
 
       if (enemyWin) {
         enemyTeam.wins = +enemyTeam.wins + 1;
@@ -304,11 +312,19 @@ router.post(
       if (!enemyTeam)
         return res.status(400).json({ message: `${enemy}: Team not found` });
 
-      const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+      const settings = await Settings.findOne(
+        {},
+        {},
+        { sort: { created_at: -1 } }
+      );
+      if (!settings)
+        return res.status(400).json({ message: "Cant get settings" });
+
+      const ourTeam = await Team.findOne({ name: settings.teamName });
       if (!ourTeam)
         return res
           .status(400)
-          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
+          .json({ message: `${settings.teamName}: Team not found` });
 
       if (prevEnemyWin !== enemyWin) {
         if (prevEnemyWin) {
@@ -603,11 +619,20 @@ router.post(
       const enemyTeam = await Team.findOne({ name: enemy });
       if (!enemyTeam)
         return res.status(400).json({ message: `${enemy}: Team not found` });
-      const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+
+      const settings = await Settings.findOne(
+        {},
+        {},
+        { sort: { created_at: -1 } }
+      );
+      if (!settings)
+        return res.status(400).json({ message: "Cant get settings" });
+
+      const ourTeam = await Team.findOne({ name: settings.teamName });
       if (!ourTeam)
         return res
           .status(400)
-          .json({ message: `${config.get("TEAMNAME")}: Team not found` });
+          .json({ message: `${settings.teamName}: Team not found` });
 
       if (game.ourScore !== 0 && game.enemyScore !== 0) {
         if (enemyWin) {
