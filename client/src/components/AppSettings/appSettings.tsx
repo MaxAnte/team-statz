@@ -9,7 +9,9 @@ import ConfirmPopup from "../ConfirmPopup/confirmPopup";
 import ErrorPage from "../ErrorPage/errorPage";
 
 import styles from "./appSettings.module.css";
+
 import BasketBallIcon from "../../assets/icons/basketBall";
+import BlankLogo from "../../assets/images/logo-blank.png";
 
 function AppSettings() {
   const {
@@ -32,6 +34,18 @@ function AppSettings() {
 
   const handleCheckboxInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prev) => ({ ...prev, [e.target.id]: !!e.target.checked }));
+
+  const handleImageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        const contents = evt.target?.result?.toString();
+        if (contents) setForm((prev) => ({ ...prev, teamLogo: contents }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,10 +80,28 @@ function AppSettings() {
           <div className={styles.section}>
             <h5 className={styles.sectionTitle}>{t("Team")}</h5>
             <div className={styles.inputGroup}>
-              <label htmlFor="teamName">Team name:</label>
+              {form.teamLogo ? (
+                <img src={form.teamLogo} alt={t("Team logo")} />
+              ) : (
+                <>
+                  <label htmlFor="teamLogo">
+                    <img src={BlankLogo} alt={t("Team logo")} />
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple={false}
+                    className={styles.inputFile}
+                    id="teamLogo"
+                    onChange={handleImageInputChange}
+                  />
+                </>
+              )}
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className={styles.inputText}
+                className={`${styles.inputText} ${styles.textCenter}`}
                 placeholder={t("Team Name")}
                 id="teamName"
                 onChange={handleTextInputChange}

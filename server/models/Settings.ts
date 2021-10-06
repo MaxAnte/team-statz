@@ -4,6 +4,7 @@ const { Schema, model } = mongoose;
 interface ISettings {
   _id: string;
   teamName: string;
+  teamLogo: string;
   playoffsStart: string;
   playoffsBracketBuilt: boolean;
   enableCalendarScrollMode: boolean;
@@ -11,6 +12,7 @@ interface ISettings {
 
 const schema = new Schema<ISettings>({
   teamName: { type: String, required: true },
+  teamLogo: { type: String },
   playoffsStart: { type: String },
   playoffsBracketBuilt: { type: Boolean, default: false },
   enableCalendarScrollMode: { type: Boolean, default: false },
