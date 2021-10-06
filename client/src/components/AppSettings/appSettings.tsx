@@ -80,23 +80,17 @@ function AppSettings() {
           <div className={styles.section}>
             <h5 className={styles.sectionTitle}>{t("Team")}</h5>
             <div className={styles.inputGroup}>
-              {form.teamLogo ? (
-                <img src={form.teamLogo} alt={t("Team logo")} />
-              ) : (
-                <>
-                  <label htmlFor="teamLogo">
-                    <img src={BlankLogo} alt={t("Team logo")} />
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple={false}
-                    className={styles.inputFile}
-                    id="teamLogo"
-                    onChange={handleImageInputChange}
-                  />
-                </>
-              )}
+              <label htmlFor="teamLogo">
+                <img src={form.teamLogo || BlankLogo} alt={t("Team logo")} />
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                multiple={false}
+                className={styles.inputFile}
+                id="teamLogo"
+                onChange={handleImageInputChange}
+              />
             </div>
             <div className={styles.inputGroup}>
               <input
