@@ -64,7 +64,21 @@ function AppSettings() {
       ) : (
         <form className={styles.settingsForm} onSubmit={handleSubmit}>
           <div className={styles.section}>
-            <h5 className={styles.sectionTitle}>{t("General")}</h5>
+            <h5 className={styles.sectionTitle}>{t("Team")}</h5>
+            <div className={styles.inputGroup}>
+              <label htmlFor="teamName">Team name:</label>
+              <input
+                type="text"
+                className={styles.inputText}
+                placeholder={t("Team Name")}
+                id="teamName"
+                onChange={handleTextInputChange}
+                value={form.teamName}
+              />
+            </div>
+          </div>
+          <div className={styles.section}>
+            <h5 className={styles.sectionTitle}>{t("Calendar")}</h5>
             <div className={styles.inputGroup}>
               <label htmlFor="enableCalendarScrollMode">
                 Calendar change month on mouse scroll:
@@ -76,17 +90,6 @@ function AppSettings() {
                 name="enableCalendarScrollMode"
                 onChange={handleCheckboxInputChange}
                 checked={form.enableCalendarScrollMode}
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="teamName">Team name:</label>
-              <input
-                type="text"
-                className={styles.inputText}
-                placeholder={t("Team Name")}
-                id="teamName"
-                onChange={handleTextInputChange}
-                value={form.teamName}
               />
             </div>
           </div>
