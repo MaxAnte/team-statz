@@ -80,7 +80,7 @@ function AppSettings() {
           <div className={styles.section}>
             <h5 className={styles.sectionTitle}>{t("Team")}</h5>
             <div className={styles.inputGroup}>
-              <label htmlFor="teamLogo">
+              <label htmlFor="teamLogo" className={styles.teamLogo}>
                 <img src={form.teamLogo || BlankLogo} alt={t("Team logo")} />
               </label>
               <input

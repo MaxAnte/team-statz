@@ -67,6 +67,9 @@
 .inputFile {
   display: none;
 }
+.teamLogo {
+  cursor: pointer;
+}
 .btn {
   margin: 5px 0px;
 }
