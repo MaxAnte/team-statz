@@ -1,6 +1,6 @@
 {
   "name": "team-statz",
-  "version": "1.5.0",
+  "version": "1.5.5",
   "description": "Team-played sports statistic app",
   "main": "dist/server/server.js",
   "type": "module",
