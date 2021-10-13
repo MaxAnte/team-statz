@@ -23,7 +23,7 @@
     "client:build": "npm run build --prefix client",
     "dev": "npm run build && cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
     "install:all": "npm install && npm install --prefix client",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "npm run build && cd client && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
     "@types/config": "^0.0.39",
