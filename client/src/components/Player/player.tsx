@@ -18,6 +18,7 @@ import HeightIcon from "../../assets/icons/heightIcon";
 import WeightIcon from "../../assets/icons/weightIcon";
 import JerseyIcon from "../../assets/icons/jerseyIcon";
 import BasketBallIcon from "../../assets/icons/basketBall";
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 import styles from "./player.module.css";
 interface ParamTypes {
@@ -100,7 +101,7 @@ function Player() {
           <div className={styles.top}>
             <h2 className={styles.nameMob}>{player.name}</h2>
             <div className={styles.image}>
-              <img src={player.image_thumb} alt={player.name} />
+              <img src={player.image_thumb || blankPhoto} alt={player.name} />
             </div>
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>
