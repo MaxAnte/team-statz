@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useRef, useState, useEffect } from "react";
 import { Coord, Game } from "../../context/app.types";
 

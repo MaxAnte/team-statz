@@ -104,7 +104,12 @@ function GameCard({ game }: Props) {
           </div>
           <TableQuarters quarters={game.quarters} />
           {game.playersStats.map((player) => {
-            return <GamePlayerStat player={player} key={player._id} />;
+            return (
+              <GamePlayerStat
+                player={player}
+                key={`${game._id}-${player._id}`}
+              />
+            );
           })}
         </>
       )}

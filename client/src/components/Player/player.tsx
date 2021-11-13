@@ -75,7 +75,7 @@ function Player() {
         }
       }
     }
-  }, []);
+  }, [gamesInfo?.length, getGames, getPlayerById, id, player]);
 
   useEffect(() => {
     getDB();
@@ -118,7 +118,7 @@ function Player() {
                   {t("CityOf", { city: "Brooklyn" })}, NY
                 </p>
               )}
-              <p className={styles.general}>
+              {/* <p className={styles.general}>
                 <strong>{t("Experience")}:</strong> 15 {t("years")}
               </p>
               <p className={styles.general}>
@@ -142,7 +142,7 @@ function Player() {
                 <li>
                   <strong>{t("Blocks")}:</strong> 0.2 <span>(2020-2021)</span>
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <div className={styles.zones}>
               <PlayerCanvas player={player._id} games={gamesInfo} />
@@ -195,6 +195,7 @@ function Player() {
                     }}
                     options={{
                       scales: {
+                        // @ts-ignore
                         yAxes: [
                           {
                             ticks: {

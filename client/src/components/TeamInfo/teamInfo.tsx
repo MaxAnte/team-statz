@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Game, Player } from "../../context/app.types";
+import { AppContext } from "../../context/app.provider";
 
-import logo from "../../assets/images/logo-bc.png";
+import BlankLogo from "../../assets/images/logo-blank.png";
 
 import styles from "./teamInfo.module.css";
 
@@ -12,6 +13,9 @@ type Props = {
 };
 
 function TeamInfo({ players, games }: Props) {
+  const {
+    settings: { teamLogo },
+  } = useContext(AppContext);
   const { t } = useTranslation();
   const actualGames: Game[] = games.filter((game) => !game.pending);
   const arrTotals: number[] = Array(4).fill(0);
@@ -34,7 +38,7 @@ function TeamInfo({ players, games }: Props) {
   return (
     <div className={styles.teamInfo}>
       <div className={styles.teamInfoLeft}>
-        <img src={logo} alt="BC logo" />
+        <img src={teamLogo || BlankLogo} alt="Team logo" />
       </div>
       <div className={styles.teamInfoRight}>
         <p>

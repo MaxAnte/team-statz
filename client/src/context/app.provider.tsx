@@ -1,7 +1,16 @@
-import React, { useState, useCallback, useEffect, createContext } from "react";
-import { useHttp } from "../hooks/http.hook";
-import { useMessage } from "../hooks/message.hook";
-import { Context, DateType, Game, Settings, Team } from "./app.types";
+import React, { createContext } from "react";
+import { api } from "../api/api";
+import {
+  Context,
+  DateType,
+  Game,
+  Player,
+  PlayoffsMatchup,
+  Settings,
+  Team,
+  Props,
+  State,
+} from "./app.types";
 import {
   SettingsSchema,
   TeamsSchema,
@@ -16,95 +25,130 @@ import {
   NewGameSchema,
 } from "./app.schema";
 
-type Props = {
-  children: React.ReactChild;
-};
-
 export const AppContext = createContext<Context>(undefined!);
+export class AppProvider extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      context: {
+        settings: {
+          teamName: "Team Name",
+          enableCalendarScrollMode: false,
+          playoffsBracketBuilt: false,
+          playoffsStart: "",
+        },
+        teams: [],
+        players: [],
+        games: [],
+        dates: [],
+        playoffsmatchups: [],
+        birthDayPlayers: [],
 
-export const AppProvider = ({ children }: Props) => {
-  const message = useMessage();
-  const { request, clearError } = useHttp();
+        getSettings: this.getSettings,
+        saveSettings: this.saveSettings,
+        getTeams: this.getTeams,
+        editTeamInfo: this.editTeamInfo,
+        getPlayers: this.getPlayers,
+        getPlayerById: this.getPlayerById,
+        getBirthdayPlayers: this.getBirthdayPlayers,
+        getGames: this.getGames,
+        completeGame: this.completeGame,
+        editGame: this.editGame,
+        deleteGame: this.deleteGame,
+        getDates: this.getDates,
+        addDate: this.addDate,
+        getPlayoffsMatchups: this.getPlayoffsMatchups,
+        buildPlayoffsBracket: this.buildPlayoffsBracket,
+        clearPlayoffsBracket: this.clearPlayoffsBracket,
+        loading: false,
+      },
+    };
+  }
 
-  const getSettings = useCallback(async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  getSettings = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
     try {
-      const response = await request("/api/settings", "POST", {});
+      const response = await api<Settings>("/api/settings", "POST", {});
 
       const settings = SettingsSchema.parse(response);
 
       setTimeout(() => {
-        setAppState((prevAppState) => ({
-          ...prevAppState,
-          settings,
-          loading: false,
-        }));
+        this.setState({
+          context: {
+            ...this.state.context,
+            settings,
+            loading: false,
+          },
+        });
       }, 800);
 
       return settings;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
-    }
-  }, [clearError, message, request]);
-
-  const saveSettings = async (settings: Settings) => {
-    try {
-      SettingsSchema.parse(settings);
-      await request("/api/settings/save", "POST", { ...settings });
-      getSettings();
-      message("Settings saved!", "success");
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getTeams = async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  saveSettings = async (settings: Settings) => {
     try {
-      const response = await request("/api/team/teams", "POST", {});
+      SettingsSchema.parse(settings);
+      await api<Settings>("/api/settings/save", "POST", { ...settings });
+      this.getSettings();
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  getTeams = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
+    try {
+      const response = await api<Team[]>("/api/team/teams", "POST", {});
 
       const teams = TeamsSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        teams,
-        loading: false,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          teams,
+          loading: false,
+        },
+      });
       return teams;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const editTeamInfo = async (team: Team) => {
+  editTeamInfo = async (team: Team) => {
     try {
       TeamSchema.parse(team);
-      await request("/api/team/edit-table-info", "POST", {
+      await api<Team>("/api/team/edit-table-info", "POST", {
         ...team,
       });
-      getTeams();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      this.getTeams();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getPlayers = async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  getPlayers = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
     try {
-      const response = await request("/api/player/players", "POST", {});
+      const response = await api<Player[]>("/api/player/players", "POST", {});
 
       const players = PlayersSchema.parse(response);
 
@@ -144,218 +188,203 @@ export const AppProvider = ({ children }: Props) => {
           if (el._id === bestStl.id) el.bestInStl = true;
         });
       }
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        players,
-        loading: false,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          players,
+          loading: false,
+        },
+      });
       return players;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getPlayerById = async (pId: string) => {
+  getPlayerById = async (pId: string) => {
     try {
-      const response = await request("/api/player/id", "POST", { _id: pId });
+      const response = await api<Player>("/api/player/id", "POST", {
+        _id: pId,
+      });
 
       const player = PlayerSchema.parse(response);
 
       return player;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getBirthdayPlayers = async () => {
+  getBirthdayPlayers = async () => {
     try {
-      const response = await request("/api/player/birthDay", "POST", {});
+      const response = await api<Player[]>("/api/player/birthDay", "POST", {});
 
       const birthDayPlayers = PlayersSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        birthDayPlayers,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          birthDayPlayers,
+          loading: true,
+        },
+      });
       return birthDayPlayers;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getGames = async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  getGames = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
     try {
-      const response = await request("/api/game/games", "POST", {});
+      const response = await api<Game[]>("/api/game/games", "POST", {});
 
       const games = GamesSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        games,
-        loading: false,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          games,
+          loading: false,
+        },
+      });
       return games;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const completeGame = async (game: Partial<Game>) => {
+  completeGame = async (game: Partial<Game>) => {
     try {
       NewGameSchema.parse(game);
-      await request("/api/game/complete-game", "POST", {
+      await api<string>("/api/game/complete-game", "POST", {
         ...game,
       });
-      getGames();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      this.getGames();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const editGame = async (game: Partial<Game>) => {
+  editGame = async (game: Partial<Game>) => {
     try {
       GameSchema.parse(game);
-      await request("/api/game/edit-game", "POST", {
+      await api<string>("/api/game/edit-game", "POST", {
         ...game,
       });
-      getGames();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      this.getGames();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const deleteGame = async (gameID: string) => {
+  deleteGame = async (gameID: string) => {
     try {
-      await request("/api/game/delete-game", "POST", {
+      await api<string>("/api/game/delete-game", "POST", {
         _id: gameID,
       });
-      getGames();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      this.getGames();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getDates = async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  getDates = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
     try {
-      const response = await request("/api/date/dates", "POST", {});
+      const response = await api<DateType[]>("/api/date/dates", "POST", {});
 
       const dates = DatesSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        dates,
-        loading: false,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          dates,
+          loading: false,
+        },
+      });
       return dates;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const addDate = async (date: DateType) => {
+  addDate = async (date: DateType) => {
     try {
       DateSchema.parse(date);
-      await request("/api/date/add-date", "POST", { ...date });
-      getDates();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      await api<string>("/api/date/add-date", "POST", { ...date });
+      this.getDates();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const getPlayoffsMatchups = async () => {
-    setAppState((prevAppState) => ({
-      ...prevAppState,
-      loading: true,
-    }));
+  getPlayoffsMatchups = async () => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
     try {
-      const response = await request("/api/bracket/get", "POST", {});
+      const response = await api<PlayoffsMatchup[]>(
+        "/api/bracket/get",
+        "POST",
+        {}
+      );
 
       const playoffsmatchups = PlayoffsMatchupsSchema.parse(response);
 
-      setAppState((prevAppState) => ({
-        ...prevAppState,
-        playoffsmatchups,
-        loading: false,
-      }));
+      this.setState({
+        context: {
+          ...this.state.context,
+          playoffsmatchups,
+          loading: true,
+        },
+      });
       return playoffsmatchups;
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const buildPlayoffsBracket = async () => {
+  buildPlayoffsBracket = async () => {
     try {
-      await request("/api/bracket/build", "POST", {});
-      getSettings();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      await api<string>("/api/bracket/build", "POST", {});
+      this.getSettings();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const clearPlayoffsBracket = async () => {
+  clearPlayoffsBracket = async () => {
     try {
-      await request("/api/bracket/clear", "POST", {});
-      getSettings();
-    } catch (e: any) {
-      message(e.message);
-      clearError();
+      await api<string>("/api/bracket/clear", "POST", {});
+      this.getSettings();
+    } catch (error: any) {
+      throw error;
     }
   };
 
-  const [appState, setAppState] = useState<Context>({
-    settings: {
-      enableCalendarScrollMode: false,
-      playoffsBracketBuilt: false,
-      playoffsStart: "",
-    },
-    teams: [],
-    players: [],
-    games: [],
-    dates: [],
-    playoffsmatchups: [],
-    birthDayPlayers: [],
+  componentDidMount() {
+    this.getSettings();
+  }
 
-    getSettings,
-    saveSettings,
-    getTeams,
-    editTeamInfo,
-    getPlayers,
-    getPlayerById,
-    getBirthdayPlayers,
-    getGames,
-    completeGame,
-    editGame,
-    deleteGame,
-    getDates,
-    addDate,
-    getPlayoffsMatchups,
-    buildPlayoffsBracket,
-    clearPlayoffsBracket,
-    loading: false,
-  });
-
-  useEffect(() => {
-    getSettings();
-  }, [getSettings]);
-
-  return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
-};
+  render() {
+    return (
+      <AppContext.Provider value={this.state.context}>
+        {this.props.children}
+      </AppContext.Provider>
+    );
+  }
+}

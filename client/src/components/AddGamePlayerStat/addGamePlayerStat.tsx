@@ -44,7 +44,7 @@ function AddGamePlayerStat({
 
   useEffect(() => {
     if (playerStats) handleChangePlayerStats(player._id, playerStats);
-  }, [playerStats, player._id]);
+  }, [playerStats, player._id, handleChangePlayerStats]);
 
   return (
     <div className={styles.gamePlayerStat}>

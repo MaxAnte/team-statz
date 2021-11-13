@@ -15,7 +15,7 @@ type Props = {
 };
 
 function GamePlayerStat({ player }: Props) {
-  const { getPlayerById, loading } = useContext(AppContext);
+  const { players } = useContext(AppContext);
   const { t } = useTranslation();
   const [playerInfo, setPlayerInfo] = useState({
     name: "",
@@ -25,15 +25,13 @@ function GamePlayerStat({ player }: Props) {
 
   useEffect(() => {
     if (playerInfo.name === "") {
-      (async () => {
-        const res = await getPlayerById(player._id);
-        if (res) {
-          const { name, position, image_thumb } = res;
-          setPlayerInfo({ name, position, image_thumb });
-        }
-      })();
+      const pInfo = players.find((p) => p._id === player._id);
+      if (pInfo) {
+        const { name, position, image_thumb } = pInfo;
+        setPlayerInfo({ name, position, image_thumb });
+      }
     }
-  }, []);
+  }, [player._id, playerInfo.name, players]);
 
   const getPercentage = (attempts: number, made: number): string => {
     let perc = (made * 100) / attempts;
@@ -101,10 +99,10 @@ function GamePlayerStat({ player }: Props) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        {playerInfo.image_thumb ? (
+        {playerInfo.name ? (
           <>
             <img
-              src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
+              src={playerInfo.image_thumb || blankPhoto}
               alt={playerInfo.name}
             />
             <h5>

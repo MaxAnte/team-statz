@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const SettingsSchema = z.object({
   _id: z.string().optional(),
+  teamName: z.string(),
+  teamLogo: z.string().optional(),
   enableCalendarScrollMode: z.boolean(),
   playoffsBracketBuilt: z.boolean(),
   playoffsStart: z.string(),

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { SessionContext } from "../../context/session.provider";
+import { UserLoginData } from "../../context/session.types";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
@@ -9,24 +10,13 @@ import styles from "./authModal.module.css";
 type Props = {
   closeOnLogin: () => void;
 };
-type UserLoginData = {
-  login: string;
-  password: string;
-};
 
 function AuthModal({ closeOnLogin }: Props) {
-  const { login } = useContext(SessionContext);
-  const { loading, error, request, clearError } = useHttp();
+  const { logInUser } = useContext(SessionContext);
+  const { loading, clearError } = useHttp();
   const message = useMessage();
   const { t } = useTranslation();
   const [form, setForm] = useState<UserLoginData>({ login: "", password: "" });
-
-  useEffect(() => {
-    if (error) {
-      message(error);
-      clearError();
-    }
-  }, [error, message, clearError]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -35,10 +25,12 @@ function AuthModal({ closeOnLogin }: Props) {
   const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const data = await request("/api/auth/login", "POST", { ...form });
-      login(data.token, data.userId);
+      await logInUser(form);
       closeOnLogin();
-    } catch (e) {}
+    } catch (error: any) {
+      message(error);
+      clearError();
+    }
   };
 
   // const registerHandler = async (e: React.FormEvent<HTMLFormElement>) => {

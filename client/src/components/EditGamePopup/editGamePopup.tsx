@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 import { TEAMNAME } from "../../project.const";
@@ -52,15 +52,15 @@ function EditGamePopup({ closeHandler, base }: Props) {
     setPlayersList(mPlayers);
   }, [base, players]);
 
-  const handleChangePlayerStats = (
-    playerID: string,
-    playersStats: PlayerStats
-  ) => {
-    setPlayersStatsArr((prevState) => ({
-      ...prevState,
-      [playerID]: playersStats,
-    }));
-  };
+  const handleChangePlayerStats = useCallback(
+    (playerID: string, playersStats: PlayerStats) => {
+      setPlayersStatsArr((prevState) => ({
+        ...prevState,
+        [playerID]: playersStats,
+      }));
+    },
+    []
+  );
 
   const gatherGameInfo = (gameInfo: PlayerStats[]) => {
     setForm((prevState) => ({
@@ -88,14 +88,10 @@ function EditGamePopup({ closeHandler, base }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const onlyCheckedPlayers = form;
-      onlyCheckedPlayers.playersStats = form?.playersStats?.filter(
-        (p) => playersList.filter((pid) => pid._id === p._id)[0].check
-      );
-      await editGame(onlyCheckedPlayers);
+      await editGame(form);
       setFormClose(true);
-    } catch (e) {
-      message(t("Something is missing..."));
+    } catch (error: any) {
+      message(error.message || t("Something is missing..."));
     }
   };
 
@@ -152,7 +148,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
                   <MiniLoader />
                 ) : (
                   <div className={styles.playersSelect}>
-                    {Object.values(players).map((player, i) => (
+                    {Object.values(playersList).map((player, i) => (
                       <div
                         key={`${player.name}_${i}`}
                         className={styles.playerCard}

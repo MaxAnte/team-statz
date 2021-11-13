@@ -53,6 +53,9 @@
   font-size: 16px;
   max-width: 150px;
 }
+.textCenter {
+  text-align: center;
+}
 .inputGroup input[id="playoffsStart"] {
   max-width: 110px;
   min-height: 40px;
@@ -60,6 +63,12 @@
 }
 .inputCheckbox {
   margin-left: 10px;
+}
+.inputFile {
+  display: none;
+}
+.teamLogo {
+  cursor: pointer;
 }
 .btn {
   margin: 5px 0px;

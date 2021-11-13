@@ -1,3 +1,5 @@
+import type { AppProvider } from "./app.provider";
+
 export type Context = {
   settings: Settings;
   teams: Team[] | [];
@@ -6,28 +8,34 @@ export type Context = {
   dates: DateType[] | [];
   playoffsmatchups: PlayoffsMatchup[] | [];
   birthDayPlayers: Player[] | [];
-
-  getSettings: () => Promise<Settings | undefined>;
-  saveSettings: (settings: Settings) => Promise<void>;
-  getTeams: () => Promise<Team[] | undefined>;
-  editTeamInfo: (team: Team) => Promise<void>;
-  getPlayers: () => Promise<Player[] | undefined>;
-  getPlayerById: (pId: string) => Promise<Player | undefined>;
-  getBirthdayPlayers: () => Promise<Player[] | undefined>;
-  getGames: () => Promise<Game[] | undefined>;
-  completeGame: (game: Partial<Game>) => Promise<void>;
-  editGame: (game: Partial<Game>) => Promise<void>;
-  deleteGame: (gameID: string) => Promise<void>;
-  getDates: () => Promise<DateType[] | undefined>;
-  addDate: (date: DateType) => Promise<void>;
-  getPlayoffsMatchups: () => Promise<PlayoffsMatchup[] | undefined>;
-  buildPlayoffsBracket: () => Promise<void>;
-  clearPlayoffsBracket: () => Promise<void>;
   loading: boolean;
+
+  getSettings: InstanceType<typeof AppProvider>["getSettings"];
+  saveSettings: InstanceType<typeof AppProvider>["saveSettings"];
+  getTeams: InstanceType<typeof AppProvider>["getTeams"];
+  editTeamInfo: InstanceType<typeof AppProvider>["editTeamInfo"];
+  getPlayers: InstanceType<typeof AppProvider>["getPlayers"];
+  getPlayerById: InstanceType<typeof AppProvider>["getPlayerById"];
+  getBirthdayPlayers: InstanceType<typeof AppProvider>["getBirthdayPlayers"];
+  getGames: InstanceType<typeof AppProvider>["getGames"];
+  completeGame: InstanceType<typeof AppProvider>["completeGame"];
+  editGame: InstanceType<typeof AppProvider>["editGame"];
+  deleteGame: InstanceType<typeof AppProvider>["deleteGame"];
+  getDates: InstanceType<typeof AppProvider>["getDates"];
+  addDate: InstanceType<typeof AppProvider>["addDate"];
+  getPlayoffsMatchups: InstanceType<typeof AppProvider>["getPlayoffsMatchups"];
+  buildPlayoffsBracket: InstanceType<
+    typeof AppProvider
+  >["buildPlayoffsBracket"];
+  clearPlayoffsBracket: InstanceType<
+    typeof AppProvider
+  >["clearPlayoffsBracket"];
 };
 
 export type Settings = {
   _id?: string;
+  teamName: string;
+  teamLogo?: string;
   enableCalendarScrollMode: boolean;
   playoffsBracketBuilt: boolean;
   playoffsStart: string;
@@ -171,4 +179,12 @@ export type PlayoffsMatchup = {
   team2: string;
   winner: string;
   __v?: number;
+};
+
+export type Props = {
+  // children: React.ReactChild;
+};
+
+export type State = {
+  context: Context;
 };
