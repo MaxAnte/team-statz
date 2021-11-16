@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { SessionContext } from "../../context/session.provider";
+import { UserLoginData } from "../../context/session.types";
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
 
 import styles from "./authModal.module.css";
-import { UserLoginData } from "../../context/session.types";
 
 type Props = {
   closeOnLogin: () => void;

@@ -14,7 +14,7 @@ type Props = {
   date: string;
 };
 
-function AddGamePopup({ closeHandler, date }: Props) {
+function AddDatePopup({ closeHandler, date }: Props) {
   const { getTeams, teams, addDate } = useContext(AppContext);
   const [form, setForm] = useState<AddDateForm>({
     date: "",
@@ -60,7 +60,7 @@ function AddGamePopup({ closeHandler, date }: Props) {
             />
           </div>
           <Select
-            options={teams ? teams.map((team) => team.name) : []}
+            options={teams.map((team) => team.name)}
             className={styles.selectWrap}
             getActive={handleGetActive}
             defaultValue="Enemy Team"
@@ -79,4 +79,4 @@ function AddGamePopup({ closeHandler, date }: Props) {
   );
 }
 
-export default AddGamePopup;
+export default AddDatePopup;

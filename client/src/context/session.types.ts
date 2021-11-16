@@ -15,10 +15,12 @@ export type UserLoginData = {
   login: string;
   password: string;
 };
+
 export type UserResponse = {
   token: string;
   userId: string;
 };
+
 export type Props = {
   // children: React.ReactChild;
 };

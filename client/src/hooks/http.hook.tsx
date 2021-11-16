@@ -10,6 +10,7 @@ interface Response<T> {
   message?: string;
   data: T;
 }
+
 export const useHttp = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

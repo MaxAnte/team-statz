@@ -1,5 +1,4 @@
-import { Headers } from "./api.types";
-import { Response } from "./api.types";
+import { Headers, Response } from "./api.types";
 
 export async function api<T>(
   url: string,

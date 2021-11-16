@@ -24,20 +24,22 @@ function Select({
   type = "",
   arrow = true,
 }: Props) {
+  const { t } = useTranslation();
   const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
-  const { t } = useTranslation();
   const [optionsRefs, setOptionsRefs] = useState<
-    React.MutableRefObject<HTMLInputElement>[]
+    React.MutableRefObject<HTMLDivElement>[]
   >([]);
 
   useEffect(() => {
-    setOptionsRefs((optionsRefs) =>
-      Array(4)
-        .fill({})
-        .map((_, i) => optionsRefs[i] || createRef())
-    );
-  }, []);
+    if (options.length) {
+      setOptionsRefs((optionsRefs) =>
+        Array(options.length)
+          .fill({})
+          .map((_, i) => optionsRefs[i] || createRef())
+      );
+    }
+  }, [options]);
 
   const clickHandle = (optionId: number) => {
     const option = optionsRefs[optionId].current.dataset.option;

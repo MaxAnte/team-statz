@@ -82,7 +82,6 @@ function AddGamePopup({ closeHandler, base }: Props) {
       await completeGame(form);
       setFormClose(true);
     } catch (e: any) {
-      console.log(e.message);
       message(t("Something is missing..."));
     }
   };

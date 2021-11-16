@@ -14,6 +14,7 @@ import {
 import PlayerCanvas from "../PlayerCanvas/playerCanvas";
 import TableSheet from "../TableSheet/tableSheet";
 
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 import HeightIcon from "../../assets/icons/heightIcon";
 import WeightIcon from "../../assets/icons/weightIcon";
 import JerseyIcon from "../../assets/icons/jerseyIcon";
@@ -100,7 +101,7 @@ function Player() {
           <div className={styles.top}>
             <h2 className={styles.nameMob}>{player.name}</h2>
             <div className={styles.image}>
-              <img src={player.image_thumb} alt={player.name} />
+              <img src={player.image_thumb || blankPhoto} alt={player.name} />
             </div>
             <div className={styles.info}>
               <h2 className={styles.name}>{player.name}</h2>
@@ -117,7 +118,7 @@ function Player() {
                   {t("CityOf", { city: "Brooklyn" })}, NY
                 </p>
               )}
-              <p className={styles.general}>
+              {/* <p className={styles.general}>
                 <strong>{t("Experience")}:</strong> 15 {t("years")}
               </p>
               <p className={styles.general}>
@@ -141,7 +142,7 @@ function Player() {
                 <li>
                   <strong>{t("Blocks")}:</strong> 0.2 <span>(2020-2021)</span>
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <div className={styles.zones}>
               <PlayerCanvas player={player._id} games={gamesInfo} />
@@ -194,7 +195,7 @@ function Player() {
                     }}
                     options={{
                       scales: {
-                        // @ts-ignore:
+                        // @ts-ignore
                         yAxes: [
                           {
                             ticks: {

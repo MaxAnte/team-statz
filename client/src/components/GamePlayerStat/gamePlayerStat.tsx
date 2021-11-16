@@ -99,10 +99,10 @@ function GamePlayerStat({ player }: Props) {
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
-        {playerInfo.image_thumb ? (
+        {playerInfo.name ? (
           <>
             <img
-              src={playerInfo.image_thumb ? playerInfo.image_thumb : blankPhoto}
+              src={playerInfo.image_thumb || blankPhoto}
               alt={playerInfo.name}
             />
             <h5>
