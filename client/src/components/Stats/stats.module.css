@@ -60,8 +60,7 @@
 }
 .canvasStats {
   border: 1px solid var(--color-black);
-  background: url("../../assets/images/courts/court-black.jpg");
-  background-size: contain;
+  background-color: var(--color-basketball-court);
   margin: 0px 35px;
 }
 .statsColumn {

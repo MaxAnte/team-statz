@@ -2,6 +2,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Coord, CoordBase } from "../../context/app.types";
+import {
+  DEFAULT_WIDTH as WIDTH,
+  DEFAULT_HEIGHT as HEIGHT,
+  drawCourt,
+  drawMade,
+  drawMiss,
+} from "../../helpers/canvas.helpers";
 
 import styles from "./gamePlayerCanvas.module.css";
 
@@ -27,19 +34,8 @@ function GamePlayerCanvas({
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const WIDTH: number = 290;
-  const HEIGHT: number = 310;
   const DPI_WIDTH: number = WIDTH * 2;
   const DPI_HEIGHT: number = HEIGHT * 2;
-
-  const drawMiss = (ctx: CanvasRenderingContext2D, element: Coord) => {
-    ctx.moveTo(element.x - 10, element.y - 10);
-    ctx.lineTo(element.x + 10, element.y + 10);
-    ctx.moveTo(element.x + 10, element.y - 10);
-    ctx.lineTo(element.x - 10, element.y + 10);
-  };
-  const drawMade = (ctx: CanvasRenderingContext2D, element: Coord) =>
-    ctx.arc(element.x, element.y, 10, 0, 2 * Math.PI);
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
@@ -54,11 +50,12 @@ function GamePlayerCanvas({
         setCanv(canvas);
         setCanvBound(canvas.getBoundingClientRect());
         setContext(ctx);
+        drawCourt(ctx, DPI_WIDTH, DPI_HEIGHT);
 
         newCoords.forEach((el) => {
           if (ctx) {
             ctx.beginPath();
-            el.miss ? drawMiss(ctx, el) : drawMade(ctx, el);
+            el.miss ? drawMiss(ctx, el, 10) : drawMade(ctx, el, 10);
             ctx.lineWidth = 5;
             ctx.closePath();
             el.miss

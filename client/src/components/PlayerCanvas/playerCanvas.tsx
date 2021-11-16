@@ -3,6 +3,10 @@ import React, { useRef, useState, useEffect } from "react";
 import { Coord, Game } from "../../context/app.types";
 
 import { zones } from "./zones";
+import {
+  drawCourt,
+  MULTIPLIER_PLAYER as MULTIPLIER,
+} from "../../helpers/canvas.helpers";
 
 import styles from "./playerCanvas.module.css";
 
@@ -25,7 +29,6 @@ function PlayerCanvas({ player, games }: Props) {
   const HEIGHT: number = 400;
   const DPI_WIDTH: number = WIDTH * 2;
   const DPI_HEIGHT: number = HEIGHT * 2;
-  const MULTIPLIER: number = 1.289655172;
 
   useEffect(() => {
     if (games.length) {
@@ -61,6 +64,7 @@ function PlayerCanvas({ player, games }: Props) {
         setCanv(canvas);
         setCanvBound(canvas.getBoundingClientRect());
         setContext(ctx);
+        drawCourt(ctx, DPI_WIDTH, DPI_HEIGHT, MULTIPLIER, 10);
 
         coords &&
           coords.forEach((el) => {

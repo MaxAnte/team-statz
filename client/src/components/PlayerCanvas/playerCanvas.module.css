@@ -4,8 +4,7 @@
 }
 .gamePlayerCanvas {
   border: 1px solid var(--color-black);
-  background: url("../../assets/images/courts/court-black.jpg");
-  background-size: contain;
+  background-color: var(--color-basketball-court);
   transform: rotate(90deg);
 }
 @media (max-width: 767px) {

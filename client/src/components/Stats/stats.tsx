@@ -2,8 +2,14 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CoordBase } from "../../context/app.types";
 import { AppContext } from "../../context/app.provider";
+import {
+  MULTIPLIER_STATS as MULTIPLIER,
+  COLORS_STATS as COLORS,
+  drawMiss,
+  drawMade,
+  drawCourt,
+} from "../../helpers/canvas.helpers";
 
 import BasketBallIcon from "../../assets/icons/basketBall";
 
@@ -35,24 +41,6 @@ function Stats() {
   const HEIGHT: number = 750;
   const DPI_WIDTH: number = WIDTH * 2;
   const DPI_HEIGHT: number = HEIGHT * 2;
-  const MULTIPLIER: number = 2.41379310345;
-  const COLORS: string[] = [
-    "#FF0032",
-    "#F700FF",
-    "#8000FF",
-    "#469990",
-    "#008FFF",
-    "#00FF83",
-    "#F0FF00",
-    "#FFA600",
-    "#FF5900",
-    "#bfef45",
-    "#42d4f4",
-    "#ffd8b1",
-    "#fffac8",
-    "#aaffc3",
-    "#ffffff",
-  ];
   const POINTER_COLORS: PointerColor[] =
     players &&
     Array(players.length)
@@ -60,15 +48,6 @@ function Stats() {
       .map((_, i) => {
         return { _id: players[i]._id, color: COLORS[i] };
       });
-
-  const drawMiss = (ctx: CanvasRenderingContext2D, element: CoordBase) => {
-    ctx.moveTo(element.x * MULTIPLIER - 12, element.y * MULTIPLIER - 12);
-    ctx.lineTo(element.x * MULTIPLIER + 12, element.y * MULTIPLIER + 12);
-    ctx.moveTo(element.x * MULTIPLIER + 12, element.y * MULTIPLIER - 12);
-    ctx.lineTo(element.x * MULTIPLIER - 12, element.y * MULTIPLIER + 12);
-  };
-  const drawMade = (ctx: CanvasRenderingContext2D, element: CoordBase) =>
-    ctx.arc(element.x * MULTIPLIER, element.y * MULTIPLIER, 12, 0, 2 * Math.PI);
 
   useEffect(() => {
     getPlayers();
@@ -87,6 +66,8 @@ function Stats() {
         setCanv(canvas);
         setCanvBound(canvas.getBoundingClientRect());
         setContext(ctx);
+        drawCourt(ctx, DPI_WIDTH, DPI_HEIGHT, MULTIPLIER, 10);
+
         let filteredGames = filterGame
           ? games.filter((game) => game.date === filterGame)
           : games;
@@ -97,9 +78,9 @@ function Stats() {
               if (ctx) {
                 ctx.beginPath();
                 if (coord.miss) {
-                  drawMiss(ctx, coord);
+                  drawMiss(ctx, coord, 12, MULTIPLIER);
                 } else {
-                  drawMade(ctx, coord);
+                  drawMade(ctx, coord, 12, MULTIPLIER);
                 }
                 filterPlayer === player._id
                   ? (ctx.lineWidth = 9)
