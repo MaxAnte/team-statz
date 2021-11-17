@@ -1,10 +1,9 @@
 /* eslint-disable */
 import React, { useRef, useState, useEffect } from "react";
 import { Coord, Game } from "../../context/app.types";
-
-import { zones } from "./zones";
 import {
   drawCourt,
+  zones,
   MULTIPLIER_PLAYER as MULTIPLIER,
 } from "../../helpers/canvas.helpers";
 
