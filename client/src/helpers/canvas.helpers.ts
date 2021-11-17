@@ -140,10 +140,10 @@ export const drawCourt = (
       L ${width - 45 * multiplier} ${height / 2 + 53 * multiplier}
     `), //basketArc
     new Path2D(`
-      M ${width - 45 * multiplier} ${height / 2 - 45 * multiplier} 
-      L ${width - 45 * multiplier} ${height / 2 + 45 * multiplier} 
-      M ${width - 45 * multiplier} ${(height / 2) * multiplier} 
-      L ${width - 52 * multiplier} ${(height / 2) * multiplier} 
+      M ${width - 45 * multiplier} ${height / 2 - 40 * multiplier} 
+      L ${width - 45 * multiplier} ${height / 2 + 40 * multiplier} 
+      M ${width - 45 * multiplier} ${height / 2 + 0 * multiplier} 
+      L ${width - 55 * multiplier} ${height / 2 - 0 * multiplier} 
       a ${10 * multiplier}, ${10 * multiplier} 0 1, 0 ${-(20 * multiplier)}, 0
       a ${10 * multiplier}, ${10 * multiplier} 0 1, 0 ${20 * multiplier}, 0
     `), //basket
