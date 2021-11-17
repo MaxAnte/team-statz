@@ -19,6 +19,7 @@ client/coverage
 
 # production
 /build
+/dist
 client/build
 
 # misc

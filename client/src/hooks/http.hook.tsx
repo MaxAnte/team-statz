@@ -4,7 +4,6 @@ type Headers = {
   "Content-Type"?: string;
   Accept?: string;
 };
-
 interface Response<T> {
   status: "ok" | "error";
   code: number;

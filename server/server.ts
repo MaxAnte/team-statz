@@ -1,14 +1,15 @@
-const express = require("express");
-const config = require("config");
-const mongoose = require("mongoose");
-const path = require("path");
-require("dotenv").config();
+import express from "express";
+import config from "config";
+import mongoose from "mongoose";
+import path from "path";
+import router from "./routes/server.routes.js";
 
 const app = express();
 
+//@ts-ignore
 app.use(express.json({ extended: true }));
 
-app.use("/api", require("./routes/server.routes"));
+app.use("/api", router);
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
@@ -31,13 +32,17 @@ const MONGO_URI =
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-    app.listen(PORT, () => console.log(`App is running on port:${PORT}!`));
-  } catch (e) {
+    if (typeof MONGO_URI === "string") {
+      await mongoose.connect(MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+      });
+      app.listen(PORT, () => console.log(`App is running on port:${PORT}!`));
+    } else {
+      throw new Error("NO URI");
+    }
+  } catch (e: any) {
     console.log("Server error", e.message);
     process.exit(1);
   }

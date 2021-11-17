@@ -1,6 +1,41 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
-const schema = new Schema({
+interface IPlayer {
+  _id: string;
+  name: string;
+  position: string;
+  image_thumb: string;
+  age: number;
+  birthDate: string;
+  number: number;
+  gp: number;
+  gs: number;
+  mp: number;
+  pts: number;
+  oreb: number;
+  dreb: number;
+  reb: number;
+  ast: number;
+  blk: number;
+  stl: number;
+  plus_minus: number;
+  fta: number;
+  ftm: number;
+  two_pa: number;
+  two_pm: number;
+  three_pa: number;
+  three_pm: number;
+  tov: number;
+  fouls: number;
+  bestInPts: boolean;
+  bestInReb: boolean;
+  bestInAst: boolean;
+  bestInBlk: boolean;
+  bestInStl: boolean;
+}
+
+const schema = new Schema<IPlayer>({
   name: { type: String, required: true },
   position: { type: String },
   image_thumb: { type: String },
@@ -33,4 +68,4 @@ const schema = new Schema({
   bestInStl: { type: Boolean, default: false },
 });
 
-module.exports = model("Player", schema);
+export default model<IPlayer>("Player", schema);
