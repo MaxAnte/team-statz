@@ -29,7 +29,7 @@ function GameCard({ game }: Props) {
 
   useEffect(() => {
     const today = new Date();
-    const gameDay = new Date(game.date);
+    const gameDay = new Date(`${game.date} ${game.time}`);
     if (today > gameDay) setEditMode(true);
   }, [game]);
 
