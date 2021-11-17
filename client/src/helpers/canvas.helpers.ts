@@ -6,21 +6,16 @@ export const MULTIPLIER_PLAYER: number = 1.289655172;
 export const MULTIPLIER_STATS: number = 2.41379310345;
 
 export const COLORS_STATS: string[] = [
-  "#FF0032",
-  "#F700FF",
-  "#8000FF",
-  "#469990",
-  "#008FFF",
-  "#00FF83",
-  "#F0FF00",
-  "#FFA600",
-  "#FF5900",
-  "#bfef45",
-  "#42d4f4",
-  "#ffd8b1",
-  "#fffac8",
-  "#aaffc3",
-  "#ffffff",
+  "#08F7FE",
+  "#E8E500",
+  "#FE53BB",
+  "#B76CFD",
+  "#B8FB3C",
+  "#A5D8F3",
+  "#28CF75",
+  "#FC6E22",
+  "#F21A1D",
+  "#7898FB",
 ];
 
 // remember about that canvas is rotated in css
