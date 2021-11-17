@@ -97,7 +97,7 @@ function PlayerCanvas({ player, games }: Props) {
     zonesPerc: number[]
   ) => {
     ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 9;
     zones.forEach((zone, id) => {
       ctx.beginPath();
       if (zonesAttempts[id]) {
