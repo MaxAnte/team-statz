@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useMessage } from "../../hooks/message.hook";
 import { useTranslation } from "react-i18next";
-import { TEAMNAME } from "../../project.const";
 import { Game, Player, PlayerStats, Quarter } from "../../context/app.types";
 import { AppContext } from "../../context/app.provider";
 
@@ -22,7 +21,7 @@ type Props = {
 };
 
 function AddGamePopup({ closeHandler, base }: Props) {
-  const { players, completeGame } = useContext(AppContext);
+  const { players, completeGame, settings } = useContext(AppContext);
   const [playersList, setPlayersList] = useState<Player[]>(players);
   const [checkListAccept, setCheckListAccept] = useState(false);
   const [form, setForm] = useState<Partial<Game>>({ playersStats: [] });
@@ -102,7 +101,9 @@ function AddGamePopup({ closeHandler, base }: Props) {
               </h4>
               <div className={styles.popupSection}>
                 <div className={styles.genGameInfo}>
-                  <span className={styles.genGameInfoNames}>{TEAMNAME}</span>
+                  <span className={styles.genGameInfoNames}>
+                    {settings.teamName || "Your team"}
+                  </span>
                   <input
                     type="text"
                     maxLength={3}

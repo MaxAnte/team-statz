@@ -586,7 +586,7 @@ router.post("/game/delete-game", [], async (req, res) => {
     if (!settings)
       return res.status(400).json({ message: "Cant get settings" });
 
-    const ourTeam = await Team.findOne({ name: config.get("TEAMNAME") });
+    const ourTeam = await Team.findOne({ name: settings.teamName });
     if (!ourTeam)
       return res
         .status(400)

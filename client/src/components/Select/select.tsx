@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, useContext } from "react";
 import Cookie from "js-cookie";
 import { useTranslation } from "react-i18next";
-import { TEAMNAME } from "../../project.const";
+import { AppContext } from "../../context/app.provider";
 
 import SelectArrowIcon from "../../assets/icons/selectArrowIcon";
 
@@ -24,6 +24,7 @@ function Select({
   type = "",
   arrow = true,
 }: Props) {
+  const { settings } = useContext(AppContext);
   const { t } = useTranslation();
   const [active, setActive] = useState(defaultValue);
   const [toggle, setToggle] = useState(false);
@@ -75,7 +76,7 @@ function Select({
         }`}
       >
         {options
-          .filter((option) => option !== active && option !== TEAMNAME)
+          .filter((option) => option !== active && option !== settings.teamName)
           .map((option, optionId) => (
             <div
               key={`option_${option}`}
