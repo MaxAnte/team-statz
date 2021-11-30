@@ -164,7 +164,9 @@ router.post("/game/complete-game", [], async (req, res) => {
     const enemyWin = +enemyScore > +ourScore;
     const enemyTeam = await Team.findOne({ name: enemy });
     if (!enemyTeam)
-      return res.status(400).json({ message: `${enemy}: Team not found` });
+      return res
+        .status(400)
+        .json({ message: `${enemy}: Enemy team not found` });
 
     const settings = await Settings.findOne(
       {},
@@ -174,11 +176,10 @@ router.post("/game/complete-game", [], async (req, res) => {
     if (!settings)
       return res.status(400).json({ message: "Cant get settings" });
 
-    const ourTeam = await Team.findOne({ name: settings.teamName });
+    const settingsObj = settings.toObject();
+    const ourTeam = await Team.findOne({ name: settingsObj.teamName });
     if (!ourTeam)
-      return res
-        .status(400)
-        .json({ message: `${settings.teamName}: Team not found` });
+      return res.status(400).json({ message: "Your team not found" });
 
     if (enemyWin) {
       enemyTeam.wins = +enemyTeam.wins + 1;
@@ -202,7 +203,9 @@ router.post("/game/complete-game", [], async (req, res) => {
         (+ourTeam.wins * 100) / (+ourTeam.wins + +ourTeam.loses);
     }
     if (!enemyTeam)
-      return res.status(400).json({ message: `${enemy} team not found` });
+      return res
+        .status(400)
+        .json({ message: `${enemy}: enemy team not found` });
 
     enemyTeam.save();
     ourTeam.save();
@@ -259,6 +262,7 @@ router.post("/game/complete-game", [], async (req, res) => {
 
     res.status(201).json({ message: `${game._id} has been added!` });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ message: "Server error! Please, try again!" });
   }
 });
@@ -291,7 +295,8 @@ router.post("/game/edit-game", [], async (req, res) => {
     if (!settings)
       return res.status(400).json({ message: "Cant get settings" });
 
-    const ourTeam = await Team.findOne({ name: settings.teamName });
+    const settingsObj = settings.toObject();
+    const ourTeam = await Team.findOne({ name: settingsObj.teamName });
     if (!ourTeam)
       return res
         .status(400)
@@ -586,7 +591,8 @@ router.post("/game/delete-game", [], async (req, res) => {
     if (!settings)
       return res.status(400).json({ message: "Cant get settings" });
 
-    const ourTeam = await Team.findOne({ name: settings.teamName });
+    const settingsObj = settings.toObject();
+    const ourTeam = await Team.findOne({ name: settingsObj.teamName });
     if (!ourTeam)
       return res
         .status(400)
