@@ -1,20 +1,25 @@
-/* eslint-disable */
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable complexity, react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider";
+import { Link } from "react-router-dom";
+
 import {
-  MULTIPLIER_STATS as MULTIPLIER,
   COLORS_STATS as COLORS,
-  drawMiss,
-  drawMade,
+  DEFAULT_HEIGHT,
+  DEFAULT_WIDTH,
   drawCourt,
+  drawMade,
+  drawMiss,
+  MULTIPLIER_STATS as MULTIPLIER,
 } from "../../helpers/canvas.helpers";
+
+import { Player } from "../../context/app.types";
+
+import { AppContext } from "../../context/app.provider";
 
 import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
 import styles from "./stats.module.css";
-import { Player } from "../../context/app.types";
 
 type PointerColor = {
   _id: string;
@@ -38,38 +43,36 @@ function Stats() {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const WIDTH: number = 700;
-  const HEIGHT: number = 750;
+  const WIDTH: number = DEFAULT_WIDTH * MULTIPLIER;
+  const HEIGHT: number = DEFAULT_HEIGHT * MULTIPLIER;
   const DPI_WIDTH: number = WIDTH * 2;
   const DPI_HEIGHT: number = HEIGHT * 2;
   const POINTER_COLORS: PointerColor[] =
     players &&
     Array(players.length)
       .fill(0)
-      .map((_, i) => {
-        return { _id: players[i]._id, color: COLORS[i] };
-      });
+      .map((_, i) => ({ _id: players[i]._id, color: COLORS[i] }));
 
   useEffect(() => {
     getPlayers();
     getGames();
-  }, []);
+  }, [getPlayers, getGames]);
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
     if (canvas) {
-      canvas.style.width = WIDTH + "px";
-      canvas.style.height = HEIGHT + "px";
+      canvas.style.width = `${WIDTH}px`;
+      canvas.style.height = `${HEIGHT}px`;
       canvas.width = DPI_WIDTH;
       canvas.height = DPI_HEIGHT;
-      var ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       if (ctx) {
         setCanv(canvas);
         setCanvBound(canvas.getBoundingClientRect());
         setContext(ctx);
         drawCourt(ctx, DPI_WIDTH, DPI_HEIGHT, MULTIPLIER, 10);
 
-        let filteredGames = filterGame
+        const filteredGames = filterGame
           ? games.filter((game) => game.date === filterGame)
           : games;
 
@@ -344,18 +347,20 @@ function Stats() {
     fgp: number,
     gPlayed: number = 0
   ) => {
-    if (!gPlayed) gPlayed = games.filter((g) => !g.pending).length;
+    const gp = !gPlayed ? games.filter((g) => !g.pending).length : gPlayed;
     return (
       <div className={styles.statsColumnRowsInfo}>
         {!filterGame ? (
           <div className={styles.allGamesStatsTabs}>
             <button
+              type="button"
               onClick={() => setStatsTabAverage(true)}
               className={`${statsTabAverage ? styles.activeTab : ""}`}
             >
               {t("Average")}
             </button>
             <button
+              type="button"
               onClick={() => setStatsTabAverage(false)}
               className={`${!statsTabAverage ? styles.activeTab : ""}`}
             >
@@ -367,8 +372,8 @@ function Stats() {
           <span>
             {t("Pts")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((pts / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((pts / gp).toFixed(1))
                 : 0
               : parseFloat(pts.toFixed(1))}
           </span>
@@ -377,16 +382,16 @@ function Stats() {
           <span>
             {t("2PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((two_fga / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((two_fga / gp).toFixed(1))
                 : 0
               : parseFloat(two_fga.toFixed(1))}
           </span>
           <span>
             {t("2PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((two_fgm / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((two_fgm / gp).toFixed(1))
                 : 0
               : parseFloat(two_fgm.toFixed(1))}
           </span>
@@ -398,16 +403,16 @@ function Stats() {
           <span>
             {t("3PA")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((three_fga / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((three_fga / gp).toFixed(1))
                 : 0
               : parseFloat(three_fga.toFixed(1))}
           </span>
           <span>
             {t("3PM")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((three_fgm / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((three_fgm / gp).toFixed(1))
                 : 0
               : parseFloat(three_fgm.toFixed(1))}
           </span>
@@ -419,16 +424,16 @@ function Stats() {
           <span>
             {t("FTA")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((fta / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((fta / gp).toFixed(1))
                 : 0
               : parseFloat(fta.toFixed(1))}
           </span>
           <span>
             {t("FTM")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((ftm / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((ftm / gp).toFixed(1))
                 : 0
               : parseFloat(ftm.toFixed(1))}
           </span>
@@ -438,16 +443,16 @@ function Stats() {
           <span>
             {t("FGA")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((fga / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((fga / gp).toFixed(1))
                 : 0
               : parseFloat(fga.toFixed(1))}
           </span>
           <span>
             {t("FGM")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((fgm / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((fgm / gp).toFixed(1))
                 : 0
               : parseFloat(fgm.toFixed(1))}
           </span>
@@ -457,56 +462,56 @@ function Stats() {
           <span>
             {t("Reb")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((reb / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((reb / gp).toFixed(1))
                 : 0
               : parseFloat(reb.toFixed(1))}
           </span>
           <span>
             {t("Ast")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((ast / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((ast / gp).toFixed(1))
                 : 0
               : parseFloat(ast.toFixed(1))}
           </span>
           <span>
             {t("Stl")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((stl / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((stl / gp).toFixed(1))
                 : 0
               : parseFloat(stl.toFixed(1))}
           </span>
           <span>
             {t("Blk")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((blk / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((blk / gp).toFixed(1))
                 : 0
               : parseFloat(blk.toFixed(1))}
           </span>
           <span>
             {t("Tov")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((tovs / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((tovs / gp).toFixed(1))
                 : 0
               : parseFloat(tovs.toFixed(1))}
           </span>
           <span>
             {t("Fouls")}:{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((fouls / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((fouls / gp).toFixed(1))
                 : 0
               : parseFloat(fouls.toFixed(1))}
           </span>
           <span>
             {"+/-"} :{" "}
             {statsTabAverage && !filterGame
-              ? gPlayed
-                ? parseFloat((plus_minus / gPlayed).toFixed(1))
+              ? gp
+                ? parseFloat((plus_minus / gp).toFixed(1))
                 : 0
               : parseFloat(plus_minus.toFixed(1))}
           </span>
@@ -533,7 +538,7 @@ function Stats() {
                     style={{
                       backgroundColor: POINTER_COLORS[i].color,
                     }}
-                  ></span>
+                  />
                   <span
                     className={
                       filterPlayer === player._id
