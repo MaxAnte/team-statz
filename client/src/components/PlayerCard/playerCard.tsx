@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Player } from "../../context/app.types";
+import { Player } from "../../app/app.types";
 
 import basket from "../../assets/images/badges/basket.svg";
 import block from "../../assets/images/badges/block.svg";

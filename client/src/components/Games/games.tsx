@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import GameCard from "../GameCard/gameCard";
 import MiniLoader from "../Loader/miniLoader";

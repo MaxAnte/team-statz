@@ -1,8 +1,8 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useTranslation } from "react-i18next";
 
-import { Player } from "../../context/app.types";
+import { Player } from "../../app/app.types";
 
 import CloseIcon from "../../assets/icons/closeIcon";
 

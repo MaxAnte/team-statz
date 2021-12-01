@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
-import React, { useContext,useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import BirthDayPopup from "../BirthDayPopup/birthDayPopup";
 

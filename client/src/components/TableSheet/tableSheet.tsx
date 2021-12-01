@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Player } from "../../context/app.types";
+import { Player } from "../../app/app.types";
 
 import styles from "./tableSheet.module.css";
 

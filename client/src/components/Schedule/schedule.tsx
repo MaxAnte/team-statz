@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 import { MONTHS, WEEKDAYS } from "../../helpers/time.helpers";
 
-import { AppContext } from "../../context/app.provider";
-import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../app/app.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import AddDatePopup from "../AddDatePopup/addDatePopup";
 import GameCardCalendar from "../GameCardCalendar/gameCardCalendar";

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Game } from "../../context/app.types";
+import { Game } from "../../app/app.types";
 
-import { AppContext } from "../../context/app.provider";
-import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../app/app.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import AddGamePopup from "../AddGamePopup/addGamePopup";
 import EditGamePopup from "../EditGamePopup/editGamePopup";

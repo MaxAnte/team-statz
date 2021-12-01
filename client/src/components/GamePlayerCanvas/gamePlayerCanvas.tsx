@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Coord, CoordBase } from "../../context/app.types";
+import { Coord, CoordBase } from "../../app/app.types";
 import {
   DEFAULT_WIDTH as WIDTH,
   DEFAULT_HEIGHT as HEIGHT,

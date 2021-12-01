@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Game, Player } from "../../context/app.types";
+import { Game, Player } from "../../app/app.types";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import BlankLogo from "../../assets/images/logo-blank.png";
 

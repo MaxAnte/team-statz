@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Game, Player, PlayerStats, Quarter } from "../../context/app.types";
+import { Game, Player, PlayerStats, Quarter } from "../../app/app.types";
 
 import { useMessage } from "../../hooks/message.hook";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat";
 import MiniLoader from "../Loader/miniLoader";

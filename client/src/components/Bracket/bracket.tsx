@@ -1,6 +1,6 @@
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import BracketMatchup from "../BracketMatchup/bracketMatchup";
 

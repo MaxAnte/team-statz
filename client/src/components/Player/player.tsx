@@ -10,9 +10,9 @@ import {
   Game,
   Player as PlayerType,
   PlayerOverallStats,
-} from "../../context/app.types";
+} from "../../app/app.types";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import PlayerCanvas from "../PlayerCanvas/playerCanvas";
 import TableSheet from "../TableSheet/tableSheet";

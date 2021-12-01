@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PlayoffsMatchup } from "../../context/app.types";
+import { PlayoffsMatchup } from "../../app/app.types";
 
 import styles from "./bracketMatchup.module.css";
 
@@ -23,7 +23,7 @@ function BracketMatchup({ info, scoreAlign, finals = false }: Props) {
         <path
           fill="var(--color-white)"
           d={`M 0 0 H ${finals ? "450" : "250"} V 100 H 0 V 0`}
-         />
+        />
         <path
           fill="none"
           stroke="var(--color-text-main)"
@@ -35,7 +35,7 @@ function BracketMatchup({ info, scoreAlign, finals = false }: Props) {
                   scoreAlign === "right" ? "210" : "40"
                 } 0 V 100 M 0 50 H 250`
           }`}
-         />
+        />
       </g>
       <g fontFamily="var(--font-main)" fontSize="18px" textAnchor="middle">
         <text

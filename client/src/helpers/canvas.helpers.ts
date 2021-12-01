@@ -1,4 +1,4 @@
-import { Coord, CoordBase } from "../context/app.types";
+import { Coord, CoordBase } from "../app/app.types";
 
 export const DEFAULT_WIDTH = 290;
 export const DEFAULT_HEIGHT = 310;

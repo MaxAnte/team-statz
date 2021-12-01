@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Team } from "../../context/app.types";
+import { Team } from "../../app/app.types";
 
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
-import { AppContext } from "../../context/app.provider";
-import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../app/app.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import MiniLoader from "../Loader/miniLoader";
 

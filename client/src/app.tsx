@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { SessionProvider } from "./context/session.provider";
-import { AppProvider } from "./context/app.provider";
+import { SessionProvider } from "./session/session.provider";
+import { AppProvider } from "./app/app.provider";
 import { useAuth } from "./hooks/auth.hook";
 import { useHttp } from "./hooks/http.hook";
 import { checkDate } from "./helpers/time.helpers";

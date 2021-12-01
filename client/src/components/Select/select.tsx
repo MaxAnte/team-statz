@@ -1,8 +1,8 @@
 import Cookie from "js-cookie";
-import React, { createRef, useContext,useEffect, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import SelectArrowIcon from "../../assets/icons/selectArrowIcon";
 
@@ -44,7 +44,7 @@ function Select({
   }, [options]);
 
   const clickHandle = (optionId: number) => {
-    const {option} = optionsRefs[optionId].current.dataset;
+    const { option } = optionsRefs[optionId].current.dataset;
     if (option) {
       setActive(option);
       type === "language" &&

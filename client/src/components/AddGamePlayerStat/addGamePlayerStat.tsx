@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Coord, Player, PlayerStats } from "../../context/app.types";
+import { Coord, Player, PlayerStats } from "../../app/app.types";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
 

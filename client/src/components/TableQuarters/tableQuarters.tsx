@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 
-import { Quarter } from "../../context/app.types";
+import { Quarter } from "../../app/app.types";
 
 import EnemyTeamIcon from "../../assets/icons/enemyTeamIcon";
 import PlusIcon from "../../assets/icons/plusIcon";

@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
-import { SessionContext } from "../../context/session.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import AuthModal from "../AuthModal/authModal";
 import Select from "../Select/select";

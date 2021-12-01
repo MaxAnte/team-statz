@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Settings } from "../../context/app.types";
+import { Settings } from "../../app/app.types";
 
 import { useMessage } from "../../hooks/message.hook";
 
-import { AppContext } from "../../context/app.provider";
-import { SessionContext } from "../../context/session.provider";
+import { AppContext } from "../../app/app.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import ConfirmPopup from "../ConfirmPopup/confirmPopup";
 import ErrorPage from "../ErrorPage/errorPage";

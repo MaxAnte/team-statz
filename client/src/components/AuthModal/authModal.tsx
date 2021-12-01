@@ -1,12 +1,12 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { UserLoginData } from "../../context/session.types";
+import { UserLoginData } from "../../session/session.types";
 
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
 
-import { SessionContext } from "../../context/session.provider";
+import { SessionContext } from "../../session/session.provider";
 
 import styles from "./authModal.module.css";
 

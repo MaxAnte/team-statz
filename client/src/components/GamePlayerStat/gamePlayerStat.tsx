@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PlayerStats } from "../../context/app.types";
+import { PlayerStats } from "../../app/app.types";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
 

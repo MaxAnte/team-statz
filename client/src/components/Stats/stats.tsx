@@ -13,9 +13,9 @@ import {
   MULTIPLIER_STATS as MULTIPLIER,
 } from "../../helpers/canvas.helpers";
 
-import { Player } from "../../context/app.types";
+import { Player } from "../../app/app.types";
 
-import { AppContext } from "../../context/app.provider";
+import { AppContext } from "../../app/app.provider";
 
 import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
