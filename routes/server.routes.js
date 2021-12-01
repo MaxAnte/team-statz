@@ -93,7 +93,16 @@ router.post(
 router.post("/date/add-date", [], async (req, res) => {
   try {
     const date = new DateModel(req.body);
-    const game = new Game(date);
+    const gameBase = {
+      ...req.body,
+      quarters: [
+        { our: 0, enemy: 0 },
+        { our: 0, enemy: 0 },
+        { our: 0, enemy: 0 },
+        { our: 0, enemy: 0 },
+      ],
+    };
+    const game = new Game(gameBase);
 
     await game.save();
     await date.save();

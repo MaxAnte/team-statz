@@ -10,22 +10,14 @@ import OurTeamLogo from "../../assets/images/logo-bc.png";
 import styles from "./tableQuarters.module.css";
 
 type Props = {
-  quarters?: Quarter[];
+  quarters: Quarter[];
+  gameId?: string;
   mode?: "edit";
   handleGetQuarters?: (quarters: Quarter[]) => void;
 };
 
-function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
-  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(
-    quarters?.length
-      ? quarters
-      : [
-          { our: 0, enemy: 0 },
-          { our: 0, enemy: 0 },
-          { our: 0, enemy: 0 },
-          { our: 0, enemy: 0 },
-        ]
-  );
+function TableQuarters({ quarters, gameId, mode, handleGetQuarters }: Props) {
+  const [editableQuaters, setEditableQuaters] = useState<Quarter[]>(quarters);
   const [ourQuartersRefs, setOurQuartersRefs] = useState<
     React.MutableRefObject<HTMLInputElement>[]
   >([]);
@@ -73,12 +65,12 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
             <th />
             {mode
               ? editableQuaters.map((q, i) => (
-                  <th key={`th-our-${q._id}`}>
+                  <th key={`${gameId}-${q._id}-our`}>
                     {i > 3 ? `OT${i - 3}` : i + 1}
                   </th>
                 ))
               : quarters?.map((q, i) => (
-                  <th key={`th-enemy-${q._id}`}>
+                  <th key={`${gameId}-${q._id}-enemy`}>
                     {i > 3 ? `OT${i - 3}` : i + 1}
                   </th>
                 ))}
@@ -91,7 +83,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
-                  <td key={`td-our-manage-${quarter._id}`}>
+                  <td key={`${gameId}-${quarter._id}-our-manage`}>
                     <input
                       type="number"
                       id={`our_${i}`}
@@ -104,7 +96,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
                 ))
               : quarters?.map((quarter) => (
                   <td
-                    key={`td-our-static-${quarter._id}`}
+                    key={`${gameId}-${quarter._id}-our-static`}
                     className={`${
                       quarter.our > quarter.enemy
                         ? styles.win
@@ -123,7 +115,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
-                  <td key={`td-enemy-manage-${quarter._id}`}>
+                  <td key={`${gameId}-${quarter._id}-enemy-manage`}>
                     <input
                       type="number"
                       id={`enemy_${i}`}
@@ -135,7 +127,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
                   </td>
                 ))
               : quarters?.map((quarter) => (
-                  <td key={`td-enemy-static-${quarter._id}`}>
+                  <td key={`${gameId}-${quarter._id}-enemy-static`}>
                     {quarter.enemy}
                   </td>
                 ))}

@@ -63,9 +63,11 @@ function GameCard({ game }: Props) {
               {addPopup ? (
                 <AddGamePopup
                   base={{
+                    gameId: game._id,
                     date: game.date,
                     time: game.time,
                     enemy: game.enemy,
+                    quarters: game.quarters,
                   }}
                   closeHandler={closeHandler}
                 />
@@ -102,7 +104,7 @@ function GameCard({ game }: Props) {
           >
             {game.date}
           </div>
-          <TableQuarters quarters={game.quarters} />
+          <TableQuarters quarters={game.quarters} gameId={game._id} />
           {game.playersStats.map((player) => (
             <GamePlayerStat player={player} key={`${game._id}-${player._id}`} />
           ))}

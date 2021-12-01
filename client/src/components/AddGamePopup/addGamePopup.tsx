@@ -20,7 +20,13 @@ import styles from "./addGamePopup.module.css";
 
 type Props = {
   closeHandler: () => void;
-  base: Partial<Game>;
+  base: {
+    gameId: string;
+    enemy: string;
+    date: string;
+    time: string;
+    quarters: Quarter[];
+  };
 };
 
 function AddGamePopup({ closeHandler, base }: Props) {
@@ -133,6 +139,8 @@ function AddGamePopup({ closeHandler, base }: Props) {
                   <span className={styles.genGameInfoNames}>{base.enemy}</span>
                 </div>
                 <TableQuarters
+                  quarters={base.quarters}
+                  gameId={base.gameId}
                   mode="edit"
                   handleGetQuarters={handleGetQuarters}
                 />

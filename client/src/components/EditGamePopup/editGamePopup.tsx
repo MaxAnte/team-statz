@@ -139,6 +139,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
                 </div>
                 <TableQuarters
                   quarters={base.quarters}
+                  gameId={base._id}
                   mode="edit"
                   handleGetQuarters={handleGetQuarters}
                 />
