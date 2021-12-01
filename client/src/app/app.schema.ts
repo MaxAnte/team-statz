@@ -93,13 +93,13 @@ export const PlayerStatsSchema = z.object({
   __v: z.number().optional(),
 });
 
-export const quartersSchema = z.array(
-  z.object({
-    _id: z.string().optional(),
-    enemy: z.number(),
-    our: z.number(),
-  })
-);
+export const quarterSchema = z.object({
+  _id: z.string().optional(),
+  enemy: z.number(),
+  our: z.number(),
+});
+
+export const quartersSchema = z.array(quarterSchema);
 
 export const GameSchema = z.object({
   _id: z.string(),
@@ -139,12 +139,12 @@ export const DateSchema = z.object({
 
 export const DatesSchema = z.array(DateSchema);
 
-export const PlayoffsMatchupsSchema = z.array(
-  z.object({
-    _id: z.string(),
-    team1: z.string(),
-    team2: z.string(),
-    winner: z.string(),
-    __v: z.number().optional(),
-  })
-);
+export const PlayoffsMatchupSchema = z.object({
+  _id: z.string(),
+  team1: z.string(),
+  team2: z.string(),
+  winner: z.string(),
+  __v: z.number().optional(),
+});
+
+export const PlayoffsMatchupsSchema = z.array(PlayoffsMatchupSchema);

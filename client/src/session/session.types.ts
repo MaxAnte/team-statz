@@ -1,4 +1,6 @@
+import { z } from "zod";
 import type { SessionProvider } from "./session.provider";
+import { UserResponseSchema } from "./session.schema";
 
 export type Session = {
   token: string | null;
@@ -11,15 +13,7 @@ export type Session = {
 
 export type User = { login: string; password: string };
 
-export type UserLoginData = {
-  login: string;
-  password: string;
-};
-
-export type UserResponse = {
-  token: string;
-  userId: string;
-};
+export type UserResponse = z.infer<typeof UserResponseSchema>;
 
 export type Props = {
   // children: React.ReactChild;

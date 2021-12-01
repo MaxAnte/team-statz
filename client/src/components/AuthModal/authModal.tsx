@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { UserLoginData } from "../../session/session.types";
+import { User } from "../../session/session.types";
 
 import { useHttp } from "../../hooks/http.hook";
 import { useMessage } from "../../hooks/message.hook";
@@ -19,7 +19,7 @@ function AuthModal({ closeOnLogin }: Props) {
   const { loading, clearError } = useHttp();
   const message = useMessage();
   const { t } = useTranslation();
-  const [form, setForm] = useState<UserLoginData>({ login: "", password: "" });
+  const [form, setForm] = useState<User>({ login: "", password: "" });
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });

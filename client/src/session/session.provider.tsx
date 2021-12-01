@@ -1,13 +1,7 @@
 /* eslint-disable no-invalid-this */
 import React, { createContext } from "react";
 
-import {
-  Props,
-  Session,
-  State,
-  UserLoginData,
-  UserResponse,
-} from "./session.types";
+import { Props, Session, State, User, UserResponse } from "./session.types";
 
 import { api } from "../api/api";
 import { UserResponseSchema } from "./session.schema";
@@ -27,7 +21,7 @@ export class SessionProvider extends React.Component<Props, State> {
     };
   }
 
-  logInUser = async (userData: UserLoginData) => {
+  logInUser = async (userData: User) => {
     try {
       const response = await api<UserResponse>("/api/auth/login", "POST", {
         ...userData,
