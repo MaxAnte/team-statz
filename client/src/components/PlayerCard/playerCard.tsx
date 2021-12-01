@@ -1,15 +1,17 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+
 import { Player } from "../../context/app.types";
 
-import styles from "./playerCard.module.css";
-
-import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 import basket from "../../assets/images/badges/basket.svg";
-import glassCleaner from "../../assets/images/badges/glass_cleaner.png";
-import assist from "../../assets/images/badges/assist.png";
-import thief from "../../assets/images/badges/thief.svg";
 import block from "../../assets/images/badges/block.svg";
+import thief from "../../assets/images/badges/thief.svg";
+
+import assist from "../../assets/images/badges/assist.png";
+import glassCleaner from "../../assets/images/badges/glass_cleaner.png";
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+
+import styles from "./playerCard.module.css";
 
 type Props = {
   player: Player;

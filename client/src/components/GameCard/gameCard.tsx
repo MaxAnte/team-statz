@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
-import { SessionContext } from "../../context/session.provider";
-import { AppContext } from "../../context/app.provider";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { Game } from "../../context/app.types";
 
-import GamePlayerStat from "../GamePlayerStat/gamePlayerStat";
+import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
+
 import AddGamePopup from "../AddGamePopup/addGamePopup";
 import EditGamePopup from "../EditGamePopup/editGamePopup";
-import TableQuarters from "../TableQuarters/tableQuarters";
+import GamePlayerStat from "../GamePlayerStat/gamePlayerStat";
 import MiniLoader from "../Loader/miniLoader";
+import TableQuarters from "../TableQuarters/tableQuarters";
 
 import EditIcon from "../../assets/icons/editIcon";
 import RemoveIcon from "../../assets/icons/removeIcon";
@@ -49,35 +51,33 @@ function GameCard({ game }: Props) {
       </h4>
       {game.pending ? (
         editMode ? (
-          <>
-            {isAuthenticated ? (
-              <>
-                <div
-                  className={`${styles.pendBtn} btn__main`}
-                  onClick={() => setAddPopup(true)}
-                >
-                  {t("Complete game info")}
-                </div>
-                <div className={styles.gameDateAdmin}>{game.date}</div>
-                {addPopup ? (
-                  <AddGamePopup
-                    base={{
-                      date: game.date,
-                      time: game.time,
-                      enemy: game.enemy,
-                    }}
-                    closeHandler={closeHandler}
-                  />
-                ) : null}
-              </>
-            ) : (
-              <div>
-                <div className={styles.gameDate}>{game.date}</div>
-                <span>{t("Waiting for info from that game")}</span>
-                <MiniLoader />
+          isAuthenticated ? (
+            <>
+              <div
+                className={`${styles.pendBtn} btn__main`}
+                onClick={() => setAddPopup(true)}
+              >
+                {t("Complete game info")}
               </div>
-            )}
-          </>
+              <div className={styles.gameDateAdmin}>{game.date}</div>
+              {addPopup ? (
+                <AddGamePopup
+                  base={{
+                    date: game.date,
+                    time: game.time,
+                    enemy: game.enemy,
+                  }}
+                  closeHandler={closeHandler}
+                />
+              ) : null}
+            </>
+          ) : (
+            <div>
+              <div className={styles.gameDate}>{game.date}</div>
+              <span>{t("Waiting for info from that game")}</span>
+              <MiniLoader />
+            </div>
+          )
         ) : (
           <span>
             {t("Game will be played")} {game.date} {t("at")} {game.time}
@@ -103,14 +103,9 @@ function GameCard({ game }: Props) {
             {game.date}
           </div>
           <TableQuarters quarters={game.quarters} />
-          {game.playersStats.map((player) => {
-            return (
-              <GamePlayerStat
-                player={player}
-                key={`${game._id}-${player._id}`}
-              />
-            );
-          })}
+          {game.playersStats.map((player) => (
+            <GamePlayerStat player={player} key={`${game._id}-${player._id}`} />
+          ))}
         </>
       )}
       {isAuthenticated ? (

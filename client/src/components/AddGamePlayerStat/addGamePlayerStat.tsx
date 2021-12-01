@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { Coord, Player, PlayerStats } from "../../context/app.types";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
 
-import styles from "./addGamePlayerStat.module.css";
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
-import { Coord, Player, PlayerStats } from "../../context/app.types";
+
+import styles from "./addGamePlayerStat.module.css";
 
 type Props = {
   player: Player;
@@ -28,7 +30,7 @@ function AddGamePlayerStat({
     setPlayerStats((prevState) => ({
       ...prevState,
       _id: player._id,
-      [e.target.name]: +e.target.value,
+      [e.target.name]: Number(e.target.value),
     }));
   };
 
@@ -39,6 +41,7 @@ function AddGamePlayerStat({
           ...prevState,
           coordinates: coords.filter((el) => el.x > 0 && el.y > 0),
         };
+      return prevState;
     });
   };
 

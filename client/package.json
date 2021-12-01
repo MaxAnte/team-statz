@@ -23,7 +23,6 @@
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-react-perf": "^3.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "i18next": "^20.3.5",
     "js-cookie": "^3.0.0",

@@ -1,9 +1,11 @@
 import React, { createRef, useEffect, useState } from "react";
+
 import { Quarter } from "../../context/app.types";
 
-import OurTeamLogo from "../../assets/images/logo-bc.png";
 import EnemyTeamIcon from "../../assets/icons/enemyTeamIcon";
 import PlusIcon from "../../assets/icons/plusIcon";
+
+import OurTeamLogo from "../../assets/images/logo-bc.png";
 
 import styles from "./tableQuarters.module.css";
 
@@ -68,13 +70,17 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
       <table>
         <thead>
           <tr>
-            <th></th>
+            <th />
             {mode
-              ? editableQuaters.map((_, i) => (
-                  <th key={i}>{i > 3 ? `OT${i - 3}` : i + 1}</th>
+              ? editableQuaters.map((q, i) => (
+                  <th key={`th-our-${q._id}`}>
+                    {i > 3 ? `OT${i - 3}` : i + 1}
+                  </th>
                 ))
-              : quarters?.map((_, i) => (
-                  <th key={i}>{i > 3 ? `OT${i - 3}` : i + 1}</th>
+              : quarters?.map((q, i) => (
+                  <th key={`th-enemy-${q._id}`}>
+                    {i > 3 ? `OT${i - 3}` : i + 1}
+                  </th>
                 ))}
           </tr>
         </thead>
@@ -85,7 +91,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
-                  <td key={i}>
+                  <td key={`td-our-manage-${quarter._id}`}>
                     <input
                       type="number"
                       id={`our_${i}`}
@@ -96,9 +102,9 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
                     />
                   </td>
                 ))
-              : quarters?.map((quarter, i) => (
+              : quarters?.map((quarter) => (
                   <td
-                    key={i}
+                    key={`td-our-static-${quarter._id}`}
                     className={`${
                       quarter.our > quarter.enemy
                         ? styles.win
@@ -117,7 +123,7 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
             </td>
             {mode
               ? editableQuaters.map((quarter, i) => (
-                  <td key={i}>
+                  <td key={`td-enemy-manage-${quarter._id}`}>
                     <input
                       type="number"
                       id={`enemy_${i}`}
@@ -128,7 +134,11 @@ function TableQuarters({ quarters, mode, handleGetQuarters }: Props) {
                     />
                   </td>
                 ))
-              : quarters?.map((quarter, i) => <td key={i}>{quarter.enemy}</td>)}
+              : quarters?.map((quarter) => (
+                  <td key={`td-enemy-static-${quarter._id}`}>
+                    {quarter.enemy}
+                  </td>
+                ))}
           </tr>
         </tbody>
       </table>

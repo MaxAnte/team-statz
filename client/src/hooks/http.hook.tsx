@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
 type Headers = {
   "Content-Type"?: string;
@@ -19,15 +19,16 @@ export const useHttp = () => {
   async function request<T>(
     url: string,
     method: string = "GET",
-    body: any = null,
+    options: any = null,
     headers: Headers = {}
   ): Promise<Response<T>> {
     setLoading(true);
     try {
-      if (body) {
-        body = JSON.stringify(body);
+      let body = null;
+      if (options) {
+        body = JSON.stringify(options);
         headers["Content-Type"] = "application/json";
-        headers["Accept"] = "application/json";
+        headers.Accept = "application/json";
       }
 
       const response = await fetch(url, { method, body, headers });

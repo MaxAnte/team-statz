@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
+import React, { useContext,useEffect, useState } from "react";
+
+import { AppContext } from "../../context/app.provider";
 
 import BirthDayPopup from "../BirthDayPopup/birthDayPopup";
-import { AppContext } from "../../context/app.provider";
 
 function BirthDayResolver() {
   const { getBirthdayPlayers, birthDayPlayers } = useContext(AppContext);

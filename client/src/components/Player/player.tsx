@@ -1,24 +1,28 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { AppContext } from "../../context/app.provider";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { Doughnut, Line } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
-import { Line, Doughnut } from "react-chartjs-2";
+import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
+
 import { MONTHS } from "../../helpers/time.helpers";
+
 import {
   Game,
   Player as PlayerType,
   PlayerOverallStats,
 } from "../../context/app.types";
 
+import { AppContext } from "../../context/app.provider";
+
 import PlayerCanvas from "../PlayerCanvas/playerCanvas";
 import TableSheet from "../TableSheet/tableSheet";
 
-import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
 import HeightIcon from "../../assets/icons/heightIcon";
-import WeightIcon from "../../assets/icons/weightIcon";
 import JerseyIcon from "../../assets/icons/jerseyIcon";
-import BasketBallIcon from "../../assets/icons/basketBall";
+import WeightIcon from "../../assets/icons/weightIcon";
+
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 import styles from "./player.module.css";
 interface ParamTypes {
@@ -89,7 +93,7 @@ function Player() {
 
   const buildBirthDateString = (date: string): string => {
     const [year, month, day] = date.split("-");
-    return `${MONTHS[+month - 1]} ${day}, ${year}`;
+    return `${MONTHS[Number(month) - 1]} ${day}, ${year}`;
   };
 
   return (

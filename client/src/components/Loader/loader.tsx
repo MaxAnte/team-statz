@@ -1,5 +1,6 @@
 import React from "react";
-import BasketBallIcon from "../../assets/icons/basketBall";
+
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
 import styles from "./loader.module.css";
 

@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import { useMessage } from "../../hooks/message.hook";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { Game, Player, PlayerStats, Quarter } from "../../context/app.types";
+
+import { useMessage } from "../../hooks/message.hook";
+
 import { AppContext } from "../../context/app.provider";
 
 import AddGamePlayerStat from "../AddGamePlayerStat/addGamePlayerStat";
 import MiniLoader from "../Loader/miniLoader";
 import TableQuarters from "../TableQuarters/tableQuarters";
 
-import CloseIcon from "../../assets/icons/closeIcon";
 import CheckIcon from "../../assets/icons/checkIcon";
-
-import styles from "./EditGamePopup.module.css";
+import CloseIcon from "../../assets/icons/closeIcon";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
+
+import styles from "./EditGamePopup.module.css";
 
 type Props = {
   closeHandler: () => void;
@@ -40,7 +43,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
   useEffect(() => {
     setForm((prevState) => ({ ...prevState, ...base }));
     const mPlayers = players;
-    mPlayers.map((player) => {
+    mPlayers.map((player: Player) => {
       base.playersStats.forEach((p) => {
         if (player._id === p._id) {
           player.check = true;
@@ -151,7 +154,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
                   <div className={styles.playersSelect}>
                     {Object.values(playersList).map((player, i) => (
                       <div
-                        key={`${player.name}_${i}`}
+                        key={`edit-${base.date}-${base.time}-${player.name}`}
                         className={styles.playerCard}
                         onClick={() => handleCheck(i)}
                       >
@@ -172,7 +175,7 @@ function EditGamePopup({ closeHandler, base }: Props) {
                           <CheckIcon width="14px" height="14px" color="green" />
                         </div>
                         {!player.check ? (
-                          <div className={styles.disabler}></div>
+                          <div className={styles.disabler} />
                         ) : null}
                       </div>
                     ))}
@@ -185,8 +188,11 @@ function EditGamePopup({ closeHandler, base }: Props) {
               <div className={styles.popupSection}>
                 {Object.values(players)
                   .filter((player) => player.check)
-                  .map((player, i) => (
-                    <div key={`playerName_${i}`} className={styles.gpsPlayer}>
+                  .map((player) => (
+                    <div
+                      key={`edit-${base.date}-${base.time}-${player.name}-stats`}
+                      className={styles.gpsPlayer}
+                    >
                       <AddGamePlayerStat
                         player={player}
                         basePlayer={base.playersStats.find(
@@ -197,7 +203,9 @@ function EditGamePopup({ closeHandler, base }: Props) {
                     </div>
                   ))}
               </div>
-              <button className="btn__main">{t("Save")}</button>
+              <button type="submit" className="btn__main">
+                {t("Save")}
+              </button>
             </form>
           </>
         ) : (

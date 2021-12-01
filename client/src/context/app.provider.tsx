@@ -1,28 +1,31 @@
+/* eslint-disable no-invalid-this */
 import React, { createContext } from "react";
-import { api } from "../api/api";
+
 import {
   Context,
   DateType,
   Game,
   Player,
   PlayoffsMatchup,
-  Settings,
-  Team,
   Props,
+  Settings,
   State,
+  Team,
 } from "./app.types";
+
+import { api } from "../api/api";
 import {
-  SettingsSchema,
-  TeamsSchema,
-  TeamSchema,
-  PlayersSchema,
-  GamesSchema,
-  DatesSchema,
   DateSchema,
-  PlayoffsMatchupsSchema,
-  PlayerSchema,
+  DatesSchema,
   GameSchema,
+  GamesSchema,
   NewGameSchema,
+  PlayerSchema,
+  PlayersSchema,
+  PlayoffsMatchupsSchema,
+  SettingsSchema,
+  TeamSchema,
+  TeamsSchema,
 } from "./app.schema";
 
 export const AppContext = createContext<Context>(undefined!);

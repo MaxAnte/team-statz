@@ -1,24 +1,27 @@
+import Cookie from "js-cookie";
 import React, {
-  useState,
-  useEffect,
   useCallback,
   useContext,
+  useEffect,
   useRef,
+  useState,
 } from "react";
-import Cookie from "js-cookie";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { SessionContext } from "../../context/session.provider";
+import { NavLink } from "react-router-dom";
+
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
+
+import { SessionContext } from "../../context/session.provider";
 
 import AuthModal from "../AuthModal/authModal";
 import Select from "../Select/select";
-import TeamIcon from "../../assets/icons/teamIcon";
-import ScheduleIcon from "../../assets/icons/scheduleIcon";
-import StatsIcon from "../../assets/icons/statsIcon";
-import UserIcon from "../../assets/icons/userIcon";
-import SettingsIcon from "../../assets/icons/settingsIcon";
+
 import LogoutIcon from "../../assets/icons/logoutIcon";
+import ScheduleIcon from "../../assets/icons/scheduleIcon";
+import SettingsIcon from "../../assets/icons/settingsIcon";
+import StatsIcon from "../../assets/icons/statsIcon";
+import TeamIcon from "../../assets/icons/teamIcon";
+import UserIcon from "../../assets/icons/userIcon";
 
 import styles from "./header.module.css";
 
@@ -47,7 +50,7 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <NavLink className={styles.logo} exact={true} to="/">
+      <NavLink className={styles.logo} exact to="/">
         <h1>
           Team Stat<span>Z</span>
         </h1>
@@ -111,7 +114,7 @@ function Header() {
       {modal && !isAuthenticated ? (
         <>
           <AuthModal closeOnLogin={closeOnLogin} />
-          <div className={styles.modalBg} onClick={() => toggleModal()}></div>
+          <div className={styles.modalBg} onClick={() => toggleModal()} />
         </>
       ) : null}
     </header>

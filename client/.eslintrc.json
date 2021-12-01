@@ -4,13 +4,7 @@
     "browser": true,
     "node": true
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "no-loops",
-    "simple-import-sort",
-    "react-perf"
-  ],
+  "plugins": ["react", "react-hooks", "no-loops", "simple-import-sort"],
   "settings": {
     "react": {
       "version": "detect"
@@ -158,13 +152,13 @@
         "groups": [
           ["^\\u0000"],
           ["^@?\\w"],
-          ["\\.const"],
-          ["\\.screen"],
-          ["\\.hook"],
           ["\\.helpers"],
-          ["\\.provider"],
-          ["\\.block"],
+          ["\\.const"],
           ["\\.types"],
+          ["\\.hook"],
+          ["\\.provider"],
+          ["\\.screen"],
+          ["\\.block"],
           ["^"],
           ["Icon"],
           ["\\.(png|jpg|jpeg)"],
@@ -172,24 +166,6 @@
         ]
       }
     ],
-    "simple-import-sort/exports": "error",
-    "react-perf/jsx-no-new-object-as-prop": [
-      "error",
-      {
-        "nativeAllowList": "all"
-      }
-    ],
-    "react-perf/jsx-no-new-array-as-prop": [
-      "error",
-      {
-        "nativeAllowList": "all"
-      }
-    ],
-    "react-perf/jsx-no-new-function-as-prop": [
-      "error",
-      {
-        "nativeAllowList": "all"
-      }
-    ]
+    "simple-import-sort/exports": "error"
   }
 }

@@ -1,13 +1,16 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import { SessionContext } from "../../context/session.provider";
-import { AppContext } from "../../context/app.provider";
-import { WEEKDAYS, MONTHS } from "../../helpers/time.helpers";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-import GameCardCalendar from "../GameCardCalendar/gameCardCalendar";
+import { MONTHS, WEEKDAYS } from "../../helpers/time.helpers";
+
+import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
+
 import AddDatePopup from "../AddDatePopup/addDatePopup";
+import GameCardCalendar from "../GameCardCalendar/gameCardCalendar";
+
 import PlusIcon from "../../assets/icons/plusIcon";
 
 import styles from "./schedule.module.css";
@@ -45,7 +48,9 @@ function Schedule() {
     getDates();
   }, [getDates]);
 
-  const closeHandler = () => setAddDateForm({ form: false, date: "" });
+  const closeHandler = () => {
+    setAddDateForm({ form: false, date: "" });
+  };
 
   const weekday = require("dayjs/plugin/weekday");
   const weekOfYear = require("dayjs/plugin/weekOfYear");
@@ -92,20 +97,18 @@ function Schedule() {
     setCalendar({ year: `${curYear}`, month: `${curMonth}` });
   };
 
-  const getNumberOfDaysInMonth = (year: string, month: string): number => {
-    return dayjs(`${year}-${month}-01`).daysInMonth();
-  };
+  const getNumberOfDaysInMonth = (year: string, month: string): number =>
+    dayjs(`${year}-${month}-01`).daysInMonth();
 
   const createDaysForCurrentMonth = (
     year: string,
     month: string
-  ): DaysForMonth[] => {
-    return [...Array(getNumberOfDaysInMonth(year, month))].map((_, index) => ({
+  ): DaysForMonth[] =>
+    [...Array(getNumberOfDaysInMonth(year, month))].map((_, index) => ({
       date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
       dayOfMonth: index + 1,
       isCurrentMonth: true,
     }));
-  };
 
   const createDaysForPreviousMonth = (
     year: string,
@@ -156,22 +159,20 @@ function Schedule() {
     }));
   };
 
-  const getWeekday = (date: string): number => {
+  const getWeekday = (date: string): number =>
     //@ts-ignore
-    return dayjs(date).weekday();
-  };
-
-  let currentMonthDays = createDaysForCurrentMonth(
+    dayjs(date).weekday();
+  const currentMonthDays = createDaysForCurrentMonth(
     calendar.year,
     calendar.month
   );
-  let previousMonthDays = createDaysForPreviousMonth(
+  const previousMonthDays = createDaysForPreviousMonth(
     calendar.year,
     calendar.month
   );
-  let nextMonthDays = createDaysForNextMonth(calendar.year, calendar.month);
+  const nextMonthDays = createDaysForNextMonth(calendar.year, calendar.month);
 
-  let days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
+  const days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
   //@ts-ignore
   const handleMouseScroll = (e) => {
@@ -228,7 +229,7 @@ function Schedule() {
                   .filter((game) => game.date === day.date)
                   .map((game) => (
                     <div key={game._id} className={styles.dayCell}>
-                      <Link to={`/#${game.date}`}></Link>
+                      <Link to={`/#${game.date}`} />
                       <GameCardCalendar game={game} />
                     </div>
                   ))

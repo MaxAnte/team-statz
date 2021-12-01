@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
+
 import { Game, Player } from "../../context/app.types";
+
 import { AppContext } from "../../context/app.provider";
 
 import BlankLogo from "../../assets/images/logo-blank.png";
@@ -53,16 +55,14 @@ function TeamInfo({ players, games }: Props) {
         <p>
           {t("DRtg")}: {parseFloat(defensiveRating.toFixed(1))}
         </p>
-        {arrTotals.map((el, i) => {
-          return (
-            <p key={i}>
-              <span>{properties[i]}: </span>
-              {actualGames.length
-                ? parseFloat((el / actualGames.length).toFixed(1))
-                : 0}
-            </p>
-          );
-        })}
+        {arrTotals.map((el, i) => (
+          <p key={`${properties[i]}-${el}`}>
+            <span>{properties[i]}: </span>
+            {actualGames.length
+              ? parseFloat((el / actualGames.length).toFixed(1))
+              : 0}
+          </p>
+        ))}
       </div>
     </div>
   );

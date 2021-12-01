@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+
 import { AppContext } from "../../context/app.provider";
 
 import GameCard from "../GameCard/gameCard";
-import Table from "../Table/table";
 import MiniLoader from "../Loader/miniLoader";
 import Select from "../Select/select";
+import Table from "../Table/table";
 
 import styles from "./games.module.css";
 
@@ -80,13 +81,15 @@ function Games() {
         ) : games.length ? (
           Object.values(sortedGames)
             .reverse()
-            .map((game, id) => {
-              return (
-                <div className={styles.gamesItem} key={id} id={game.date}>
-                  <GameCard game={game} />
-                </div>
-              );
-            })
+            .map((game) => (
+              <div
+                className={styles.gamesItem}
+                key={`${game.date}-${game.time}`}
+                id={game.date}
+              >
+                <GameCard game={game} />
+              </div>
+            ))
         ) : (
           <div className={styles.noGames}>
             {t("No games has been added yet")}. {t("Go to")}{" "}

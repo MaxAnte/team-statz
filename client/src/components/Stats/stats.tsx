@@ -11,9 +11,10 @@ import {
   drawCourt,
 } from "../../helpers/canvas.helpers";
 
-import BasketBallIcon from "../../assets/icons/basketBall";
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
 import styles from "./stats.module.css";
+import { Player } from "../../context/app.types";
 
 type PointerColor = {
   _id: string;
@@ -522,8 +523,11 @@ function Stats() {
           <h5>{t("Players")}</h5>
           <div className={styles.statsColumnRows}>
             {!loading ? (
-              players.map((player, i) => (
-                <div className={styles.statsColumnRowsPlayersItem} key={i}>
+              players.map((player: Player, i: number) => (
+                <div
+                  className={styles.statsColumnRowsPlayersItem}
+                  key={player.name}
+                >
                   <span
                     className={styles.playerColorStick}
                     style={{
@@ -586,7 +590,7 @@ function Stats() {
                         filterGame === game.date ? undefined : game.date
                       )
                     }
-                    key={i}
+                    key={`${game.date}-${game.time}`}
                   >
                     <h4 className={styles.calendarGameName}>
                       {t("vs.")} {game.enemy}

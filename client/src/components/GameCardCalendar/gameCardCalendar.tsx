@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+
 import { DateType } from "../../context/app.types";
 
 import MiniLoader from "../Loader/miniLoader";

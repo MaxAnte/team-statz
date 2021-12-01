@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider";
+
 import { Team } from "../../context/app.types";
-import { SessionContext } from "../../context/session.provider";
+
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
+
+import { AppContext } from "../../context/app.provider";
+import { SessionContext } from "../../context/session.provider";
 
 import MiniLoader from "../Loader/miniLoader";
 
@@ -55,9 +58,8 @@ function Table() {
 
   const handleEditRow = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditableTeam((prev) => {
-      if (prev) {
-        return { ...prev, [e.target.name]: +e.target.value };
-      }
+      if (prev) return { ...prev, [e.target.name]: Number(e.target.value) };
+      return prev;
     });
   };
 
@@ -79,8 +81,8 @@ function Table() {
             {loading ? (
               <MiniLoader />
             ) : (
-              group[1].map((el: Team, i: number) => {
-                return isAuthenticated && editableTeam?._id === el._id ? (
+              group[1].map((el: Team, i: number) =>
+                isAuthenticated && editableTeam?._id === el._id ? (
                   <div
                     ref={editableCellRef}
                     className={`${styles.tableRow} ${
@@ -90,10 +92,10 @@ function Table() {
                           : styles.eliminated
                         : ""
                     }`}
-                    key={`tableRow${i}`}
+                    key={`tableRow${el.name}`}
                     onClick={() => setEditableTeam(el)}
                   >
-                    <span className={styles.tableRowPos}>{++i}</span>
+                    <span className={styles.tableRowPos}>{i + 1}</span>
                     <p className={styles.tableRowName}>{el.name}</p>
                     <span className={styles.tableRowWins}>
                       {editableTeam?._id === el._id ? (
@@ -136,17 +138,17 @@ function Table() {
                           : styles.eliminated
                         : ""
                     }`}
-                    key={`tableRow${i}`}
+                    key={`tableRow${el.name}`}
                     onClick={() => setEditableTeam(el)}
                   >
-                    <span className={styles.tableRowPos}>{++i}</span>
+                    <span className={styles.tableRowPos}>{i + 1}</span>
                     <p className={styles.tableRowName}>{el.name}</p>
                     <span className={styles.tableRowWins}>{el.wins}</span>
                     <span className={styles.tableRowLoses}>{el.loses}</span>
                     <span className={styles.tableRowPoints}>{el.points}</span>
                   </div>
-                );
-              })
+                )
+              )
             )}
           </div>
         </div>

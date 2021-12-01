@@ -1,13 +1,16 @@
+/* eslint-disable no-invalid-this */
 import React, { createContext } from "react";
-import { api } from "../api/api";
-import { UserResponseSchema } from "./session.schema";
+
 import {
-  Session,
   Props,
+  Session,
   State,
   UserLoginData,
   UserResponse,
 } from "./session.types";
+
+import { api } from "../api/api";
+import { UserResponseSchema } from "./session.schema";
 
 export const SessionContext = createContext<Session>(undefined!);
 export class SessionProvider extends React.Component<Props, State> {
@@ -47,7 +50,7 @@ export class SessionProvider extends React.Component<Props, State> {
     }
   };
 
-  logOutUser = async () => {
+  logOutUser = () => {
     this.setState({
       context: {
         ...this.state.context,
@@ -63,14 +66,16 @@ export class SessionProvider extends React.Component<Props, State> {
     const user = localStorage.getItem("userData");
     if (user) {
       const { token, userId } = JSON.parse(user);
-      this.setState({
-        context: {
-          ...this.state.context,
-          token,
-          userId,
-          isAuthenticated: true,
-        },
-      });
+      (() => {
+        this.setState({
+          context: {
+            ...this.state.context,
+            token,
+            userId,
+            isAuthenticated: true,
+          },
+        });
+      })();
     }
   }
 

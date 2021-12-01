@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider";
+
 import { PlayerStats } from "../../context/app.types";
+
+import { AppContext } from "../../context/app.provider";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
 
-import BasketBallIcon from "../../assets/icons/basketBall";
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
+
+import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 import styles from "./gamePlayerStat.module.css";
-import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
 type Props = {
   player: PlayerStats;
@@ -34,7 +37,7 @@ function GamePlayerStat({ player }: Props) {
   }, [player._id, playerInfo.name, players]);
 
   const getPercentage = (attempts: number, made: number): string => {
-    let perc = (made * 100) / attempts;
+    const perc = (made * 100) / attempts;
     return attempts ? `${parseFloat(perc.toFixed(1))}%` : !made ? "100%" : "0%";
   };
 
@@ -56,7 +59,7 @@ function GamePlayerStat({ player }: Props) {
     } = player;
     const fga = two_pa + three_pa;
     const fgm = two_pm + three_pm;
-    let perc =
+    const perc =
       pts + oreb + dreb + ast + stl + blk - (fga - fgm + fta - ftm + tov);
     return `${parseFloat(perc.toFixed(1))}%`;
   };

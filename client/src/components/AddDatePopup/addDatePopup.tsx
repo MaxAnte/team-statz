@@ -1,7 +1,10 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContext } from "../../context/app.provider";
+
+import { Team } from "../../context/app.types";
 import { AddDateForm } from "./addDatePopup.types";
+
+import { AppContext } from "../../context/app.provider";
 
 import Select from "../Select/select";
 
@@ -36,7 +39,7 @@ function AddDatePopup({ closeHandler, date }: Props) {
   const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prevState) => ({ ...prevState, time: e.target.value }));
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addDate(form);
     setFormClose(true);
@@ -60,12 +63,14 @@ function AddDatePopup({ closeHandler, date }: Props) {
             />
           </div>
           <Select
-            options={teams.map((team) => team.name)}
+            options={teams.map((team: Team) => team.name)}
             className={styles.selectWrap}
             getActive={handleGetActive}
             defaultValue="Enemy Team"
           />
-          <button className="btn__main">{t("Add")}</button>
+          <button type="submit" className="btn__main">
+            {t("Add")}
+          </button>
         </form>
       ) : (
         <div className={styles.addDateForm}>

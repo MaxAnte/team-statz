@@ -1,17 +1,21 @@
-import React, { useEffect, useContext, useState } from "react";
-import { useMessage } from "../../hooks/message.hook";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { Settings } from "../../context/app.types";
+
+import { useMessage } from "../../hooks/message.hook";
+
 import { AppContext } from "../../context/app.provider";
 import { SessionContext } from "../../context/session.provider";
-import { Settings } from "../../context/app.types";
 
 import ConfirmPopup from "../ConfirmPopup/confirmPopup";
 import ErrorPage from "../ErrorPage/errorPage";
 
-import styles from "./appSettings.module.css";
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
-import BasketBallIcon from "../../assets/icons/basketBall";
 import BlankLogo from "../../assets/images/logo-blank.png";
+
+import styles from "./appSettings.module.css";
 
 function AppSettings() {
   const {
@@ -33,11 +37,12 @@ function AppSettings() {
     setForm((prev) => ({ ...prev, [e.target.id]: e.target.value }));
 
   const handleCheckboxInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((prev) => ({ ...prev, [e.target.id]: !!e.target.checked }));
+    setForm((prev) => ({ ...prev, [e.target.id]: Boolean(e.target.checked) }));
 
   const handleImageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
+      //@ts-ignore
+      const [file] = e.target.files;
       const reader = new FileReader();
       reader.onload = function (evt) {
         const contents = evt.target?.result?.toString();
@@ -47,13 +52,13 @@ function AppSettings() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
-      /[0-9]{4}-[0-9]{2}-[0-9]{2}/i.test(form.playoffsStart) &&
+      /[0-9]{4}-[0-9]{2}-[0-9]{2}/iu.test(form.playoffsStart) &&
       form.playoffsStart.split("-")[0].length <= 4 &&
-      +form.playoffsStart.split("-")[1] <= 12 &&
-      +form.playoffsStart.split("-")[2] <= 31
+      Number(form.playoffsStart.split("-")[1]) <= 12 &&
+      Number(form.playoffsStart.split("-")[2]) <= 31
     ) {
       saveSettings(form);
     } else {
@@ -173,7 +178,7 @@ function AppSettings() {
             handleGetAnswer={handleGetAnswer}
             loadingTitle={`${t("Building")}...`}
           />
-          <div className="dark-overlay" onClick={() => setPopup(false)}></div>
+          <div className="dark-overlay" onClick={() => setPopup(false)} />
         </>
       ) : null}
     </div>

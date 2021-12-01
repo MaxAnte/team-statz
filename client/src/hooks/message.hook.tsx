@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 
-export const useMessage = () => {
-  return useCallback((text: string, type: string = "") => {
+export const useMessage = () => useCallback((text: string, type: string = "") => {
     if (text) {
       const wrapper = document.createElement("div");
       wrapper.className = "errorWrap";
@@ -22,4 +21,3 @@ export const useMessage = () => {
       }, 2000);
     }
   }, []);
-};

@@ -1,12 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
+
+import { Player } from "../../context/app.types";
+
 import { AppContext } from "../../context/app.provider";
 
-import TeamInfo from "../TeamInfo/teamInfo";
 import PlayerCard from "../PlayerCard/playerCard";
+import TeamInfo from "../TeamInfo/teamInfo";
 
-import BasketBallIcon from "../../assets/icons/basketBall";
+import BasketBallIcon from "../../assets/icons/basketBallIcon";
 
 import styles from "./team.module.css";
 
@@ -35,7 +38,7 @@ function Team() {
         <>
           <TeamInfo players={players} games={games} />
           <div className={styles.teamPlayers}>
-            {players.map((player) => (
+            {players.map((player: Player) => (
               <div className={styles.playerItem} key={player._id}>
                 <NavLink
                   to={`/player/${player._id}`}

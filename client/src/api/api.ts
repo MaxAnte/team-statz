@@ -3,14 +3,15 @@ import { Headers, Response } from "./api.types";
 export async function api<T>(
   url: string,
   method: string = "GET",
-  body: any = null,
+  options: any = null,
   headers: Headers = {}
 ): Promise<Response<T>> {
   try {
-    if (body) {
-      body = JSON.stringify(body);
+    let body = null;
+    if (options) {
+      body = JSON.stringify(options);
       headers["Content-Type"] = "application/json";
-      headers["Accept"] = "application/json";
+      headers.Accept = "application/json";
     }
 
     const response = await fetch(url, { method, body, headers });
