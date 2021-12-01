@@ -6,7 +6,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint:check": "eslint src/**/*.{ts,tsx}",
+    "eslint:fix": "eslint src/**/*.{ts,tsx} --fix"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.12.0",
@@ -28,6 +30,15 @@
     "react-youtube": "^7.13.1",
     "web-vitals": "^1.1.1",
     "zod": "^3.8.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.29.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-perf": "^3.3.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0"
   },
   "eslintConfig": {
     "extends": [

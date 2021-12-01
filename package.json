@@ -10,6 +10,8 @@
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
+    "eslint:check-client": "npm run eslint:check --prefix client",
+    "eslint:fix-client": "npm run eslint:fix --prefix client",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
@@ -33,7 +35,7 @@
     "express-validator": "^6.11.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",
-    "typescript": "^4.4.3"
+    "typescript": "4.2.3"
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
