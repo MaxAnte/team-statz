@@ -11,6 +11,7 @@ const schema = new Schema({
   playersStats: [
     {
       pID: { type: Types.ObjectId, ref: "Player" },
+      gs: { type: Boolean, default: false },
       pts: { type: Number, default: 0 },
       oreb: { type: Number, default: 0 },
       dreb: { type: Number, default: 0 },
@@ -26,7 +27,7 @@ const schema = new Schema({
       ftm: { type: Number, default: 0 },
       tov: { type: Number, default: 0 },
       fouls: { type: Number, default: 0 },
-      minutes: { type: Number, default: 0 },
+      minutes: [{ type: String, default: "" }],
       coordinates: [{ x: Number, y: Number, miss: Boolean }],
     },
   ],

@@ -3,4 +3,5 @@ export type Props = {
   width?: string;
   height?: string;
   color?: "black" | "white" | "green" | "red";
+  onClick?: () => void;
 };

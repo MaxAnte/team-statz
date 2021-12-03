@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { parsePlayingMinutes } from "../../helpers/time.helpers";
+
 import { PlayerStats } from "../../app/app.types";
 
 import { AppContext } from "../../app/app.provider";
@@ -230,7 +232,8 @@ function GamePlayerStat({ player }: Props) {
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  {t("Minutes")}:<span>{player.minutes}</span>
+                  {t("Minutes")}:
+                  <span>{parsePlayingMinutes(player.minutes)}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>

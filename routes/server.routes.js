@@ -229,7 +229,16 @@ router.post("/game/complete-game", [], async (req, res) => {
             .json({ message: `${player._id}: Player not found` });
 
         playerDB.gp += 1;
-        playerDB.mp = (+playerDB.mp + +player.minutes || 0) / +playerDB.gp;
+        playerDB.gs += player.gs ? 1 : 0;
+        playerDB.mp =
+          (+playerDB.mp +
+            (player.minutes
+              .map((min) => {
+                const [m, s] = min.split(":");
+                return +m ? +m + +s / 60 : +s / 60;
+              })
+              .reduce((acc, cur) => (acc += cur)) || 0)) /
+          +playerDB.gp;
         playerDB.pts = (+playerDB.pts + +player.pts || 0) / +playerDB.gp;
         playerDB.oreb += +player.oreb || 0;
         playerDB.dreb += +player.dreb || 0;
@@ -379,9 +388,18 @@ router.post("/game/edit-game", [], async (req, res) => {
               console.log("Removing:", p._id);
               const removedPlayerDB = await Player.findOne({ _id: p._id });
               removedPlayerDB.gp -= 1;
+
+              removedPlayerDB.gs -= player.gs ? 1 : 0;
+
               removedPlayerDB.mp = +removedPlayerDB.gp
                 ? (+removedPlayerDB.mp * (+removedPlayerDB.gp + 1) -
-                    +player.minutes || 0) / +removedPlayerDB.gp
+                    (player.minutes
+                      .map((min) => {
+                        const [m, s] = min.split(":");
+                        return +m ? +m + +s / 60 : +s / 60;
+                      })
+                      .reduce((acc, cur) => (acc += cur)) || 0)) /
+                  +removedPlayerDB.gp
                 : 0;
 
               removedPlayerDB.pts = +removedPlayerDB.gp
@@ -468,7 +486,13 @@ router.post("/game/edit-game", [], async (req, res) => {
         playerDB.mp =
           (+playerDB.mp * +playerDB.gp -
             (+prevPlayerDB.minutes || 0) +
-            +player.minutes || 0) / +playerDB.gp;
+            (+player.minutes
+              .map((min) => {
+                const [m, s] = min.split(":");
+                return +m ? +m + +s / 60 : +s / 60;
+              })
+              .reduce((acc, cur) => (acc += cur)) || 0)) /
+          +playerDB.gp;
 
         playerDB.pts =
           (+playerDB.pts * +playerDB.gp -
@@ -645,9 +669,16 @@ router.post("/game/delete-game", [], async (req, res) => {
           .json({ message: `${player._id}: Player not found` });
 
       playerDB.gp -= 1;
+      playerDB.gs -= player.gs ? 1 : 0;
+
       playerDB.mp = +playerDB.gp
-        ? (+playerDB.mp * (+playerDB.gp + 1) - +player.minutes || 0) /
-          +playerDB.gp
+        ? (+playerDB.mp * (+playerDB.gp + 1) -
+            player.minutes
+              .map((min) => {
+                const [m, s] = min.split(":");
+                return +m ? +m + +s / 60 : +s / 60;
+              })
+              .reduce((acc, cur) => (acc += cur)) || 0) / +playerDB.gp
         : 0;
 
       playerDB.pts = +playerDB.gp

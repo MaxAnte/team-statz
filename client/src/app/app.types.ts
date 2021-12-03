@@ -79,9 +79,26 @@ export type PlayerOverallStats = {
   __v?: number;
 };
 
-export type PlayerStats = PlayerOverallStats & {
+export type PlayerStats = {
   _id: string;
+  ast: number;
+  blk: number;
+  dreb: number;
+  fouls: number;
+  fta: number;
+  ftm: number;
+  minutes: string[];
+  oreb: number;
+  plus_minus: number;
+  pts: number;
+  stl: number;
+  three_pa: number;
+  three_pm: number;
+  tov: number;
+  two_pa: number;
+  two_pm: number;
   coordinates: Coord[];
+  __v?: number;
 };
 
 export type Quarter = z.infer<typeof quarterSchema>;

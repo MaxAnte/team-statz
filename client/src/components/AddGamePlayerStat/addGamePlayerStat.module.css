@@ -16,6 +16,25 @@
 }
 .gpsLeft {
   text-align: center;
+  position: relative;
+}
+.starterIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.starterIcon:hover {
+  fill: var(--color-green-main);
+  transition: all 0.3s ease;
+}
+.staterFilled {
+  fill: var(--color-green-main);
+}
+.staterEmpty {
+  fill: var(--color-soft-gray);
 }
 .gpsLeft img {
   width: 300px;

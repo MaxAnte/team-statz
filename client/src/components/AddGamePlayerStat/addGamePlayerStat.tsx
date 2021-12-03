@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Coord, Player, PlayerStats } from "../../app/app.types";
 
 import GamePlayerCanvas from "../GamePlayerCanvas/gamePlayerCanvas";
+import SubstitutionInput from "../SubstitutionInput/substitutionInput";
+
+import StarIcon from "../../assets/icons/starIcon";
 
 import blankPhoto from "../../assets/images/players/blank-silhouette.png";
 
@@ -23,6 +26,7 @@ function AddGamePlayerStat({
   const [playerStats, setPlayerStats] = useState<PlayerStats | undefined>(
     basePlayer
   );
+  const [isStarter, setIsStarter] = useState(false);
   const { t } = useTranslation();
 
   const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +36,15 @@ function AddGamePlayerStat({
       _id: player._id,
       [e.target.name]: Number(e.target.value),
     }));
+  };
+
+  const handleCheckStarter = () => {
+    //@ts-ignore
+    setPlayerStats((prevState) => ({
+      ...prevState,
+      gs: !isStarter,
+    }));
+    setIsStarter(!isStarter);
   };
 
   const handleGetCoords = (coords: Coord[]) => {
@@ -45,6 +58,17 @@ function AddGamePlayerStat({
     });
   };
 
+  const handleGetSubstitutions = useCallback((minutes: string[]) => {
+    setPlayerStats((prevState) => {
+      if (prevState)
+        return {
+          ...prevState,
+          minutes,
+        };
+      return prevState;
+    });
+  }, []);
+
   useEffect(() => {
     if (playerStats) handleChangePlayerStats(player._id, playerStats);
   }, [playerStats, player._id, handleChangePlayerStats]);
@@ -52,6 +76,14 @@ function AddGamePlayerStat({
   return (
     <div className={styles.gamePlayerStat}>
       <div className={styles.gpsLeft}>
+        <StarIcon
+          width={"34"}
+          height={"34"}
+          className={`${styles.starterIcon} ${
+            isStarter ? styles.staterFilled : styles.staterEmpty
+          }`}
+          onClick={handleCheckStarter}
+        />
         <img
           src={player.image_thumb ? player.image_thumb : blankPhoto}
           alt={player.name}
@@ -257,19 +289,6 @@ function AddGamePlayerStat({
               </div>
               <div className={styles.gpsStatsRowItem}>
                 <div>
-                  <label htmlFor="minutes">{t("Minutes")}: </label>
-                  <input
-                    type="number"
-                    min="0"
-                    id="minutes"
-                    name="minutes"
-                    placeholder={basePlayer?.minutes.toString() || "0"}
-                    onChange={handleChangeStats}
-                  />
-                </div>
-              </div>
-              <div className={styles.gpsStatsRowItem}>
-                <div>
                   <label htmlFor="plus_minus">{"+/-"} : </label>
                   <input
                     type="number"
@@ -280,6 +299,14 @@ function AddGamePlayerStat({
                   />
                 </div>
               </div>
+            </div>
+          </div>
+          <div className={styles.gpsStatsRow}>
+            <div className={styles.gpsStatsRowItem}>
+              <SubstitutionInput
+                isStarter={isStarter}
+                getSubstitutions={handleGetSubstitutions}
+              />
             </div>
           </div>
         </div>

@@ -1,0 +1,60 @@
+.wrapper {
+  display: flex !important;
+  align-items: center;
+}
+
+.subsWrapper {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  min-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  margin-left: 5px;
+  width: 100%;
+}
+
+.sub {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  background-color: var(--color-soft-gray);
+  border-radius: 4px;
+  padding: 2px 5px 2px 2px;
+  position: relative;
+}
+
+.subUp {
+  fill: var(--color-green-main);
+}
+.subDown {
+  transform: rotate(180deg);
+  fill: var(--color-soft-red);
+}
+
+.input {
+  border: 1px solid var(--color-soft-gray);
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
+  width: 47px;
+  text-align: center;
+}
+
+.remove {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

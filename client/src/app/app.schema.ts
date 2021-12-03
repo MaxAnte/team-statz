@@ -80,7 +80,7 @@ export const PlayerStatsSchema = z.object({
   fouls: z.number(),
   fta: z.number(),
   ftm: z.number(),
-  minutes: z.number(),
+  minutes: z.string().array(),
   oreb: z.number(),
   plus_minus: z.number(),
   pts: z.number(),

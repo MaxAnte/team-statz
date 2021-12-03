@@ -18,6 +18,7 @@ function TableSheet({ tableStats }: Props) {
           <tr>
             <th>{t("SEASON")}</th>
             <th>{t("GP")}</th>
+            <th>{t("GS")}</th>
             <th>{t("MPG")}</th>
             <th>{t("PPG")}</th>
             <th>{t("APG")}</th>
@@ -51,6 +52,7 @@ function TableSheet({ tableStats }: Props) {
             {tableStats.gp ? (
               <>
                 <td>{tableStats.gp}</td>
+                <td>{tableStats.gs}</td>
                 <td>{tableStats.mp}</td>
                 <td>{tableStats.pts}</td>
                 <td>{tableStats.ast}</td>
