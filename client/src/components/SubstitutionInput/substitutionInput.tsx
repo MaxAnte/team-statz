@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { parseSubTime } from "../../helpers/time.helpers";
+
+import { useMessage } from "../../hooks/message.hook";
 
 import CloseIcon from "../../assets/icons/closeIcon";
 import SubstitutionArrowIcon from "../../assets/icons/substitutionArrowIcon";
@@ -10,36 +12,25 @@ import styles from "./substitutionInput.module.css";
 
 type Props = {
   isStarter: boolean;
+  base?: string[];
   getSubstitutions: (list: string[]) => void;
 };
 
-function SubstitutionInput({ isStarter, getSubstitutions }: Props) {
+function SubstitutionInput({ isStarter, base, getSubstitutions }: Props) {
+  const message = useMessage();
   const { t } = useTranslation();
-  const [tmpTime, setTmpTime] = useState<string>("");
-  const [subsList, setSubsList] = useState<string[]>([]);
+  const [subsList, setSubsList] = useState<string[]>(base || []);
+  const inputRef = useRef(null);
 
-  const onChangeSub = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTmpTime(e.target.value);
-  };
-
-  const addSubstitution = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
-        setSubsList(subsList.concat(parseSubTime(tmpTime)));
-        setTmpTime("");
-      }
-    },
-    [subsList, tmpTime]
-  );
-
-  useEffect(() => {
+  const addSubstitution = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value.trim().length || !Number(e.target.value)) {
+      message(t("Invalid value"));
+    } else {
+      setSubsList(subsList.concat(parseSubTime(e.target.value)));
+    }
     //@ts-ignore
-    window.addEventListener("keydown", addSubstitution);
-    return () => {
-      //@ts-ignore
-      window.removeEventListener("keydown", addSubstitution);
-    };
-  }, [addSubstitution]);
+    inputRef.current.value = "";
+  };
 
   const handleRemove = (index: number) => {
     setSubsList(subsList.filter((_, i) => i !== index));
@@ -78,9 +69,9 @@ function SubstitutionInput({ isStarter, getSubstitutions }: Props) {
           type="text"
           className={styles.input}
           id="substitution"
-          onChange={onChangeSub}
+          ref={inputRef}
+          onBlur={addSubstitution}
           placeholder="15:35"
-          value={tmpTime}
         />
       </div>
     </div>

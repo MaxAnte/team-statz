@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { parseToFixedWithoutZero } from "../../helpers/number.helpers";
+
 import { Player } from "../../app/app.types";
 
 import basket from "../../assets/images/badges/basket.svg";
@@ -65,19 +67,19 @@ function PlayerCard({ player }: Props) {
       </p>
       <div className={styles.playerStats}>
         <div className={styles.playerStatsItem}>
-          {t("PPG")}: {player.pts ? parseFloat(player.pts.toFixed(1)) : 0}
+          {t("PPG")}: {player.pts ? parseToFixedWithoutZero(player.pts) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          {t("RPG")}: {player.reb ? parseFloat(player.reb.toFixed(1)) : 0}
+          {t("RPG")}: {player.reb ? parseToFixedWithoutZero(player.reb) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          {t("APG")}: {player.ast ? parseFloat(player.ast.toFixed(1)) : 0}
+          {t("APG")}: {player.ast ? parseToFixedWithoutZero(player.ast) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          {t("BPG")}: {player.blk ? parseFloat(player.blk.toFixed(1)) : 0}
+          {t("BPG")}: {player.blk ? parseToFixedWithoutZero(player.blk) : 0}
         </div>
         <div className={styles.playerStatsItem}>
-          {t("SPG")}: {player.stl ? parseFloat(player.stl.toFixed(1)) : 0}
+          {t("SPG")}: {player.stl ? parseToFixedWithoutZero(player.stl) : 0}
         </div>
       </div>
     </div>

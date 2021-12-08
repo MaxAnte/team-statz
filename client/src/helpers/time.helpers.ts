@@ -1,3 +1,5 @@
+import { parseToFixedWithoutZero } from "./number.helpers";
+
 export const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const MONTHS = [
   "January",
@@ -36,10 +38,26 @@ export const parseSubTime = (timeStr: string) => {
   }
 };
 
-export const parsePlayingMinutes = (minutes: string[]): number =>
-  minutes
-    .map((min) => {
-      const [m, s] = min.split(":");
-      return Number(m) ? Number(m) + Number(s) / 60 : Number(s) / 60;
-    })
-    .reduce((acc, cur) => (acc += cur));
+export const parsePlayingMinutes = (
+  minutes: string[],
+  isStarter: boolean
+): number => {
+  let tmp = 0;
+  const minArr = ["0:00", ...minutes];
+
+  return parseToFixedWithoutZero(
+    minArr
+      .map((min) => {
+        const [m, s] = min.split(":");
+        return Number(m) + Number(s) / 60;
+      })
+      .reduce((acc, cur, i) => {
+        const decider = isStarter ? 0 : 1;
+        if (i % 2 === decider) {
+          tmp = cur;
+          return (acc += 0);
+        }
+        return (acc += cur - tmp);
+      })
+  );
+};

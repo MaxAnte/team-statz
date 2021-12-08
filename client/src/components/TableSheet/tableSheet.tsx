@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { parseToFixedWithoutZero } from "../../helpers/number.helpers";
+
 import { Player } from "../../app/app.types";
 
 import styles from "./tableSheet.module.css";
@@ -64,11 +66,9 @@ function TableSheet({ tableStats }: Props) {
                 <td>{tableStats.two_pa + tableStats.three_pa}</td>
                 <td>
                   {tableStats.two_pa + tableStats.three_pa
-                    ? parseFloat(
-                        (
-                          ((tableStats.two_pm + tableStats.three_pm) * 100) /
+                    ? parseToFixedWithoutZero(
+                        ((tableStats.two_pm + tableStats.three_pm) * 100) /
                           (tableStats.two_pa + tableStats.three_pa)
-                        ).toFixed(1)
                       )
                     : 0}
                   %
@@ -77,11 +77,8 @@ function TableSheet({ tableStats }: Props) {
                 <td>{tableStats.three_pa}</td>
                 <td>
                   {tableStats.three_pa
-                    ? parseFloat(
-                        (
-                          (tableStats.three_pm * 100) /
-                          tableStats.three_pa
-                        ).toFixed(1)
+                    ? parseToFixedWithoutZero(
+                        (tableStats.three_pm * 100) / tableStats.three_pa
                       )
                     : 0}
                   %
@@ -90,8 +87,8 @@ function TableSheet({ tableStats }: Props) {
                 <td>{tableStats.fta}</td>
                 <td>
                   {tableStats.fta
-                    ? parseFloat(
-                        ((tableStats.ftm * 100) / tableStats.fta).toFixed(1)
+                    ? parseToFixedWithoutZero(
+                        (tableStats.ftm * 100) / tableStats.fta
                       )
                     : 0}
                   %

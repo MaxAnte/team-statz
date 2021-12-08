@@ -12,6 +12,24 @@ const Player = require("../models/Player");
 const Settings = require("../models/Settings");
 const PlayoffsMatchup = require("../models/PlayoffsMatchup");
 
+const calculateMinutes = (minutesArr, isStarter) => {
+  let tmp = 0;
+  const minArr = ["0:00", ...minutesArr];
+  return minArr
+    .map((min) => {
+      const [m, s] = min.split(":");
+      return +m + +s / 60;
+    })
+    .reduce((acc, cur, i) => {
+      const decider = isStarter ? 0 : 1;
+      if (i % 2 === decider) {
+        tmp = cur;
+        return (acc += 0);
+      }
+      return (acc += cur - tmp);
+    });
+};
+
 // ===================== AUTH ===================
 
 // /api/auth/login
@@ -230,15 +248,11 @@ router.post("/game/complete-game", [], async (req, res) => {
 
         playerDB.gp += 1;
         playerDB.gs += player.gs ? 1 : 0;
+
         playerDB.mp =
-          (+playerDB.mp +
-            (player.minutes
-              .map((min) => {
-                const [m, s] = min.split(":");
-                return +m ? +m + +s / 60 : +s / 60;
-              })
-              .reduce((acc, cur) => (acc += cur)) || 0)) /
+          (+playerDB.mp + calculateMinutes(player.minutes, player.gs)) /
           +playerDB.gp;
+
         playerDB.pts = (+playerDB.pts + +player.pts || 0) / +playerDB.gp;
         playerDB.oreb += +player.oreb || 0;
         playerDB.dreb += +player.dreb || 0;
@@ -393,12 +407,7 @@ router.post("/game/edit-game", [], async (req, res) => {
 
               removedPlayerDB.mp = +removedPlayerDB.gp
                 ? (+removedPlayerDB.mp * (+removedPlayerDB.gp + 1) -
-                    (player.minutes
-                      .map((min) => {
-                        const [m, s] = min.split(":");
-                        return +m ? +m + +s / 60 : +s / 60;
-                      })
-                      .reduce((acc, cur) => (acc += cur)) || 0)) /
+                    calculateMinutes(player.minutes, player.gs)) /
                   +removedPlayerDB.gp
                 : 0;
 
@@ -485,13 +494,8 @@ router.post("/game/edit-game", [], async (req, res) => {
 
         playerDB.mp =
           (+playerDB.mp * +playerDB.gp -
-            (+prevPlayerDB.minutes || 0) +
-            (+player.minutes
-              .map((min) => {
-                const [m, s] = min.split(":");
-                return +m ? +m + +s / 60 : +s / 60;
-              })
-              .reduce((acc, cur) => (acc += cur)) || 0)) /
+            calculateMinutes(prevPlayerDB.minutes, prevPlayerDB.gs) +
+            calculateMinutes(player.minutes, player.gs)) /
           +playerDB.gp;
 
         playerDB.pts =
@@ -673,12 +677,8 @@ router.post("/game/delete-game", [], async (req, res) => {
 
       playerDB.mp = +playerDB.gp
         ? (+playerDB.mp * (+playerDB.gp + 1) -
-            player.minutes
-              .map((min) => {
-                const [m, s] = min.split(":");
-                return +m ? +m + +s / 60 : +s / 60;
-              })
-              .reduce((acc, cur) => (acc += cur)) || 0) / +playerDB.gp
+            calculateMinutes(player.minutes, player.gs)) /
+          +playerDB.gp
         : 0;
 
       playerDB.pts = +playerDB.gp

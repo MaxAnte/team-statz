@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
+import { parseToFixedWithoutZero } from "../../helpers/number.helpers";
+
 import { Game, Player } from "../../app/app.types";
 
 import { AppContext } from "../../app/app.provider";
@@ -50,16 +52,16 @@ function TeamInfo({ players, games }: Props) {
           {t("W")}/{t("L")}: {winsCount}/{actualGames.length - winsCount}
         </p>
         <p>
-          {t("ORtg")}: {parseFloat(offensiveRating.toFixed(1))}
+          {t("ORtg")}: {parseToFixedWithoutZero(offensiveRating)}
         </p>
         <p>
-          {t("DRtg")}: {parseFloat(defensiveRating.toFixed(1))}
+          {t("DRtg")}: {parseToFixedWithoutZero(defensiveRating)}
         </p>
         {arrTotals.map((el, i) => (
           <p key={`${properties[i]}-${el}`}>
             <span>{properties[i]}: </span>
             {actualGames.length
-              ? parseFloat((el / actualGames.length).toFixed(1))
+              ? parseToFixedWithoutZero(el / actualGames.length)
               : 0}
           </p>
         ))}

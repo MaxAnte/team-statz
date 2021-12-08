@@ -26,7 +26,9 @@ function AddGamePlayerStat({
   const [playerStats, setPlayerStats] = useState<PlayerStats | undefined>(
     basePlayer
   );
-  const [isStarter, setIsStarter] = useState(false);
+  const [isStarter, setIsStarter] = useState(
+    basePlayer ? basePlayer.gs : false
+  );
   const { t } = useTranslation();
 
   const handleChangeStats = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -305,6 +307,7 @@ function AddGamePlayerStat({
             <div className={styles.gpsStatsRowItem}>
               <SubstitutionInput
                 isStarter={isStarter}
+                base={basePlayer?.minutes}
                 getSubstitutions={handleGetSubstitutions}
               />
             </div>

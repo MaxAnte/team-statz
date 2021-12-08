@@ -87,6 +87,7 @@ export type PlayerStats = {
   fouls: number;
   fta: number;
   ftm: number;
+  gs: boolean;
   minutes: string[];
   oreb: number;
   plus_minus: number;

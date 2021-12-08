@@ -6,6 +6,7 @@ import {
   zones,
   MULTIPLIER_PLAYER as MULTIPLIER,
 } from "../../helpers/canvas.helpers";
+import { parseToFixedWithoutZero } from "../../helpers/number.helpers";
 
 import styles from "./playerCanvas.module.css";
 
@@ -83,7 +84,7 @@ function PlayerCanvas({ player, games }: Props) {
           });
 
         const zonesPerc = zonesMade.map((el, id) =>
-          el ? parseFloat(((el * 100) / zonesAttempts[id]).toFixed(1)) : 0
+          el ? parseToFixedWithoutZero((el * 100) / zonesAttempts[id]) : 0
         );
 
         drawZones(ctx, zonesAttempts, zonesPerc);

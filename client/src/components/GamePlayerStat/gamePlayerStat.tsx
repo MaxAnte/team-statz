@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { parseToFixedWithoutZero } from "../../helpers/number.helpers";
 import { parsePlayingMinutes } from "../../helpers/time.helpers";
 
 import { PlayerStats } from "../../app/app.types";
@@ -40,7 +41,11 @@ function GamePlayerStat({ player }: Props) {
 
   const getPercentage = (attempts: number, made: number): string => {
     const perc = (made * 100) / attempts;
-    return attempts ? `${parseFloat(perc.toFixed(1))}%` : !made ? "100%" : "0%";
+    return attempts
+      ? `${parseToFixedWithoutZero(perc)}%`
+      : !made
+      ? "100%"
+      : "0%";
   };
 
   const getEfficiencyRate = (player: PlayerStats): string => {
@@ -63,7 +68,7 @@ function GamePlayerStat({ player }: Props) {
     const fgm = two_pm + three_pm;
     const perc =
       pts + oreb + dreb + ast + stl + blk - (fga - fgm + fta - ftm + tov);
-    return `${parseFloat(perc.toFixed(1))}%`;
+    return `${parseToFixedWithoutZero(perc)}%`;
   };
 
   const getBadges = (player: PlayerStats) => {
@@ -233,7 +238,7 @@ function GamePlayerStat({ player }: Props) {
               <div className={styles.gpsStatsRowItem}>
                 <div>
                   {t("Minutes")}:
-                  <span>{parsePlayingMinutes(player.minutes)}</span>
+                  <span>{parsePlayingMinutes(player.minutes, player.gs)}</span>
                 </div>
               </div>
               <div className={styles.gpsStatsRowItem}>

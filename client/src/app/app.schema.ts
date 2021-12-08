@@ -73,6 +73,7 @@ export const CoordinatesSchema = z.array(
 
 export const PlayerStatsSchema = z.object({
   _id: z.string(),
+  gs: z.boolean(),
   ast: z.number(),
   blk: z.number(),
   coordinates: CoordinatesSchema,
