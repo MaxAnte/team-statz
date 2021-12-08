@@ -23,10 +23,13 @@ function SubstitutionInput({ isStarter, base, getSubstitutions }: Props) {
   const inputRef = useRef(null);
 
   const addSubstitution = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value.trim().length || !Number(e.target.value)) {
-      message(t("Invalid value"));
-    } else {
+    if (
+      e.target.value.trim().length &&
+      e.target.value.split(":").every((el) => Number(el))
+    ) {
       setSubsList(subsList.concat(parseSubTime(e.target.value)));
+    } else {
+      message(t("Invalid value"));
     }
     //@ts-ignore
     inputRef.current.value = "";
