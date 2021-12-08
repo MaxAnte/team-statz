@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { parseSubTime } from "../../helpers/time.helpers";
+import { parseSubTime, parseToPureMinutes } from "../../helpers/time.helpers";
 
 import { useMessage } from "../../hooks/message.hook";
 
@@ -27,7 +27,17 @@ function SubstitutionInput({ isStarter, base, getSubstitutions }: Props) {
       e.target.value.trim().length &&
       e.target.value.split(":").every((el) => Number(el))
     ) {
-      setSubsList(subsList.concat(parseSubTime(e.target.value)));
+      if (subsList.length === 0) {
+        setSubsList(subsList.concat(parseSubTime(e.target.value)));
+      } else if (
+        subsList.length > 0 &&
+        parseToPureMinutes(parseSubTime(e.target.value)) >
+          parseToPureMinutes(subsList[subsList.length - 1])
+      ) {
+        setSubsList(subsList.concat(parseSubTime(e.target.value)));
+      } else {
+        message(t("Wrong time"));
+      }
     } else {
       message(t("Invalid value"));
     }

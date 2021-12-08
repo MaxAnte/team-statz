@@ -38,6 +38,11 @@ export const parseSubTime = (timeStr: string) => {
   }
 };
 
+export const parseToPureMinutes = (timeStr: string): number => {
+  const [m, s] = timeStr.split(":");
+  return Number(m) + Number(s) / 60;
+};
+
 export const parsePlayingMinutes = (
   minutes: string[],
   isStarter: boolean
@@ -47,10 +52,7 @@ export const parsePlayingMinutes = (
 
   return parseToFixedWithoutZero(
     minArr
-      .map((min) => {
-        const [m, s] = min.split(":");
-        return Number(m) + Number(s) / 60;
-      })
+      .map((min) => parseToPureMinutes(min))
       .reduce((acc, cur, i) => {
         const decider = isStarter ? 0 : 1;
         if (i % 2 === decider) {
