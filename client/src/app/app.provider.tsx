@@ -122,7 +122,9 @@ export class AppProvider extends React.Component<Props, State> {
       },
     });
     try {
-      const response = await api<Team[]>("/api/team/teams", "POST", {});
+      const response = await api<Team[]>("/api/team/teams", "POST", {
+        season: this.state.context.season,
+      });
 
       const teams = TeamsSchema.parse(response);
 
@@ -144,6 +146,7 @@ export class AppProvider extends React.Component<Props, State> {
       TeamSchema.parse(team);
       await api<Team>("/api/team/edit-table-info", "POST", {
         ...team,
+        season: this.state.context.season,
       });
       this.getTeams();
     } catch (error: any) {

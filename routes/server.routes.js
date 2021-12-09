@@ -812,9 +812,9 @@ router.post("/player/id", async (req, res) => {
 // ===================== TEAM ===================
 
 router.post("/team/teams", [], async (req, res) => {
-  const teams = await Team.find({});
-  if (!teams) return res.status(400).json({ message: "Teams not found" });
-  res.json(teams);
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Teams not found" });
+  res.json(season.teams);
 });
 
 router.post("/team/edit-table-info", [], async (req, res) => {
