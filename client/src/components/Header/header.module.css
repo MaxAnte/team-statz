@@ -71,6 +71,15 @@
   height: 40px;
   transition: all 0.3s ease;
 }
+.seasonsSwitcher {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-soft-gray);
+  padding: 5px 30px 5px 10px;
+  margin-right: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+}
 .navList ul {
   display: flex;
   align-items: center;

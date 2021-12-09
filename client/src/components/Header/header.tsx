@@ -11,6 +11,7 @@ import { NavLink } from "react-router-dom";
 
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
+import { AppContext } from "../../app/app.provider";
 import { SessionContext } from "../../session/session.provider";
 
 import AuthModal from "../AuthModal/authModal";
@@ -27,6 +28,7 @@ import styles from "./header.module.css";
 
 function Header() {
   const { isAuthenticated, logOutUser } = useContext(SessionContext);
+  const { getSeason } = useContext(AppContext);
   const [modal, setModal] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
@@ -43,9 +45,15 @@ function Header() {
 
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
-  const handleGetActive = useCallback(
+  const handleGetActiveLanguage = useCallback(
     (option: string) => i18n.changeLanguage(option),
     [i18n]
+  );
+  const handleGetActiveSeason = useCallback(
+    async (option: string) => {
+      await getSeason(option);
+    },
+    [getSeason]
   );
 
   return (
@@ -55,6 +63,12 @@ function Header() {
           Team Stat<span>Z</span>
         </h1>
       </NavLink>
+      <Select
+        options={["18/19", "19/20", "20/21"]}
+        className={styles.seasonsSwitcher}
+        getActive={handleGetActiveSeason}
+        defaultValue={"20/21"}
+      />
       <nav className={styles.navList}>
         <ul>
           <li>
@@ -80,7 +94,7 @@ function Header() {
       <Select
         options={["en", "ru", "uk"]}
         className={styles.languageSwitcher}
-        getActive={handleGetActive}
+        getActive={handleGetActiveLanguage}
         defaultValue={Cookie.get("language") || "en"}
         type="language"
         arrow={false}

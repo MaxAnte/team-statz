@@ -916,7 +916,7 @@ router.post("/bracket/clear", [], async (req, res) => {
 // ==================== SEASON ==================
 
 router.post("/season", [], async (req, res) => {
-  const season = await Season.find({ name: req.body.name });
+  const season = await Season.findOne({ name: req.body.name });
   if (!season)
     return res
       .status(400)

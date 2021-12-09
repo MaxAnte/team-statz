@@ -8,6 +8,7 @@ import {
   PlayerSchema,
   PlayoffsMatchupSchema,
   quarterSchema,
+  SeasonSchema,
   SettingsSchema,
   TeamSchema,
 } from "./app.schema";
@@ -20,6 +21,7 @@ export type Context = {
   dates: DateType[] | [];
   playoffsmatchups: PlayoffsMatchup[] | [];
   birthDayPlayers: Player[] | [];
+  season: Season;
   loading: boolean;
 
   getSettings: InstanceType<typeof AppProvider>["getSettings"];
@@ -42,6 +44,7 @@ export type Context = {
   clearPlayoffsBracket: InstanceType<
     typeof AppProvider
   >["clearPlayoffsBracket"];
+  getSeason: InstanceType<typeof AppProvider>["getSeason"];
 };
 
 export type Settings = z.infer<typeof SettingsSchema>;
@@ -106,6 +109,7 @@ export type Quarter = z.infer<typeof quarterSchema>;
 export type Game = z.infer<typeof GameSchema>;
 export type DateType = z.infer<typeof DateSchema>;
 export type PlayoffsMatchup = z.infer<typeof PlayoffsMatchupSchema>;
+export type Season = z.infer<typeof SeasonSchema> | null;
 
 export type Props = {
   // children: React.ReactChild;

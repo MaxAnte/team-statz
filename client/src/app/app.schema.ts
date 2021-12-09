@@ -149,3 +149,13 @@ export const PlayoffsMatchupSchema = z.object({
 });
 
 export const PlayoffsMatchupsSchema = z.array(PlayoffsMatchupSchema);
+
+export const SeasonSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  dates: DatesSchema,
+  teams: TeamsSchema,
+  players: PlayersSchema,
+  games: GamesSchema,
+  playoffsMatchups: PlayoffsMatchupsSchema,
+});

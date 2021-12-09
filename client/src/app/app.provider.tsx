@@ -8,6 +8,7 @@ import {
   Player,
   PlayoffsMatchup,
   Props,
+  Season,
   Settings,
   State,
   Team,
@@ -23,6 +24,7 @@ import {
   PlayerSchema,
   PlayersSchema,
   PlayoffsMatchupsSchema,
+  SeasonSchema,
   SettingsSchema,
   TeamSchema,
   TeamsSchema,
@@ -46,6 +48,7 @@ export class AppProvider extends React.Component<Props, State> {
         dates: [],
         playoffsmatchups: [],
         birthDayPlayers: [],
+        season: null,
 
         getSettings: this.getSettings,
         saveSettings: this.saveSettings,
@@ -63,6 +66,7 @@ export class AppProvider extends React.Component<Props, State> {
         getPlayoffsMatchups: this.getPlayoffsMatchups,
         buildPlayoffsBracket: this.buildPlayoffsBracket,
         clearPlayoffsBracket: this.clearPlayoffsBracket,
+        getSeason: this.getSeason,
         loading: false,
       },
     };
@@ -374,6 +378,31 @@ export class AppProvider extends React.Component<Props, State> {
     try {
       await api<string>("/api/bracket/clear", "POST", {});
       this.getSettings();
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  getSeason = async (name: string) => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        loading: true,
+      },
+    });
+    try {
+      const response = await api<Season>("/api/season", "POST", { name });
+
+      const season = SeasonSchema.parse(response);
+
+      this.setState({
+        context: {
+          ...this.state.context,
+          season,
+          loading: false,
+        },
+      });
+      return season;
     } catch (error: any) {
       throw error;
     }
