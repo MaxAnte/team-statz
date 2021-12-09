@@ -159,3 +159,5 @@ export const SeasonSchema = z.object({
   games: GamesSchema,
   playoffsMatchups: PlayoffsMatchupsSchema,
 });
+
+export const SeasonsNamesSchema = z.array(z.string());

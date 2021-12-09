@@ -1,6 +1,8 @@
 /* eslint-disable no-invalid-this */
 import React, { createContext } from "react";
 
+import { createCurrentSeasonYears } from "../helpers/time.helpers";
+
 import {
   Context,
   DateType,
@@ -25,6 +27,7 @@ import {
   PlayersSchema,
   PlayoffsMatchupsSchema,
   SeasonSchema,
+  SeasonsNamesSchema,
   SettingsSchema,
   TeamSchema,
   TeamsSchema,
@@ -48,7 +51,7 @@ export class AppProvider extends React.Component<Props, State> {
         dates: [],
         playoffsmatchups: [],
         birthDayPlayers: [],
-        season: null,
+        season: createCurrentSeasonYears(),
 
         getSettings: this.getSettings,
         saveSettings: this.saveSettings,
@@ -66,7 +69,8 @@ export class AppProvider extends React.Component<Props, State> {
         getPlayoffsMatchups: this.getPlayoffsMatchups,
         buildPlayoffsBracket: this.buildPlayoffsBracket,
         clearPlayoffsBracket: this.clearPlayoffsBracket,
-        getSeason: this.getSeason,
+        setSeason: this.setSeason,
+        getSeasons: this.getSeasons,
         loading: false,
       },
     };
@@ -383,34 +387,27 @@ export class AppProvider extends React.Component<Props, State> {
     }
   };
 
-  getSeason = async (name: string) => {
-    this.setState({
-      context: {
-        ...this.state.context,
-        loading: true,
-      },
-    });
+  getSeasons = async () => {
     try {
-      const response = await api<Season>("/api/season", "POST", { name });
-
-      const season = SeasonSchema.parse(response);
-
-      this.setState({
-        context: {
-          ...this.state.context,
-          season,
-          loading: false,
-        },
-      });
-      return season;
+      const response = await api<string[]>("/api/seasons");
+      const seasons = SeasonsNamesSchema.parse(response);
+      return seasons;
     } catch (error: any) {
       throw error;
     }
   };
 
+  setSeason = (season: string) => {
+    this.setState({
+      context: {
+        ...this.state.context,
+        season,
+      },
+    });
+    return season;
+  };
+
   componentDidMount() {
-    const curYear = new Date().getFullYear().toString().slice(-2);
-    this.getSeason(`${Number(curYear) - 1}/${curYear}`);
     this.getSettings();
   }
 

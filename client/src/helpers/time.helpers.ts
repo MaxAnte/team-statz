@@ -63,3 +63,8 @@ export const parsePlayingMinutes = (
       })
   );
 };
+
+export const createCurrentSeasonYears = () => {
+  const curYear = Number(new Date().getFullYear().toString().slice(-2));
+  return `${curYear - 1}/${curYear}`;
+};

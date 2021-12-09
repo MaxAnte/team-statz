@@ -915,6 +915,13 @@ router.post("/bracket/clear", [], async (req, res) => {
 
 // ==================== SEASON ==================
 
+router.get("/seasons", [], async (req, res) => {
+  const seasons = await Season.find();
+  if (!seasons)
+    return res.status(400).json({ message: `Cant find any season!` });
+  res.json(seasons.map((season) => season.name));
+});
+
 router.post("/season", [], async (req, res) => {
   const season = await Season.findOne({ name: req.body.name });
   if (!season)

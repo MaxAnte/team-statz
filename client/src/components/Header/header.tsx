@@ -9,6 +9,8 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
+import { createCurrentSeasonYears } from "../../helpers/time.helpers";
+
 import { useMessage } from "../../hooks/message.hook";
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
@@ -29,8 +31,9 @@ import styles from "./header.module.css";
 
 function Header() {
   const { isAuthenticated, logOutUser } = useContext(SessionContext);
-  const { getSeason } = useContext(AppContext);
+  const { setSeason, getSeasons } = useContext(AppContext);
   const [modal, setModal] = useState<boolean>(false);
+  const [seasons, setSeasons] = useState<string[]>([]);
   const message = useMessage();
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
@@ -45,6 +48,13 @@ function Header() {
     i18n.changeLanguage(lang || "en");
   }, [i18n]);
 
+  useEffect(() => {
+    (async () => {
+      const seasons = await getSeasons();
+      setSeasons(seasons);
+    })();
+  }, [getSeasons]);
+
   const toggleModal = () => setModal(!modal);
   const closeOnLogin = () => setModal(false);
   const handleGetActiveLanguage = useCallback(
@@ -52,14 +62,10 @@ function Header() {
     [i18n]
   );
   const handleGetActiveSeason = useCallback(
-    async (option: string) => {
-      try {
-        await getSeason(option);
-      } catch (err) {
-        message(err);
-      }
+    (option: string) => {
+      setSeason(option);
     },
-    [getSeason, message]
+    [setSeason]
   );
 
   return (
@@ -70,10 +76,10 @@ function Header() {
         </h1>
       </NavLink>
       <Select
-        options={["18/19", "19/20", "20/21"]}
+        options={seasons}
         className={styles.seasonsSwitcher}
         getActive={handleGetActiveSeason}
-        defaultValue={"20/21"}
+        defaultValue={createCurrentSeasonYears()}
       />
       <nav className={styles.navList}>
         <ul>

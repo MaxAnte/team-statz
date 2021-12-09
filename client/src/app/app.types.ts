@@ -21,7 +21,7 @@ export type Context = {
   dates: DateType[] | [];
   playoffsmatchups: PlayoffsMatchup[] | [];
   birthDayPlayers: Player[] | [];
-  season: Season;
+  season: string;
   loading: boolean;
 
   getSettings: InstanceType<typeof AppProvider>["getSettings"];
@@ -44,7 +44,8 @@ export type Context = {
   clearPlayoffsBracket: InstanceType<
     typeof AppProvider
   >["clearPlayoffsBracket"];
-  getSeason: InstanceType<typeof AppProvider>["getSeason"];
+  setSeason: InstanceType<typeof AppProvider>["setSeason"];
+  getSeasons: InstanceType<typeof AppProvider>["getSeasons"];
 };
 
 export type Settings = z.infer<typeof SettingsSchema>;
