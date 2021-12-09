@@ -409,6 +409,8 @@ export class AppProvider extends React.Component<Props, State> {
   };
 
   componentDidMount() {
+    const curYear = new Date().getFullYear().toString().slice(-2);
+    this.getSeason(`${Number(curYear) - 1}/${curYear}`);
     this.getSettings();
   }
 

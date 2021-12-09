@@ -1,8 +1,7 @@
 /* eslint-disable */
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { SessionProvider } from "./session/session.provider";
-import { AppProvider } from "./app/app.provider";
+import { AppContext } from "./app/app.provider";
 import { useAuth } from "./hooks/auth.hook";
 import { useHttp } from "./hooks/http.hook";
 import { checkDate } from "./helpers/time.helpers";
@@ -26,6 +25,7 @@ import "./App.css";
 import styles from "./background.module.css";
 
 function App() {
+  const { season } = useContext(AppContext);
   const { ready } = useAuth();
   const { request } = useHttp();
 
@@ -39,32 +39,27 @@ function App() {
   //   cleanAllPlayersStats();
   // }, [cleanAllPlayersStats]);
 
-  if (!ready) return <Loader />;
-
+  if (!season && !ready) return <Loader />;
   return (
-    <SessionProvider>
-      <AppProvider>
-        <Router>
-          <div className={`app ${styles[checkDate()]}`}>
-            <Header />
-            <main>
-              <Switch>
-                <Route path="/" exact component={Games} />
-                <Route path="/team" component={Team} />
-                <Route path="/player/:id" component={Player} />
-                <Route path="/schedule" component={Schedule} />
-                <Route path="/stats" component={Stats} />
-                <Route path="/playoffs" component={Playoffs} />
-                <Route path="/app/settings" component={AppSettings} />
-                <Route path="*" component={ErrorPage} />
-              </Switch>
-            </main>
-            <BirthDayResolver />
-            <Footer>© Max Zahorskyi 2021</Footer>
-          </div>
-        </Router>
-      </AppProvider>
-    </SessionProvider>
+    <Router>
+      <div className={`app ${styles[checkDate()]}`}>
+        <Header />
+        <main>
+          <Switch>
+            <Route path="/" exact component={Games} />
+            <Route path="/team" component={Team} />
+            <Route path="/player/:id" component={Player} />
+            <Route path="/schedule" component={Schedule} />
+            <Route path="/stats" component={Stats} />
+            <Route path="/playoffs" component={Playoffs} />
+            <Route path="/app/settings" component={AppSettings} />
+            <Route path="*" component={ErrorPage} />
+          </Switch>
+        </main>
+        <BirthDayResolver />
+        <Footer>© Max Zahorskyi 2021</Footer>
+      </div>
+    </Router>
   );
 }
 

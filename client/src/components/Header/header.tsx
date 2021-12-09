@@ -9,6 +9,7 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
+import { useMessage } from "../../hooks/message.hook";
 import { useOutsideClickHandler } from "../../hooks/outsideClick.hook";
 
 import { AppContext } from "../../app/app.provider";
@@ -30,6 +31,7 @@ function Header() {
   const { isAuthenticated, logOutUser } = useContext(SessionContext);
   const { getSeason } = useContext(AppContext);
   const [modal, setModal] = useState<boolean>(false);
+  const message = useMessage();
   const { t, i18n } = useTranslation();
   const userPanelRef = useRef(null);
   const closeUserPanel: boolean = useOutsideClickHandler(userPanelRef);
@@ -51,9 +53,13 @@ function Header() {
   );
   const handleGetActiveSeason = useCallback(
     async (option: string) => {
-      await getSeason(option);
+      try {
+        await getSeason(option);
+      } catch (err) {
+        message(err);
+      }
     },
-    [getSeason]
+    [getSeason, message]
   );
 
   return (
