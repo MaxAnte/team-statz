@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 const router = Router();
 
 const User = require("../models/User");
+const Settings = require("../models/Settings");
+const Season = require("../models/Season");
 const DateModel = require("../models/Date");
 const Game = require("../models/Game");
 const Team = require("../models/Team");
 const Player = require("../models/Player");
-const Settings = require("../models/Settings");
 const PlayoffsMatchup = require("../models/PlayoffsMatchup");
 
 const calculateMinutes = (minutesArr, isStarter) => {
@@ -910,6 +911,17 @@ router.post("/bracket/clear", [], async (req, res) => {
   await PlayoffsMatchup.deleteMany();
   settings.save();
   res.json("Playoffs bracket has been cleared!");
+});
+
+// ==================== SEASON ==================
+
+router.post("/season", [], async (req, res) => {
+  const season = await Season.find({ name: req.body.name });
+  if (!season)
+    return res
+      .status(400)
+      .json({ message: `Cant find ${req.body.name} season` });
+  res.json(season);
 });
 
 // ==================== WARNING ==================
