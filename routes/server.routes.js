@@ -813,21 +813,31 @@ router.post("/player/id", async (req, res) => {
 
 router.post("/team/teams", [], async (req, res) => {
   const season = await Season.findOne({ name: req.body.season });
-  if (!season) return res.status(400).json({ message: "Teams not found" });
+  if (!season) return res.status(400).json({ message: "Season not found" });
   res.json(season.teams);
 });
 
 router.post("/team/edit-table-info", [], async (req, res) => {
-  const team = await Team.findOne({ _id: req.body._id });
-  if (!team)
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season)
+    return res
+      .status(400)
+      .json({ message: `${req.body.season}: Season not found` });
+
+  if (!season.teams.find((team) => team._id.toString() === req.body._id))
     return res.status(400).json({ message: `${req.body._id}: Team not found` });
 
-  team.wins = req.body.wins;
-  team.loses = req.body.loses;
-  team.points = req.body.wins * 2 + req.body.loses * 1;
-  team.winRate = (+team.wins * 100) / (+team.wins + +team.loses);
-  await team.save();
-  res.json({ ...team });
+  season.teams = season.teams.map((team) => {
+    if (team._id.toString() === req.body._id) {
+      team.wins = req.body.wins;
+      team.loses = req.body.loses;
+      team.points = req.body.wins * 2 + req.body.loses;
+      team.winRate = (+team.wins * 100) / (+team.wins + +team.loses);
+    }
+    return team;
+  });
+  await season.save();
+  res.json(season.teams);
 });
 
 // ================= SETTINGS ==================
