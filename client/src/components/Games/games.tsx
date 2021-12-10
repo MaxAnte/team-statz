@@ -14,6 +14,7 @@ import styles from "./games.module.css";
 function Games() {
   const {
     settings: { playoffsBracketBuilt },
+    season,
     getGames,
     games,
     getPlayers,
@@ -25,9 +26,11 @@ function Games() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getGames();
-    getPlayers();
-  }, [getGames, getPlayers]);
+    if (season) {
+      getGames();
+      getPlayers();
+    }
+  }, [getGames, getPlayers, season]);
 
   useEffect(() => {
     if (hash === "") {

@@ -18,7 +18,7 @@ type Props = {
 };
 
 function AddDatePopup({ closeHandler, date }: Props) {
-  const { getTeams, teams, addDate } = useContext(AppContext);
+  const { getTeams, teams, addDate, season } = useContext(AppContext);
   const [form, setForm] = useState<AddDateForm>({
     date: "",
     enemy: "",
@@ -28,9 +28,11 @@ function AddDatePopup({ closeHandler, date }: Props) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
-    getTeams();
-  }, [date, getTeams]);
+    if (season) {
+      setForm((prevState) => ({ ...prevState, date, time: "18:00" }));
+      getTeams();
+    }
+  }, [date, getTeams, season]);
 
   const handleGetActive = useCallback(
     (enemy: string) => setForm((prevState) => ({ ...prevState, enemy })),

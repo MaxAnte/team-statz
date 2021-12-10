@@ -35,6 +35,7 @@ function Schedule() {
   const { isAuthenticated } = useContext(SessionContext);
   const {
     settings: { enableCalendarScrollMode },
+    season,
     getDates,
     dates,
   } = useContext(AppContext);
@@ -45,8 +46,8 @@ function Schedule() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    getDates();
-  }, [getDates]);
+    if (season) getDates();
+  }, [getDates, season]);
 
   const closeHandler = () => {
     setAddDateForm({ form: false, date: "" });

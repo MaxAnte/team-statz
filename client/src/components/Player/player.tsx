@@ -30,7 +30,7 @@ interface ParamTypes {
 }
 
 function Player() {
-  const { getPlayerById, getGames } = useContext(AppContext);
+  const { season, getPlayerById, getGames } = useContext(AppContext);
   const [player, setPlayer] = useState<PlayerType | undefined>(undefined);
   const [gamesInfo, setGamesInfo] = useState<Game[]>([]);
   const [overallStats, setOverallStats] = useState<
@@ -82,8 +82,8 @@ function Player() {
   }, [gamesInfo?.length, getGames, getPlayerById, id, player]);
 
   useEffect(() => {
-    getDB();
-  }, [getDB]);
+    if (season) getDB();
+  }, [getDB, season]);
 
   //@ts-ignore
   const _onReady = (event) => {

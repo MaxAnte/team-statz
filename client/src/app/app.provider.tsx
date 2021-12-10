@@ -26,7 +26,6 @@ import {
   PlayerSchema,
   PlayersSchema,
   PlayoffsMatchupsSchema,
-  SeasonSchema,
   SeasonsNamesSchema,
   SettingsSchema,
   TeamSchema,
@@ -162,7 +161,9 @@ export class AppProvider extends React.Component<Props, State> {
       },
     });
     try {
-      const response = await api<Player[]>("/api/player/players", "POST", {});
+      const response = await api<Player[]>("/api/player/players", "POST", {
+        season: this.state.context.season,
+      });
 
       const players = PlayersSchema.parse(response);
 
@@ -218,6 +219,7 @@ export class AppProvider extends React.Component<Props, State> {
   getPlayerById = async (pId: string) => {
     try {
       const response = await api<Player>("/api/player/id", "POST", {
+        season: this.state.context.season,
         _id: pId,
       });
 
@@ -231,7 +233,9 @@ export class AppProvider extends React.Component<Props, State> {
 
   getBirthdayPlayers = async () => {
     try {
-      const response = await api<Player[]>("/api/player/birthDay", "POST", {});
+      const response = await api<Player[]>("/api/player/birthDay", "POST", {
+        season: this.state.context.season,
+      });
 
       const birthDayPlayers = PlayersSchema.parse(response);
 
@@ -256,7 +260,9 @@ export class AppProvider extends React.Component<Props, State> {
       },
     });
     try {
-      const response = await api<Game[]>("/api/game/games", "POST", {});
+      const response = await api<Game[]>("/api/game/games", "POST", {
+        season: this.state.context.season,
+      });
 
       const games = GamesSchema.parse(response);
 
@@ -277,6 +283,7 @@ export class AppProvider extends React.Component<Props, State> {
     try {
       NewGameSchema.parse(game);
       await api<string>("/api/game/complete-game", "POST", {
+        season: this.state.context.season,
         ...game,
       });
       this.getGames();
@@ -289,6 +296,7 @@ export class AppProvider extends React.Component<Props, State> {
     try {
       GameSchema.parse(game);
       await api<string>("/api/game/edit-game", "POST", {
+        season: this.state.context.season,
         ...game,
       });
       this.getGames();
@@ -300,6 +308,7 @@ export class AppProvider extends React.Component<Props, State> {
   deleteGame = async (gameID: string) => {
     try {
       await api<string>("/api/game/delete-game", "POST", {
+        season: this.state.context.season,
         _id: gameID,
       });
       this.getGames();
@@ -316,7 +325,9 @@ export class AppProvider extends React.Component<Props, State> {
       },
     });
     try {
-      const response = await api<DateType[]>("/api/date/dates", "POST", {});
+      const response = await api<DateType[]>("/api/date/dates", "POST", {
+        season: this.state.context.season,
+      });
 
       const dates = DatesSchema.parse(response);
 
@@ -336,7 +347,10 @@ export class AppProvider extends React.Component<Props, State> {
   addDate = async (date: DateType) => {
     try {
       DateSchema.parse(date);
-      await api<string>("/api/date/add-date", "POST", { ...date });
+      await api<string>("/api/date/add-date", "POST", {
+        season: this.state.context.season,
+        ...date,
+      });
       this.getDates();
     } catch (error: any) {
       throw error;
@@ -354,7 +368,9 @@ export class AppProvider extends React.Component<Props, State> {
       const response = await api<PlayoffsMatchup[]>(
         "/api/bracket/get",
         "POST",
-        {}
+        {
+          season: this.state.context.season,
+        }
       );
 
       const playoffsmatchups = PlayoffsMatchupsSchema.parse(response);
@@ -374,7 +390,9 @@ export class AppProvider extends React.Component<Props, State> {
 
   buildPlayoffsBracket = async () => {
     try {
-      await api<string>("/api/bracket/build", "POST", {});
+      await api<string>("/api/bracket/build", "POST", {
+        season: this.state.context.season,
+      });
       this.getSettings();
     } catch (error: any) {
       throw error;
@@ -383,7 +401,9 @@ export class AppProvider extends React.Component<Props, State> {
 
   clearPlayoffsBracket = async () => {
     try {
-      await api<string>("/api/bracket/clear", "POST", {});
+      await api<string>("/api/bracket/clear", "POST", {
+        season: this.state.context.season,
+      });
       this.getSettings();
     } catch (error: any) {
       throw error;

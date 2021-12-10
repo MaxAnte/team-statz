@@ -65,6 +65,9 @@
   padding-bottom: 15px;
   font-size: 20px;
 }
+.noTeamsText {
+  margin-bottom: 25px;
+}
 
 @media (max-width: 1023px) {
   .tableCont {

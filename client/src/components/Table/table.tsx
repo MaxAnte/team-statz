@@ -16,6 +16,7 @@ function Table() {
   const { isAuthenticated } = useContext(SessionContext);
   const {
     settings: { playoffsBracketBuilt },
+    season,
     getTeams,
     editTeamInfo,
     teams,
@@ -28,8 +29,8 @@ function Table() {
   const closeEditableCell = useOutsideClickHandler(editableCellRef);
 
   useEffect(() => {
-    getTeams();
-  }, [getTeams]);
+    if (season) getTeams();
+  }, [getTeams, season]);
 
   useEffect(() => {
     setTable(sortTableStandings(teams));
@@ -65,94 +66,100 @@ function Table() {
 
   return (
     <div className={styles.tables}>
-      {table.map((group: any[]) => (
-        <div className={styles.tableCont} key={group[0]}>
-          {table.length > 1 ? (
-            <span className={styles.groupName}>{t(`Group ${group[0]}`)}</span>
-          ) : null}
-          <div className={styles.tableWrap}>
-            <div className={styles.tableHead}>
-              <span className={styles.tableRowPos}>№</span>
-              <p className={styles.tableRowName}>{t("Team")}</p>
-              <span className={styles.tableRowWins}>{t("W")}</span>
-              <span className={styles.tableRowLoses}>{t("L")}</span>
-              <span className={styles.tableRowPoints}>{t("Pts")}</span>
-            </div>
-            {loading ? (
-              <MiniLoader />
-            ) : (
-              group[1].map((el: Team, i: number) =>
-                isAuthenticated && editableTeam?._id === el._id ? (
-                  <div
-                    ref={editableCellRef}
-                    className={`${styles.tableRow} ${
-                      playoffsBracketBuilt
-                        ? i <= 3
-                          ? styles.clinched
-                          : styles.eliminated
-                        : ""
-                    }`}
-                    key={`tableRow${el.name}`}
-                    onClick={() => setEditableTeam(el)}
-                  >
-                    <span className={styles.tableRowPos}>{i + 1}</span>
-                    <p className={styles.tableRowName}>{el.name}</p>
-                    <span className={styles.tableRowWins}>
-                      {editableTeam?._id === el._id ? (
-                        <input
-                          type="number"
-                          min="0"
-                          className={styles.editableCell}
-                          placeholder={`${el.wins}`}
-                          name="wins"
-                          value={editableTeam?.wins}
-                          onChange={handleEditRow}
-                        />
-                      ) : (
-                        el.wins
-                      )}
-                    </span>
-                    <span className={styles.tableRowLoses}>
-                      {editableTeam?._id === el._id ? (
-                        <input
-                          type="number"
-                          min="0"
-                          className={styles.editableCell}
-                          placeholder={`${el.loses}`}
-                          name="loses"
-                          value={editableTeam?.loses}
-                          onChange={handleEditRow}
-                        />
-                      ) : (
-                        el.loses
-                      )}
-                    </span>
-                    <span className={styles.tableRowPoints}>{el.points}</span>
-                  </div>
-                ) : (
-                  <div
-                    className={`${styles.tableRow} ${
-                      playoffsBracketBuilt
-                        ? i <= 3
-                          ? styles.clinched
-                          : styles.eliminated
-                        : ""
-                    }`}
-                    key={`tableRow${el.name}`}
-                    onClick={() => setEditableTeam(el)}
-                  >
-                    <span className={styles.tableRowPos}>{i + 1}</span>
-                    <p className={styles.tableRowName}>{el.name}</p>
-                    <span className={styles.tableRowWins}>{el.wins}</span>
-                    <span className={styles.tableRowLoses}>{el.loses}</span>
-                    <span className={styles.tableRowPoints}>{el.points}</span>
-                  </div>
+      {table.length ? (
+        table.map((group: any[]) => (
+          <div className={styles.tableCont} key={group[0]}>
+            {table.length > 1 ? (
+              <span className={styles.groupName}>{t(`Group ${group[0]}`)}</span>
+            ) : null}
+            <div className={styles.tableWrap}>
+              <div className={styles.tableHead}>
+                <span className={styles.tableRowPos}>№</span>
+                <p className={styles.tableRowName}>{t("Team")}</p>
+                <span className={styles.tableRowWins}>{t("W")}</span>
+                <span className={styles.tableRowLoses}>{t("L")}</span>
+                <span className={styles.tableRowPoints}>{t("Pts")}</span>
+              </div>
+              {loading ? (
+                <MiniLoader />
+              ) : (
+                group[1].map((el: Team, i: number) =>
+                  isAuthenticated && editableTeam?._id === el._id ? (
+                    <div
+                      ref={editableCellRef}
+                      className={`${styles.tableRow} ${
+                        playoffsBracketBuilt
+                          ? i <= 3
+                            ? styles.clinched
+                            : styles.eliminated
+                          : ""
+                      }`}
+                      key={`tableRow${el.name}`}
+                      onClick={() => setEditableTeam(el)}
+                    >
+                      <span className={styles.tableRowPos}>{i + 1}</span>
+                      <p className={styles.tableRowName}>{el.name}</p>
+                      <span className={styles.tableRowWins}>
+                        {editableTeam?._id === el._id ? (
+                          <input
+                            type="number"
+                            min="0"
+                            className={styles.editableCell}
+                            placeholder={`${el.wins}`}
+                            name="wins"
+                            value={editableTeam?.wins}
+                            onChange={handleEditRow}
+                          />
+                        ) : (
+                          el.wins
+                        )}
+                      </span>
+                      <span className={styles.tableRowLoses}>
+                        {editableTeam?._id === el._id ? (
+                          <input
+                            type="number"
+                            min="0"
+                            className={styles.editableCell}
+                            placeholder={`${el.loses}`}
+                            name="loses"
+                            value={editableTeam?.loses}
+                            onChange={handleEditRow}
+                          />
+                        ) : (
+                          el.loses
+                        )}
+                      </span>
+                      <span className={styles.tableRowPoints}>{el.points}</span>
+                    </div>
+                  ) : (
+                    <div
+                      className={`${styles.tableRow} ${
+                        playoffsBracketBuilt
+                          ? i <= 3
+                            ? styles.clinched
+                            : styles.eliminated
+                          : ""
+                      }`}
+                      key={`tableRow${el.name}`}
+                      onClick={() => setEditableTeam(el)}
+                    >
+                      <span className={styles.tableRowPos}>{i + 1}</span>
+                      <p className={styles.tableRowName}>{el.name}</p>
+                      <span className={styles.tableRowWins}>{el.wins}</span>
+                      <span className={styles.tableRowLoses}>{el.loses}</span>
+                      <span className={styles.tableRowPoints}>{el.points}</span>
+                    </div>
+                  )
                 )
-              )
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p className={styles.noTeamsText}>
+          {t("There is no registered teams in this season yet")}
+        </p>
+      )}
     </div>
   );
 }

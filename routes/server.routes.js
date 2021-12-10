@@ -111,6 +111,9 @@ router.post(
 // /api/date/add-date
 router.post("/date/add-date", [], async (req, res) => {
   try {
+    const season = await Season.findOne({ name: req.body.season });
+    if (!season) return res.status(400).json({ message: "Season not found" });
+
     const date = new DateModel(req.body);
     const gameBase = {
       ...req.body,
@@ -123,8 +126,9 @@ router.post("/date/add-date", [], async (req, res) => {
     };
     const game = new Game(gameBase);
 
-    await game.save();
-    await date.save();
+    season.games.push(game);
+    season.dates.push(date);
+    await season.save();
     res.status(201).json({ message: `${game} on ${date} has been added!` });
   } catch (e) {
     console.log("Error:", e.message);
@@ -134,38 +138,20 @@ router.post("/date/add-date", [], async (req, res) => {
 
 // /api/date/dates
 router.post("/date/dates", async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res
-        .status(400)
-        .json({ errors: errors.array(), message: "Wrong login or password" });
-  } catch (e) {
-    res.status(500).json({ message: "Server error! Please, try again!" });
-  }
-  const dates = await DateModel.find({});
-
-  if (!dates) return res.status(400).json({ message: "Game not found" });
-
-  res.json(dates);
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+  res.json(season.dates);
 });
 
 // ===================== GAME ===================
 
 // /api/game/games
 router.post("/game/games", async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res
-        .status(400)
-        .json({ errors: errors.array(), message: "Wrong login or password" });
-  } catch (e) {
-    res.status(500).json({ message: "Server error! Please, try again!" });
-  }
-  const games = await Game.find({});
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+
+  const games = season.games;
   games.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
-  if (!games) return res.status(400).json({ message: "Game not found" });
   res.json(games);
 });
 
@@ -762,21 +748,9 @@ router.post("/game/delete-game", [], async (req, res) => {
 
 // /api/player/players
 router.post("/player/players", async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res
-        .status(400)
-        .json({ errors: errors.array(), message: "Wrong login or password" });
-  } catch (e) {
-    res.status(500).json({ message: "Server error! Please, try again!" });
-  }
-  const players = await Player.find({});
-
-  if (!players)
-    return res.status(400).json({ message: "There are no active players" });
-
-  res.json(players);
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+  res.json(season.players);
 });
 
 // /api/player/birthDay
@@ -787,10 +761,11 @@ router.post("/player/birthDay", async (req, res) => {
       ? `0${today.getMonth() + 1}`
       : today.getMonth() + 1
   }-${today.getDate()}`;
-  const players = await Player.find({});
-  if (!players)
-    return res.status(400).json({ message: "There are no active players" });
 
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+
+  const players = season.players;
   const birthDays = players.filter(
     (player) => player.birthDate.slice(5) === todayToLocalUsedStr.slice(5)
   );
@@ -800,11 +775,12 @@ router.post("/player/birthDay", async (req, res) => {
 
 // /api/player/id
 router.post("/player/id", async (req, res) => {
-  const { _id } = req.body;
-  const playerDB = await Player.findOne({ _id });
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
 
-  if (!playerDB)
-    return res.status(400).json({ message: `${_id}: Player not found` });
+  const playerDB = season.players.find(
+    (player) => player._id.toString() === req.body._id
+  );
 
   res.json(playerDB);
 });
@@ -866,10 +842,13 @@ router.post("/settings/save", [], async (req, res) => {
 
 router.post("/bracket/build", [], async (req, res) => {
   // clean before start -> get all teams -> take 8 best of them -> build Playoffs matchups
-  await PlayoffsMatchup.deleteMany();
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+
+  season.playoffsMatchups = [];
   const QUANTITY_OF_TEAMS_FROM_ONE_GROUP = 4;
 
-  const teams = await Team.find({});
+  const teams = season.teams;
   teams.sort((a, b) => b.points - a.points || b.winRate - a.winRate);
   const bestA = teams
     .filter((t) => t.group === "A")
@@ -885,7 +864,7 @@ router.post("/bracket/build", [], async (req, res) => {
         team2: bestA[bestA.length - (index + 1)].name,
         winner: "",
       });
-      await match.save();
+      season.playoffsMatchups.push(match);
     }
   });
   bestB.forEach(async (t, index) => {
@@ -895,7 +874,7 @@ router.post("/bracket/build", [], async (req, res) => {
         team2: bestB[bestB.length - (index + 1)].name,
         winner: "",
       });
-      await match.save();
+      season.playoffsMatchups.push(match);
     }
   });
 
@@ -903,23 +882,26 @@ router.post("/bracket/build", [], async (req, res) => {
   if (!settings) return res.status(400).json({ message: "Where is settings?" });
   settings.playoffsBracketBuilt = true;
   await settings.save();
+  await season.save();
   res.json({ message: "Bracket has been succesefully built!" });
 });
 
 router.post("/bracket/get", [], async (req, res) => {
-  const matches = await PlayoffsMatchup.find({});
-  if (!matches)
-    return res.status(400).json({ message: "No matches in playoffs table" });
-  res.json(matches);
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
+  res.json(season.playoffsMatchups);
 });
 
 router.post("/bracket/clear", [], async (req, res) => {
+  const season = await Season.findOne({ name: req.body.season });
+  if (!season) return res.status(400).json({ message: "Season not found" });
   const settings = await Settings.findOne({}, {}, { sort: { created_at: -1 } });
   if (!settings) return res.status(400).json({ message: "Where is settings?" });
 
   settings.playoffsBracketBuilt = false;
-  await PlayoffsMatchup.deleteMany();
+  season.playoffsMatchups = [];
   settings.save();
+  season.save();
   res.json("Playoffs bracket has been cleared!");
 });
 

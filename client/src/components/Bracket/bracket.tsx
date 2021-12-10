@@ -7,11 +7,12 @@ import BracketMatchup from "../BracketMatchup/bracketMatchup";
 import styles from "./bracket.module.css";
 
 function Bracket() {
-  const { getPlayoffsMatchups, playoffsmatchups } = useContext(AppContext);
+  const { season, getPlayoffsMatchups, playoffsmatchups } =
+    useContext(AppContext);
 
   useEffect(() => {
-    getPlayoffsMatchups();
-  }, [getPlayoffsMatchups]);
+    if (season) getPlayoffsMatchups();
+  }, [getPlayoffsMatchups, season]);
 
   return (
     <svg viewBox="0 0 1580 660" className={styles.bracket}>

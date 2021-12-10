@@ -17,6 +17,7 @@ function Team() {
   const { t } = useTranslation();
   const {
     loading,
+    season,
     getPlayers,
     getGames,
     players,
@@ -25,9 +26,11 @@ function Team() {
   } = useContext(AppContext);
 
   useEffect(() => {
-    getPlayers();
-    getGames();
-  }, [getPlayers, getGames]);
+    if (season) {
+      getPlayers();
+      getGames();
+    }
+  }, [getPlayers, getGames, season]);
 
   return (
     <div className="team page-wrapper">

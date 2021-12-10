@@ -28,7 +28,7 @@ type PointerColor = {
 };
 
 function Stats() {
-  const { getGames, getPlayers, games, players, loading } =
+  const { season, getGames, getPlayers, games, players, loading } =
     useContext(AppContext);
   const [statsTabAverage, setStatsTabAverage] = useState<boolean>(true);
   const [canv, setCanv] = useState<HTMLCanvasElement | undefined>(undefined);
@@ -55,9 +55,11 @@ function Stats() {
       .map((_, i) => ({ _id: players[i]._id, color: COLORS[i] }));
 
   useEffect(() => {
-    getPlayers();
-    getGames();
-  }, [getPlayers, getGames]);
+    if (season) {
+      getPlayers();
+      getGames();
+    }
+  }, [getPlayers, getGames, season]);
 
   useEffect(() => {
     const canvas: HTMLCanvasElement | null = canvasRef.current;
