@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 import "dotenv/config";
 import routes from "./router/index.js";
 
@@ -7,32 +8,16 @@ const server = express();
 
 server.use(express.json({ extended: true }));
 
+server.use(cors());
+
 server.use("/api", routes);
 
 server.get("/", (req, res) => {
   console.log("Wassup?");
 });
 
-async function start() {
-  try {
-    await mongoose.connect(
-      process.env.MONGO_URI,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-      },
-      () => {
-        console.log("Connected to DB!");
-      }
-    );
-    server.listen(process.env.PORT, () => {
-      console.log(`We are line at ${process.env.PORT} port`);
-    });
-  } catch (e) {
-    console.log("Server error", e.message);
-    process.exit(1);
-  }
-}
+mongoose.connect(process.env.MONGO_URI, () => console.log("Connected to DB!"));
 
-start();
+server.listen(process.env.PORT, () => {
+  console.log(`We are live at ${process.env.PORT} port`);
+});
